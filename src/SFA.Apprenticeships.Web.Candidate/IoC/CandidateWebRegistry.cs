@@ -49,6 +49,7 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using System.Web;
+    using Application.Provider.Strategies;
 
     public class CandidateWebRegistry : Registry
     {
@@ -194,6 +195,9 @@
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
             For<ISetUserStatusPendingDeletionStrategy>().Use<SetUserStatusPendingDeletionStrategy>();
+
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
         }
 
         private void RegisterMediators()

@@ -35,7 +35,7 @@ AS
 	V.VacancyReferenceNumber,
 	P.FullName,
 	dbo.GetSubmittedDate(V.VacancyID) AS DateSubmitted,
-	VST.FullName,
+	VST.FullName AS Outcome,
 	vh.HistoryDate AS OutComeDate
 	from @vacancyHistory vh 
 	JOIN Vacancy V ON V.VacancyId = vh.VacancyId

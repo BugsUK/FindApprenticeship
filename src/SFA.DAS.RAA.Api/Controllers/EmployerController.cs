@@ -2,6 +2,7 @@
 {
     using System.Security.Claims;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Web.Common.Extensions;
     using Models;
@@ -25,8 +26,9 @@
         /// <param name="edsUrn">The employer's secondary identifier.</param>
         /// <returns></returns>
         [Route("employer/{edsUrn}/link")]
+        [ResponseType(typeof(EmployerProviderSiteLinkResponse))]
         [SwaggerOperation("LinkEmployer")]
-        public IHttpActionResult LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int edsUrn)
+        public IHttpActionResult LinkEmployer(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn)
         {
             return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLink, edsUrn, User.GetUkprn()));
         }

@@ -6,6 +6,7 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
+    using System;
     using System.Linq;
     using System.Web.Mvc;
     using FluentValidation;
@@ -41,10 +42,13 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             view.GetElementbyId("vacancySummaryAndExit").Should().NotBeNull("Should exists a save and exit button");
         }
 
-        [TestCase(16, false)]
-        [TestCase(2016, true)]
-        public void DateYearValidation(int year, bool expectValid)
+        [TestCase(false)]
+        [TestCase(true)]
+        public void DateYearValidation(bool expectValid)
         {
+            var currentYear = DateTime.UtcNow.Year;
+            var year = expectValid ? currentYear : currentYear - 2000; //Either 20XX or XX
+
             //Arrange
             var view = new ValidationSummary();
             var viewModel = new ModelStateDictionary();

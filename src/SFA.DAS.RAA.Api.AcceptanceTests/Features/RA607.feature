@@ -15,11 +15,10 @@ Scenario: Link an employer to a provider site no description and bad url
 	And I request to link employer identified with EDSURN: 123456789 to provider site identified with EDSURN: 0 with description: null and website: test
 	Then The response status is: BadRequest
 	And The validation errors contain:
-		| Property            | Error                                                     |
-		| ProviderSiteId      | You must specify either the provider site's ID or EDSURN. |
-		| ProviderSiteEdsUrn  | You must specify either the provider site's ID or EDSURN. |
-		| EmployerDescription | Please supply a description for the employer.             |
-		| EmployerWebsiteUrl  | Please supply a valid website url for the employer.       |
+		| Property            | Error                                               |
+		| ProviderSiteEdsUrn  | You must specify the provider site's EDSURN.        |
+		| EmployerDescription | Please supply a description for the employer.       |
+		| EmployerWebsiteUrl  | Please supply a valid website url for the employer. |
 	And I do not see the employer link for the employer identified with EDSURN: 123456789 and the provider site identified with EDSURN: 0
 
 #@RA607

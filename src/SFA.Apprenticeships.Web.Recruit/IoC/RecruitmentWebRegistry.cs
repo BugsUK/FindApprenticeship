@@ -23,6 +23,7 @@
     using Application.Location;
     using Application.Organisation;
     using Application.Provider;
+    using Application.Provider.Strategies;
     using Application.ReferenceData;
     using Application.Reporting;
     using Application.UserAccount;
@@ -158,8 +159,9 @@
             For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
-
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
             For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<Infrastructure.Repositories.Sql.Schemas.dbo.CandidateRepository>();
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
         }
 
         private void RegisterMediators()

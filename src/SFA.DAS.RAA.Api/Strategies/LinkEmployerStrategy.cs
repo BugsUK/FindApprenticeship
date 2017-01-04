@@ -4,7 +4,9 @@
     using System.Linq;
     using System.Security;
     using Apprenticeships.Application.Employer.Strategies;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Provider.Strategies;
+    using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Parties;
     using Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using Constants;
@@ -15,7 +17,9 @@
 
     public class LinkEmployerStrategy : ILinkEmployerStrategy
     {
-        private readonly EmployerProviderSiteLinkValidator _employerProviderSiteLinkValidator = new EmployerProviderSiteLinkValidator();
+        private readonly EmployerProviderSiteLinkRequestValidator _employerProviderSiteLinkValidator = new EmployerProviderSiteLinkRequestValidator();
+
+        private readonly ILogService _logService;
 
         private readonly IGetByEdsUrnStrategy _getByEdsUrnStrategy;
         private readonly IProviderReadRepository _providerReadRepository;
@@ -24,7 +28,7 @@
         private readonly IGetVacancyOwnerRelationshipStrategy _getVacancyOwnerRelationshipStrategy;
         private readonly IVacancyOwnerRelationshipWriteRepository _vacancyOwnerRelationshipWriteRepository;
 
-        public LinkEmployerStrategy(IGetByEdsUrnStrategy getByEdsUrnStrategy, IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IGetVacancyOwnerRelationshipStrategy getVacancyOwnerRelationshipStrategy, IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository)
+        public LinkEmployerStrategy(IGetByEdsUrnStrategy getByEdsUrnStrategy, IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IGetOwnedProviderSitesStrategy getOwnedProviderSitesStrategy, IGetVacancyOwnerRelationshipStrategy getVacancyOwnerRelationshipStrategy, IVacancyOwnerRelationshipWriteRepository vacancyOwnerRelationshipWriteRepository, ILogService logService)
         {
             _getByEdsUrnStrategy = getByEdsUrnStrategy;
             _providerReadRepository = providerReadRepository;
@@ -32,12 +36,13 @@
             _getOwnedProviderSitesStrategy = getOwnedProviderSitesStrategy;
             _getVacancyOwnerRelationshipStrategy = getVacancyOwnerRelationshipStrategy;
             _vacancyOwnerRelationshipWriteRepository = vacancyOwnerRelationshipWriteRepository;
+            _logService = logService;
         }
 
-        public EmployerProviderSiteLink LinkEmployer(EmployerProviderSiteLink employerProviderSiteLink, int edsUrn, string ukprn)
+        public EmployerProviderSiteLinkResponse LinkEmployer(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn, string ukprn)
         {
             //Doing validation here rather than on object as the object requires populating before validation
-            employerProviderSiteLink.EmployerEdsUrn = employerProviderSiteLink.EmployerEdsUrn ?? edsUrn;
+            employerProviderSiteLink.EmployerEdsUrn = edsUrn;
 
             var validationResult = _employerProviderSiteLinkValidator.Validate(employerProviderSiteLink);
             if (!validationResult.IsValid)
@@ -45,23 +50,41 @@
                 throw new ValidationException(validationResult.Errors);
             }
 
-            var employer = _getByEdsUrnStrategy.Get(employerProviderSiteLink.EmployerEdsUrn.ToString());
-            if (employer == null)
+            Employer employer = null;
+            try
             {
-                validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerNotFoundFormat, employerProviderSiteLink.EmployerEdsUrn)));
-            }
-            //TODO: Validate geocoding for employer. Use Google as a fallback
-
-            ProviderSite providerSite = null;
-            if (employerProviderSiteLink.ProviderSiteId.HasValue)
-            {
-                providerSite = _providerSiteReadRepository.GetById(employerProviderSiteLink.ProviderSiteId.Value);
+                employer = _getByEdsUrnStrategy.Get(employerProviderSiteLink.EmployerEdsUrn.ToString());
                 if (employer == null)
                 {
-                    validationResult.Errors.Add(new ValidationFailure("ProviderSiteId", string.Format(EmployerProviderSiteLinkMessages.ProviderSiteNotFoundIdFormat, employerProviderSiteLink.ProviderSiteId)));
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerNotFoundFormat, employerProviderSiteLink.EmployerEdsUrn)));
+                }
+                //TODO: Validate geocoding for employer. Use Google as a fallback
+            }
+            catch (CustomException ex)
+            {
+                _logService.Warn($"Error when linking to employer with EDSURN {employerProviderSiteLink.EmployerEdsUrn}", ex);
+
+                if (ex.Code == Apprenticeships.Application.Employer.ErrorCodes.InvalidAddress)
+                {
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerAddressNotValid, employerProviderSiteLink.EmployerEdsUrn)));
+                }
+                else if (ex.Code == Apprenticeships.Infrastructure.EmployerDataService.ErrorCodes.GetByReferenceNumberFailed)
+                {
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerGetByReferenceNumberFailed, employerProviderSiteLink.EmployerEdsUrn)));
+                }
+                else
+                {
+                    validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerUnknownError, employerProviderSiteLink.EmployerEdsUrn)));
                 }
             }
-            else if(employerProviderSiteLink.ProviderSiteEdsUrn.HasValue)
+            catch (Exception ex)
+            {
+                _logService.Warn($"Error when linking to employer with EDSURN {employerProviderSiteLink.EmployerEdsUrn}", ex);
+                validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerUnknownError, employerProviderSiteLink.EmployerEdsUrn)));
+            }
+
+            ProviderSite providerSite = null;
+            if(employerProviderSiteLink.ProviderSiteEdsUrn.HasValue)
             {
                 providerSite = _providerSiteReadRepository.GetByEdsUrn(employerProviderSiteLink.ProviderSiteEdsUrn.ToString());
                 if (employer == null)
@@ -97,14 +120,17 @@
 
             vacancyOwnerRelationship = _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship);
 
-            employerProviderSiteLink.ProviderSiteId = providerSite.ProviderSiteId;
-            employerProviderSiteLink.ProviderSiteEdsUrn = Convert.ToInt32(providerSite.EdsUrn);
-            employerProviderSiteLink.EmployerId = employer.EmployerId;
-            employerProviderSiteLink.EmployerEdsUrn = Convert.ToInt32(employer.EdsUrn);
-            employerProviderSiteLink.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
-            employerProviderSiteLink.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
+            var employerProviderSiteLinkResponse = new EmployerProviderSiteLinkResponse
+            {
+                ProviderSiteId = providerSite.ProviderSiteId,
+                ProviderSiteEdsUrn = Convert.ToInt32(providerSite.EdsUrn),
+                EmployerId = employer.EmployerId,
+                EmployerEdsUrn = Convert.ToInt32(employer.EdsUrn),
+                EmployerDescription = vacancyOwnerRelationship.EmployerDescription,
+                EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl,
+            };
 
-            return employerProviderSiteLink;
+            return employerProviderSiteLinkResponse;
         }
     }
 }

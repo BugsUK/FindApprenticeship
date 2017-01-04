@@ -5,23 +5,16 @@
     using FluentValidation;
     using Models;
 
-    public class EmployerProviderSiteLinkValidator : AbstractValidator<EmployerProviderSiteLink>
+    public class EmployerProviderSiteLinkRequestValidator : AbstractValidator<EmployerProviderSiteLinkRequest>
     {
-        public EmployerProviderSiteLinkValidator()
+        public EmployerProviderSiteLinkRequestValidator()
         {
             RuleFor(el => el.EmployerEdsUrn)
                 .NotEmpty()
-                .When(el => !el.EmployerId.HasValue)
                 .WithMessage(EmployerProviderSiteLinkMessages.MissingEmployerIdentifier);
-
-            RuleFor(el => el.ProviderSiteId)
-                .NotEmpty()
-                .When(el => !el.ProviderSiteEdsUrn.HasValue)
-                .WithMessage(EmployerProviderSiteLinkMessages.MissingProviderSiteIdentifier);
 
             RuleFor(el => el.ProviderSiteEdsUrn)
                 .NotEmpty()
-                .When(el => !el.ProviderSiteId.HasValue)
                 .WithMessage(EmployerProviderSiteLinkMessages.MissingProviderSiteIdentifier);
 
             RuleFor(x => x.EmployerDescription)
