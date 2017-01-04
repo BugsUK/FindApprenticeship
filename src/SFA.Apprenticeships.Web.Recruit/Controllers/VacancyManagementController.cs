@@ -3,12 +3,18 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Application.Interfaces;
+    using Attributes;
+    using Common.Attributes;
     using Constants;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.VacancyManagement;
 
+    [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+    [OwinSessionTimeout]
     public class VacancyManagementController : RecruitmentControllerBase
     {
         private readonly IVacancyManagementMediator _vacancyManagementMediator;
