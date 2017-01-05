@@ -641,12 +641,12 @@
             {
                 response.Add(new ReportVacancyTrackerResultItem
                 {
-                    OutComeDate = Convert.ToDateTime(reader["OutComeDate"]).ToString("dd/MM/yyy HH:mm"),
+                    OutComeDate = reader["OutComeDate"] == DBNull.Value ? string.Empty : Convert.ToDateTime(reader["OutComeDate"]).ToString("dd/MM/yyy HH:mm"),
                     ProviderName = reader["FullName"].ToString(),
-                    DateSubmitted = Convert.ToDateTime(reader["DateSubmitted"]).ToString("dd/MM/yyy"),
+                    DateSubmitted = reader["DateSubmitted"] == DBNull.Value ? string.Empty : Convert.ToDateTime(reader["DateSubmitted"]).ToString("dd/MM/yyy"),
                     Reference = reader["VacancyReferenceNumber"].ToString(),
                     Outcome = reader["Outcome"].ToString(),
-                    QAUserName = reader["QAUserName"].ToString(),
+                    QAUserName = reader["QAUserName"].ToString()
                 });
             }
 
