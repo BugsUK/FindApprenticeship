@@ -4,6 +4,19 @@
 
 $secondary-button-bg: transparent;
 
+.inline {
+    .button{
+        &.sfa-button-secondary {
+            padding-left:0px;
+        }
+        &:nth-child(2) {
+            &.sfa-button-secondary {
+                padding-left:.789473em;
+            }
+        }
+    }
+}
+
 // An extension of the GDS button class which creates a secondary button style that looks like a normal link
 .button.sfa-button-secondary {
     background:$secondary-button-bg;

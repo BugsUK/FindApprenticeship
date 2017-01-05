@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.TraineeshipSearch
 {
-    using System;
-    using System.Globalization;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.TraineeshipSearch;
     using Common.ViewModels.Locations;
@@ -9,6 +7,8 @@
     using Infrastructure.Presentation;
     using NUnit.Framework;
     using RazorGenerator.Testing;
+    using System;
+    using System.Globalization;
 
     [TestFixture]
     public class DetailsTests : ViewUnitTest
@@ -75,7 +75,7 @@
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
-            
+
             view.GetElementbyId("vacancy-distance").InnerText.Should().Be(SomeString + " miles");
         }
 
@@ -94,7 +94,7 @@
 
             view.GetElementbyId("vacancy-distance").Should().BeNull();
         }
-        
+
         [Test]
         public void ShowFutureProspects()
         {
@@ -108,7 +108,7 @@
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
 
-            view.GetElementbyId("vacancy-future-prospects").InnerText.Should().Be(SomeString);
+            view.GetElementbyId("vacancy-future-prospects").InnerText.Should().Contain(SomeString);
         }
 
         [Test]
@@ -125,7 +125,7 @@
 
             view.GetElementbyId("vacancy-future-prospects").Should().BeNull();
         }
-        
+
         [Test]
         public void ShowWellFormedEmployerWebSite()
         {
@@ -140,7 +140,7 @@
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
 
-            view.GetElementbyId("vacancy-employer-website").Attributes["href"].Value.Should().Be(SomeString, 
+            view.GetElementbyId("vacancy-employer-website").Attributes["href"].Value.Should().Be(SomeString,
                 string.Format("The employer website url should be shown and should be {0}", SomeString));
         }
 
@@ -162,7 +162,7 @@
                 .Should()
                 .BeNull("The employer website url should not be shown");
         }
-        
+
         [Test]
         public void ShowOtherInformation()
         {

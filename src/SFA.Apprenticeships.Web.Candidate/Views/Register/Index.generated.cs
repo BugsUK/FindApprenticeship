@@ -180,16 +180,12 @@ WriteLiteral(">\r\n        <legend");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Contact details</legend>\r\n        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n\r\n");
+WriteLiteral(">Contact details</legend>\r\n\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 29 "..\..\Views\Register\Index.cshtml"
+            #line 28 "..\..\Views\Register\Index.cshtml"
        Write(Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/register/findaddress" }));
 
             
@@ -200,7 +196,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 30 "..\..\Views\Register\Index.cshtml"
+            #line 29 "..\..\Views\Register\Index.cshtml"
        Write(Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false" }, hintHtmlAttributes: new { @class = "text" }));
 
             
@@ -219,16 +215,16 @@ WriteLiteral("></span>\r\n\r\n");
 WriteLiteral("            ");
 
             
-            #line 33 "..\..\Views\Register\Index.cshtml"
+            #line 32 "..\..\Views\Register\Index.cshtml"
        Write(Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" }, hintHtmlAttributes: new { @class = "text" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n        </div>\r\n    </fieldset>\r\n");
+WriteLiteral("\r\n\r\n    </fieldset>\r\n");
 
             
-            #line 37 "..\..\Views\Register\Index.cshtml"
+            #line 35 "..\..\Views\Register\Index.cshtml"
 
 
             
@@ -274,27 +270,27 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2327), Tuple.Create("\"", 2367)
-, Tuple.Create(Tuple.Create("", 2334), Tuple.Create("#", 2334), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2277), Tuple.Create("\"", 2317)
+, Tuple.Create(Tuple.Create("", 2284), Tuple.Create("#", 2284), true)
             
-            #line 45 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2335), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+            #line 43 "..\..\Views\Register\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 2285), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2335), false)
+, 2285), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n");
 
             
-            #line 48 "..\..\Views\Register\Index.cshtml"
+            #line 46 "..\..\Views\Register\Index.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 48 "..\..\Views\Register\Index.cshtml"
+            #line 46 "..\..\Views\Register\Index.cshtml"
          using (Html.FormPasswordWithContentFor(m => m.Password, hintHtmlAttributes: new { id = "passwordHint" }, controlHtmlAttributes: new { aria_describedby = "passwordHint", autocomplete = "off" }))
         {
 
@@ -312,7 +308,7 @@ WriteLiteral(" id=\"pass_meter\"");
 WriteLiteral("></span></span>\r\n");
 
             
-            #line 51 "..\..\Views\Register\Index.cshtml"
+            #line 49 "..\..\Views\Register\Index.cshtml"
         }
 
             
@@ -323,7 +319,7 @@ WriteLiteral("        \r\n");
 WriteLiteral("        ");
 
             
-            #line 53 "..\..\Views\Register\Index.cshtml"
+            #line 51 "..\..\Views\Register\Index.cshtml"
    Write(Html.FormPasswordFor(m => m.ConfirmPassword, controlHtmlAttributes: new { autocomplete = "off" }));
 
             
@@ -332,8 +328,9 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </fieldset>\r\n");
 
             
-            #line 55 "..\..\Views\Register\Index.cshtml"
-    
+            #line 53 "..\..\Views\Register\Index.cshtml"
+
+ 
 
             
             #line default
@@ -342,41 +339,30 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n        <fieldset>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
             #line 57 "..\..\Views\Register\Index.cshtml"
-   Write(Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
+       Write(Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
 
             
-            #line 59 "..\..\Views\Register\Index.cshtml"
-
-    
-            
-            #line default
-            #line hidden
-            
-            #line 60 "..\..\Views\Register\Index.cshtml"
-Write(Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
+            #line 58 "..\..\Views\Register\Index.cshtml"
+       Write(Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox" }));
 
             
             #line default
             #line hidden
-            
-            #line 60 "..\..\Views\Register\Index.cshtml"
-                                                                                                                                              
+WriteLiteral("\r\n        </fieldset>\r\n     </div>\r\n");
 
-
-            
-            #line default
-            #line hidden
 WriteLiteral("    <div");
 
 WriteLiteral(" class=\"form-group\"");
@@ -390,7 +376,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Create account</button>\r\n    </div>\r\n");
 
             
-            #line 65 "..\..\Views\Register\Index.cshtml"
+            #line 64 "..\..\Views\Register\Index.cshtml"
 }
 
             
@@ -405,7 +391,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 69 "..\..\Views\Register\Index.cshtml"
+            #line 68 "..\..\Views\Register\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/account"));
 
             
@@ -416,7 +402,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 70 "..\..\Views\Register\Index.cshtml"
+            #line 69 "..\..\Views\Register\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/passwordstrength"));
 
             
@@ -426,7 +412,7 @@ WriteLiteral("\r\n\r\n    <script>\r\n        $(function () {\r\n            $(\
 "lass(\'sfa-disabled\');\r\n            $(\'input[id=EmailAddress]\').usernameLookup(\'");
 
             
-            #line 75 "..\..\Views\Register\Index.cshtml"
+            #line 74 "..\..\Views\Register\Index.cshtml"
                                                    Write(Url.RouteUrl(RouteNames.CheckUsername));
 
             

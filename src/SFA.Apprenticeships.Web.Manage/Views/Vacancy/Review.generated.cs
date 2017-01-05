@@ -125,7 +125,11 @@ WriteLiteral("\r\n\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        <section>\r\n            <div");
+WriteLiteral("        <section");
+
+WriteLiteral(" class=\"sfa-xlarge-top-margin\"");
+
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 

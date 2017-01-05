@@ -86,21 +86,22 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div");
+WriteLiteral("\r\n\r\n<li");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 459), Tuple.Create("\"", 485)
+WriteAttribute("class", Tuple.Create(" class=\"", 458), Tuple.Create("\"", 497)
             
             #line 13 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 467), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 466), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 467), false)
+, 466), false)
+, Tuple.Create(Tuple.Create(" ", 484), Tuple.Create("sfa-if-first", 485), true)
 );
 
 WriteLiteral(">\r\n    <h3");
 
-WriteLiteral(" class=\"bold-small\"");
+WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">\r\n");
 
@@ -118,7 +119,11 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            <span>Weekly hours</span>\r\n");
+WriteLiteral("            ");
+
+WriteLiteral("Weekly hours");
+
+WriteLiteral("\r\n");
 
             
             #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
@@ -129,7 +134,11 @@ WriteLiteral("            <span>Weekly hours</span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            <span>Working week</span>\r\n");
+WriteLiteral("            ");
+
+WriteLiteral("Working week");
+
+WriteLiteral("\r\n");
 
             
             #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
@@ -152,131 +161,147 @@ WriteLiteral("            <span>Working week</span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    </h3>\r\n    <p");
+WriteLiteral("    </h3>\r\n    <ul");
+
+WriteLiteral(" class=\"list\"");
+
+WriteLiteral(">\r\n        <li");
 
 WriteLiteral(" id=\"vacancy-working-week\"");
 
 WriteLiteral(" itemprop=\"workHours\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1084), Tuple.Create("\"", 1173)
+WriteAttribute("class", Tuple.Create(" class=\"", 1127), Tuple.Create("\"", 1217)
             
-            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 1092), Tuple.Create<System.Object, System.Int32>(Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()
+            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+, Tuple.Create(Tuple.Create(" ", 1135), Tuple.Create<System.Object, System.Int32>(Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 1092), false)
+, 1136), false)
 );
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("            ");
 
             
-            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                                                                                            Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.WorkingWeek));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n");
-
-            
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-     if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek.HasValue)
-    {
+            #line 27 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+        Write(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.WorkingWeek));
 
             
             #line default
             #line hidden
-WriteLiteral("        <a");
+WriteLiteral("\r\n        </li>  \r\n");
+
+            
+            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+         if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek.HasValue)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <a");
 
 WriteLiteral(" name=\"furthervacancydetailsviewmodel_hoursperweek\"");
 
 WriteLiteral("></a>\r\n");
 
-WriteLiteral("        <p");
+WriteLiteral("            <li");
 
 WriteLiteral(" id=\"total-hours-per-week\"");
 
 WriteLiteral(">Total hours per week: ");
 
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                      Write(Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek);
+            #line 32 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                           Write(Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n");
-
-            
-            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-        if (Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek > 40)
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <p>(the hours are based on the candidate being over 18)</p>\r\n");
+WriteLiteral("</li>\r\n");
 
             
             #line 33 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
         }
-    }
 
             
             #line default
             #line hidden
+WriteLiteral("        ");
+
+            
+            #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+         if (Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek > 40)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <li>(the hours are based on the candidate being over 18)</li>\r\n");
+
+            
+            #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    </ul>\r\n");
+
 WriteLiteral("    ");
 
             
-            #line 35 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 39 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WorkingWeek, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WorkingWeekComment)));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\r\n\r\n");
+WriteLiteral("\r\n</li>\r\n\r\n");
 
             
-            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
  if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship)
 {
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("    <li");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2198), Tuple.Create("\"", 2224)
+WriteAttribute("class", Tuple.Create(" class=\"", 2307), Tuple.Create("\"", 2333)
             
-            #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 2206), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+, Tuple.Create(Tuple.Create("", 2315), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2206), false)
+, 2315), false)
 );
 
 WriteLiteral(">\r\n        <h3");
 
-WriteLiteral(" class=\"bold-small\"");
+WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
              if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.Custom)
             {
 
@@ -292,7 +317,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 49 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
                Write(Model.FurtherVacancyDetailsViewModel.Wage.Unit.GetHeaderDisplayText());
 
             
@@ -303,7 +328,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
                Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
 
             
@@ -312,7 +337,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </span>\r\n");
 
             
-            #line 48 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 52 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
             }
             else
             {
@@ -325,7 +350,7 @@ WriteLiteral("                <span>\r\n                    Weekly wage\r\n");
 WriteLiteral("                    ");
 
             
-            #line 53 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
                Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
 
             
@@ -334,21 +359,27 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </span>\r\n");
 
             
-            #line 55 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
             }
 
             
             #line default
             #line hidden
-WriteLiteral("        </h3>\r\n        <p");
+WriteLiteral("        </h3>\r\n        <div");
+
+WriteLiteral(" class=\"sfa-p-margin-bottom\"");
+
+WriteLiteral(">\r\n            <p");
 
 WriteLiteral(" id=\"vacancy-wage\"");
+
+WriteLiteral(" class=\"sfa-no-bottom-margin\"");
 
 WriteLiteral(">");
 
             
-            #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                        Write(WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, Model.FurtherVacancyDetailsViewModel.Wage.AmountUpperBound, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date));
+            #line 62 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                         Write(WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, Model.FurtherVacancyDetailsViewModel.Wage.AmountUpperBound, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date));
 
             
             #line default
@@ -356,29 +387,29 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-        
+            #line 63 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            
             
             #line default
             #line hidden
             
-            #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-         if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.PresetText
-            && Model.IsManageReviewerView)
-        {
+            #line 63 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+             if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.PresetText
+                        && Model.IsManageReviewerView)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"wage-reason-display\"");
 
 WriteLiteral(">");
 
             
-            #line 61 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                        Write(Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason);
+            #line 66 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                            Write(Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason);
 
             
             #line default
@@ -386,63 +417,103 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n");
 
             
-            #line 62 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-        }
+            #line 67 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            }
 
             
             #line default
             #line hidden
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 63 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-   Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
+            #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+       Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment)));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-
-    var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
-
-    if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
-    {
-        
+            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            
             
             #line default
             #line hidden
             
             #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-   Write(Html.Partial("_ApprenticeMinimumWageExplained", possibleStartDate));
+              
+                var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
+            
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
+            
+            #line 73 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            
             
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                           
-    }
-
-    if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
-    {
-        
+            #line 73 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+             if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
+            {
+                
             
             #line default
             #line hidden
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-   Write(Html.Partial("_NationalMinimumWageExplained", possibleStartDate));
+           Write(Html.Partial("_ApprenticeMinimumWageExplained", possibleStartDate));
 
             
             #line default
             #line hidden
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                         
-    }
+                                                                                   
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 78 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 78 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+             if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
+            {
+                
+            
+            #line default
+            #line hidden
+            
+            #line 80 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+           Write(Html.Partial("_NationalMinimumWageExplained", possibleStartDate));
+
+            
+            #line default
+            #line hidden
+            
+            #line 80 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                                                 
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </div>\r\n    </li>\r\n");
+
+            
+            #line 84 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 }
             
             #line default

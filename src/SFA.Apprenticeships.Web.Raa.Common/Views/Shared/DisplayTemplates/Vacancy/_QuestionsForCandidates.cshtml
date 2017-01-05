@@ -8,33 +8,38 @@
 
 @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
 {
-    <section class="sfa-section-bordered grid-row" id="course-info">
-        <h2 class="heading-large column-full">Questions for candidates</h2>
+    <section class="grid-row" id="course-info">
+        <div class="column-full">
+            <h2 class="heading-large">Questions for candidates</h2>
+        </div>
         <div class="column-one-half">
-                <div>
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
-                    {
-                        <div class="@editableItemClass">
-                            <h3 class="heading-small">
-                                First question
-                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, Model.QuestionsLink))
-                            </h3>
-                            <p class="@Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.FirstQuestion))</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment))
+                @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
+                {
+                    <div class="@editableItemClass sfa-if-first">
+                        <h3 class="heading-small">
+                            First question
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, Model.QuestionsLink))
+                        </h3>
+                        <div class="sfa-text-editor-generated @Model.VacancyQuestionsViewModel.FirstQuestion.GetPreserveFormattingCssClass()">
+                            @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.FirstQuestion))
                         </div>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
-                    {
-                        <div class="@editableItemClass">
-                            <h3 class="heading-small">
-                                Second question
-                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, Model.QuestionsLink))
-                            </h3>
-                            <p class="@Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.SecondQuestion))</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment))
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+                {
+                    <div class="@editableItemClass sfa-if-first">
+                        <h3 class="heading-small">
+                            Second question
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, Model.QuestionsLink))
+                        </h3>
+                        <div class="sfa-text-editor-generated @Model.VacancyQuestionsViewModel.SecondQuestion.GetPreserveFormattingCssClass()">
+                            @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyQuestionsViewModel.SecondQuestion))
                         </div>
-                    }
-                </div>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
+                    </div>
+                }
         </div>
     </section>
+    <hr class="sfa-no-bottom-margin" />
 }

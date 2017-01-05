@@ -42,10 +42,12 @@
                     </div>
                 </div>
                 <div class="grid grid-1-3">
-                    <p class="sfa-small-bottom-margin">
-                        Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
-                    </p>
-                    @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications, Model.VacancyType, Model.TotalNumberOfApplicationsWithPendingDecisions), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
+                    <ul class="list">
+                        <li class="sfa-small-bottom-margin">
+                            Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
+                        </li>
+                    	@Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications, Model.VacancyType,Model.TotalNumberOfApplicationsWithPendingDecisions), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
+                    </ul>
                 </div>
             </div>
         </section>

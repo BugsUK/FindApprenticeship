@@ -60,20 +60,20 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
         {
 WriteLiteral("\r\n");
 
-WriteLiteral("    <dt");
+WriteLiteral("    <h3");
 
-WriteLiteral(" class=\"bold-small\"");
+WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">");
 
             
             #line 5 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                      Write(Model.Wage.Unit.GetHeaderDisplayText());
+                         Write(Model.Wage.Unit.GetHeaderDisplayText());
 
             
             #line default
             #line hidden
-WriteLiteral("</dt>\r\n    <dd");
+WriteLiteral("</h3>\r\n    <p");
 
 WriteLiteral(" id=\"vacancy-wage\"");
 
@@ -88,7 +88,7 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </dd>\r\n\r\n\r\n");
+WriteLiteral("\r\n    </p>\r\n\r\n\r\n");
 
             
             #line 11 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"

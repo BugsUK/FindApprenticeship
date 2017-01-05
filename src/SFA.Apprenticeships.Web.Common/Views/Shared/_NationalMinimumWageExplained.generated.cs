@@ -47,9 +47,13 @@ namespace SFA.Apprenticeships.Web.Common.Views.Shared
         }
         public override void Execute()
         {
-WriteLiteral("<details>\r\n    <summary>Wages explained</summary>\r\n    <div");
+WriteLiteral("<details>\r\n    <summary><span");
 
-WriteLiteral(" class=\"detail-content\"");
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Wages explained</span></summary>\r\n    <div");
+
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n");
 
@@ -67,9 +71,7 @@ WriteLiteral(">\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            ");
-
-WriteLiteral("\r\n                The current National Minimum Wage rates are £");
+WriteLiteral("            <p>\r\n                The current National Minimum Wage rates are £");
 
             
             #line 10 "..\..\Views\Shared\_NationalMinimumWageExplained.cshtml"
@@ -107,9 +109,7 @@ WriteLiteral(" for 18 to 20 year-olds and £");
             #line hidden
 WriteLiteral(" for anyone aged 21 and over on the 1 Oct 2016<br />\r\n                Apprentices" +
 " are paid for their normal working hours and training that’s part of their appre" +
-"nticeship(usually one day per week).\r\n            ");
-
-WriteLiteral("\r\n");
+"nticeship(usually one day per week).\r\n            </p>\r\n");
 
             
             #line 13 "..\..\Views\Shared\_NationalMinimumWageExplained.cshtml"
@@ -120,9 +120,7 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            ");
-
-WriteLiteral("\r\n                The current National Minimum Wage rates are £");
+WriteLiteral("            <p>\r\n                The current National Minimum Wage rates are £");
 
             
             #line 17 "..\..\Views\Shared\_NationalMinimumWageExplained.cshtml"
@@ -151,9 +149,7 @@ WriteLiteral(" an hour for 18 - 20 year olds and £");
             #line hidden
 WriteLiteral(" for anyone aged 21 and over.<br />\r\n                Apprentices are paid for the" +
 "ir normal working hours and training that’s part of their apprenticeship(usually" +
-" one day per week).\r\n            ");
-
-WriteLiteral("\r\n");
+" one day per week).\r\n            </p>\r\n");
 
             
             #line 20 "..\..\Views\Shared\_NationalMinimumWageExplained.cshtml"
