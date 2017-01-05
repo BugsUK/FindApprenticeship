@@ -15,7 +15,7 @@
 
     @if (Model.Status.IsStateReadOnly())
     {
-        <section class="sfa-xlarge-top-margin">
+        <section class="sfa-xlarge-top-margin inline">
             @if (Model.Mode == VacancyViewModel.BulkUploadMode)
             {
                 <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Continue responding to candidates</a>

@@ -43,14 +43,14 @@ $(function() {
     return false;
   });
 
-  $('.mob-collpanel-trigger').on('click', function() {
-    $(this).next('.mob-collpanel').toggleClass('panel-open');
+  $('.sfa-mob-collpanel-trigger').on('click', function() {
+    $(this).next('.sfa-mob-collpanel').toggleClass('panel-open');
     $(this).toggleClass('triggered');
     return false;
   });
 
-  $('.collpanel-trigger').on('click', function() {
-    $(this).next('.collpanel').toggleClass('panel-open');
+  $('.sfa-collpanel-trigger').on('click', function() {
+    $(this).next('.sfa-collpanel').toggleClass('panel-open');
     $(this).toggleClass('triggered');
     return false;
   });

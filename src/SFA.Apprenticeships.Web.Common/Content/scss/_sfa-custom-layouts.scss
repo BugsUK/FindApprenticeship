@@ -134,6 +134,34 @@ Custom margins
     }
 }
 
+.sfa-p-margin-bottom {
+    margin-bottom: 1.05263em;
+}
+
+/* -------------------------------------------------------------------
+Removed Margins
+------------------------------------------------------------------- */
+
+.sfa-no-margins {
+    margin: 0 !important;
+}
+
+.sfa-no-right-margin {
+    margin-right: 0 !important;
+}
+
+.sfa-no-left-margin {
+    margin-left: 0 !important;
+}
+
+.sfa-no-bottom-margin {
+    margin-bottom: 0 !important;
+}
+
+.sfa-no-top-margin {
+    margin-top: 0 !important;
+}
+
 /* -------------------------------------------------------------------
 Custom padding
 ------------------------------------------------------------------- */
@@ -267,7 +295,7 @@ Custom list
 
 // Detail list mimic GDS .list ul and li pattern
 dl.sfa-dl{
-    .sfa-di { //detail list item
+    .sfa-di { //detail list item. Wraps dt and dd elements to act as a single li
         margin-bottom: 5px;
     }
     .dt {
@@ -280,7 +308,7 @@ dl.sfa-dl{
 Text editor generated text
 ------------------------------------------------------------------- */
 
-.sfa-if-first:first-child { // Apply class to the wrapper elements which share the same level and each contain an element that should only be styled only if its within the first wrapper element
+.sfa-if-first:first-child { // Apply class to child element which, if first requires a style to be applied
     .heading-small:first-child {
         margin-top: 0.3125em;
         @include media (tablet){
@@ -289,21 +317,7 @@ Text editor generated text
     }
 }
 
-/*
-.sfa-remove-heading-small-top-margin {
-    div:first-of-type {
-        .heading-small:first-of-type {
-            margin-top: 0.3125em;
-            @include media (tablet){
-                margin-top: 0.26316em
-            }
-        }
-    }
-}
-*/
-
-// Class to be applied to containers of content output by text editor to style bullet and number points
-.sfa-text-editor-generated {
+.sfa-text-editor-generated { // Class to be applied to containers of content output by text editor to style bullet and number points
     // Mimics GDS .list class
     ul, ol {
         padding: 0;
@@ -328,36 +342,6 @@ Text editor generated text
         font-weight:700;
     }
 }
-
-
-/* -------------------------------------------------------------------
-Forced Margin and Padding
-------------------------------------------------------------------- */
-
-.sfa-p-margin-bottom {
-    margin-bottom: 1.05263em;
-}
-
-.sfa-no-margins {
-    margin: 0 !important;
-}
-
-.sfa-no-right-margin {
-    margin-right: 0 !important;
-}
-
-.sfa-no-left-margin {
-    margin-left: 0 !important;
-}
-
-.sfa-no-bottom-margin {
-    margin-bottom: 0 !important;
-}
-
-.sfa-no-top-margin {
-    margin-top: 0 !important;
-}
-
 
 /* -------------------------------------------------------------------
 Alignment
@@ -384,6 +368,50 @@ Alignment
         }
     }
 }
+
+
+/* -------------------------------------------------------------------
+Custom expand content
+------------------------------------------------------------------- */
+
+@include media(mobile) {
+    .sfa-mob-collpanel-trigger:after {
+        content:" ▼";
+        display: inline-block;
+        font-size: 12px;
+        height: 14px;
+        padding-left: 10px;
+        vertical-align: middle
+    }
+
+    .sfa-mob-collpanel-trigger.triggered:after {
+        content: " ▲"
+    }
+}
+
+@include media(mobile) {
+    .sfa-mob-collpanel.panel-open {
+        display:block
+    }
+}
+
+.sfa-collpanel-trigger:after {
+    content:" ▼";
+    display: inline-block;
+    font-size: 12px;
+    height: 14px;
+    padding-left: 10px;
+    vertical-align: middle
+}
+
+.sfa-collpanel-trigger.triggered:after {
+    content: " ▲"
+}
+
+.sfa-collpanel.panel-open {
+    display:block
+}
+
 
 
 /* -------------------------------------------------------------------
@@ -503,27 +531,5 @@ iframe, object, embed {
 {
     @include media (0,641px){
         display: none;
-    }
-}
-
-
-@include media(mobile) {
-    .mob-collpanel-trigger:after {
-        content:" ▼";
-        display: inline-block;
-        font-size: 12px;
-        height: 14px;
-        padding-left: 10px;
-        vertical-align: middle
-    }
-
-    .mob-collpanel-trigger.triggered:after {
-        content: " ▲"
-    }
-}
-
-@include media(mobile) {
-    .mob-collpanel.panel-open {
-        display:block
     }
 }

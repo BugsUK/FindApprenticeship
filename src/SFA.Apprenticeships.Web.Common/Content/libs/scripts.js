@@ -40,14 +40,14 @@ $(function() {
     return false;
   });
 
-  $(document).on('click', '.mob-collpanel-trigger', function () {
-    $(this).next('.mob-collpanel').toggleClass('panel-open');
+  $(document).on('click', '.sfa-mob-collpanel-trigger', function () {
+    $(this).next('.sfa-mob-collpanel').toggleClass('panel-open');
     $(this).toggleClass('triggered');
     return false;
   });
 
-  $('.collpanel-trigger').on('click', function() {
-    $(this).next('.collpanel').toggle();
+  $('.sfa-collpanel-trigger').on('click', function() {
+    $(this).next('.sfa-collpanel').toggle();
     $(this).toggleClass('triggered');
     return false;
   });

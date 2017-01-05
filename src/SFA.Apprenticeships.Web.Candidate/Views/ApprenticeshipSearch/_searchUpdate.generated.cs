@@ -68,13 +68,13 @@ WriteLiteral(" class=\"search-filter\"");
 
 WriteLiteral(">\r\n            <legend");
 
-WriteLiteral(" class=\"heading-medium mob-collpanel-trigger\"");
+WriteLiteral(" class=\"heading-medium sfa-mob-collpanel-trigger\"");
 
 WriteLiteral(" id=\"editSearchToggle\"");
 
 WriteLiteral(">Edit search</legend>\r\n            <div");
 
-WriteLiteral(" class=\"mob-collpanel toggle-content--mob\"");
+WriteLiteral(" class=\"sfa-mob-collpanel toggle-content--mob\"");
 
 WriteLiteral(" id=\"editSearchPanel\"");
 

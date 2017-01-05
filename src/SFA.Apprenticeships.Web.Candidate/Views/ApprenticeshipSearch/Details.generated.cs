@@ -2058,23 +2058,23 @@ WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n                    <h2");
 
-WriteLiteral(" class=\"heading-large collpanel-trigger\"");
+WriteLiteral(" class=\"heading-large sfa-collpanel-trigger\"");
 
 WriteLiteral(">Other information</h2>\r\n                    <div");
 
-WriteLiteral(" class=\"collpanel toggle-content\"");
+WriteLiteral(" class=\"sfa-collpanel toggle-content\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 22381), Tuple.Create("\"", 22470)
-, Tuple.Create(Tuple.Create("", 22389), Tuple.Create("sfa-text-editor-generated", 22389), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 22389), Tuple.Create("\"", 22478)
+, Tuple.Create(Tuple.Create("", 22397), Tuple.Create("sfa-text-editor-generated", 22397), true)
             
             #line 385 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create(" ", 22414), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create(" ", 22422), Tuple.Create<System.Object, System.Int32>(Model.OtherInformation.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 22415), false)
+, 22423), false)
 );
 
 WriteLiteral(">\r\n");
@@ -2129,14 +2129,14 @@ WriteLiteral(">\r\n                    <p");
 
 WriteLiteral(" id=\"application-instructions\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 23248), Tuple.Create("\"", 23318)
+WriteAttribute("class", Tuple.Create(" class=\"", 23256), Tuple.Create("\"", 23326)
             
             #line 400 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 23256), Tuple.Create<System.Object, System.Int32>(Model.ApplicationInstructions.GetPreserveFormattingCssClass()
+, Tuple.Create(Tuple.Create("", 23264), Tuple.Create<System.Object, System.Int32>(Model.ApplicationInstructions.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 23256), false)
+, 23264), false)
 );
 
 WriteLiteral(">");
