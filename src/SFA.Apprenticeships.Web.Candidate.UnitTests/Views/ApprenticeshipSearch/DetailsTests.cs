@@ -131,7 +131,7 @@
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
 
-            view.GetElementbyId("vacancy-future-prospects").InnerText.Should().Be(SomeString);
+            view.GetElementbyId("vacancy-future-prospects").InnerText.Should().Contain(SomeString);
         }
 
         [Test]
@@ -162,7 +162,7 @@
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
 
-            view.GetElementbyId("vacancy-reality-check").InnerText.Should().Be(SomeString);
+            view.GetElementbyId("vacancy-reality-check").InnerText.Should().Contain(SomeString);
         }
 
         [Test]
