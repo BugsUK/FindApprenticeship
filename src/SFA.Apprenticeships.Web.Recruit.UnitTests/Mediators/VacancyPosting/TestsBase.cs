@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using System.Threading.Tasks;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Applications;
     using Apprenticeships.Application.Interfaces.Employers;
@@ -21,6 +22,7 @@
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Validators.VacancyPosting;
+    using Raa.Common.ViewModels.Provider;
     using Recruit.Mediators.VacancyPosting;
 
     public class TestsBase

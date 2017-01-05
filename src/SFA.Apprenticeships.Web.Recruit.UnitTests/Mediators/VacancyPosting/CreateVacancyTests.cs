@@ -281,7 +281,7 @@
                 IsAnonymousEmployer = false
             };
 
-            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(new Task<VacancyOwnerRelationshipViewModel>(() => viewModel));
+            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(Task.FromResult(viewModel));
 
             // Act.
             var mediator = GetMediator();
@@ -328,7 +328,7 @@
                 IsAnonymousEmployer = false
             };
 
-            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(new Task<VacancyOwnerRelationshipViewModel>(() => viewModel));
+            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(Task.FromResult(viewModel));
 
             VacancyPostingProvider
                 .Setup(p => p.CreateVacancy(It.IsAny<VacancyMinimumData>()))
