@@ -6,6 +6,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using System;
+    using System.Threading.Tasks;
     using ViewModels.Employer;
     using ViewModels.Provider;
     using Web.Common.ViewModels.Locations;
@@ -15,7 +16,7 @@
     public class CreateVacancyTests : TestBase
     {
         [Test]
-        public void ShouldUpdateVacancyProviderSiteEmployerLinkIfTheVacancyAlreadyExists()
+        public async Task ShouldUpdateVacancyProviderSiteEmployerLinkIfTheVacancyAlreadyExists()
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
@@ -44,7 +45,7 @@
             var provider = GetProviderProvider();
 
             // Act
-            provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
+            await provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
             {
                 ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel
@@ -70,7 +71,7 @@
         }
 
         [Test]
-        public void ShouldNotUpdateVacancyProviderSiteEmployerLinkIfTheVacancyDoesNotExist()
+        public async Task ShouldNotUpdateVacancyProviderSiteEmployerLinkIfTheVacancyDoesNotExist()
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
@@ -99,7 +100,7 @@
             var provider = GetProviderProvider();
 
             // Act
-            provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
+            await provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
             {
                 ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel

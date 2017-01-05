@@ -241,7 +241,7 @@
             }
 
             var vacancyPreviousState = await _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
-            var newViewModel = _providerProvider.ConfirmVacancyOwnerRelationship(viewModel);
+            var newViewModel =  await _providerProvider.ConfirmVacancyOwnerRelationship(viewModel);
             var existingVacancy = await _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
 
             if (existingVacancy != null)

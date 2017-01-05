@@ -13,25 +13,35 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
+    using DAS.RAA.Api.Client.V1.Models;
+    using Microsoft.Rest;
     using ViewModels.Employer;
     using ViewModels.Provider;
+    using Web.Common.Configuration;
     using Web.Common.Converters;
+    using Vacancy = Domain.Entities.Raa.Vacancies.Vacancy;
 
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
         private static readonly IMapper ProviderMappers = new ProviderMappers();
+        private static readonly IMapper ApiClientMappers = new ApiClientMappers();
 
+        private readonly ILogService _logService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly IConfigurationService _configurationService;
+        private readonly IApiClientProvider _apiClientProvider;
 
-        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IEmployerService employerService)
+        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IEmployerService employerService, IApiClientProvider apiClientProvider, ILogService logService)
         {
             _providerService = providerService;
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
             _employerService = employerService;
+            _apiClientProvider = apiClientProvider;
+            _logService = logService;
         }
 
         public ProviderViewModel GetProviderViewModel(string ukprn, bool errorIfNotFound = true)
@@ -135,7 +145,7 @@
             return vacancyOwnerRelationship.Convert(employer);
         }
 
-        public VacancyOwnerRelationshipViewModel ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel)
+        public async Task<VacancyOwnerRelationshipViewModel> ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel)
         {
             if (_providerService.IsADeletedVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn))
             {
@@ -143,11 +153,38 @@
             }
 
             var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
-            vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
-            vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
+            
+            if (_configurationService.Get<CommonWebConfiguration>().Features.RaaApiEnabled)
+            {
+                var providerSite = _providerService.GetProviderSite(viewModel.ProviderSiteId);
 
+                var employerProviderSiteLinkRequest = new EmployerProviderSiteLinkRequest
+                {
+                    ProviderSiteEdsUrn = Convert.ToInt32(providerSite.EdsUrn),
+                    EmployerDescription = viewModel.EmployerDescription,
+                    EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl
+                };
 
-            vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
+                var apiClient = _apiClientProvider.GetApiClient();
+
+                try
+                {
+                    var apiVacancyResult = await apiClient.LinkEmployerWithHttpMessagesAsync(employerProviderSiteLinkRequest, Convert.ToInt32(viewModel.Employer.EdsUrn));
+                    var employerProviderSiteLinkResponse = apiVacancyResult.Body;
+                    vacancyOwnerRelationship = ApiClientMappers.Map<EmployerProviderSiteLinkResponse, VacancyOwnerRelationship>(employerProviderSiteLinkResponse);
+                }
+                catch (HttpOperationException ex)
+                {
+                    _logService.Info(ex.ToString());
+                    return null;
+                }
+            }
+            else
+            {
+                vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+                vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
+                vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
+            }
 
             var vacancy = GetVacancy(viewModel);
             if (vacancy != null)
