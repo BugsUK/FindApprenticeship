@@ -17,8 +17,6 @@
         public class EditWage
         {
             public const string Ok = "VacancyPosting.EditWage.Ok";
-            public const string UpdatedHasApplications = "VacancyPosting.EditWage.UpdatedHasApplications";
-            public const string UpdatedNoApplications = "VacancyPosting.EditWage.UpdatedNoApplications";
             public const string NotFound = "VacancyManagement.EditWage.NotFound";
             public const string FailedValidation = "VacancyPosting.EditWage.FailedValidation";
             public const string Failure = "VacancyPosting.EditWage.Failure";

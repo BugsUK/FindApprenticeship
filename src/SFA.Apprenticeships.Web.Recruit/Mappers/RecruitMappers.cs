@@ -70,6 +70,11 @@
                     {
                         ewvm.Classification = WageClassification.Custom;
                     }
+                    if (ewvm.Classification == WageClassification.ApprenticeshipMinimum || ewvm.Classification == WageClassification.PresetText)
+                    {
+                        //Force selection
+                        ewvm.Classification = WageClassification.NotApplicable;
+                    }
                 });
         }
     }

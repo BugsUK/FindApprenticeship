@@ -89,8 +89,16 @@
                 var vacancySummary = serviceResult.Result;
                 var viewModel = RecruitMappers.Map<VacancySummary, EditWageViewModel>(vacancySummary);
 
+                if (editWageViewModel.Classification == WageClassification.LegacyText)
+                {
+                    //Hack to cope with the fact that WageClassification.NotApplicable is -1 rather than 0
+                    editWageViewModel.Classification = WageClassification.NotApplicable;
+                }
                 editWageViewModel.ExistingWage = viewModel.ExistingWage;
-                editWageViewModel.Type = WageViewModelToWageConverter.GetWageType(editWageViewModel.Classification, editWageViewModel.CustomType, PresetText.NotApplicable);
+                editWageViewModel.Type = editWageViewModel.Classification == WageClassification.NotApplicable || (editWageViewModel.Classification == WageClassification.Custom && editWageViewModel.CustomType == CustomWageType.NotApplicable)
+                    ? editWageViewModel.Type = viewModel.ExistingWage.Type
+                    : WageViewModelToWageConverter.GetWageType(editWageViewModel.Classification,
+                        editWageViewModel.CustomType, PresetText.NotApplicable);
                 editWageViewModel.Unit = WageViewModelToWageConverter.GetWageUnit(editWageViewModel.Classification, editWageViewModel.CustomType, editWageViewModel.Unit ?? editWageViewModel.ExistingWage.Unit, editWageViewModel.RangeUnit);
                 editWageViewModel.PossibleStartDate = viewModel.PossibleStartDate;
 
@@ -100,7 +108,7 @@
                     var editResult = await _vacancyManagementProvider.EditWage(editWageViewModel);
                     if (editResult.Code == VacancyManagementServiceCodes.EditWage.Ok)
                     {
-                        return GetMediatorResponse(vacancySummary.ApplicantCount > 0 ? VacancyManagementMediatorCodes.EditWage.UpdatedHasApplications : VacancyManagementMediatorCodes.EditWage.UpdatedNoApplications, editResult.Result);
+                        return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, editResult.Result);
                     }
                     return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Failure, editWageViewModel);
                 }

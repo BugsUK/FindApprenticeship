@@ -10,6 +10,7 @@
     using FluentValidation.Mvc;
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
+    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyManagement;
 
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -72,13 +73,12 @@
                 result.ValidationResult.AddToModelState(ModelState, string.Empty);
                 return View(result.ViewModel);
             }
-            if (result.Code == VacancyManagementMediatorCodes.EditWage.UpdatedHasApplications)
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.Ok)
             {
-                return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = result.ViewModel.VacancyReferenceNumber});
-            }
-            if (result.Code == VacancyManagementMediatorCodes.EditWage.UpdatedNoApplications)
-            {
-                return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = result.ViewModel.VacancyReferenceNumber });
+                var routeName = result.ViewModel.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                    RecruitmentRouteNames.VacancyApplications :
+                    RecruitmentRouteNames.PreviewVacancy;
+                return RedirectToRoute(routeName, new {vacancyReferenceNumber = result.ViewModel.VacancyReferenceNumber});
             }
             return View(result.ViewModel);
         }

@@ -14,6 +14,9 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, FormMethod.Post, new { id = "edit-wage-form" }))
 {
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
     <div>
         @if (Model.Classification != WageClassification.Custom)
         {
@@ -59,7 +62,8 @@
             {
                 <label id="wage-type-label" class="form-label-bold">Change wage type</label>
             }
-            <div class="form-group @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Type))">
+            <div class="form-group @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Classification))">
+                @Html.ValidationMessageFor(m => m.Classification)
                 @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
                 {
                     @* ReSharper disable once Html.IdNotResolved *@
@@ -85,7 +89,7 @@
                 {
                     @Html.HiddenFor(model => model.Classification)
                 }
-                <div id="custom-wage-panel" class="toggle-content blocklabel-content nested-panel-1 clearfix" style="@(Model.Classification == WageClassification.Custom ? "display: block;": "")">
+                <div id="custom-wage-panel" class="toggle-content blocklabel-content nested-panel-1 clearfix" style="@(Model.Classification == WageClassification.Custom ? "display: block;" : "")">
                     <div class="panel panel-border-narrow">
                         <fieldset class="form-group inline-fixed">
                             @if (Model.ExistingWage.Type == WageType.NationalMinimum || Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
@@ -208,8 +212,8 @@
                     RecruitmentRouteNames.VacancyApplications :
                     RecruitmentRouteNames.PreviewVacancy;
 
-                @Html.RouteLink("Cancel", routeName, new {vacancyReferenceNumber = Model.VacancyReferenceNumber})
+                @Html.RouteLink("Cancel", routeName, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
             }
         </div>
     </div>
-}
+                }
