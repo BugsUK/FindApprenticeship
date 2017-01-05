@@ -60,18 +60,21 @@
                 <label id="wage-type-label" class="form-label-bold">Change wage type</label>
             }
             <div class="form-group @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Type))">
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label id="national-minimum-wage-radio-label" for="national-minimum-wage" class="selection-button-radio @(Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged ? "block-label" : "hidden")">
-                    @Html.RadioButtonFor(model => model.Classification, WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
-                    National Minimum Wage
-                </label>
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label id="apprenticeship-minimum-wage-radio-label" for="apprenticeship-minimum-wage" class="selection-button-radio @(Model.ExistingWage.Type == WageType.Unwaged ? "block-label" : "hidden")">
-                    @Html.RadioButtonFor(model => model.Classification, WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
-                    National Minimum Wage for apprentices
-                </label>
                 @if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
                 {
+                    @* ReSharper disable once Html.IdNotResolved *@
+                    <label id="national-minimum-wage-radio-label" for="national-minimum-wage" class="block-label selection-button-radio">
+                        @Html.RadioButtonFor(model => model.Classification, WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
+                        National Minimum Wage
+                    </label>
+                    if (Model.ExistingWage.Type == WageType.Unwaged)
+                    {
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label id="apprenticeship-minimum-wage-radio-label" for="apprenticeship-minimum-wage" class="block-label selection-button-radio">
+                            @Html.RadioButtonFor(model => model.Classification, WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
+                            National Minimum Wage for apprentices
+                        </label>
+                    }
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label id="custom-wage-radio-label" for="custom-wage" class="block-label selection-button-radio" data-target="custom-wage-panel">
                         @Html.RadioButtonFor(model => model.Classification, WageClassification.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})

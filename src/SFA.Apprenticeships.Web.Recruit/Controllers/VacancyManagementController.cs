@@ -72,6 +72,14 @@
                 result.ValidationResult.AddToModelState(ModelState, string.Empty);
                 return View(result.ViewModel);
             }
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.UpdatedHasApplications)
+            {
+                return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = result.ViewModel.VacancyReferenceNumber});
+            }
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.UpdatedNoApplications)
+            {
+                return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = result.ViewModel.VacancyReferenceNumber });
+            }
             return View(result.ViewModel);
         }
     }

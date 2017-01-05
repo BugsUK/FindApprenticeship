@@ -28,12 +28,8 @@
 
             //Wage choices should not be visible
             view.GetElementbyId("wage-type-label").Should().BeNull();
-            var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
-            nationalMinimumWage.Should().NotBeNull();
-            nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
-            apprenticeshipMinimumWage.Should().NotBeNull();
-            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            view.GetElementbyId("national-minimum-wage-radio-label").Should().BeNull();
+            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
             view.GetElementbyId("custom-wage-radio-label").Should().BeNull();
 
             var customWagePanel = view.GetElementbyId("custom-wage-panel");
@@ -97,12 +93,8 @@
 
             //Wage choices should not be visible
             view.GetElementbyId("wage-type-label").Should().BeNull();
-            var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
-            nationalMinimumWage.Should().NotBeNull();
-            nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
-            apprenticeshipMinimumWage.Should().NotBeNull();
-            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            view.GetElementbyId("national-minimum-wage-radio-label").Should().BeNull();
+            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
             view.GetElementbyId("custom-wage-radio-label").Should().BeNull();
 
             var customWagePanel = view.GetElementbyId("custom-wage-panel");
@@ -175,12 +167,8 @@
 
             //Wage choices should not be visible
             view.GetElementbyId("wage-type-label").Should().BeNull();
-            var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
-            nationalMinimumWage.Should().NotBeNull();
-            nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
-            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
-            apprenticeshipMinimumWage.Should().NotBeNull();
-            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            view.GetElementbyId("national-minimum-wage-radio-label").Should().BeNull();
+            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
             view.GetElementbyId("custom-wage-radio-label").Should().BeNull();
 
             var customWagePanel = view.GetElementbyId("custom-wage-panel");
@@ -257,9 +245,7 @@
             var nationalMinimumWage = view.GetElementbyId("national-minimum-wage-radio-label");
             nationalMinimumWage.Should().NotBeNull();
             nationalMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeFalse();
-            var apprenticeshipMinimumWage = view.GetElementbyId("apprenticeship-minimum-wage-radio-label");
-            apprenticeshipMinimumWage.Should().NotBeNull();
-            apprenticeshipMinimumWage.Attributes["class"].Value.Contains("hidden").Should().BeTrue();
+            view.GetElementbyId("apprenticeship-minimum-wage-radio-label").Should().BeNull();
             var customWage = view.GetElementbyId("custom-wage-radio-label");
             customWage.Should().NotBeNull();
             customWage.Attributes["class"].Value.Contains("hidden").Should().BeFalse();

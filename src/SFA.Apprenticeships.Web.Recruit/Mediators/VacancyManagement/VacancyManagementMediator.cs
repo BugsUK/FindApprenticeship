@@ -2,25 +2,24 @@
 {
     using System;
     using System.Threading.Tasks;
-    using FluentValidation;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Vacancy;
     using Common.Constants;
     using Common.Mappers.Resolvers;
     using Common.Mediators;
     using Common.ViewModels;
-    using Domain.Entities.Raa.Vacancies.Validation;
     using Mappers;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.VacancyManagement;
     using VacancyPosting;
+    using Validators;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class VacancyManagementMediator : MediatorBase, IVacancyManagementMediator
     {
         private static readonly IMapper RecruitMappers = new RecruitMappers();
 
-        private readonly WageUpdateValidator _wageUpdateValidator = new WageUpdateValidator();
+        private readonly EditWageViewModelValidator _editWageViewModelValidator = new EditWageViewModelValidator();
 
         private readonly IVacancyManagementProvider _vacancyManagementProvider;
 
@@ -93,14 +92,15 @@
                 editWageViewModel.ExistingWage = viewModel.ExistingWage;
                 editWageViewModel.Type = WageViewModelToWageConverter.GetWageType(editWageViewModel.Classification, editWageViewModel.CustomType, PresetText.NotApplicable);
                 editWageViewModel.Unit = WageViewModelToWageConverter.GetWageUnit(editWageViewModel.Classification, editWageViewModel.CustomType, editWageViewModel.Unit ?? editWageViewModel.ExistingWage.Unit, editWageViewModel.RangeUnit);
+                editWageViewModel.PossibleStartDate = viewModel.PossibleStartDate;
 
-                var validationResult = _wageUpdateValidator.Validate(editWageViewModel, ruleSet: WageUpdateValidator.CompareWithExisting);
+                var validationResult = _editWageViewModelValidator.Validate(editWageViewModel);
                 if (validationResult.IsValid)
                 {
                     var editResult = await _vacancyManagementProvider.EditWage(editWageViewModel);
                     if (editResult.Code == VacancyManagementServiceCodes.EditWage.Ok)
                     {
-                        return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Ok, editResult.Result);
+                        return GetMediatorResponse(vacancySummary.ApplicantCount > 0 ? VacancyManagementMediatorCodes.EditWage.UpdatedHasApplications : VacancyManagementMediatorCodes.EditWage.UpdatedNoApplications, editResult.Result);
                     }
                     return GetMediatorResponse(VacancyManagementMediatorCodes.EditWage.Failure, editWageViewModel);
                 }

@@ -75,9 +75,9 @@
             return totalNumberOfApplications > 0 && (status == VacancyStatus.Live || status == VacancyStatus.Closed || status == VacancyStatus.Completed);
         }
 
-        public static bool CanEditWage(this VacancyStatus status)
+        public static bool CanEditWage(this VacancyStatus status, VacancyType vacancyType)
         {
-            return status == VacancyStatus.Live || status == VacancyStatus.Closed;
+            return vacancyType == VacancyType.Apprenticeship && (status == VacancyStatus.Live || status == VacancyStatus.Closed);
         }
     }
 }
