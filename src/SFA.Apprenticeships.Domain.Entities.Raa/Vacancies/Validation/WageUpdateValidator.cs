@@ -26,7 +26,7 @@
             });
         }
 
-        private static ValidationFailure WageTypeValidation(WageUpdate wageUpdate)
+        public static ValidationFailure WageTypeValidation(WageUpdate wageUpdate)
         {
             if (!wageUpdate.Type.HasValue)
             {
@@ -95,7 +95,7 @@
             return null;
         }
 
-        private static ValidationFailure WageAmountRequiredValidation(WageUpdate wageUpdate)
+        public static ValidationFailure WageAmountRequiredValidation(WageUpdate wageUpdate)
         {
             var wageType = wageUpdate.Type ?? wageUpdate.ExistingWage.Type;
             var amount = wageUpdate.Amount ?? wageUpdate.ExistingWage.Amount;
@@ -119,7 +119,7 @@
             return null;
         }
 
-        private static ValidationFailure WageAmountLowerBoundRequiredValidation(WageUpdate wageUpdate)
+        public static ValidationFailure WageAmountLowerBoundRequiredValidation(WageUpdate wageUpdate)
         {
             var wageType = wageUpdate.Type ?? wageUpdate.ExistingWage.Type;
             var amountLowerBound = wageUpdate.AmountLowerBound ?? wageUpdate.ExistingWage.AmountLowerBound;
@@ -143,7 +143,7 @@
             return null;
         }
 
-        private static ValidationFailure WageAmountUpperBoundRequiredValidation(WageUpdate wageUpdate)
+        public static ValidationFailure WageAmountUpperBoundRequiredValidation(WageUpdate wageUpdate)
         {
             var wageType = wageUpdate.Type ?? wageUpdate.ExistingWage.Type;
             var amountUpperBound = wageUpdate.AmountUpperBound ?? wageUpdate.ExistingWage.AmountUpperBound;
@@ -159,7 +159,7 @@
             return null;
         }
 
-        private static ValidationFailure WageUnitRequiredValidation(WageUpdate wageUpdate)
+        public static ValidationFailure WageUnitRequiredValidation(WageUpdate wageUpdate)
         {
             var wageType = wageUpdate.Type ?? wageUpdate.ExistingWage.Type;
             var wageUnit = wageUpdate.Unit ?? wageUpdate.ExistingWage.Unit;
@@ -182,7 +182,7 @@
             return null;
         }
 
-        private static ValidationFailure WageRangeBasicValidation(WageUpdate wageUpdate)
+        public static ValidationFailure WageRangeBasicValidation(WageUpdate wageUpdate)
         {
             var wageType = wageUpdate.Type ?? wageUpdate.ExistingWage.Type;
             var amountLowerBound = wageUpdate.AmountLowerBound ?? wageUpdate.ExistingWage.AmountLowerBound;
@@ -199,7 +199,7 @@
             return null;
         }
 
-        private static ValidationFailure WageAmountValidation(WageUpdate wageUpdate)
+        public static ValidationFailure WageAmountValidation(WageUpdate wageUpdate)
         {
             var wageType = wageUpdate.Type ?? wageUpdate.ExistingWage.Type;
             var wageUnit = wageUpdate.Unit ?? wageUpdate.ExistingWage.Unit;

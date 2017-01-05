@@ -412,6 +412,7 @@
     <Compile Include="Mediators\VacancyStatus\VacancyStatusMediatorCodes.cs" />
     <Compile Include="Mediators\VacancyStatus\VacancyStatusMediator.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
+    <Compile Include="Validators\EditWageViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
