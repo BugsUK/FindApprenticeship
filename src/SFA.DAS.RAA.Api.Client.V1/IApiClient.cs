@@ -43,7 +43,26 @@ namespace SFA.DAS.RAA.Api.Client.V1
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
 
-            /// <param name='vacancyId'>
+            /// <summary>
+        /// Endpoint for linking an employer to a provider site.
+        /// </summary>
+        /// <param name='employerProviderSiteLink'>
+        /// Defines the provider site to link to as well as additional
+        /// employer information. Note that you can specify the employer
+        /// identifier in either the URL or the POST body
+        /// </param>
+        /// <param name='edsUrn'>
+        /// The employer's secondary identifier.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLinkResponse>> LinkEmployerWithHttpMessagesAsync(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name='vacancyId'>
         /// </param>
         /// <param name='vacancyReferenceNumber'>
         /// </param>
@@ -84,6 +103,22 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// The cancellation token.
         /// </param>
         System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<Vacancy>> EditVacancyWageWithHttpMessagesAsync(WageUpdate wageUpdate, int? vacancyId = default(int?), int? vacancyReferenceNumber = default(int?), System.Guid? vacancyGuid = default(System.Guid?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name='filterType'>
+        /// Possible values include: 'All', 'Live', 'Submitted', 'Rejected',
+        /// 'ClosingSoon', 'Closed', 'Draft', 'NewApplications', 'Withdrawn',
+        /// 'Completed', 'SubmittedToday', 'SubmittedYesterday',
+        /// 'SubmittedMoreThan48Hours', 'Resubmitted'
+        /// </param>
+        /// <param name='page'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<VacancySummary>>> GetAllWithHttpMessagesAsync(string filterType = default(string), int? page = default(int?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 }

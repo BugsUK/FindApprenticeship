@@ -3,12 +3,19 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Application.Interfaces;
+    using Attributes;
+    using Common.Attributes;
     using Constants;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
+    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyManagement;
 
+    [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+    [OwinSessionTimeout]
     public class VacancyManagementController : RecruitmentControllerBase
     {
         private readonly IVacancyManagementMediator _vacancyManagementMediator;
@@ -65,6 +72,13 @@
                 ModelState.Clear();
                 result.ValidationResult.AddToModelState(ModelState, string.Empty);
                 return View(result.ViewModel);
+            }
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.Ok)
+            {
+                var routeName = result.ViewModel.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                    RecruitmentRouteNames.VacancyApplications :
+                    RecruitmentRouteNames.PreviewVacancy;
+                return RedirectToRoute(routeName, new {vacancyReferenceNumber = result.ViewModel.VacancyReferenceNumber});
             }
             return View(result.ViewModel);
         }

@@ -55,7 +55,27 @@
                 .ForMember(dest => dest.Classification, opt => opt.MapFrom(src => Map<Wage, WageViewModel>(src.Wage).Classification))
                 .ForMember(dest => dest.CustomType, opt => opt.MapFrom(src => Map<Wage, WageViewModel>(src.Wage).CustomType))
                 .ForMember(dest => dest.RangeUnit, opt => opt.MapFrom(src => Map<Wage, WageViewModel>(src.Wage).RangeUnit))
-                .ForMember(dest => dest.WageUnits, opt => opt.Ignore());
+                .ForMember(dest => dest.WageUnits, opt => opt.Ignore())
+                .AfterMap((vs, ewvm) =>
+                {
+                    if (ewvm.CustomType == CustomWageType.Fixed)
+                    {
+                        ewvm.AmountLowerBound = ewvm.Amount;
+                    }
+                    if (ewvm.CustomType == CustomWageType.Ranged)
+                    {
+                        ewvm.Amount = ewvm.AmountLowerBound;
+                    }
+                    if (ewvm.Classification == WageClassification.NationalMinimum)
+                    {
+                        ewvm.Classification = WageClassification.Custom;
+                    }
+                    if (ewvm.Classification == WageClassification.ApprenticeshipMinimum || ewvm.Classification == WageClassification.PresetText)
+                    {
+                        //Force selection
+                        ewvm.Classification = WageClassification.NotApplicable;
+                    }
+                });
         }
     }
 }

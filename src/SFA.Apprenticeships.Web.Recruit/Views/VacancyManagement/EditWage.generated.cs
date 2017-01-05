@@ -35,22 +35,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
-    
-    #line 2 "..\..\Views\VacancyManagement\EditWage.cshtml"
-    using SFA.Apprenticeships.Web.Common.Constants.ViewModels;
-    
-    #line default
-    #line hidden
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
-    #line 3 "..\..\Views\VacancyManagement\EditWage.cshtml"
+    #line 2 "..\..\Views\VacancyManagement\EditWage.cshtml"
     using SFA.Apprenticeships.Web.Common.ViewModels;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\VacancyManagement\EditWage.cshtml"
+    #line 3 "..\..\Views\VacancyManagement\EditWage.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
@@ -58,7 +52,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 5 "..\..\Views\VacancyManagement\EditWage.cshtml"
+    #line 4 "..\..\Views\VacancyManagement\EditWage.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -74,7 +68,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
         public override void Execute()
         {
             
-            #line 8 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 7 "..\..\Views\VacancyManagement\EditWage.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Increase vacancy wage";
 
@@ -88,9 +82,38 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n    Increase vacancy wage\r\n</h1>\r\n\r\n");
 
             
-            #line 16 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 15 "..\..\Views\VacancyManagement\EditWage.cshtml"
  using (Html.BeginRouteForm(RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, FormMethod.Post, new { id = "edit-wage-form" }))
 {
+    
+            
+            #line default
+            #line hidden
+            
+            #line 17 "..\..\Views\VacancyManagement\EditWage.cshtml"
+Write(Html.AntiForgeryToken());
+
+            
+            #line default
+            #line hidden
+            
+            #line 17 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                            
+    
+            
+            #line default
+            #line hidden
+            
+            #line 18 "..\..\Views\VacancyManagement\EditWage.cshtml"
+Write(Html.Partial("ValidationSummary", ViewData.ModelState));
+
+            
+            #line default
+            #line hidden
+            
+            #line 18 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                           
+
 
             
             #line default
@@ -98,13 +121,131 @@ WriteLiteral(">\r\n    Increase vacancy wage\r\n</h1>\r\n\r\n");
 WriteLiteral("    <div>\r\n");
 
             
-            #line 19 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 21 "..\..\Views\VacancyManagement\EditWage.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 21 "..\..\Views\VacancyManagement\EditWage.cshtml"
+         if (Model.Classification != WageClassification.Custom)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <h3");
+
+WriteLiteral(" id=\"current-wage-header\"");
+
+WriteLiteral(" class=\"bold-small\"");
+
+WriteLiteral(">Current wage</h3>\r\n");
+
+            
+            #line 24 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 26 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 26 "..\..\Views\VacancyManagement\EditWage.cshtml"
+         if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <p");
+
+WriteLiteral(" id=\"current-wage-name\"");
+
+WriteLiteral(">National minimum wage for apprentices</p>\r\n");
+
+            
+            #line 29 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 31 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 31 "..\..\Views\VacancyManagement\EditWage.cshtml"
+         if (Model.ExistingWage.Type == WageType.NationalMinimum)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <p");
+
+WriteLiteral(" id=\"current-wage-name\"");
+
+WriteLiteral(">National Minimum Wage</p>\r\n");
+
+            
+            #line 34 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 36 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 36 "..\..\Views\VacancyManagement\EditWage.cshtml"
+         if (Model.ExistingWage.Type == WageType.Unwaged)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <p");
+
+WriteLiteral(" id=\"current-wage-name\"");
+
+WriteLiteral(">Unwaged</p>\r\n");
+
+            
+            #line 39 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 41 "..\..\Views\VacancyManagement\EditWage.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 41 "..\..\Views\VacancyManagement\EditWage.cshtml"
          if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.NationalMinimum)
         {
 
@@ -113,45 +254,11 @@ WriteLiteral("    <div>\r\n");
             #line hidden
 WriteLiteral("            <h3");
 
-WriteLiteral(" class=\"bold-small\"");
-
-WriteLiteral(">\r\n                Current wage\r\n            </h3>\r\n");
-
-            
-            #line 24 "..\..\Views\VacancyManagement\EditWage.cshtml"
-            if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <p>National minimum wage for apprentices</p>\r\n");
-
-            
-            #line 27 "..\..\Views\VacancyManagement\EditWage.cshtml"
-            }
-
-            if (Model.ExistingWage.Type == WageType.NationalMinimum)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <p>National Minimum Wage</p>\r\n");
-
-            
-            #line 32 "..\..\Views\VacancyManagement\EditWage.cshtml"
-            }
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <h3");
+WriteLiteral(" id=\"vacancy-wage-header\"");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">\r\n                Wage displayed\r\n            </h3>\r\n");
+WriteLiteral(">Wage displayed</h3>\r\n");
 
 WriteLiteral("            <p");
 
@@ -162,7 +269,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 38 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 45 "..\..\Views\VacancyManagement\EditWage.cshtml"
            Write(WagePresenter.GetDisplayAmount(Model.ExistingWage.Type, Model.ExistingWage.Amount, Model.ExistingWage.AmountLowerBound, Model.ExistingWage.AmountUpperBound, Model.ExistingWage.Text, Model.ExistingWage.HoursPerWeek, Model.PossibleStartDate));
 
             
@@ -171,22 +278,22 @@ WriteLiteral("                ");
 WriteLiteral(" (based on ");
 
             
-            #line 38 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 45 "..\..\Views\VacancyManagement\EditWage.cshtml"
                                                                                                                                                                                                                                                                       Write(Model.ExistingWage.HoursPerWeek);
 
             
             #line default
             #line hidden
-WriteLiteral(") paid hours per week\r\n\r\n");
+WriteLiteral(" paid hours per week)\r\n\r\n");
 
             
-            #line 40 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 47 "..\..\Views\VacancyManagement\EditWage.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 47 "..\..\Views\VacancyManagement\EditWage.cshtml"
                  if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum)
                 {
                     
@@ -194,14 +301,14 @@ WriteLiteral(") paid hours per week\r\n\r\n");
             #line default
             #line hidden
             
-            #line 42 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 49 "..\..\Views\VacancyManagement\EditWage.cshtml"
                Write(Html.Partial("_ApprenticeMinimumWageExplained", Model.PossibleStartDate));
 
             
             #line default
             #line hidden
             
-            #line 42 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 49 "..\..\Views\VacancyManagement\EditWage.cshtml"
                                                                                              
                 }
 
@@ -211,13 +318,13 @@ WriteLiteral(") paid hours per week\r\n\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 45 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 52 "..\..\Views\VacancyManagement\EditWage.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 52 "..\..\Views\VacancyManagement\EditWage.cshtml"
                  if (Model.ExistingWage.Type == WageType.NationalMinimum)
                 {
                     
@@ -225,14 +332,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 47 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 54 "..\..\Views\VacancyManagement\EditWage.cshtml"
                Write(Html.Partial("_NationalMinimumWageExplained", Model.PossibleStartDate));
 
             
             #line default
             #line hidden
             
-            #line 47 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 54 "..\..\Views\VacancyManagement\EditWage.cshtml"
                                                                                            
                 }
 
@@ -242,7 +349,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            </p>\r\n");
 
             
-            #line 50 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 57 "..\..\Views\VacancyManagement\EditWage.cshtml"
         }
 
             
@@ -254,102 +361,228 @@ WriteLiteral(" class=\"blocklabel-single-container\"");
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 2207), Tuple.Create("\"", 2261)
+WriteAttribute("name", Tuple.Create(" name=\"", 2465), Tuple.Create("\"", 2519)
             
-            #line 53 "..\..\Views\VacancyManagement\EditWage.cshtml"
-, Tuple.Create(Tuple.Create("", 2214), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Type).ToString().ToLower()
+            #line 60 "..\..\Views\VacancyManagement\EditWage.cshtml"
+, Tuple.Create(Tuple.Create("", 2472), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Type).ToString().ToLower()
             
             #line default
             #line hidden
-, 2214), false)
+, 2472), false)
 );
 
-WriteLiteral("></a>\r\n            <label");
+WriteLiteral("></a>\r\n");
+
+            
+            #line 61 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 61 "..\..\Views\VacancyManagement\EditWage.cshtml"
+             if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <label");
+
+WriteLiteral(" id=\"wage-type-label\"");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(" for=\"weekly-wage\"");
+WriteLiteral(">Change wage type</label>\r\n");
 
-WriteLiteral(">Wage</label>\r\n            <div");
-
-WriteAttribute("class", Tuple.Create(" class=\"", 2360), Tuple.Create("\"", 2453)
-, Tuple.Create(Tuple.Create("", 2368), Tuple.Create("form-group", 2368), true)
             
-            #line 55 "..\..\Views\VacancyManagement\EditWage.cshtml"
-, Tuple.Create(Tuple.Create(" ", 2378), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Type))
+            #line 64 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            }
+
             
             #line default
             #line hidden
-, 2379), false)
+WriteLiteral("            <div");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 2791), Tuple.Create("\"", 2894)
+, Tuple.Create(Tuple.Create("", 2799), Tuple.Create("form-group", 2799), true)
+            
+            #line 65 "..\..\Views\VacancyManagement\EditWage.cshtml"
+, Tuple.Create(Tuple.Create(" ", 2809), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Classification))
+            
+            #line default
+            #line hidden
+, 2810), false)
 );
 
-WriteLiteral(">\r\n                ");
+WriteLiteral(">\r\n");
 
-WriteLiteral("\r\n                <label");
+WriteLiteral("                ");
+
+            
+            #line 66 "..\..\Views\VacancyManagement\EditWage.cshtml"
+           Write(Html.ValidationMessageFor(m => m.Classification));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 67 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 67 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                 if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
+                {
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 69 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                   
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    <label");
+
+WriteLiteral(" id=\"national-minimum-wage-radio-label\"");
 
 WriteLiteral(" for=\"national-minimum-wage\"");
 
-WriteLiteral(" class=\"block-label selection-button-radio vertically-stacked\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 58 "..\..\Views\VacancyManagement\EditWage.cshtml"
-               Write(Html.RadioButtonFor(model => model.Classification, WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"}));
+            #line 71 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                   Write(Html.RadioButtonFor(model => model.Classification, WageClassification.NationalMinimum, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    National Minimum Wage\r\n                </label>\r\n          " +
-"      ");
+WriteLiteral("\r\n                        National Minimum Wage\r\n                    </label>\r\n");
 
-WriteLiteral("\r\n                <label");
+            
+            #line 74 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                    if (Model.ExistingWage.Type == WageType.Unwaged)
+                    {
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 76 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                       
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <label");
+
+WriteLiteral(" id=\"apprenticeship-minimum-wage-radio-label\"");
 
 WriteLiteral(" for=\"apprenticeship-minimum-wage\"");
 
-WriteLiteral(" class=\"block-label selection-button-radio vertically-stacked\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 63 "..\..\Views\VacancyManagement\EditWage.cshtml"
-               Write(Html.RadioButtonFor(model => model.Classification, WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"}));
+            #line 78 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                       Write(Html.RadioButtonFor(model => model.Classification, WageClassification.ApprenticeshipMinimum, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    National Minimum Wage for apprentices\r\n                </la" +
-"bel>\r\n                ");
+WriteLiteral("\r\n                            National Minimum Wage for apprentices\r\n            " +
+"            </label>\r\n");
 
-WriteLiteral("\r\n                <label");
+            
+            #line 81 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                    }
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 82 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                   
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    <label");
+
+WriteLiteral(" id=\"custom-wage-radio-label\"");
 
 WriteLiteral(" for=\"custom-wage\"");
 
-WriteLiteral(" class=\"block-label selection-button-radio vertically-stacked\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-target=\"custom-wage-panel\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 68 "..\..\Views\VacancyManagement\EditWage.cshtml"
-               Write(Html.RadioButtonFor(model => model.Classification, WageClassification.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"}));
+            #line 84 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                   Write(Html.RadioButtonFor(model => model.Classification, WageClassification.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    Custom wage\r\n                </label>\r\n                <div" +
-"");
+WriteLiteral("\r\n                        Custom wage\r\n                    </label>\r\n");
+
+            
+            #line 87 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                }
+                else
+                {
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 90 "..\..\Views\VacancyManagement\EditWage.cshtml"
+               Write(Html.HiddenFor(model => model.Classification));
+
+            
+            #line default
+            #line hidden
+            
+            #line 90 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                  
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
 
 WriteLiteral(" id=\"custom-wage-panel\"");
 
 WriteLiteral(" class=\"toggle-content blocklabel-content nested-panel-1 clearfix\"");
+
+WriteAttribute("style", Tuple.Create(" style=\"", 4934), Tuple.Create("\"", 5019)
+            
+            #line 92 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                      , Tuple.Create(Tuple.Create("", 4942), Tuple.Create<System.Object, System.Int32>(Model.Classification == WageClassification.Custom ? "display: block;" : ""
+            
+            #line default
+            #line hidden
+, 4942), false)
+);
 
 WriteLiteral(">\r\n                    <div");
 
@@ -359,13 +592,66 @@ WriteLiteral(">\r\n                        <fieldset");
 
 WriteLiteral(" class=\"form-group inline-fixed\"");
 
-WriteLiteral(">\r\n                            ");
+WriteLiteral(">\r\n");
 
-WriteLiteral("\r\n                            <span");
+            
+            #line 95 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                            
+            
+            #line default
+            #line hidden
+            
+            #line 95 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                             if (Model.ExistingWage.Type == WageType.NationalMinimum || Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
+                            {
+                                if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <span");
+
+WriteLiteral(" id=\"custom-wage-label\"");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral(">Select an option</span>\r\n                            <label");
+WriteLiteral(">Select a custom wage option</span>\r\n");
+
+            
+            #line 100 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                }
+                                else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <span");
+
+WriteLiteral(" id=\"custom-wage-label\"");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral(">Select an option</span>\r\n");
+
+            
+            #line 104 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                }
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 105 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                               
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <label");
+
+WriteLiteral(" id=\"custom-wage-fixed-label\"");
 
 WriteLiteral(" for=\"custom-wage-fixed\"");
 
@@ -375,19 +661,37 @@ WriteLiteral(" data-target=\"custom-wage-fixed-panel\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                ");
+WriteLiteral("                                    ");
 
             
-            #line 77 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                           Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"}));
+            #line 107 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                               Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                Fixed wage\r\n                            </label" +
-">\r\n                            ");
+WriteLiteral("\r\n                                    <span");
 
-WriteLiteral("\r\n                            <label");
+WriteLiteral(" id=\"custom-wage-fixed-label-text\"");
+
+WriteLiteral(">Fixed wage</span>\r\n                                </label>\r\n");
+
+            
+            #line 110 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 110 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                               
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <label");
+
+WriteLiteral(" id=\"custom-wage-range-label\"");
 
 WriteLiteral(" for=\"custom-wage-range\"");
 
@@ -397,22 +701,242 @@ WriteLiteral(" data-target=\"custom-wage-range-panel\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                ");
+WriteLiteral("                                    ");
 
             
-            #line 82 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                           Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"}));
+            #line 112 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                               Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                Wage range\r\n                            </label" +
-">\r\n");
+WriteLiteral("\r\n                                    <span");
 
+WriteLiteral(" id=\"custom-wage-range-label-text\"");
+
+WriteLiteral(">Wage range</span>\r\n                                </label>\r\n");
+
+            
+            #line 115 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
 WriteLiteral("                            ");
 
             
-            #line 85 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 116 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                             if (Model.ExistingWage.Type == WageType.Custom)
+                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <span");
+
+WriteLiteral(" id=\"custom-wage-label\"");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral(">Keep as fixed wage?</span>\r\n");
+
+            
+            #line 119 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 119 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                               
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <label");
+
+WriteLiteral(" id=\"custom-wage-fixed-label\"");
+
+WriteLiteral(" for=\"custom-wage-fixed\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio\"");
+
+WriteLiteral(" data-target=\"custom-wage-fixed-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 121 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                               Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    <span");
+
+WriteLiteral(" id=\"custom-wage-fixed-label-text\"");
+
+WriteLiteral(">Yes</span>\r\n                                </label>\r\n");
+
+            
+            #line 124 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 124 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                               
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <label");
+
+WriteLiteral(" id=\"custom-wage-range-label\"");
+
+WriteLiteral(" for=\"custom-wage-range\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio\"");
+
+WriteLiteral(" data-target=\"custom-wage-range-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 126 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                               Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    <span");
+
+WriteLiteral(" id=\"custom-wage-range-label-text\"");
+
+WriteLiteral(">No, change to wage range</span>\r\n                                </label>\r\n");
+
+            
+            #line 129 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            ");
+
+            
+            #line 130 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                             if (Model.ExistingWage.Type == WageType.CustomRange)
+                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <span");
+
+WriteLiteral(" id=\"custom-wage-label\"");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral(">Keep as wage range?</span>\r\n");
+
+            
+            #line 133 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 133 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                               
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <label");
+
+WriteLiteral(" id=\"custom-wage-range-label\"");
+
+WriteLiteral(" for=\"custom-wage-range\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio\"");
+
+WriteLiteral(" data-target=\"custom-wage-range-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 135 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                               Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Ranged, new {id = "custom-wage-range", aria_controls = "custom-wage-panel"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    <span");
+
+WriteLiteral(" id=\"custom-wage-range-label-text\"");
+
+WriteLiteral(">Yes</span>\r\n                                </label>\r\n");
+
+            
+            #line 138 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 138 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                               
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <label");
+
+WriteLiteral(" id=\"custom-wage-fixed-label\"");
+
+WriteLiteral(" for=\"custom-wage-fixed\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio\"");
+
+WriteLiteral(" data-target=\"custom-wage-fixed-panel\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                    ");
+
+            
+            #line 140 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                               Write(Html.RadioButtonFor(model => model.CustomType, CustomWageType.Fixed, new {id = "custom-wage-fixed", aria_controls = "custom-wage-panel"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    <span");
+
+WriteLiteral(" id=\"custom-wage-fixed-label-text\"");
+
+WriteLiteral(">No, change to fixed wage</span>\r\n                                </label>\r\n");
+
+            
+            #line 143 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            ");
+
+            
+            #line 144 "..\..\Views\VacancyManagement\EditWage.cshtml"
                        Write(Html.ValidationMessageFor(m => m.CustomType));
 
             
@@ -428,25 +952,132 @@ WriteLiteral(">\r\n                            <fieldset");
 
 WriteLiteral(" class=\"nested-panel-2 form-group inline-fixed\"");
 
-WriteLiteral(">\r\n                                <span");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral(">");
+WriteLiteral(">\r\n");
 
             
-            #line 89 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                                                  Write(Html.Label(WageViewModelMessages.AmountMessages.HelpText));
+            #line 148 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 148 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                 if (Model.ExistingWage.Type == WageType.Custom)
+                                {
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                £\r\n");
+WriteLiteral("                                    <span");
+
+WriteLiteral(" id=\"custom-wage-fixed-help-text\"");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral(">Enter a new increased wage</span>\r\n");
+
+            
+            #line 151 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 152 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                 if (Model.ExistingWage.Type == WageType.CustomRange)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <span");
+
+WriteLiteral(" id=\"custom-wage-fixed-hint-text\"");
+
+WriteLiteral(" class=\"clearfix form-hint\"");
+
+WriteLiteral(">The wage must not be less than the minimum amount set in the original wage range" +
+"</span>\r\n");
+
+            
+            #line 155 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 156 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                 if (Model.ExistingWage.HoursPerWeek.HasValue)
+                                {
+                                    if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <span");
+
+WriteLiteral(" id=\"custom-wage-fixed-hint-text\"");
+
+WriteLiteral(" class=\"clearfix form-hint\"");
+
+WriteLiteral(">The new increased wage must be more than ");
+
+            
+            #line 160 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                                                                                              Write(WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span>\r\n");
+
+            
+            #line 161 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                    }
+                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <span");
+
+WriteLiteral(" id=\"custom-wage-fixed-hint-text\"");
+
+WriteLiteral(" class=\"clearfix form-hint\"");
+
+WriteLiteral(">The new increased wage must be more than ");
+
+            
+            #line 164 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                                                                                              Write(WagePresenter.GetWeeklyApprenticeshipMinimumWage(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span>\r\n");
+
+            
+            #line 165 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                    }
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                £\r\n");
 
 WriteLiteral("                                ");
 
             
-            #line 91 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 168 "..\..\Views\VacancyManagement\EditWage.cshtml"
                            Write(Html.FormTextFor(m => m.Amount, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12}));
 
             
@@ -457,7 +1088,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 92 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 169 "..\..\Views\VacancyManagement\EditWage.cshtml"
                            Write(Html.DropDownListFor(m => m.Unit, Model.WageUnits, new {@class = "form-control"}));
 
             
@@ -472,45 +1103,160 @@ WriteLiteral(" class=\"toggle-content blocklabel-content\"");
 
 WriteLiteral(">\r\n                            <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6087), Tuple.Create("\"", 6352)
-, Tuple.Create(Tuple.Create("", 6095), Tuple.Create("nested-panel-2", 6095), true)
-, Tuple.Create(Tuple.Create(" ", 6109), Tuple.Create("form-group", 6110), true)
-, Tuple.Create(Tuple.Create(" ", 6120), Tuple.Create("inline-fixed", 6121), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 12588), Tuple.Create("\"", 12808)
+, Tuple.Create(Tuple.Create("", 12596), Tuple.Create("nested-panel-2", 12596), true)
+, Tuple.Create(Tuple.Create(" ", 12610), Tuple.Create("form-group", 12611), true)
+, Tuple.Create(Tuple.Create(" ", 12621), Tuple.Create("inline-fixed", 12622), true)
             
-            #line 96 "..\..\Views\VacancyManagement\EditWage.cshtml"
-   , Tuple.Create(Tuple.Create(" ", 6133), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountLowerBound))
-            
-            #line default
-            #line hidden
-, 6134), false)
-            
-            #line 97 "..\..\Views\VacancyManagement\EditWage.cshtml"
-, Tuple.Create(Tuple.Create("\r\n                                            ", 6220), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountUpperBound))
+            #line 173 "..\..\Views\VacancyManagement\EditWage.cshtml"
+  , Tuple.Create(Tuple.Create(" ", 12634), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountLowerBound))
             
             #line default
             #line hidden
-, 6266), false)
+, 12635), false)
+            
+            #line 173 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                                         , Tuple.Create(Tuple.Create(" ", 12721), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.AmountUpperBound))
+            
+            #line default
+            #line hidden
+, 12722), false)
 );
 
-WriteLiteral(">\r\n                                <span");
+WriteLiteral(">\r\n");
+
+            
+            #line 174 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 174 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                 if (Model.ExistingWage.Type == WageType.Custom)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <span");
+
+WriteLiteral(" id=\"custom-wage-range-hint-text\"");
+
+WriteLiteral(" class=\"clearfix form-hint\"");
+
+WriteLiteral(">The minimum amount in the wage range must not be less than the original fixed wa" +
+"ge</span>\r\n");
+
+            
+            #line 177 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 178 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                 if (Model.ExistingWage.Type == WageType.CustomRange)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <span");
+
+WriteLiteral(" id=\"custom-wage-range-help-text\"");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral(">");
+WriteLiteral(">Enter increased wage range</span>\r\n");
+
+WriteLiteral("                                    <span");
+
+WriteLiteral(" id=\"custom-wage-range-hint-text\"");
+
+WriteLiteral(" class=\"clearfix form-hint\"");
+
+WriteLiteral(">You can increase one or both of these figures</span>\r\n");
 
             
-            #line 98 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                                                  Write(Html.Label(WageViewModelMessages.AmountRangeMessages.HelpText, new {@class = "form-hint"}));
+            #line 182 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                }
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                                £\r\n");
+WriteLiteral("                                ");
+
+            
+            #line 183 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                 if (Model.ExistingWage.HoursPerWeek.HasValue)
+                                {
+                                    if (Model.ExistingWage.Type == WageType.NationalMinimum)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <span");
+
+WriteLiteral(" id=\"custom-wage-range-hint-text\"");
+
+WriteLiteral(" class=\"clearfix form-hint\"");
+
+WriteLiteral(">The minimum amount in the wage range must be more than ");
+
+            
+            #line 187 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                                                                                                            Write(WagePresenter.GetWeeklyNationalMinimumWageMaximum(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span>\r\n");
+
+            
+            #line 188 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                    }
+                                    else if (Model.ExistingWage.Type == WageType.ApprenticeshipMinimum || Model.ExistingWage.Type == WageType.Unwaged)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <span");
+
+WriteLiteral(" id=\"custom-wage-range-hint-text\"");
+
+WriteLiteral(" class=\"clearfix form-hint\"");
+
+WriteLiteral(">The minimum amount in the wage range must be more than ");
+
+            
+            #line 191 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                                                                                                            Write(WagePresenter.GetWeeklyApprenticeshipMinimumWage(Model.ExistingWage.HoursPerWeek.Value, Model.PossibleStartDate));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span>\r\n");
+
+            
+            #line 192 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                    }
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                £\r\n");
 
 WriteLiteral("                                ");
 
             
-            #line 100 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 195 "..\..\Views\VacancyManagement\EditWage.cshtml"
                            Write(Html.FormTextFor(m => m.AmountLowerBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12, placeholder = "min"}));
 
             
@@ -521,7 +1267,7 @@ WriteLiteral("\r\n                                &nbsp;to&nbsp;£\r\n");
 WriteLiteral("                                ");
 
             
-            #line 102 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 197 "..\..\Views\VacancyManagement\EditWage.cshtml"
                            Write(Html.FormTextFor(m => m.AmountUpperBound, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12, placeholder = "max"}));
 
             
@@ -532,7 +1278,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                ");
 
             
-            #line 103 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 198 "..\..\Views\VacancyManagement\EditWage.cshtml"
                            Write(Html.DropDownListFor(m => m.RangeUnit, Model.WageUnits, new {@class = "form-control"}));
 
             
@@ -544,7 +1290,7 @@ WriteLiteral("\r\n                            </fieldset>\r\n                   
 WriteLiteral("            ");
 
             
-            #line 109 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 204 "..\..\Views\VacancyManagement\EditWage.cshtml"
        Write(Html.ValidationMessageFor(m => m.Type));
 
             
@@ -569,13 +1315,13 @@ WriteLiteral(" value=\"EditWage\"");
 WriteLiteral(">Save and return</button>\r\n\r\n");
 
             
-            #line 115 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 210 "..\..\Views\VacancyManagement\EditWage.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 115 "..\..\Views\VacancyManagement\EditWage.cshtml"
+            #line 210 "..\..\Views\VacancyManagement\EditWage.cshtml"
               
                 var routeName = Model.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
                     RecruitmentRouteNames.VacancyApplications :
@@ -586,15 +1332,15 @@ WriteLiteral(">Save and return</button>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 120 "..\..\Views\VacancyManagement\EditWage.cshtml"
-           Write(Html.RouteLink("Cancel", routeName, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}));
+            #line 215 "..\..\Views\VacancyManagement\EditWage.cshtml"
+           Write(Html.RouteLink("Cancel", routeName, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
             #line default
             #line hidden
             
-            #line 120 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                                                                                                                 
+            #line 215 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                                                                                                                   
             
             
             #line default
@@ -602,8 +1348,8 @@ WriteLiteral(">Save and return</button>\r\n\r\n");
 WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 124 "..\..\Views\VacancyManagement\EditWage.cshtml"
-}
+            #line 219 "..\..\Views\VacancyManagement\EditWage.cshtml"
+                }
             
             #line default
             #line hidden
