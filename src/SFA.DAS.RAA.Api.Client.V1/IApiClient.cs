@@ -46,7 +46,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             /// <summary>
         /// Endpoint for linking an employer to a provider site.
         /// </summary>
-        /// <param name='employerProviderSiteLink'>
+        /// <param name='employerProviderSiteLinkRequest'>
         /// Defines the provider site to link to as well as additional
         /// employer information. Note that you can specify the employer
         /// identifier in either the URL or the POST body
@@ -60,7 +60,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLinkResponse>> LinkEmployerWithHttpMessagesAsync(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLink>> LinkEmployerWithHttpMessagesAsync(EmployerProviderSiteLinkRequest employerProviderSiteLinkRequest, int edsUrn, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name='vacancyId'>
         /// </param>

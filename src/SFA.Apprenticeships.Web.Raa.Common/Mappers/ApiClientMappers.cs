@@ -24,7 +24,9 @@
             Mapper.CreateMap<ApiVacancy, Vacancy>();
             Mapper.CreateMap<WageUpdate, ApiWageUpdate>();
 
-            Mapper.CreateMap<EmployerProviderSiteLinkResponse, VacancyOwnerRelationship>();
+            Mapper.CreateMap<EmployerProviderSiteLink, VacancyOwnerRelationship>()
+                .ForMember(dest => dest.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.EmployerProviderSiteLinkId))
+                .ForMember(dest => dest.VacancyOwnerRelationshipGuid, opt => opt.Ignore());
         }
     }
 }

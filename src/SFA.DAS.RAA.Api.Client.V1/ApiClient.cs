@@ -274,7 +274,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <summary>
         /// Endpoint for linking an employer to a provider site.
         /// </summary>
-        /// <param name='employerProviderSiteLink'>
+        /// <param name='employerProviderSiteLinkRequest'>
         /// Defines the provider site to link to as well as additional employer
         /// information. Note that you can specify the employer identifier in either
         /// the URL or the POST body
@@ -300,11 +300,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLinkResponse>> LinkEmployerWithHttpMessagesAsync(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLink>> LinkEmployerWithHttpMessagesAsync(EmployerProviderSiteLinkRequest employerProviderSiteLinkRequest, int edsUrn, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (employerProviderSiteLink == null)
+            if (employerProviderSiteLinkRequest == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "employerProviderSiteLink");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "employerProviderSiteLinkRequest");
             }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
@@ -313,7 +313,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("employerProviderSiteLink", employerProviderSiteLink);
+                tracingParameters.Add("employerProviderSiteLinkRequest", employerProviderSiteLinkRequest);
                 tracingParameters.Add("edsUrn", edsUrn);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "LinkEmployer", tracingParameters);
@@ -342,9 +342,9 @@ namespace SFA.DAS.RAA.Api.Client.V1
 
             // Serialize Request
             string _requestContent = null;
-            if(employerProviderSiteLink != null)
+            if(employerProviderSiteLinkRequest != null)
             {
-                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(employerProviderSiteLink, this.SerializationSettings);
+                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(employerProviderSiteLinkRequest, this.SerializationSettings);
                 _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -391,7 +391,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLinkResponse>();
+            var _result = new Microsoft.Rest.HttpOperationResponse<EmployerProviderSiteLink>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -400,7 +400,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<EmployerProviderSiteLinkResponse>(_responseContent, this.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<EmployerProviderSiteLink>(_responseContent, this.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {

@@ -170,8 +170,8 @@
                 try
                 {
                     var apiVacancyResult = await apiClient.LinkEmployerWithHttpMessagesAsync(employerProviderSiteLinkRequest, Convert.ToInt32(viewModel.Employer.EdsUrn));
-                    var employerProviderSiteLinkResponse = apiVacancyResult.Body;
-                    vacancyOwnerRelationship = ApiClientMappers.Map<EmployerProviderSiteLinkResponse, VacancyOwnerRelationship>(employerProviderSiteLinkResponse);
+                    var employerProviderSiteLink = apiVacancyResult.Body;
+                    vacancyOwnerRelationship = ApiClientMappers.Map<EmployerProviderSiteLink, VacancyOwnerRelationship>(employerProviderSiteLink);
                 }
                 catch (HttpOperationException ex)
                 {

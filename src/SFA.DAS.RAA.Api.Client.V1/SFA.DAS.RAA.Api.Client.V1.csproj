@@ -73,8 +73,8 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="ApiClientExtensions.cs" />
     <Compile Include="IApiClient.cs" />
+    <Compile Include="Models\EmployerProviderSiteLink.cs" />
     <Compile Include="Models\EmployerProviderSiteLinkRequest.cs" />
-    <Compile Include="Models\EmployerProviderSiteLinkResponse.cs" />
     <Compile Include="Models\GeoPoint.cs" />
     <Compile Include="Models\PostalAddress.cs" />
     <Compile Include="Models\Vacancy.cs" />

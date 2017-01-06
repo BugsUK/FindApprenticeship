@@ -9,18 +9,18 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
     /// <summary>
     /// Specifies which provider site to link an employer to
     /// </summary>
-    public partial class EmployerProviderSiteLinkResponse
+    public partial class EmployerProviderSiteLink
     {
         /// <summary>
-        /// Initializes a new instance of the EmployerProviderSiteLinkResponse
-        /// class.
+        /// Initializes a new instance of the EmployerProviderSiteLink class.
         /// </summary>
-        public EmployerProviderSiteLinkResponse() { }
+        public EmployerProviderSiteLink() { }
 
         /// <summary>
-        /// Initializes a new instance of the EmployerProviderSiteLinkResponse
-        /// class.
+        /// Initializes a new instance of the EmployerProviderSiteLink class.
         /// </summary>
+        /// <param name="employerProviderSiteLinkId">The primary identifier
+        /// for the link from an employer to a provider site</param>
         /// <param name="employerId">The employer's primary identifier.</param>
         /// <param name="employerEdsUrn">The employer's secondary
         /// identifier.</param>
@@ -36,8 +36,9 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// for this link (required)</param>
         /// <param name="employerWebsiteUrl">The employer's website for this
         /// link (optional)</param>
-        public EmployerProviderSiteLinkResponse(int? employerId = default(int?), int? employerEdsUrn = default(int?), int? providerSiteId = default(int?), int? providerSiteEdsUrn = default(int?), string employerDescription = default(string), string employerWebsiteUrl = default(string))
+        public EmployerProviderSiteLink(int? employerProviderSiteLinkId = default(int?), int? employerId = default(int?), int? employerEdsUrn = default(int?), int? providerSiteId = default(int?), int? providerSiteEdsUrn = default(int?), string employerDescription = default(string), string employerWebsiteUrl = default(string))
         {
+            EmployerProviderSiteLinkId = employerProviderSiteLinkId;
             EmployerId = employerId;
             EmployerEdsUrn = employerEdsUrn;
             ProviderSiteId = providerSiteId;
@@ -45,6 +46,13 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             EmployerDescription = employerDescription;
             EmployerWebsiteUrl = employerWebsiteUrl;
         }
+
+        /// <summary>
+        /// Gets or sets the primary identifier for the link from an employer
+        /// to a provider site
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "EmployerProviderSiteLinkId")]
+        public int? EmployerProviderSiteLinkId { get; set; }
 
         /// <summary>
         /// Gets or sets the employer's primary identifier.
