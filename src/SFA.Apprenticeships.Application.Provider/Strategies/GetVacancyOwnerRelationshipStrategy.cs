@@ -43,7 +43,7 @@
 
             var vacancyOwnerRelationship =
                 _vacancyOwnerRelationshipReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employerId, liveOnly) ??
-                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employerId };
+                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employerId, StatusType = VacancyOwnerRelationshipStatusTypes.Active};
 
             return vacancyOwnerRelationship;
         }

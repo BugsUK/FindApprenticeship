@@ -10,5 +10,6 @@
         public int EmployerId { get; set; }
         public string EmployerDescription { get; set; }
         public string EmployerWebsiteUrl { get; set; }
+        public VacancyOwnerRelationshipStatusTypes StatusType { get; set; }
     }
 }

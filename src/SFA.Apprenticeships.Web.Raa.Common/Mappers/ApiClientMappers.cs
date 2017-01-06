@@ -26,7 +26,8 @@
 
             Mapper.CreateMap<EmployerProviderSiteLink, VacancyOwnerRelationship>()
                 .ForMember(dest => dest.VacancyOwnerRelationshipId, opt => opt.MapFrom(src => src.EmployerProviderSiteLinkId))
-                .ForMember(dest => dest.VacancyOwnerRelationshipGuid, opt => opt.Ignore());
+                .ForMember(dest => dest.VacancyOwnerRelationshipGuid, opt => opt.Ignore())
+                .ForMember(dest => dest.StatusType, opt => opt.UseValue(VacancyOwnerRelationshipStatusTypes.Active));
         }
     }
 }

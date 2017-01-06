@@ -108,15 +108,10 @@
                 throw new SecurityException(EmployerProviderSiteLinkMessages.UnauthorizedProviderSiteAccess);
             }
 
-            //Yuk. Taken from existing RAA code. Should be dealt with by returning the status of the VOR and checking that
-            if (_getVacancyOwnerRelationshipStrategy.IsADeletedVacancyOwnerRelationship(providerSite.ProviderSiteId, employer.EmployerId))
-            {
-                _getVacancyOwnerRelationshipStrategy.ResurrectVacancyOwnerRelationship(providerSite.ProviderSiteId, employer.EmployerId);
-            }
-
             var vacancyOwnerRelationship = _getVacancyOwnerRelationshipStrategy.GetVacancyOwnerRelationship(providerSite.ProviderSiteId, employer.EmployerId, false);
             vacancyOwnerRelationship.EmployerDescription = employerProviderSiteLinkRequest.EmployerDescription;
             vacancyOwnerRelationship.EmployerWebsiteUrl = new UriBuilder(employerProviderSiteLinkRequest.EmployerWebsiteUrl).ToString();
+            vacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Active;
 
             vacancyOwnerRelationship = _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship);
 
