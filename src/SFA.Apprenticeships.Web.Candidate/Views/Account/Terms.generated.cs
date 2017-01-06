@@ -63,16 +63,38 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" role=\"alert\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(" class=\"panel-info\"");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral(">\r\n    <p");
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"info-summary\"");
+
+WriteLiteral(" role=\"group\"");
+
+WriteLiteral(" aria-labelledby=\"info-summary-heading-example-2\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">\r\n            <!--<h1 class=\"heading-medium info-summary-heading\" id=\"info-summa" +
+"ry-heading-example-2\">\r\n                Message to alert the user to a problem g" +
+"oes here\r\n            </h1>-->\r\n\r\n            <p");
 
 WriteLiteral(" id=\"InfoMessageText\"");
 
-WriteLiteral(">To use this service you must accept our updated terms and conditions</p>\r\n</div>" +
-"\r\n\r\n<div");
+WriteLiteral(@">To use this service you must accept our updated terms and conditions</p>
+
+            <!--<ul class=""info-summary-list"">
+                <li><a href=""#"">Descriptive link to the question with an error</a></li>
+            </ul>-->
+        </div>
+    </div>
+</div>
+
+<div");
 
 WriteLiteral(" class=\"hgroup\"");
 
@@ -88,7 +110,7 @@ WriteLiteral(">Please read and accept our updated terms and conditions​</span>
 "    </div>\r\n</div>\r\n");
 
             
-            #line 18 "..\..\Views\Account\Terms.cshtml"
+            #line 30 "..\..\Views\Account\Terms.cshtml"
 Write(Html.Partial("_TermsAndConditions"));
 
             
@@ -97,7 +119,7 @@ Write(Html.Partial("_TermsAndConditions"));
 WriteLiteral("\r\n");
 
             
-            #line 19 "..\..\Views\Account\Terms.cshtml"
+            #line 31 "..\..\Views\Account\Terms.cshtml"
 Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" }));
 
             
@@ -106,7 +128,7 @@ Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, ne
 WriteLiteral("\r\n");
 
             
-            #line 20 "..\..\Views\Account\Terms.cshtml"
+            #line 32 "..\..\Views\Account\Terms.cshtml"
 Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { }));
 
             

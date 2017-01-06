@@ -14,9 +14,22 @@
     const string deleteMessage = "You've successfully removed the <a id='vacancyDeletedLink' href={0}>{1}</a> apprenticeship";
     var deletedMessageWithLink = string.Format(deleteMessage, Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.DeletedVacancyId }), Model.DeletedVacancyTitle);
      
-    <div role="alert" aria-live="assertive" class="panel-info">
-        <p id="VacancyDeletedInfoMessageText">@Html.Raw(deletedMessageWithLink)</p>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <div class="info-summary" role="group" aria-labelledby="info-summary-heading-example-2" tabindex="-1">
+                <!--<h1 class="heading-medium info-summary-heading" id="info-summary-heading-example-2">
+                    Message to alert the user to a problem goes here
+                </h1>-->
+
+                <p id="VacancyDeletedInfoMessageText">@Html.Raw(deletedMessageWithLink)</p>
+
+                <!--<ul class="info-summary-list">
+                    <li><a href="#">Descriptive link to the question with an error</a></li>
+                </ul>-->
+            </div>
+        </div>
     </div>
+
 }
 
 @if (Model.TraineeshipFeature.ShowTraineeshipsPrompt)

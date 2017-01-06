@@ -4,78 +4,83 @@
 @model ModelStateDictionary
 
 @{
-var hasWarnings = Model.HasWarnings();
+    var hasWarnings = Model.HasWarnings();
 }
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <div id="error-summary" class="error-summary @(!Model.HasErrors() ? "sfa-hide" : "")" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
 
-<div id="error-summary" class="error-summary @(!Model.HasErrors() ? "sfa-hide" : "")" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+            <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+                Please fix these errors
+            </h1>
 
-    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-        Please fix these errors
-    </h1>
+            <!--<p>
+                Optional description of the errors and how to correct them
+            </p>-->
 
-    <!--<p>
-        Optional description of the errors and how to correct them
-    </p>-->
-
-    <ul class="error-summary-list">
-        @foreach (var modelKey in Model.Keys)
-        {
-            var modelState = Model[modelKey];
-
-            var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
-            foreach (var modelError in modelState.Errors)
-            {
-                if (modelError.GetType() == typeof(ModelError))
+            <ul class="error-summary-list">
+                @foreach (var modelKey in Model.Keys)
                 {
-                    if (elementId == string.Empty)
+                    var modelState = Model[modelKey];
+
+                    var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+                    foreach (var modelError in modelState.Errors)
                     {
-                        <li>@modelError.ErrorMessage</li>
-                    }
-                    else
-                    {
-                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                        if (modelError.GetType() == typeof(ModelError))
+                        {
+                            if (elementId == string.Empty)
+                            {
+                                <li>@modelError.ErrorMessage</li>
+                            }
+                            else
+                            {
+                                <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                            }
+                        }
                     }
                 }
-            }
-        }
-    </ul>
-
+            </ul>
+        </div>
+    </div>
 </div>
 
-<div id="warning-summary " class="warning-summary @(!hasWarnings ? "sfa-hide" : "")" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <div id="warning-summary " class="warning-summary @(!hasWarnings ? "sfa-hide" : "")" role="group" aria-labelledby="warning-summary-heading-example-1" tabindex="-1">
 
-    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-        Please fix these errors
-    </h1>
+            <h1 class="heading-medium warning-summary-heading" id="warning-summary-heading-example-1">
+                Please fix these errors
+            </h1>
 
-    <!--<p>
-        Optional description of the errors and how to correct them
-    </p>-->
+            <!--<p>
+                Optional description of the errors and how to correct them
+            </p>-->
 
-    <ul class="error-summary-list">
-        @foreach (var modelKey in Model.Keys)
-        {
-            var modelState = Model[modelKey];
-            var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
-
-            var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof(ModelError));
-            foreach (var modelError in modelState.Errors)
-            {
-                if (modelError.GetType() == typeof(ModelWarning) && !anyError)
+            <ul class="warning-summary-list">
+                @foreach (var modelKey in Model.Keys)
                 {
-                    if (elementId == string.Empty)
+                    var modelState = Model[modelKey];
+                    var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+
+                    var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof(ModelError));
+                    foreach (var modelError in modelState.Errors)
                     {
-                        <li>@modelError.ErrorMessage</li>
-                    }
-                    else
-                    {
-                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                        if (modelError.GetType() == typeof(ModelWarning) && !anyError)
+                        {
+                            if (elementId == string.Empty)
+                            {
+                                <li>@modelError.ErrorMessage</li>
+                            }
+                            else
+                            {
+                                <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                            }
+                        }
                     }
                 }
-            }
-        }
-    </ul>
+            </ul>
+        </div>
+    </div>
 </div>
 
-
-@Html.Hidden("acceptWarnings", hasWarnings)
+        @Html.Hidden("acceptWarnings", hasWarnings)

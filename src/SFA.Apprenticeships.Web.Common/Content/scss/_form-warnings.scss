@@ -1,9 +1,22 @@
+$warning-colour: $orange;
+$info-colour:$light-blue;
+$success-colour:$turquoise;
+
+.notifications { 
+    .error-summary,.warning-summary,.success-summary,.info-summary{
+        margin-bottom:0px !important;
+        &:last-child {
+           margin-bottom:100px; 
+        }
+    }
+}
+
 // Form validation
 // ==========================================================================
 // This is a clone of the _form-errors.scss in the govuk_elements package.
 // error is replaced for warning only and any new versions in the package can
 // be updated into this file by doing a global find and replace. The colour
-// variable is declared in the parent styles.scss file.
+// variable is declared at the top of this partial.
 // ==========================================================================
 
 // Use warning to add a blue border to the left of a .form-group
@@ -100,5 +113,207 @@
       font-weight: bold;
       text-decoration: underline;
     }
+  }
+  .warning-dismiss {
+    color: $warning-colour;
+    font-weight: bold;
+    text-decoration: underline;
+   }
+}
+
+
+// ==========================================================================
+// This is a clone of the _form-errors.scss in the govuk_elements package.
+// error is replaced for info only and any new versions in the package can
+// be updated into this file by doing a global find and replace. The colour
+// variable is declared at the top of this partial.
+// ==========================================================================
+
+// Use info to add a blue border to the left of a .form-group
+.info {
+
+  // Ensure the .info class is applied to .form-group, otherwise box-sizing(border-box) will need to be used
+  // @include box-sizing(border-box);
+  margin-right: 15px;
+
+  // Form inputs should have a blue border
+  // Add a blue border to .form-controls that are direct descendants
+  > .form-control {
+    border: 4px solid $info-colour;
+  }
+
+  border-left: 4px solid $info-colour;
+  padding-left: 10px;
+
+  @include media(tablet) {
+    border-left: 5px solid $info-colour;
+    padding-left: $gutter-half;
+  }
+
+}
+
+// info messages should be blue and bold
+.info-message {
+  @include bold-19;
+  color: $info-colour;
+
+
+  display: block;
+  clear: both;
+
+  margin: 0;
+  padding: 2px 0;
+}
+
+.form-label-bold .info-message,
+.form-label-bold .info-message {
+  padding-top: 4px;
+  padding-bottom: 0;
+}
+
+// Summary of multiple info messages
+.info-summary {
+
+  // info summary has a border on all sides
+  border: 4px solid $info-colour;
+
+  margin-top: $gutter-half;
+  margin-bottom: $gutter-half;
+
+  padding: $gutter-half 10px;
+
+  @include media(tablet) {
+    border: 5px solid $info-colour;
+
+    margin-top: $gutter;
+    margin-bottom: $gutter;
+
+    padding: $gutter-two-thirds $gutter-half $gutter-half;
+  }
+
+  @include ie-lte(6) {
+    zoom: 1;
+  }
+
+  // Use the GOV.UK outline focus style
+  &:focus {
+    outline: 3px solid $focus-colour;
+  }
+
+  .info-summary-heading {
+    margin-top: 0;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  .info-summary-list {
+    padding-left: 0;
+
+    li {
+
+      @include media(tablet) {
+        margin-bottom: 5px;
+      }
+    }
+
+    a {
+      color: $info-colour;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+
+  .info-dismiss {
+    color: $info-colour;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+// ==========================================================================
+// This is a clone of the _form-errors.scss in the govuk_elements package.
+// error is replaced for success only and any new versions in the package can
+// be updated into this file by doing a global find and replace. The colour
+// variable is declared in the parent styles.scss file.
+// ==========================================================================
+
+// success messages should be green and bold
+.success-message {
+  @include bold-19;
+  color: $success-colour;
+
+
+  display: block;
+  clear: both;
+
+  margin: 0;
+  padding: 2px 0;
+}
+
+.form-label-bold .success-message,
+.form-label-bold .success-message {
+  padding-top: 4px;
+  padding-bottom: 0;
+}
+
+// Summary of multiple success messages
+.success-summary {
+
+  // success summary has a border on all sides
+  border: 4px solid $success-colour;
+
+  margin-top: $gutter-half;
+  margin-bottom: $gutter-half;
+
+  padding: $gutter-half 10px;
+
+  @include media(tablet) {
+    border: 5px solid $success-colour;
+
+    margin-top: $gutter;
+    margin-bottom: $gutter;
+
+    padding: $gutter-two-thirds $gutter-half $gutter-half;
+  }
+
+  @include ie-lte(6) {
+    zoom: 1;
+  }
+
+  // Use the GOV.UK outline focus style
+  &:focus {
+    outline: 3px solid $focus-colour;
+  }
+
+  .success-summary-heading {
+    margin-top: 0;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  .success-summary-list {
+    padding-left: 0;
+
+    li {
+
+      @include media(tablet) {
+        margin-bottom: 5px;
+      }
+    }
+
+    a {
+      color: $success-colour;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+  .success-dismiss {
+    color: $success-colour;
+    font-weight: bold;
+    text-decoration: underline;
   }
 }

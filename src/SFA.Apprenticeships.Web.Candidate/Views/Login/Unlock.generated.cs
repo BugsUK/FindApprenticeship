@@ -61,120 +61,100 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<h1");
-
-WriteLiteral(" id=\"account-unlock-h1\"");
-
-WriteLiteral(" class=\"heading-large\"");
-
-WriteLiteral(">Account locked</h1>\r\n<p >You should receive a 6-character code in your email. En" +
-"ter the code to unlock your account.</p>\r\n\r\n");
+WriteLiteral("\r\n\r\n");
 
             
-            #line 11 "..\..\Views\Login\Unlock.cshtml"
+            #line 8 "..\..\Views\Login\Unlock.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <h1");
+
+WriteLiteral(" id=\"account-unlock-h1\"");
+
+WriteLiteral(" class=\"heading-xlarge\"");
+
+WriteLiteral(">Account locked</h1>\r\n        <p>You should receive a 6-character code in your em" +
+"ail. Enter the code to unlock your account.</p>\r\n\r\n");
 
             
-            #line 13 "..\..\Views\Login\Unlock.cshtml"
- using (Html.BeginRouteForm(RouteNames.Unlock, FormMethod.Post, new { @id = "account-unlock-form" }))
-{
-    
+            #line 15 "..\..\Views\Login\Unlock.cshtml"
+        
             
             #line default
             #line hidden
             
             #line 15 "..\..\Views\Login\Unlock.cshtml"
-Write(Html.AntiForgeryToken());
-
+         using (Html.BeginRouteForm(RouteNames.Unlock, FormMethod.Post, new { @id = "account-unlock-form" }))
+        {
+            
             
             #line default
             #line hidden
-            
-            #line 15 "..\..\Views\Login\Unlock.cshtml"
-                            ;
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
             
             #line 17 "..\..\Views\Login\Unlock.cshtml"
-   Write(Html.FormTextFor(
-                m => m.EmailAddress,
-                containerHtmlAttributes: new { @class = "form-group-withlink" },
-                controlHtmlAttributes: new { type = "email", autofocus = "autofocus", spellcheck = "false" }));
+       Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n\r\n    </div>\r\n");
+            
+            #line 17 "..\..\Views\Login\Unlock.cshtml"
+                                    
+            ;
+            
+            
+            #line default
+            #line hidden
+            
+            #line 19 "..\..\Views\Login\Unlock.cshtml"
+       Write(Html.FormTextFor(
+            m => m.EmailAddress,
+            controlHtmlAttributes: new { type = "email", autofocus = "autofocus", spellcheck = "false" }));
 
             
-            #line 24 "..\..\Views\Login\Unlock.cshtml"
+            #line default
+            #line hidden
+            
+            #line 21 "..\..\Views\Login\Unlock.cshtml"
+                                                                                                         
 
-    
+            
+            
+            #line default
+            #line hidden
+            
+            #line 23 "..\..\Views\Login\Unlock.cshtml"
+       Write(Html.FormTextFor(
+            m => m.AccountUnlockCode,
+            controlHtmlAttributes: new { @maxlength = "6" }));
+
             
             #line default
             #line hidden
             
             #line 25 "..\..\Views\Login\Unlock.cshtml"
-Write(Html.FormTextFor(
-        m => m.AccountUnlockCode, 
-        controlHtmlAttributes: new { @maxlength = "6" }, 
-        containerHtmlAttributes: new { @class = "form-group-withlink" }));
+                                                            
+
 
             
             #line default
             #line hidden
-            
-            #line 28 "..\..\Views\Login\Unlock.cshtml"
-                                                                        
-    
+WriteLiteral("            <div");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("    <div");
+WriteLiteral(" class=\"form-group inline\"");
 
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n        <button");
-
-WriteLiteral(" class=\"button hide-button\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(" name=\"LoginAction\"");
-
-WriteLiteral(" value=\"Unlock\"");
-
-WriteLiteral(" tabindex=\"-1\"");
-
-WriteLiteral(">Unlock account</button>\r\n        <button");
-
-WriteLiteral(" id=\"ResendAccountUnlockCodeLink\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(" name=\"LoginAction\"");
-
-WriteLiteral(" class=\"button sfa-button-secondary\"");
-
-WriteLiteral(" value=\"Resend\"");
-
-WriteLiteral(" formnovalidate>Resend code</button>\r\n        <p>\r\n            <button");
+WriteLiteral(">\r\n                <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -186,15 +166,29 @@ WriteLiteral(" name=\"LoginAction\"");
 
 WriteLiteral(" value=\"Unlock\"");
 
-WriteLiteral(">Unlock account</button>\r\n        </p>\r\n    </div>\r\n");
+WriteLiteral(">Unlock account</button>\r\n                <button");
+
+WriteLiteral(" id=\"ResendAccountUnlockCodeLink\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" name=\"LoginAction\"");
+
+WriteLiteral(" class=\"button sfa-button-secondary\"");
+
+WriteLiteral(" value=\"Resend\"");
+
+WriteLiteral(" formnovalidate>Resend code</button>\r\n            </div>\r\n");
 
             
-            #line 37 "..\..\Views\Login\Unlock.cshtml"
-}
+            #line 31 "..\..\Views\Login\Unlock.cshtml"
+        }
 
             
             #line default
             #line hidden
+WriteLiteral("    </div>\r\n</div>");
+
         }
     }
 }

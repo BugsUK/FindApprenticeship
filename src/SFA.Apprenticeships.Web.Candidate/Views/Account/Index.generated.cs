@@ -95,29 +95,44 @@ WriteLiteral("\r\n\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" role=\"alert\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(" aria-live=\"assertive\"");
+WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"panel-info\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
-WriteLiteral(">\r\n        <p");
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"info-summary\"");
+
+WriteLiteral(" role=\"group\"");
+
+WriteLiteral(" aria-labelledby=\"info-summary-heading-example-2\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">\r\n                <!--<h1 class=\"heading-medium info-summary-heading\" id=\"info-s" +
+"ummary-heading-example-2\">\r\n                    Message to alert the user to a p" +
+"roblem goes here\r\n                </h1>-->\r\n\r\n                <p");
 
 WriteLiteral(" id=\"VacancyDeletedInfoMessageText\"");
 
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\Account\Index.cshtml"
-                                         Write(Html.Raw(deletedMessageWithLink));
+            #line 24 "..\..\Views\Account\Index.cshtml"
+                                                 Write(Html.Raw(deletedMessageWithLink));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n    </div>\r\n");
+WriteLiteral("</p>\r\n\r\n                <!--<ul class=\"info-summary-list\">\r\n                    <" +
+"li><a href=\"#\">Descriptive link to the question with an error</a></li>\r\n        " +
+"        </ul>-->\r\n            </div>\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 20 "..\..\Views\Account\Index.cshtml"
+            #line 32 "..\..\Views\Account\Index.cshtml"
+
 }
 
             
@@ -126,7 +141,7 @@ WriteLiteral("</p>\r\n    </div>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 22 "..\..\Views\Account\Index.cshtml"
+            #line 35 "..\..\Views\Account\Index.cshtml"
  if (Model.TraineeshipFeature.ShowTraineeshipsPrompt)
 {
 
@@ -151,14 +166,14 @@ WriteLiteral(">\r\n        <div>\r\n            <p>\r\n                Have you 
 
 WriteLiteral(" id=\"traineeship-overview-link\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1298), Tuple.Create("\"", 1380)
+WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1841), Tuple.Create("\"", 1923)
             
-            #line 31 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1326), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)
+            #line 44 "..\..\Views\Account\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 1869), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)
             
             #line default
             #line hidden
-, 1326), false)
+, 1869), false)
 );
 
 WriteLiteral("\r\n                   onlick=\"Webtrends.multiTrack({ element: this, argsa: [\'DCS.d" +
@@ -172,14 +187,14 @@ WriteLiteral(" id=\"dismiss-traineeship-prompts-link\"");
 
 WriteLiteral(" \r\n                   class=\"notInterested link-unimp icon-black\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1744), Tuple.Create("\"", 1832)
+WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 2287), Tuple.Create("\"", 2375)
             
-            #line 37 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1772), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)
+            #line 50 "..\..\Views\Account\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 2315), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)
             
             #line default
             #line hidden
-, 1772), false)
+, 2315), false)
 );
 
 WriteLiteral("\r\n                   onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'DCS." +
@@ -194,7 +209,7 @@ WriteLiteral("></i>Don\'t show me this again</a>\r\n            </p>\r\n        
 "");
 
             
-            #line 42 "..\..\Views\Account\Index.cshtml"
+            #line 55 "..\..\Views\Account\Index.cshtml"
 }
 
             
@@ -203,7 +218,7 @@ WriteLiteral("></i>Don\'t show me this again</a>\r\n            </p>\r\n        
 WriteLiteral("\r\n");
 
             
-            #line 44 "..\..\Views\Account\Index.cshtml"
+            #line 57 "..\..\Views\Account\Index.cshtml"
  if (Model.ApplicationStatusNotifications.Any())
 {
 
@@ -225,13 +240,13 @@ WriteLiteral(" style=\"display: block;\"");
 WriteLiteral(">\r\n        <div>\r\n");
 
             
-            #line 48 "..\..\Views\Account\Index.cshtml"
+            #line 61 "..\..\Views\Account\Index.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 48 "..\..\Views\Account\Index.cshtml"
+            #line 61 "..\..\Views\Account\Index.cshtml"
              foreach (var applicationNotification in Model.ApplicationStatusNotifications)
             {
                 var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
@@ -242,7 +257,7 @@ WriteLiteral(">\r\n        <div>\r\n");
 WriteLiteral("                <p>\r\n                    Your application for ");
 
             
-            #line 52 "..\..\Views\Account\Index.cshtml"
+            #line 65 "..\..\Views\Account\Index.cshtml"
                                     Write(applicationNotification.Title);
 
             
@@ -251,7 +266,7 @@ WriteLiteral("                <p>\r\n                    Your application for ")
 WriteLiteral(" has been ");
 
             
-            #line 52 "..\..\Views\Account\Index.cshtml"
+            #line 65 "..\..\Views\Account\Index.cshtml"
                                                                             Write(successOrUnsuccessful);
 
             
@@ -260,13 +275,13 @@ WriteLiteral(" has been ");
 WriteLiteral(".\r\n");
 
             
-            #line 53 "..\..\Views\Account\Index.cshtml"
+            #line 66 "..\..\Views\Account\Index.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\Account\Index.cshtml"
+            #line 66 "..\..\Views\Account\Index.cshtml"
                      if (applicationNotification.UnsuccessfulReason != null)
                     {
 
@@ -275,20 +290,20 @@ WriteLiteral(".\r\n");
             #line hidden
 WriteLiteral("                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2845), Tuple.Create("\"", 2963)
+WriteAttribute("href", Tuple.Create(" href=\"", 3388), Tuple.Create("\"", 3506)
             
-            #line 55 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2852), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new { id = applicationNotification.VacancyId })
+            #line 68 "..\..\Views\Account\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 3395), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new { id = applicationNotification.VacancyId })
             
             #line default
             #line hidden
-, 2852), false)
+, 3395), false)
 );
 
 WriteLiteral(">Read feedback</a>\r\n");
 
             
-            #line 56 "..\..\Views\Account\Index.cshtml"
+            #line 69 "..\..\Views\Account\Index.cshtml"
                     }                        
 
             
@@ -297,7 +312,7 @@ WriteLiteral(">Read feedback</a>\r\n");
 WriteLiteral("                </p>\r\n");
 
             
-            #line 58 "..\..\Views\Account\Index.cshtml"
+            #line 71 "..\..\Views\Account\Index.cshtml"
             }
 
             
@@ -305,15 +320,15 @@ WriteLiteral("                </p>\r\n");
             #line hidden
 WriteLiteral("            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3103), Tuple.Create("\"", 3286)
+WriteAttribute("href", Tuple.Create(" href=\"", 3646), Tuple.Create("\"", 3829)
             
-            #line 60 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3110), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, 
+            #line 73 "..\..\Views\Account\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 3653), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, 
                         new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
-, 3110), false)
+, 3653), false)
 );
 
 WriteLiteral(" class=\"notInterested link-unimp icon-black\"");
@@ -327,7 +342,7 @@ WriteLiteral(" class=\"fa fa-times-circle\"");
 WriteLiteral("></fa>Dismiss this message</a>\r\n            </p>\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 65 "..\..\Views\Account\Index.cshtml"
+            #line 78 "..\..\Views\Account\Index.cshtml"
 }
 
             
@@ -356,13 +371,13 @@ WriteLiteral(" class=\"list sfa-align-right-tablet sfa-xlarge-top-margin\"");
 WriteLiteral(">\r\n");
 
             
-            #line 73 "..\..\Views\Account\Index.cshtml"
+            #line 86 "..\..\Views\Account\Index.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 73 "..\..\Views\Account\Index.cshtml"
+            #line 86 "..\..\Views\Account\Index.cshtml"
              if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
             {
 
@@ -372,7 +387,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                <li>");
 
             
-            #line 75 "..\..\Views\Account\Index.cshtml"
+            #line 88 "..\..\Views\Account\Index.cshtml"
                Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "link-unimp" }));
 
             
@@ -381,7 +396,7 @@ WriteLiteral("                <li>");
 WriteLiteral("</li>\r\n");
 
             
-            #line 76 "..\..\Views\Account\Index.cshtml"
+            #line 89 "..\..\Views\Account\Index.cshtml"
             }
 
             
@@ -390,7 +405,7 @@ WriteLiteral("</li>\r\n");
 WriteLiteral("            ");
 
             
-            #line 77 "..\..\Views\Account\Index.cshtml"
+            #line 90 "..\..\Views\Account\Index.cshtml"
              if (Model.TraineeshipFeature.ShowTraineeshipsLink)
             {
 
@@ -402,7 +417,7 @@ WriteLiteral("                <li>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 80 "..\..\Views\Account\Index.cshtml"
+            #line 93 "..\..\Views\Account\Index.cshtml"
                Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "link-unimp" }));
 
             
@@ -411,7 +426,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n                </li>\r\n");
 
             
-            #line 82 "..\..\Views\Account\Index.cshtml"
+            #line 95 "..\..\Views\Account\Index.cshtml"
             }
 
             
@@ -420,7 +435,7 @@ WriteLiteral("\r\n                </li>\r\n");
 WriteLiteral("        </ul>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 87 "..\..\Views\Account\Index.cshtml"
+            #line 100 "..\..\Views\Account\Index.cshtml"
 Write(Html.DisplayFor(m => m, MyApplicationsViewModel.PartialView));
 
             
