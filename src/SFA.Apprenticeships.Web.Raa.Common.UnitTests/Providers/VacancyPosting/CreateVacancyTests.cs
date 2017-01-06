@@ -69,7 +69,7 @@
                             }
                     }
                 });
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(ProviderSiteId, EdsUrn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(ProviderSiteId, EdsUrn, true))
                 .Returns(_vacancyOwnerRelationship);
             MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(VacancyOwnerRelationshipId, true))
                 .Returns(_vacancyOwnerRelationship);

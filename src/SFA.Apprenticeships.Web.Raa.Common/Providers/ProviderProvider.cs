@@ -140,19 +140,14 @@
 
         public VacancyOwnerRelationshipViewModel GetVacancyOwnerRelationshipViewModel(int providerSiteId, string edsUrn)
         {
-            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(providerSiteId, edsUrn);
+            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(providerSiteId, edsUrn, true);
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);
             return vacancyOwnerRelationship.Convert(employer);
         }
 
         public async Task<VacancyOwnerRelationshipViewModel> ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel)
         {
-            if (_providerService.IsADeletedVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn))
-            {
-                _providerService.ResurrectVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
-            }
-
-            var vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
+            VacancyOwnerRelationship vacancyOwnerRelationship;
             
             if (_configurationService.Get<CommonWebConfiguration>().Features.RaaApiEnabled)
             {
@@ -181,8 +176,10 @@
             }
             else
             {
+                vacancyOwnerRelationship = _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn, false);
                 vacancyOwnerRelationship.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
                 vacancyOwnerRelationship.EmployerDescription = viewModel.EmployerDescription;
+                vacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Live;
                 vacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(vacancyOwnerRelationship);
             }
 

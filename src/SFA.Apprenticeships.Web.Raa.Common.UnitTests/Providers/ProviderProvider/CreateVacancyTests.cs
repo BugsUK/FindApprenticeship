@@ -37,7 +37,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
                 .Returns(vacancyOwnerRelationship);
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(vacancyOwnerRelationship);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
@@ -92,7 +92,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(nullApprenticeshipVacancy);
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(providerSiteEmployerLink))
                 .Returns(providerSiteEmployerLink);
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(providerSiteEmployerLink);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
@@ -137,17 +137,17 @@
                 ProviderSiteId = providerSiteId,
                 EmployerId = employerId,
                 EmployerDescription = "Description",
-                EmployerWebsiteUrl = "Url"
+                EmployerWebsiteUrl = "Url",
+                StatusType = VacancyOwnerRelationshipStatusTypes.Deleted
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
                 .Returns(vacancyOwnerRelationship);
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(vacancyOwnerRelationship);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
-            MockProviderService.Setup(s => s.IsADeletedVacancyOwnerRelationship(providerSiteId, edsErn)).Returns(true);
 
             var provider = GetProviderProvider();
 
@@ -167,9 +167,7 @@
             });
 
             // Assert
-            MockProviderService.Verify(s => s.ResurrectVacancyOwnerRelationship(providerSiteId, edsErn));
-
-
+            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vor => vor.StatusType == VacancyOwnerRelationshipStatusTypes.Live)));
         }
     }
 }
