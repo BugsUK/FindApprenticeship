@@ -172,7 +172,7 @@
             if (!string.IsNullOrWhiteSpace(addressLine1))
             {
                 var addresses = _postalAddressSearchService.GetValidatedAddress(postCodeToSearch, addressLine1)?.ToList();
-                if (addresses != null && addresses.Count() == 1)
+                if (addresses != null && addresses.Count == 1)
                 {
                     verifiedAddress = addresses.Single();
                 }

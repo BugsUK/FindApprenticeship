@@ -1,6 +1,6 @@
 namespace SFA.Apprenticeships.Application.Employer.Strategies
 {
-    using System.Data.SqlClient;
+    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
@@ -12,6 +12,8 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
 
     public class GetByEdsUrnStrategy : IGetByEdsUrnStrategy
     {
+        private readonly IEqualityComparer<Employer> _employerVerifiedOrganisationComparer = new EmployerVerifiedOrganisationComparer();
+
         private readonly IEmployerReadRepository _employerReadRepository;
         private readonly IEmployerWriteRepository _employerWriteRepository;
         private readonly IOrganisationService _organisationService;
@@ -36,21 +38,27 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
             var employer = _employerReadRepository.GetByEdsUrn(edsUrn);
             if (employer == null)
             {
-                _logService.Info("No record of employer with ERN='{0}' found in Employer Repository. Calling Organisation Service to get employer", edsUrn);
+                _logService.Info("No record of employer with ERN='{0}' found in Employer Repository. Calling Organisation Service to try and get employer", edsUrn);
+            }
 
-                var organisationSummary = _organisationService.GetVerifiedOrganisationSummary(edsUrn);
+            //Retrieve the master record of the employer from the service and use to update the employer if neccessary
+            var organisationSummary = _organisationService.GetVerifiedOrganisationSummary(edsUrn);
+            if (organisationSummary != null)
+            {
+                var referenceEmployer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
 
-                //We don't know about this employer yet so get the reference from the organisation service and store for future use
-                employer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
+                PatchCountyAndTown(referenceEmployer, organisationSummary.Address);
 
-                PatchCountyAndTown(employer, organisationSummary.Address);
-
-                if (employer.Address.AddressLine1 == null)
+                if (referenceEmployer.Address.AddressLine1 == null)
                 {
                     throw new CustomException(Application.Employer.ErrorCodes.InvalidAddress);
                 }
 
-                employer = _employerWriteRepository.Save(employer);
+                if (!_employerVerifiedOrganisationComparer.Equals(employer, referenceEmployer))
+                {
+                    //Geocode?
+                    employer = _employerWriteRepository.Save(employer);
+                }
             }
 
             return employer;
@@ -83,7 +91,7 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
         {
             if (string.IsNullOrWhiteSpace(employer.Address.Town))
             {
-                employer.Address.Town = employer.Address.AddressLine4 ?? employer.Address.AddressLine3;
+                employer.Address.Town = employer.Address.AddressLine5 ?? employer.Address.AddressLine4 ?? employer.Address.AddressLine3;
             }
         }
     }

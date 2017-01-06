@@ -129,6 +129,8 @@
     <Compile Include="Rest\IRestService.cs" />
     <Compile Include="Rest\RestService.cs" />
     <Compile Include="RetrieveAddressService.cs" />
+    <Compile Include="Strategies\GetValidatedGeocodedPostalAddressStrategy.cs" />
+    <Compile Include="Strategies\IGetValidatedGeocodedPostalAddressStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

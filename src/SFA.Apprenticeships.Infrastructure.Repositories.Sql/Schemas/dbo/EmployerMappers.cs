@@ -77,7 +77,7 @@
                 .ForMember(dest => dest.EdsUrn, opt => opt.MapFrom(src => src.ReferenceNumber))
                 .ForMember(dest => dest.PrimaryContact, opt => opt.UseValue(Constants.UnspecifiedEmployerContact))
                 .ForMember(dest => dest.IsPositiveAboutDisability, opt => opt.Ignore())
-                .ForMember(dest => dest.EmployerStatus, opt => opt.Ignore());
+                .ForMember(dest => dest.EmployerStatus, opt => opt.UseValue(EmployerTrainingProviderStatuses.Activated));
         }
     }
 
