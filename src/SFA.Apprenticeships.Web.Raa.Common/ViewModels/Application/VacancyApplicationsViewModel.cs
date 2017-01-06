@@ -38,5 +38,7 @@
         public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
 
         public bool HasApplications => TotalNumberOfApplications > 0;
+
+        public WageViewModel Wage { get; set; }
     }
 }
