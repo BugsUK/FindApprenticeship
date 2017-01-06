@@ -22,9 +22,9 @@ var outputPaths = [
 ];
 
 var projectJsPaths = [
-    { key: 'recruit', path: repo_root + 'Content/projectJs/Recruit/*' },
-    { key: 'manage', path: repo_root + 'Content/projectJs/Manage/*' },
-    { key: 'find', path: repo_root + 'Content/projectJs/Find/*' }
+    { key: 'recruit', path: repo_root + 'Content/projectJs/Recruit/**/*' },
+    { key: 'manage', path: repo_root + 'Content/projectJs/Manage/**/*' },
+    { key: 'find', path: repo_root + 'Content/projectJs/Find/**/*' }
 ];
 
 gulp.task('default', ['clean', 'cleantarget', 'styles', 'merge-base', 'merge-font-awesome', 'copy']);
@@ -95,7 +95,7 @@ gulp.task('copy', ['clean', 'cleantarget', 'styles', 'merge-base', 'merge-font-a
 
     for (var i = 0; i < outputPaths.length; i++) {
         for (var p = 0; p < projectJsPaths.length; p++) {
-            if (outputPaths.key === projectJsPaths.key) {
+            if (outputPaths[i].key === projectJsPaths[p].key) {
                 merged.add(gulp.src(projectJsPaths[p].path).pipe(gulp.dest(outputPaths[i].path + '/js/nas')));
                 break;
             }
