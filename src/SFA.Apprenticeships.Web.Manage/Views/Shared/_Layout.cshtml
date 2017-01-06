@@ -69,24 +69,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     @if (ViewBag.ShowEuCookieDirective == true)
     {
-        <div id="global-cookie-message" class="cookie-banner">
-            <div class="content-container" role="alert">
-                <span class="font-xsmall">GOV.UK uses cookies to make the site simpler. <a href='@Url.RouteUrl("Privacy")'>Find out more about cookies</a></span>
-            </div>
+        <div id="global-cookie-message">
+            <p>GOV.UK uses cookies to make the site simpler. <a href='@Url.RouteUrl("Privacy")'>Find out more about cookies</a></p>
         </div>
     }
 
     @if (!string.IsNullOrEmpty(ViewBag.PlannedOutageMessage))
     {
-        <div id="planned-outage-message" class="maintenance-banner">
-            <div class="content-container" role="alert">
-                <div class="font-xsmall maintenance-content">
-                    <div>@Html.Raw(ViewBag.PlannedOutageMessage)</div>
-                    <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="maintenance-close">
-                        <i id="dismiss-planned-outage-message" class="icon-black fa fa-times-circle"></i>
-                    </a>
-                </div>
-            </div>
+        <div id="planned-outage-message" class="sfa-maintenance-banner">
+            <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
+            <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="maintenance-close">
+                Dismiss
+            </a>
         </div>
     }
 
@@ -156,16 +150,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             {
                             <div class="grid-row">
                                 <div class="column-two-thirds">
-                                    <div class="warning-summary" role="group" aria-labelledby="warning-summary-heading-example-2" tabindex="-1">
-                                        <!--<h1 class="heading-medium warning-summary-heading" id="warning-summary-heading-example-2">
-                                    Message to alert the user to a problem goes here
-                                </h1>-->
-
+                                    <div class="warning-summary" role="group" aria-labelledby="WarningMessageText" tabindex="-1">
                                         <p id="WarningMessageText">@Html.Raw(warningMessage)</p>
-
-                                        <!--<ul class="warning-summary-list">
-                                    <li><a href="#">Descriptive link to the question with an error</a></li>
-                                </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -174,16 +160,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             {
                             <div class="grid-row">
                                 <div class="column-two-thirds">
-                                    <div class="success-summary" role="group" aria-labelledby="success-summary-heading-example-2" tabindex="-1">
-                                        <!--<h1 class="heading-medium success-summary-heading" id="success-summary-heading-example-2">
-                                    Message to alert the user to a problem goes here
-                                </h1>-->
-
+                                    <div class="success-summary" role="group" aria-labelledby="SuccessMessageText" tabindex="-1">
                                         <p id="SuccessMessageText">@Html.Raw(successMessage)</p>
-
-                                        <!--<ul class="success-summary-list">
-                                    <li><a href="#">Descriptive link to the question with an error</a></li>
-                                </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -192,21 +170,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             {
                             <div class="grid-row">
                                 <div class="column-two-thirds">
-                                    <div class="info-summary" role="group" aria-labelledby="info-summary-heading-example-2" tabindex="-1">
-                                        <!--<h1 class="heading-medium info-summary-heading" id="info-summary-heading-example-2">
-                                    Message to alert the user to a problem goes here
-                                </h1>-->
-
+                                    <div class="info-summary" role="group" aria-labelledby="InfoMessageText" tabindex="-1">
                                         <p id="InfoMessageText">@Html.Raw(infoMessage)</p>
-
-                                        <!--<ul class="info-summary-list">
-                                    <li><a href="#">Descriptive link to the question with an error</a></li>
-                                </ul>-->
                                     </div>
                                 </div>
                             </div>
-                }                       
-                             }
+                            }                       
+                            }
                 }
 
                         @RenderBody()

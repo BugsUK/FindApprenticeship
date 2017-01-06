@@ -75,26 +75,16 @@ WriteLiteral(" class=\"info-summary\"");
 
 WriteLiteral(" role=\"group\"");
 
-WriteLiteral(" aria-labelledby=\"info-summary-heading-example-2\"");
+WriteLiteral(" aria-labelledby=\"InfoMessageText\"");
 
 WriteLiteral(" tabindex=\"-1\"");
 
-WriteLiteral(">\r\n            <!--<h1 class=\"heading-medium info-summary-heading\" id=\"info-summa" +
-"ry-heading-example-2\">\r\n                Message to alert the user to a problem g" +
-"oes here\r\n            </h1>-->\r\n\r\n            <p");
+WriteLiteral(">\r\n\r\n            <p");
 
 WriteLiteral(" id=\"InfoMessageText\"");
 
-WriteLiteral(@">To use this service you must accept our updated terms and conditions</p>
-
-            <!--<ul class=""info-summary-list"">
-                <li><a href=""#"">Descriptive link to the question with an error</a></li>
-            </ul>-->
-        </div>
-    </div>
-</div>
-
-<div");
+WriteLiteral(">To use this service you must accept our updated terms and conditions</p>\r\n\r\n    " +
+"    </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"hgroup\"");
 
@@ -110,7 +100,7 @@ WriteLiteral(">Please read and accept our updated terms and conditions​</span>
 "    </div>\r\n</div>\r\n");
 
             
-            #line 30 "..\..\Views\Account\Terms.cshtml"
+            #line 24 "..\..\Views\Account\Terms.cshtml"
 Write(Html.Partial("_TermsAndConditions"));
 
             
@@ -119,7 +109,7 @@ Write(Html.Partial("_TermsAndConditions"));
 WriteLiteral("\r\n");
 
             
-            #line 31 "..\..\Views\Account\Terms.cshtml"
+            #line 25 "..\..\Views\Account\Terms.cshtml"
 Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" }));
 
             
@@ -128,7 +118,7 @@ Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, ne
 WriteLiteral("\r\n");
 
             
-            #line 32 "..\..\Views\Account\Terms.cshtml"
+            #line 26 "..\..\Views\Account\Terms.cshtml"
 Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { }));
 
             

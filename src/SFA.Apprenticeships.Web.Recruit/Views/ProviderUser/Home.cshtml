@@ -34,19 +34,12 @@
 
     <div class="grid-row">
         <div class="column-two-thirds">
-            <div class="info-summary" role="group" aria-labelledby="info-summary-heading-example-2" tabindex="-1">
-                <!--<h1 class="heading-medium info-summary-heading" id="info-summary-heading-example-2">
-                    Message to alert the user to a problem goes here
-                </h1>-->
+            <div class="info-summary" role="group" aria-labelledby="info-summary" tabindex="-1">
 
                 @Html.Raw(Model.ProviderUserViewModel.ReleaseNoteViewModel.Note)
-                <p>
+                <p id="info-summary">
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.DismissReleaseNotes, new {Model.ProviderUserViewModel.ReleaseNoteViewModel.Version})" class="notInterested link-unimp icon-black" style="float: right"><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
                 </p>
-
-                <!--<ul class="info-summary-list">
-                    <li><a href="#">Descriptive link to the question with an error</a></li>
-                </ul>-->
             </div>
         </div>
     </div>

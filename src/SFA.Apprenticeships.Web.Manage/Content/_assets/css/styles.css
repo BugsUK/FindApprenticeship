@@ -1455,14 +1455,14 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   display: block;
   clear: both; }
 
-#content {
+#content, sfa-maintenance-banner p {
   max-width: 960px;
   margin: 0 15px; }
   @media (min-width: 641px) {
-    #content {
+    #content, sfa-maintenance-banner p {
       margin: 0 30px; } }
   @media (min-width: 1020px) {
-    #content {
+    #content, sfa-maintenance-banner p {
       margin: 0 auto; } }
 
 .grid-row {
@@ -1483,14 +1483,14 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   display: block;
   clear: both; }
 
-#content {
+#content, sfa-maintenance-banner p {
   max-width: 960px;
   margin: 0 15px; }
   @media (min-width: 641px) {
-    #content {
+    #content, sfa-maintenance-banner p {
       margin: 0 30px; } }
   @media (min-width: 1020px) {
-    #content {
+    #content, sfa-maintenance-banner p {
       margin: 0 auto; } }
 
 .grid-row {
@@ -3221,3 +3221,29 @@ input[type=number] {
 @media (min-width: 641px) {
   .form-control-4-4 {
     width: 100%; } }
+
+.js-enabled .sfa-maintenance-banner {
+  display: none;
+  /* shown with JS, always on for non-JS */ }
+
+sfa-maintenance-banner {
+  width: 100%;
+  background-color: #fff2d3;
+  padding-top: 10px;
+  padding-bottom: 10px; }
+  sfa-maintenance-banner p {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.14286;
+    margin-top: 0;
+    margin-bottom: 0; }
+    @media (min-width: 641px) {
+      sfa-maintenance-banner p {
+        font-size: 16px;
+        line-height: 1.25; } }
+
+/*Additions to the cloned styles above */
+.sfa-maintenance-banner .sfa-maintenance-close {
+  font-weight: bold; }

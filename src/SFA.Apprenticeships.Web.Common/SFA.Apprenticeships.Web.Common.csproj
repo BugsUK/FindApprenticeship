@@ -376,6 +376,7 @@
     <None Include="Content\libs\vendor\nanospell\server\license\key.lic" />
     <None Include="Content\libs\vendor\nanospell\server\license\web.config" />
     <None Include="Content\scss\styles.scss" />
+    <None Include="Content\scss\_sfa-banners.scss" />
     <None Include="Content\scss\_address-service-styles.scss" />
     <None Include="Content\scss\_forms.scss" />
     <None Include="Content\scss\_govuk-custom.scss" />
