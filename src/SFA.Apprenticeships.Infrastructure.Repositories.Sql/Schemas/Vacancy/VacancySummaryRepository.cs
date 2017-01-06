@@ -467,7 +467,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     filterSql.Append($"{sqlFilterKeyword} v.VacancyStatusId = {(int)VacancyStatus.Referred}");
                     break;
                 case VacanciesSummaryFilterTypes.ClosingSoon:
-                    filterSql.Append($"{sqlFilterKeyword} (v.VacancyStatusId = {(int)VacancyStatus.Live} AND v.ApplicationClosingDate >= GETDATE() AND v.ApplicationClosingDate < (GETDATE() + 5))");
+                    filterSql.Append($"{sqlFilterKeyword} (v.VacancyStatusId = {(int)VacancyStatus.Live} AND v.ApplicationClosingDate >= CONVERT(DATE, GETDATE()) AND v.ApplicationClosingDate < (DATEADD(day,5,CONVERT(DATE, GETDATE()))))");
                     break;
                 case VacanciesSummaryFilterTypes.Closed:
                     filterSql.Append($"{sqlFilterKeyword} v.VacancyStatusId = {(int)VacancyStatus.Closed}");
