@@ -23,14 +23,14 @@
     using Domain.Raa.Interfaces.Repositories.Models;
     using Infrastructure.Presentation;
     using Infrastructure.Raa.Extensions;
+    using Mappers;
+    using Microsoft.Rest;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Mappers;
-    using Microsoft.Rest;
     using ViewModels;
     using ViewModels.Admin;
     using ViewModels.Provider;
@@ -40,12 +40,12 @@
     using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
     using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
-    using ApiVacancy = DAS.RAA.Api.Client.V1.Models.Vacancy;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
@@ -153,6 +153,15 @@
             var locationAddresses = GetLocationsAddressViewModels(vacancy.VacancyId);
             if (locationAddresses.Any())
             {
+                foreach (VacancyLocationAddressViewModel vacancyLocationAddressViewModel in locationAddresses)
+                {
+                    var geoPoint =
+                    _geoCodingService.GetGeoPointFor(
+                        _mapper.Map<AddressViewModel, PostalAddress>(vacancyLocationAddressViewModel.Address));
+
+                    vacancyLocationAddressViewModel.Address.GeoPoint =
+                        _mapper.Map<GeoPoint, GeoPointViewModel>(geoPoint);
+                }
                 return locationAddresses;
             }
 
@@ -166,8 +175,19 @@
                         Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
                         NumberOfPositions = vacancy.NumberOfPositions
                     });
+
             }
             return locationAddresses;
+        }
+
+        private AddressViewModel GeoCodeAddressForVacancy(Vacancy vacancy, AddressViewModel addressViewModel)
+        {
+            if (vacancy.Address != null && (vacancy.Address.GeoPoint == null || vacancy.Address.GeoPoint.IsSet()))
+            {
+                vacancy.Address.GeoPoint = _geoCodingService.GetGeoPointFor(vacancy.Address);
+                addressViewModel = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address);
+            }
+            return addressViewModel;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
@@ -797,9 +817,12 @@
             viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider,
                 vacancyManager, vacancy);
             var vacancyLocationAddressViewModels = GetLocationsAddressViewModel(vacancy);
-
             viewModel.LocationAddresses = vacancyLocationAddressViewModels;
             viewModel.NewVacancyViewModel.LocationAddresses = vacancyLocationAddressViewModels;
+            if (vacancy.Address.GeoPoint == null || vacancy.Address.GeoPoint.IsSet())
+            {
+                viewModel.Address = GeoCodeAddressForVacancy(vacancy, viewModel.Address);
+            }
             return viewModel;
         }
 
