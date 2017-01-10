@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Locations;
     using Application.Location;
+    using Strategies;
     using StructureMap.Configuration.DSL;
 
     public class PostcodeRegistry : Registry
@@ -17,6 +18,7 @@
             For<IPostalAddressSearchService>().Use<PostalAddressSearchService>();
             For<IGeoCodeLookupProvider>().Use<GeoCodeLookupProvider>();
             For<ILocalAuthorityLookupProvider>().Use<LocalAuthorityLookupProvider>();
+            For<IPostalAddressStrategy>().Use<PostalAddressStrategy>();
         }
     }
 }
