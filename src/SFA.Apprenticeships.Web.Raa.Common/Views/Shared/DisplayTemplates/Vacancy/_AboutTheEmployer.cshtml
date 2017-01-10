@@ -201,21 +201,21 @@
                                                             <tr class="no-btm-border">
                                                                 <td>@locationAddress.Address.Town</td>
                                                                 <td>@locationAddress.NumberOfPositions</td>
-                                                            </tr>                                                            
-                                                                if (Model.IsManageReviewerView)
-                                                                 {
-                                                                     <tr>
-                                                                         <td>
-                                                                             <div class="left-grey-border">
-                                                                                 <h3 class="bold-xsmall">Hidden full address</h3>
-                                                                                 <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
-                                                                                 <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
-                                                                                 <p class="small-btm-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>                                                                                                                                                                  
-                                                                             </div>
-                                                                         </td>
-                                                                         <td></td>
-                                                                     </tr>
-                                                                 }
+                                                            </tr>
+                                                            if (Model.IsManageReviewerView)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="left-grey-border">
+                                                                            <h3 class="bold-xsmall">Hidden full address</h3>
+                                                                            <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
+                                                                            <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
+                                                                            <p class="small-btm-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            }
 
                                                         }
                                                         else
@@ -260,10 +260,10 @@
                                                             <tr>
                                                                 <td>
                                                                     <div class="left-grey-border">
-                                                                        <h3 class="bold-xsmall">Hidden full address</h3>                                                                        
+                                                                        <h3 class="bold-xsmall">Hidden full address</h3>
                                                                         <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine1</p>
                                                                         <p class="small-btm-margin" itemprop="streetAddress">@locationAddress.Address.AddressLine2</p>
-                                                                        <p class="small-btm-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>                                                                                                                                                
+                                                                        <p class="small-btm-margin" itemprop="addressLocality">@locationAddress.Address.Town @locationAddress.Address.Postcode</p>
                                                                     </div>
                                                                 </td>
                                                                 <td></td>
@@ -301,22 +301,28 @@
         </div>
         <div class="grid grid-1-2 hide-print">
             @if (Model.IsSingleLocation)
-            {
-                <div id="vacancy-map" class="ad-details__map">
-                    <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
-                    @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+            {                
+                @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
+                {
+                    if (Model.Address.GeoPoint != null)
                     {
-                        <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/view?center=@Model.Address.GeoPoint.Latitude,@Model.Address.GeoPoint.Longitude&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                        <div id="vacancy-map" class="ad-details__map">
+                            <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
+                            <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/view?center=@Model.Address.GeoPoint.Latitude,@Model.Address.GeoPoint.Longitude&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                        </div>
                     }
-                    else
-                    {
+                }
+                else
+                {
+                    <div id="vacancy-map" class="ad-details__map">
+                        <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
                         <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                    }
-
-                    <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                </div>
+                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                    </div>
+                }                
             }
-            else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+            else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count == 1)
             {
                 <div id="vacancy-map" class="ad-details__map">
                     <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
