@@ -33,14 +33,13 @@
                         Town = v.Town
                     };
 
-                    if (v.Latitude.HasValue && v.Longitude.HasValue)
+                    av.Address.GeoPoint = new GeoPoint
                     {
-                        av.Address.GeoPoint = new GeoPoint
-                        {
-                            Latitude = (double)v.Latitude.Value,
-                            Longitude = (double)v.Longitude.Value
-                        };
-                    }
+                        Latitude = (double)(v.Latitude ?? 0),
+                        Longitude = (double)(v.Longitude ?? 0),
+                        Easting = v.GeocodeEasting ?? 0,
+                        Northing = v.GeocodeNorthing ?? 0
+                    };
                 });
 
             Mapper.CreateMap<DomainEmployer, Employer>()
@@ -58,8 +57,8 @@
                 .ForMember(v => v.Longitude, opt => opt.ResolveUsing<GeocodeToLongitudeConverter>().FromMember(src => src.Address.GeoPoint))
                 .ForMember(v => v.CountyId, opt => opt.Ignore())
                 .ForMember(v => v.LocalAuthorityId, opt => opt.Ignore())
-                .ForMember(v => v.GeocodeEasting, opt => opt.Ignore())
-                .ForMember(v => v.GeocodeNorthing, opt => opt.Ignore())
+                .ForMember(v => v.GeocodeEasting, opt => opt.ResolveUsing<GeocodeToEastingConverter>().FromMember(src => src.Address.GeoPoint))
+                .ForMember(v => v.GeocodeNorthing, opt => opt.ResolveUsing<GeocodeToNorthingConverter>().FromMember(src => src.Address.GeoPoint))
                 .ForMember(v => v.NumberofEmployeesAtSite, opt => opt.Ignore())
                 .ForMember(v => v.NumberOfEmployeesInGroup, opt => opt.Ignore())
                 .ForMember(v => v.OwnerOrgnistaion, opt => opt.Ignore())
@@ -104,6 +103,32 @@
             }
 
             return (decimal)source.Longitude;
+        }
+    }
+
+    public class GeocodeToEastingConverter : ValueResolver<GeoPoint, int>
+    {
+        protected override int ResolveCore(GeoPoint source)
+        {
+            if (source == null)
+            {
+                return 0;
+            }
+
+            return source.Easting;
+        }
+    }
+
+    public class GeocodeToNorthingConverter : ValueResolver<GeoPoint, int>
+    {
+        protected override int ResolveCore(GeoPoint source)
+        {
+            if (source == null)
+            {
+                return 0;
+            }
+
+            return source.Northing;
         }
     }
 }

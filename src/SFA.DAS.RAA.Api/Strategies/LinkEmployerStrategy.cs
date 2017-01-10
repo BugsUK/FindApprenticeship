@@ -87,7 +87,7 @@
             if(employerProviderSiteLinkRequest.ProviderSiteEdsUrn.HasValue)
             {
                 providerSite = _providerSiteReadRepository.GetByEdsUrn(employerProviderSiteLinkRequest.ProviderSiteEdsUrn.ToString());
-                if (employer == null)
+                if (providerSite == null)
                 {
                     validationResult.Errors.Add(new ValidationFailure("ProviderSiteEdsUrn", string.Format(EmployerProviderSiteLinkMessages.ProviderSiteNotFoundEdsUrnFormat, employerProviderSiteLinkRequest.ProviderSiteEdsUrn)));
                 }

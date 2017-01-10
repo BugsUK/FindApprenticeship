@@ -108,8 +108,6 @@
 
                 dbEmployer.CountyId = existingEmployer.CountyId;
                 dbEmployer.LocalAuthorityId = existingEmployer.LocalAuthorityId;
-                dbEmployer.GeocodeEasting = existingEmployer.GeocodeEasting;
-                dbEmployer.GeocodeNorthing = existingEmployer.GeocodeNorthing;
                 dbEmployer.PrimaryContact = existingEmployer.PrimaryContact;
                 dbEmployer.NumberofEmployeesAtSite = existingEmployer.NumberofEmployeesAtSite;
                 dbEmployer.NumberOfEmployeesInGroup = existingEmployer.NumberOfEmployeesInGroup;
