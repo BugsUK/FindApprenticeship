@@ -33,7 +33,6 @@
         private readonly IProviderProvider _providerProvider;
         private readonly IEmployerProvider _employerProvider;
         private readonly ILocationsProvider _locationsProvider;
-        private readonly IGeoCodingProvider _geoCodingProvider;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
@@ -54,7 +53,6 @@
             IVacancyPostingProvider vacancyPostingProvider,
             IProviderProvider providerProvider,
             IEmployerProvider employerProvider,
-            IGeoCodingProvider geoCodingProvider,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator,
             NewVacancyViewModelClientValidator newVacancyViewModelClientValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
@@ -74,7 +72,6 @@
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerProvider = providerProvider;
             _employerProvider = employerProvider;
-            _geoCodingProvider = geoCodingProvider;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _newVacancyViewModelClientValidator = newVacancyViewModelClientValidator;
             _vacancyOwnerRelationshipViewModelValidator = vacancyOwnerRelationshipViewModelValidator;
@@ -203,15 +200,9 @@
                 }
             }
 
-            //if (useEmployerLocation.HasValue && useEmployerLocation.Value)
-            //{
-            //    viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
-            //}
-
             try
             {
-                if (_geoCodingProvider.EmployerHasAValidAddress(viewModel.Employer.EmployerId) ==
-                    GeoCodeAddressResult.InvalidAddress)
+                if (viewModel.Employer.Address.GeoPoint == null || !viewModel.Employer.Address.GeoPoint.IsSet())
                 {
                     viewModel.IsEmployerAddressValid = false;
                     viewModel.VacancyLocationType = VacancyLocationType.MultipleLocations;

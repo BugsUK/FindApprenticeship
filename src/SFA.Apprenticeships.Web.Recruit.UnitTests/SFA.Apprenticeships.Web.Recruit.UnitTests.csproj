@@ -177,7 +177,6 @@
     <Compile Include="Mediators\VacancyManagement\TestsBase.cs" />
     <Compile Include="Mediators\VacancyPosting\CloseVacancyTests.cs" />
     <Compile Include="Mediators\VacancyPosting\ReviewVacancyTests.cs" />
-    <Compile Include="Mediators\VacancyPosting\GetEmployerTests.cs" />
     <Compile Include="Mediators\VacancyPosting\ManageDatesTests.cs" />
     <Compile Include="Mediators\VacancyPosting\PreviewVacancyTests.cs" />
     <Compile Include="Mediators\VacancyPosting\CloneVacancyTests.cs" />

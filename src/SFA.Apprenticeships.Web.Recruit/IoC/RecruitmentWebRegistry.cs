@@ -93,7 +93,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
             For<ILocationsProvider>().Use<LocationsProvider>();
-            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
             For<IReportingProvider>().Use<ReportingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();

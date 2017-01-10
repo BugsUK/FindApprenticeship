@@ -30,7 +30,6 @@
         protected Mock<IVacancyPostingProvider> VacancyPostingProvider;
         protected Mock<IProviderProvider> ProviderProvider;
         protected Mock<IEmployerProvider> EmployerProvider;
-        protected Mock<IGeoCodingProvider> GeoCodingProvider;
 
         private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<ILogService> _mockLogService;
@@ -55,7 +54,6 @@
             VacancyPostingProvider = new Mock<IVacancyPostingProvider>();
             ProviderProvider = new Mock<IProviderProvider>();
             EmployerProvider = new Mock<IEmployerProvider>();
-            GeoCodingProvider = new Mock<IGeoCodingProvider>();
 
             _mockLogService = new Mock<ILogService>();
             MockMapper = new Mock<IMapper>();
@@ -111,7 +109,6 @@
                 VacancyPostingProvider.Object,
                 ProviderProvider.Object,
                 EmployerProvider.Object,
-                GeoCodingProvider.Object,
                 new NewVacancyViewModelServerValidator(),
                 new NewVacancyViewModelClientValidator(),
                 new VacancySummaryViewModelServerValidator(),
