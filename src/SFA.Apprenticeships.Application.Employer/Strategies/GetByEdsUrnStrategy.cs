@@ -33,27 +33,38 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
             var employer = _employerReadRepository.GetByEdsUrn(edsUrn);
 
             //Retrieve the master record of the employer from the service and use to update the employer if neccessary
-            var organisationSummary = _organisationService.GetVerifiedOrganisationSummary(edsUrn);
-            if (organisationSummary != null)
+            try
             {
-                var referenceEmployer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
-
-                if (referenceEmployer.Address.AddressLine1 == null)
+                var organisationSummary = _organisationService.GetVerifiedOrganisationSummary(edsUrn);
+                if (organisationSummary != null)
                 {
-                    throw new CustomException(Application.Employer.ErrorCodes.InvalidAddress);
-                }
+                    var referenceEmployer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
 
+                    if (referenceEmployer.Address.AddressLine1 == null)
+                    {
+                        throw new CustomException(Application.Employer.ErrorCodes.InvalidAddress);
+                    }
+
+                    if (employer == null)
+                    {
+                        employer = _employerWriteRepository.Save(referenceEmployer);
+                    }
+                    else if (!_employerVerifiedOrganisationComparer.Equals(employer, referenceEmployer))
+                    {
+                        //Update employer with new data and save
+                        employer.FullName = referenceEmployer.FullName;
+                        employer.TradingName = referenceEmployer.TradingName;
+                        employer.Address = referenceEmployer.Address;
+                        employer = _employerWriteRepository.Save(employer);
+                    }
+                }
+            }
+            catch (CustomException ex)
+            {
+                _logService.Warn($"Exception thrown when trying to retrieve verified organisation with edsurn {edsUrn}", ex);
                 if (employer == null)
                 {
-                    employer = _employerWriteRepository.Save(referenceEmployer);
-                }
-                else if (!_employerVerifiedOrganisationComparer.Equals(employer, referenceEmployer))
-                {
-                    //Update employer with new data and save
-                    employer.FullName = referenceEmployer.FullName;
-                    employer.TradingName = referenceEmployer.TradingName;
-                    employer.Address = referenceEmployer.Address;
-                    employer = _employerWriteRepository.Save(employer);
+                    throw;
                 }
             }
 

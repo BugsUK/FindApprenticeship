@@ -214,7 +214,7 @@
 
             var message = errorStringBuilder.ToString();
             _logger.Error(message);
-            throw new CustomException(message, Postcode.ErrorCodes.PostalAddressGeocodeRequestFailed);
+            throw new CustomException(message, Postcode.ErrorCodes.PostalAddressRequestFailed);
         }
 
         private GeoPoint[] GetGeoPoints(IRestClient client, string resource)

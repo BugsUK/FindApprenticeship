@@ -231,13 +231,12 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation, existingViewModel, validationResult);
             }
 
-            var vacancyPreviousState = await _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
-            var newViewModel =  await _providerProvider.ConfirmVacancyOwnerRelationship(viewModel);
             var existingVacancy = await _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
+            var newViewModel =  await _providerProvider.ConfirmVacancyOwnerRelationship(viewModel);
 
             if (existingVacancy != null)
             {
-                UpdateVacancy(viewModel, ukprn, existingVacancy, vacancyPreviousState);
+                UpdateVacancy(viewModel, ukprn, existingVacancy);
             }
             else
             {
@@ -326,8 +325,7 @@
             _vacancyPostingProvider.CreateVacancy(vacancyMinimumData);
         }
 
-        private void UpdateVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn, VacancyViewModel existingVacancy,
-            VacancyViewModel vacancyPreviousState)
+        private void UpdateVacancy(VacancyOwnerRelationshipViewModel viewModel, string ukprn, VacancyViewModel existingVacancy)
         {
             if (viewModel.VacancyLocationType == VacancyLocationType.SpecificLocation
                 || viewModel.VacancyLocationType == VacancyLocationType.Nationwide)
@@ -342,26 +340,21 @@
                     viewModel.NumberOfPositionsNationwide : viewModel.NumberOfPositions,
                     Ukprn = ukprn,
                     VacancyGuid = viewModel.VacancyGuid,
-                    VacancyOwnerRelationshipId = existingVacancy.NewVacancyViewModel.VacancyOwnerRelationship.VacancyOwnerRelationshipId,
+                    VacancyOwnerRelationshipId = viewModel.VacancyOwnerRelationshipId,
                     EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl,
                     EmployerDescription = viewModel.EmployerDescription
                 };
                 _vacancyPostingProvider.UpdateVacancy(vacancyData);
             }
 
-            /*
-            var employerHasChanged = vacancyPreviousState != null &&
-                                     existingVacancy.NewVacancyViewModel.VacancyOwnerRelationship.Employer.EmployerId !=
-                                     vacancyPreviousState.NewVacancyViewModel.VacancyOwnerRelationship.Employer.EmployerId;*/
-
             var changedFromSameLocationAsEmployerToDifferentLocation =
-                vacancyPreviousState != null &&
+                existingVacancy != null &&
                 viewModel.VacancyLocationType == VacancyLocationType.MultipleLocations &&
-                vacancyPreviousState.NewVacancyViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation;
+                existingVacancy.NewVacancyViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation;
 
-            if (changedFromSameLocationAsEmployerToDifferentLocation /*|| employerHasChanged*/)
+            if (changedFromSameLocationAsEmployerToDifferentLocation)
             {
-                _vacancyPostingProvider.EmptyVacancyLocation(vacancyPreviousState.VacancyReferenceNumber);
+                _vacancyPostingProvider.EmptyVacancyLocation(existingVacancy.VacancyReferenceNumber);
             }
         }
 

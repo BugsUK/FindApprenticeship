@@ -29,10 +29,23 @@
             <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
 
             @{
-                var postcodeForMap = Model.IsEmployerAddressValid ? (Model.Employer.Address.Postcode + ",+") : string.Empty;
+                var queryForMap = "";
+                if (Model.IsEmployerAddressValid)
+                {
+                    var geoPointViewModel = Model.Employer.Address.GeoPoint;
+                    if (geoPointViewModel != null && geoPointViewModel.IsSet())
+                    {
+                        queryForMap = string.Format("{0},{1)", geoPointViewModel.Latitude, geoPointViewModel.Longitude);
+                    }
+                    else
+                    {
+                        queryForMap = Model.Employer.Address.Postcode + ",+United+Kingdom";
+                    }
+                }
+
             }
 
-            <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(postcodeForMap)United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+            <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(queryForMap)&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
 
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
         </div>
