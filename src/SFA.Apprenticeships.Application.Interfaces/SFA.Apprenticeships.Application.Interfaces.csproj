@@ -84,6 +84,7 @@
     <Compile Include="Applications\ErrorCodes.cs" />
     <Compile Include="Applications\ICommonApplicationService.cs" />
     <Compile Include="AuditEventTypes.cs" />
+    <Compile Include="Locations\IPostalAddressService.cs" />
     <Compile Include="Providers\ProviderServiceCodes.cs" />
     <Compile Include="Service\IServiceResult.cs" />
     <Compile Include="Service\IServiceResult{T}.cs" />

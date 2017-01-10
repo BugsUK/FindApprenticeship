@@ -5,12 +5,14 @@
     using System.Text;
     using System.Threading;
     using Application.Interfaces;
+    using Application.Location.Strategies;
     using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Entities;
     using Newtonsoft.Json;
     using RestSharp;
+    using System.Collections.Generic;
 
     public class PostalAddressStrategy : IPostalAddressStrategy
     {
@@ -23,21 +25,42 @@
             _logger = logger;
         }
 
-        public PostalAddress GetPostalAddresses(string companyName, string street, string addressLine1, string addressLine2, string addressLine3, string addressLine4, string town, string postcode)
+        public PostalAddress GetPostalAddresses(string companyName, string primaryAddressableObject, string secondaryAddressableObject, string street, string town, string postcode)
         {
             //This code assumes that we don't particularly mind how accurate the address is, we simply want to geocode as best as possible and let the user deside if the address is correct
             var postalAddress = new PostalAddress
             {
-                AddressLine1 = addressLine1,
-                AddressLine2 = addressLine2,
-                AddressLine3 = addressLine3,
-                AddressLine4 = addressLine4,
+                AddressLine1 = GetAddressLine1(primaryAddressableObject, secondaryAddressableObject, street),
+                AddressLine2 = GetAddressLine2(primaryAddressableObject, secondaryAddressableObject, street),
+                AddressLine3 = GetAddressLine3(primaryAddressableObject, secondaryAddressableObject, street),
+                AddressLine4 = "", //Used to be town, Currently always empty string
                 AddressLine5 = null, //Currently always null
                 Town = town,
                 Postcode = postcode
             };
-            
-            //Geocode the addres. Must be successful
+
+            //Try and get the address itself from PCA. Can fail
+            var postalAddressServiceConfiguration = _configurationService.Get<PostalAddressServiceConfiguration>();
+            var addressKey = postalAddressServiceConfiguration.Key;
+
+            //http://www.pcapredict.com/support/webservice/postcodeanywhere/interactive/retrievebyaddress/1.2/
+            var addressClient = new RestClient("http://services.postcodeanywhere.co.uk/PostcodeAnywhere/Interactive/RetrieveByAddress/v1.20");
+            var addresses = GetAddresses(addressClient, $"json.ws?Key={addressKey}&Address={string.Join(",", GetAddressComponents(postalAddress))},{postcode}");
+            var address = addresses.FirstOrDefault();
+            if (address != null)
+            {
+                postalAddress.AddressLine1 = address.Line1;
+                postalAddress.AddressLine2 = address.Line2;
+                postalAddress.AddressLine3 = address.Line3;
+                postalAddress.AddressLine4 = address.Line4;
+                postalAddress.AddressLine5 = address.Line5;
+                postalAddress.Town = address.PostTown;
+                postalAddress.Postcode = address.Postcode;
+                postalAddress.ValidationSourceKeyValue = address.Udprn.ToString();
+                postalAddress.ValidationSourceCode = "PCA";
+            }
+
+            //Geocode the address. Must be successful
             var geoCodingServiceConfiguration = _configurationService.Get<GeoCodingServiceConfiguration>();
             var geocodingKey = geoCodingServiceConfiguration.Key;
 
@@ -50,7 +73,7 @@
             if (!geoPoints.Any(gp => gp.IsSet()))
             {
                 //If that fails, try full address
-                geoPoints = GetGeoPoints(geocodeClient, $"json.ws?Key={geocodingKey}&Location={addressLine1},{addressLine2},{town}");
+                geoPoints = GetGeoPoints(geocodeClient, $"json.ws?Key={geocodingKey}&Location={string.Join(",", GetAddressComponents(postalAddress))}");
 
                 if (!geoPoints.Any(gp => gp.IsSet()))
                 {
@@ -64,7 +87,7 @@
                         while (geocodePostcode.Length > 2 && geocodePostcode.Length > postcode.IndexOf(" ", StringComparison.InvariantCulture))
                         {
                             geocodePostcode = geocodePostcode.Substring(0, geocodePostcode.Length - 1);
-                            geoPoints = GetGeoPoints(geocodeClient, $"json.ws?Key={geocodingKey}&Location={street},{town}");
+                            geoPoints = GetGeoPoints(geocodeClient, $"json.ws?Key={geocodingKey}&Location={geocodePostcode}");
                             if (geoPoints.Any(gp => gp.IsSet()))
                             {
                                 break;
@@ -89,6 +112,88 @@
             var postzons = GetPostzon(postzonRetrieveByCoordinatesClient, $"json.ws?Key={geocodingKey}&CentrePoint={geopoint.Latitude},{geopoint.Longitude}");
 
             return postalAddress;
+        }
+
+        private static IEnumerable<string> GetAddressComponents(PostalAddress postalAddress)
+        {
+            var addressComponents = new List<string>(4) {postalAddress.AddressLine1};
+            if (!string.IsNullOrEmpty(postalAddress.AddressLine2))
+            {
+                addressComponents.Add(postalAddress.AddressLine2);
+            }
+            if (!string.IsNullOrEmpty(postalAddress.AddressLine3))
+            {
+                addressComponents.Add(postalAddress.AddressLine3);
+            }
+            addressComponents.Add(postalAddress.Town);
+            return addressComponents;
+        }
+
+        private static string GetAddressLine1(string primaryAddressableObject, string secondaryAddressableObject, string street)
+        {
+            if (!string.IsNullOrEmpty(secondaryAddressableObject))
+            {
+                return secondaryAddressableObject;
+            }
+
+            if (!string.IsNullOrEmpty(primaryAddressableObject))
+            {
+                return primaryAddressableObject;
+            }
+
+            return street;
+        }
+
+        private static string GetAddressLine2(string primaryAddressableObject, string secondaryAddressableObject, string street)
+        {
+            if (!string.IsNullOrEmpty(secondaryAddressableObject) && !string.IsNullOrEmpty(primaryAddressableObject))
+            {
+                return primaryAddressableObject;
+            }
+
+            if (string.IsNullOrEmpty(secondaryAddressableObject) && !string.IsNullOrEmpty(primaryAddressableObject))
+            {
+                return street;
+            }
+
+            return "";
+        }
+
+        private static string GetAddressLine3(string primaryAddressableObject, string secondaryAddressableObject, string street)
+        {
+            if (!string.IsNullOrEmpty(secondaryAddressableObject) && !string.IsNullOrEmpty(primaryAddressableObject))
+            {
+                return street;
+            }
+
+            return "";
+        }
+
+        private PcaFullAddress[] GetAddresses(IRestClient client, string resource)
+        {
+            //TODO: async
+            //Retry up to three times with backoff
+            var errorStringBuilder = new StringBuilder("Failed to retrieve address due to network error. The following errors occured:\r\n");
+            for (var i = 0; i < 3; i++)
+            {
+                var request = new RestRequest(resource)
+                {
+                    RequestFormat = DataFormat.Json
+                };
+
+                var response = client.Execute(request);
+                if (response.ResponseStatus == ResponseStatus.Completed)
+                {
+                    var addresses = JsonConvert.DeserializeObject<PcaFullAddress[]>(response.Content);
+                    return addresses;
+                }
+                errorStringBuilder.AppendLine($"Request {i + 1}. ResponseStatus: {response.ResponseStatus} StatusCode {response.StatusCode}");
+                Thread.Sleep(1000 * i);
+            }
+
+            var message = errorStringBuilder.ToString();
+            _logger.Error(message);
+            throw new CustomException(message, Postcode.ErrorCodes.PostalAddressGeocodeRequestFailed);
         }
 
         private GeoPoint[] GetGeoPoints(IRestClient client, string resource)

@@ -107,7 +107,9 @@
     <Compile Include="LocalAuthorityLookupService.cs" />
     <Compile Include="LocationSearchService.cs" />
     <Compile Include="PostalAddressSearchService.cs" />
+    <Compile Include="PostalAddressService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\IPostalAddressStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

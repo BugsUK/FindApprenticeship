@@ -113,6 +113,7 @@
     <Compile Include="Entities\AddressInfo.cs" />
     <Compile Include="Entities\AddressInfoResult.cs" />
     <Compile Include="Entities\PcaAddress.cs" />
+    <Compile Include="Entities\PcaFullAddress.cs" />
     <Compile Include="Entities\PcaServiceFindResult.cs" />
     <Compile Include="Entities\PostcodeSearchInfoResult.cs" />
     <Compile Include="Entities\PostcodeSearchInfo.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="Rest\RestService.cs" />
     <Compile Include="RetrieveAddressService.cs" />
     <Compile Include="Strategies\PostalAddressStrategy.cs" />
-    <Compile Include="Strategies\IPostalAddressStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
