@@ -301,7 +301,7 @@
             {
                 @if (Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null && Model.NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value)
                 {
-                    if (Model.Address.GeoPoint != null)
+                    @if (Model.Address.GeoPoint != null)
                     {
                         <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
