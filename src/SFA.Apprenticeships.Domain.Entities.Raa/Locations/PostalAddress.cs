@@ -52,7 +52,7 @@
 
         protected bool Equals(PostalAddress other)
         {
-            return string.Equals(AddressLine1, other.AddressLine1) && string.Equals(AddressLine2, other.AddressLine2) && string.Equals(AddressLine3, other.AddressLine3) && string.Equals(AddressLine4, other.AddressLine4) && string.Equals(AddressLine5, other.AddressLine5) && string.Equals(County, other.County) && DateValidated.Equals(other.DateValidated) && Equals(GeoPoint, other.GeoPoint) && PostalAddressId == other.PostalAddressId && string.Equals(Postcode, other.Postcode) && string.Equals(Town, other.Town) && string.Equals(ValidationSourceCode, other.ValidationSourceCode) && string.Equals(ValidationSourceKeyValue, other.ValidationSourceKeyValue);
+            return string.Equals(AddressLine1, other.AddressLine1) && string.Equals(AddressLine2, other.AddressLine2) && string.Equals(AddressLine3, other.AddressLine3) && string.Equals(AddressLine4, other.AddressLine4) && string.Equals(AddressLine5, other.AddressLine5) && string.Equals(County, other.County) && CountyId == other.CountyId && DateValidated.Equals(other.DateValidated) && Equals(GeoPoint, other.GeoPoint) && string.Equals(LocalAuthority, other.LocalAuthority) && string.Equals(LocalAuthorityCodeName, other.LocalAuthorityCodeName) && LocalAuthorityId == other.LocalAuthorityId && PostalAddressId == other.PostalAddressId && string.Equals(Postcode, other.Postcode) && string.Equals(Town, other.Town) && string.Equals(ValidationSourceCode, other.ValidationSourceCode) && string.Equals(ValidationSourceKeyValue, other.ValidationSourceKeyValue);
         }
 
         public override bool Equals(object obj)
@@ -73,8 +73,12 @@
                 hashCode = (hashCode*397) ^ (AddressLine4 != null ? AddressLine4.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (AddressLine5 != null ? AddressLine5.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (County != null ? County.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ CountyId;
                 hashCode = (hashCode*397) ^ DateValidated.GetHashCode();
                 hashCode = (hashCode*397) ^ (GeoPoint != null ? GeoPoint.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (LocalAuthority != null ? LocalAuthority.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (LocalAuthorityCodeName != null ? LocalAuthorityCodeName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ LocalAuthorityId;
                 hashCode = (hashCode*397) ^ PostalAddressId;
                 hashCode = (hashCode*397) ^ (Postcode != null ? Postcode.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (Town != null ? Town.GetHashCode() : 0);

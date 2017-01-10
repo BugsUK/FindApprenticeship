@@ -6,27 +6,32 @@
     using Common;
     using Domain.Raa.Interfaces.Repositories;
     using Application.Interfaces;
-    using Domain.Entities.Raa.Reference;
     using Domain.Raa.Interfaces.Repositories.Models;
     using DomainEmployer = Domain.Entities.Raa.Parties.Employer;
     using Employer = Entities.Employer;
 
     public class EmployerRepository: IEmployerReadRepository, IEmployerWriteRepository
     {
+        private const string BasicQuery =
+@"SELECT e.*, c.FullName as County, la.CodeName as LocalAuthorityCodeName, la.FullName as LocalAuthority FROM dbo.Employer e 
+LEFT JOIN dbo.County c ON e.CountyId = c.CountyId 
+LEFT JOIN dbo.LocalAuthority la ON e.LocalAuthorityId = la.LocalAuthorityId ";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
-        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
+        private readonly IReferenceRepository _referenceRepository;
 
-        public EmployerRepository(IGetOpenConnection getOpenConnection, IMapper mapper)
+        public EmployerRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IReferenceRepository referenceRepository)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
+            _referenceRepository = referenceRepository;
         }
 
         public DomainEmployer GetById(int employerId, bool currentOnly = true)
         {
             var employer =
-                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
+                _getOpenConnection.Query<Employer>(BasicQuery + "WHERE EmployerId = @EmployerId" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EmployerId = employerId }).SingleOrDefault();
 
             return MapEmployers(new []{employer}).Single();
@@ -35,7 +40,7 @@
         public DomainEmployer GetByEdsUrn(string edsUrn, bool currentOnly = true)
         {
             var employer =
-                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
+                _getOpenConnection.Query<Employer>(BasicQuery + "WHERE EdsUrn = @EdsUrn" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EdsUrn = Convert.ToInt32(edsUrn) }).SingleOrDefault();
 
             return employer == null ? null : MapEmployers(new[] { employer }).Single();
@@ -47,7 +52,7 @@
             var splitEmployerIds = DbHelpers.SplitIds(employerIds);           
             foreach (int[] employersIds in splitEmployerIds)
             {
-                var splitEmployer= _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
+                var splitEmployer= _getOpenConnection.Query<Employer>(BasicQuery + "WHERE EmployerId IN @EmployerIds" + (currentOnly ? " AND EmployerStatusTypeId != 2" : ""),
                     new { EmployerIds = employersIds }).ToList();
                 employers.AddRange(splitEmployer);
             }                                 
@@ -56,7 +61,7 @@
 
         public IEnumerable<DomainEmployer> Search(EmployerSearchParameters searchParameters)
         {
-            var sql = "SELECT * FROM dbo.Employer WHERE ";
+            var sql = BasicQuery + "WHERE ";
             var and = "";
 
             if (!string.IsNullOrEmpty(searchParameters.Id))
@@ -97,7 +102,7 @@
             }
             else
             {
-                const string sql = "SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId";
+                const string sql = BasicQuery + "WHERE EmployerId = @EmployerId";
 
                 var sqlParams = new
                 {
@@ -106,8 +111,10 @@
 
                 var existingEmployer = _getOpenConnection.Query<Employer>(sql, sqlParams).Single();
 
-                dbEmployer.CountyId = existingEmployer.CountyId;
-                dbEmployer.LocalAuthorityId = existingEmployer.LocalAuthorityId;
+                if (!dbEmployer.LocalAuthorityId.HasValue || dbEmployer.LocalAuthorityId.Value == 0)
+                {
+                    dbEmployer.LocalAuthorityId = existingEmployer.LocalAuthorityId;
+                }
                 dbEmployer.PrimaryContact = existingEmployer.PrimaryContact;
                 dbEmployer.NumberofEmployeesAtSite = existingEmployer.NumberofEmployeesAtSite;
                 dbEmployer.NumberOfEmployeesInGroup = existingEmployer.NumberOfEmployeesInGroup;
@@ -129,15 +136,7 @@
         {
             var results = new List<DomainEmployer>(employers.Count);
 
-            var countyIds = employers.Where(e => e.CountyId > 0).Select(e => e.CountyId).Distinct();
-            var countyIdsMap = _getOpenConnection.QueryCached<County>(_cacheDuration, @"
-SELECT *
-FROM   dbo.County
-WHERE  CountyId IN @countyIds",
-                    new
-                    {
-                        countyIds
-                    }).ToDictionary(c => c.CountyId, c => c.FullName);
+            var countyIdsMap = _referenceRepository.GetCounties().ToDictionary(c => c.CountyId, c => c.FullName);
 
             foreach (var employer in employers)
             {
@@ -152,19 +151,12 @@ WHERE  CountyId IN @countyIds",
             return results;
         }
 
-        private void PopulateCountyId(DomainEmployer entity, Employer dbVacancyLocation)
+        private void PopulateCountyId(DomainEmployer entity, Employer dbEmployer)
         {
-            if (!string.IsNullOrWhiteSpace(entity.Address?.County))
-            {
-                dbVacancyLocation.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
-SELECT CountyId
-FROM   dbo.County
-WHERE  FullName = @CountyFullName",
-                    new
-                    {
-                        CountyFullName = entity.Address.County
-                    }).SingleOrDefault();
-            }
+            if (dbEmployer.CountyId != 0) return;
+            var county = _referenceRepository.GetCounty(entity.Address.County);
+            if(county != null)
+                dbEmployer.CountyId = county.CountyId;
         }
     }
 }
