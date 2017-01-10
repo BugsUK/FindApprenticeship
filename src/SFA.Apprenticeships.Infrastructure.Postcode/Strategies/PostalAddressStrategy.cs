@@ -13,14 +13,17 @@
     using Newtonsoft.Json;
     using RestSharp;
     using System.Collections.Generic;
+    using Application.Interfaces.ReferenceData;
 
     public class PostalAddressStrategy : IPostalAddressStrategy
     {
+        private readonly IReferenceDataService _referenceDataService;
         private readonly IConfigurationService _configurationService;
         private readonly ILogService _logger;
 
-        public PostalAddressStrategy(IConfigurationService configurationService, ILogService logger)
+        public PostalAddressStrategy(IReferenceDataService referenceDataService, IConfigurationService configurationService, ILogService logger)
         {
+            _referenceDataService = referenceDataService;
             _configurationService = configurationService;
             _logger = logger;
         }
@@ -110,6 +113,24 @@
             //http://www.pcapredict.com/Support/WebService/GovernmentData/Postzon/RetrieveByCoordinates/1.2/
             var postzonRetrieveByCoordinatesClient = new RestClient("http://services.postcodeanywhere.co.uk/GovernmentData/Postzon/RetrieveByCoordinates/v1.20");
             var postzons = GetPostzon(postzonRetrieveByCoordinatesClient, $"json.ws?Key={geocodingKey}&CentrePoint={geopoint.Latitude},{geopoint.Longitude}");
+            var postzon = postzons.FirstOrDefault();
+            if (postzon != null)
+            {
+                postalAddress.County = string.IsNullOrEmpty(postzon.CountyName) ? postzon.GovernmentOfficeName : postzon.CountyName;
+                postalAddress.LocalAuthority = postzon.DistrictName;
+                postalAddress.LocalAuthorityCodeName = postzon.DistrictCode;
+
+                //TODO: Cache in service
+                var localAuthority = _referenceDataService.GetLocalAuthority(postzon.DistrictCode);
+                if (localAuthority != null)
+                {
+                    postalAddress.CountyId = localAuthority.County.CountyId;
+                    postalAddress.County = localAuthority.County.FullName;
+                    postalAddress.LocalAuthorityId = localAuthority.LocalAuthorityId;
+                    postalAddress.LocalAuthorityCodeName = localAuthority.CodeName;
+                    postalAddress.LocalAuthority = localAuthority.FullName;
+                }
+            }
 
             return postalAddress;
         }

@@ -1,6 +1,8 @@
 namespace SFA.DAS.RAA.Api.DependencyResolution
 {
     using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.ReferenceData;
+    using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Application.Vacancy;
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Infrastructure.Raa.Mappers;
@@ -22,6 +24,7 @@ namespace SFA.DAS.RAA.Api.DependencyResolution
 
             For<IAuthenticationService>().Use<ApiKeyAuthenticationService>();
             For<IVacancySummaryService>().Use<VacancySummaryService>();
+            For<IReferenceDataService>().Use<ReferenceDataService>();
 
             For<IPublishVacancySummaryUpdateStrategy>().Use<PublishVacancySummaryUpdateStrategy>().Ctor<IMapper>().Is<VacancySummaryUpdateMapper>();
         }

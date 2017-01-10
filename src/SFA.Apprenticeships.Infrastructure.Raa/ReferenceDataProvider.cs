@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.ReferenceData;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Presentation;
@@ -148,6 +149,36 @@
         public IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication)
         {
             return _getReleaseNotesStrategy.GetReleaseNotes(dasApplication);
+        }
+
+        public IEnumerable<County> GetCounties()
+        {
+            return _referenceRepository.GetCounties();
+        }
+
+        public County GetCounty(int countyId)
+        {
+            return _referenceRepository.GetCounty(countyId);
+        }
+
+        public County GetCounty(string countyName)
+        {
+            return _referenceRepository.GetCounty(countyName);
+        }
+
+        public IEnumerable<LocalAuthority> GetLocalAuthorities()
+        {
+            return _referenceRepository.GetLocalAuthorities();
+        }
+
+        public LocalAuthority GetLocalAuthority(int localAuthorityId)
+        {
+            return _referenceRepository.GetLocalAuthority(localAuthorityId);
+        }
+
+        public LocalAuthority GetLocalAuthority(string localAuthorityCodeName)
+        {
+            return _referenceRepository.GetLocalAuthority(localAuthorityCodeName);
         }
     }
 }

@@ -38,10 +38,9 @@
 
         public DateTime DateValidated { get; set; }
         public int CountyId { get; set; }
-        public int CountyCodeName { get; set; }
         public string County { get; set; }
         public int LocalAuthorityId { get; set; }
-        public int LocalAuthorityCodeName { get; set; }
+        public string LocalAuthorityCodeName { get; set; }
         public string LocalAuthority { get; set; }
 
         public GeoPoint GeoPoint { get; set; }
