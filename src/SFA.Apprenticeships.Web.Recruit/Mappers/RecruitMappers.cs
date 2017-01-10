@@ -62,10 +62,6 @@
                     {
                         ewvm.AmountLowerBound = ewvm.Amount;
                     }
-                    if (ewvm.CustomType == CustomWageType.Ranged)
-                    {
-                        ewvm.Amount = ewvm.AmountLowerBound;
-                    }
                     if (ewvm.Classification == WageClassification.NationalMinimum)
                     {
                         ewvm.Classification = WageClassification.Custom;
