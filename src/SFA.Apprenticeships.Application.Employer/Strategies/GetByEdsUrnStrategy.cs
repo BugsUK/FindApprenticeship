@@ -47,8 +47,7 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
                 {
                     employer = _employerWriteRepository.Save(referenceEmployer);
                 }
-
-                if (!_employerVerifiedOrganisationComparer.Equals(employer, referenceEmployer))
+                else if (!_employerVerifiedOrganisationComparer.Equals(employer, referenceEmployer))
                 {
                     //Update employer with new data and save
                     employer.FullName = referenceEmployer.FullName;

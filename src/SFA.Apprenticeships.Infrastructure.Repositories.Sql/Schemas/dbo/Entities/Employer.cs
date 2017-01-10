@@ -15,8 +15,11 @@
 	    public string AddressLine5 { get; set; }
         public string Town { get; set; }
         public int CountyId { get; set; }
+        public string County { get; set; }
         public string PostCode { get; set; }
         public int? LocalAuthorityId { get; set; }
+        public string LocalAuthorityCodeName { get; set; }
+        public string LocalAuthority { get; set; }
         public decimal? Longitude { get; set; }
         public decimal? Latitude { get; set; }
         public int? GeocodeEasting { get; set; }

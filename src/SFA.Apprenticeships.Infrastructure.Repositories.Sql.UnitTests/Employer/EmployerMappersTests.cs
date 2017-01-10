@@ -103,7 +103,7 @@
                 // employer.Address.GeoPoint.Northing.Should().Be(dbEmployer.AddressLine1); // TODO: US1259: AG: add.
                 employer.Address.GeoPoint.Latitude.Should().Be(Convert.ToDouble(dbEmployer.Latitude ?? 0m));
                 employer.Address.GeoPoint.Longitude.Should().Be(Convert.ToDouble(dbEmployer.Longitude ?? 0m));
-                employer.Address.County.Should().BeNull(); // TODO: US1259: ?
+                employer.Address.County.Should().Be(dbEmployer.County);
             }
         }
 
@@ -137,15 +137,15 @@
                 dbEmployer.AddressLine5.Should().Be(employer.Address.AddressLine5);
 
                 dbEmployer.Town.Should().Be(employer.Address.Town);
-                dbEmployer.CountyId.Should().Be(0); // TODO: US1259: ?
+                dbEmployer.CountyId.Should().Be(employer.Address.CountyId);
                 dbEmployer.PostCode.Should().Be(employer.Address.Postcode);
 
-                dbEmployer.LocalAuthorityId.Should().Be(default(int?)); // TODO: US1259: ?
+                dbEmployer.LocalAuthorityId.Should().Be(employer.Address.LocalAuthorityId);
 
                 dbEmployer.Latitude.Should().Be(Convert.ToDecimal(employer.Address.GeoPoint.Latitude));
                 dbEmployer.Longitude.Should().Be(Convert.ToDecimal(employer.Address.GeoPoint.Longitude));
-                dbEmployer.GeocodeEasting.Should().Be(default(int?)); // TODO: US1259: ?
-                dbEmployer.GeocodeNorthing.Should().Be(default(int?)); // TODO: US1259: ?
+                dbEmployer.GeocodeEasting.Should().Be(employer.Address.GeoPoint.Easting);
+                dbEmployer.GeocodeNorthing.Should().Be(employer.Address.GeoPoint.Northing);
 
                 dbEmployer.PrimaryContact.Should().Be(employer.PrimaryContact);
 

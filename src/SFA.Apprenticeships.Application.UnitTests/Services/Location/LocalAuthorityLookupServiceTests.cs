@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SFA.Apprenticeships.Application.Interfaces.Locations;
 using SFA.Apprenticeships.Application.Location;
+#pragma warning disable 612
 
 namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
 {

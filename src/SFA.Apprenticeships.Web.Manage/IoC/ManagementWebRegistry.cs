@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.IoC
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
     using Application.Candidate;

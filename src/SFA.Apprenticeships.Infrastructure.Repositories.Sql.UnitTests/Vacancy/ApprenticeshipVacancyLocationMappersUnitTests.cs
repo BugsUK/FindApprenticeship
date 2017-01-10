@@ -55,7 +55,11 @@
                 .Excluding(vl => vl.Address.ValidationSourceCode)
                 .Excluding(vl => vl.Address.ValidationSourceKeyValue)
                 .Excluding(vl => vl.Address.DateValidated)
+                .Excluding(vl => vl.Address.CountyId)
                 .Excluding(vl => vl.Address.County)
+                .Excluding(vl => vl.Address.LocalAuthorityId)
+                .Excluding(vl => vl.Address.LocalAuthorityCodeName)
+                .Excluding(vl => vl.Address.LocalAuthority)
                 .Excluding(vl => vl.LocalAuthorityCode));
         }
         

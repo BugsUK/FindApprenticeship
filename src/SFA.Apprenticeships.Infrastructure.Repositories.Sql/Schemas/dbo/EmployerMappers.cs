@@ -30,15 +30,19 @@
                         AddressLine4 = v.AddressLine4,
                         AddressLine5 = v.AddressLine5,
                         Postcode = v.PostCode,
-                        Town = v.Town
-                    };
-
-                    av.Address.GeoPoint = new GeoPoint
-                    {
-                        Latitude = (double)(v.Latitude ?? 0),
-                        Longitude = (double)(v.Longitude ?? 0),
-                        Easting = v.GeocodeEasting ?? 0,
-                        Northing = v.GeocodeNorthing ?? 0
+                        Town = v.Town,
+                        CountyId = v.CountyId,
+                        County = v.County,
+                        LocalAuthorityId = v.LocalAuthorityId ?? 0,
+                        LocalAuthorityCodeName = v.LocalAuthorityCodeName,
+                        LocalAuthority = v.LocalAuthority,
+                        GeoPoint = new GeoPoint
+                        {
+                            Latitude = (double) (v.Latitude ?? 0),
+                            Longitude = (double) (v.Longitude ?? 0),
+                            Easting = v.GeocodeEasting ?? 0,
+                            Northing = v.GeocodeNorthing ?? 0
+                        }
                     };
                 });
 
@@ -55,8 +59,11 @@
                 .ForMember(v => v.Town, opt => opt.MapFrom(src => src.Address.Town))
                 .ForMember(v => v.Latitude, opt => opt.ResolveUsing<GeocodeToLatitudeConverter>().FromMember(src => src.Address.GeoPoint))
                 .ForMember(v => v.Longitude, opt => opt.ResolveUsing<GeocodeToLongitudeConverter>().FromMember(src => src.Address.GeoPoint))
-                .ForMember(v => v.CountyId, opt => opt.Ignore())
-                .ForMember(v => v.LocalAuthorityId, opt => opt.Ignore())
+                .ForMember(v => v.CountyId, opt => opt.MapFrom(src => src.Address.CountyId))
+                .ForMember(v => v.County, opt => opt.MapFrom(src => src.Address.County))
+                .ForMember(v => v.LocalAuthorityId, opt => opt.MapFrom(src => src.Address.LocalAuthorityId))
+                .ForMember(v => v.LocalAuthorityCodeName, opt => opt.MapFrom(src => src.Address.LocalAuthorityCodeName))
+                .ForMember(v => v.LocalAuthority, opt => opt.MapFrom(src => src.Address.LocalAuthority))
                 .ForMember(v => v.GeocodeEasting, opt => opt.ResolveUsing<GeocodeToEastingConverter>().FromMember(src => src.Address.GeoPoint))
                 .ForMember(v => v.GeocodeNorthing, opt => opt.ResolveUsing<GeocodeToNorthingConverter>().FromMember(src => src.Address.GeoPoint))
                 .ForMember(v => v.NumberofEmployeesAtSite, opt => opt.Ignore())

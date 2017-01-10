@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System.Linq;
     using Application.Interfaces.Locations;
