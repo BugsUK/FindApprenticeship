@@ -14,9 +14,11 @@
 @import "_joyride-styles";
 
 $path: "/Content/_assets/img/";
-$warning-colour: #2b8cc4;
 
 @import "_govuk-elements";
 
-@import "_form-warnings";
+@import "_sfa-form-warnings";
 @import "_forms";
+
+@import "_sfa-banners.scss";
+@import "_sfa-notifications.scss";

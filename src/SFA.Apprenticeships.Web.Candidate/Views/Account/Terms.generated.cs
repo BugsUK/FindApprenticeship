@@ -63,16 +63,28 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" role=\"alert\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(" class=\"panel-info\"");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral(">\r\n    <p");
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"info-summary\"");
+
+WriteLiteral(" role=\"group\"");
+
+WriteLiteral(" aria-labelledby=\"InfoMessageText\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">\r\n\r\n            <p");
 
 WriteLiteral(" id=\"InfoMessageText\"");
 
-WriteLiteral(">To use this service you must accept our updated terms and conditions</p>\r\n</div>" +
-"\r\n\r\n<div");
+WriteLiteral(">To use this service you must accept our updated terms and conditions</p>\r\n\r\n    " +
+"    </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
 WriteLiteral(" class=\"hgroup\"");
 
@@ -88,7 +100,7 @@ WriteLiteral(">Please read and accept our updated terms and conditions​</span>
 "    </div>\r\n</div>\r\n");
 
             
-            #line 18 "..\..\Views\Account\Terms.cshtml"
+            #line 24 "..\..\Views\Account\Terms.cshtml"
 Write(Html.Partial("_TermsAndConditions"));
 
             
@@ -97,7 +109,7 @@ Write(Html.Partial("_TermsAndConditions"));
 WriteLiteral("\r\n");
 
             
-            #line 19 "..\..\Views\Account\Terms.cshtml"
+            #line 25 "..\..\Views\Account\Terms.cshtml"
 Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" }));
 
             
@@ -106,7 +118,7 @@ Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, ne
 WriteLiteral("\r\n");
 
             
-            #line 20 "..\..\Views\Account\Terms.cshtml"
+            #line 26 "..\..\Views\Account\Terms.cshtml"
 Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { }));
 
             

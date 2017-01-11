@@ -1,9 +1,11 @@
+$warning-colour: $orange;
+
 // Form validation
 // ==========================================================================
 // This is a clone of the _form-errors.scss in the govuk_elements package.
 // error is replaced for warning only and any new versions in the package can
 // be updated into this file by doing a global find and replace. The colour
-// variable is declared in the parent styles.scss file.
+// variable is declared at the top of this partial.
 // ==========================================================================
 
 // Use warning to add a blue border to the left of a .form-group
@@ -101,4 +103,9 @@
       text-decoration: underline;
     }
   }
+  .warning-dismiss {
+    color: $warning-colour;
+    font-weight: bold;
+    text-decoration: underline;
+   }
 }
