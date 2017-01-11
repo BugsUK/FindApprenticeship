@@ -120,7 +120,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipAp
             var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.Ok, true);
-            response.ViewModel.DateTimeMessage.Should().Be("12:00:00 AM on 31/1/2015");
+            response.ViewModel.DateTimeMessage.ToUpper().Should().Be("12:00:00 AM ON 31/1/2015");
         }
     }
 }
