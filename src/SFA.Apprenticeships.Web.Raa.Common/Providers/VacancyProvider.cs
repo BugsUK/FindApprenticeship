@@ -822,7 +822,7 @@
             var vacancyLocationAddressViewModels = GetLocationsAddressViewModel(vacancy);
             viewModel.LocationAddresses = vacancyLocationAddressViewModels;
             viewModel.NewVacancyViewModel.LocationAddresses = vacancyLocationAddressViewModels;
-            if (vacancy.Address.GeoPoint == null || vacancy.Address.GeoPoint.IsSet())
+            if (vacancy.Address != null && (vacancy.Address.GeoPoint == null || vacancy.Address.GeoPoint.IsSet()))
             {
                 viewModel.Address = GeoCodeAddressForVacancy(vacancy, viewModel.Address);
             }
