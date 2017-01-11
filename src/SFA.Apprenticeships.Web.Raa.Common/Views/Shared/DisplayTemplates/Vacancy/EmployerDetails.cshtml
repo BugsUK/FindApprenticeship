@@ -35,7 +35,7 @@
                     var geoPointViewModel = Model.Employer.Address.GeoPoint;
                     if (geoPointViewModel != null && geoPointViewModel.IsSet())
                     {
-                        queryForMap = string.Format("{0},{1)", geoPointViewModel.Latitude, geoPointViewModel.Longitude);
+                        queryForMap = string.Format("{0},+United+Kingdom&center={1},{2}", Model.Employer.Address.Postcode, geoPointViewModel.Latitude, geoPointViewModel.Longitude);
                     }
                     else
                     {

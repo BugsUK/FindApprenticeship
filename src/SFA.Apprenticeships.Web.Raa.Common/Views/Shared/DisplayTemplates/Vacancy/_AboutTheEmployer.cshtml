@@ -307,7 +307,14 @@ else
             }
             else
             {
-                <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                var queryForMap = Model.Address.Postcode + ",+United+Kingdom";
+                var geoPointViewModel = Model.Address.GeoPoint;
+                if (geoPointViewModel != null && geoPointViewModel.IsSet())
+                {
+                    queryForMap = string.Format("{0}&center={1},{2}", queryForMap, geoPointViewModel.Latitude, geoPointViewModel.Longitude);
+                }
+
+                <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(queryForMap)&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
             }
 
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>

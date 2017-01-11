@@ -110,7 +110,7 @@
 
             var vacancyOwnerRelationship = _getVacancyOwnerRelationshipStrategy.GetVacancyOwnerRelationship(providerSite.ProviderSiteId, employer.EmployerId, false);
             vacancyOwnerRelationship.EmployerDescription = employerProviderSiteLinkRequest.EmployerDescription;
-            vacancyOwnerRelationship.EmployerWebsiteUrl = new UriBuilder(employerProviderSiteLinkRequest.EmployerWebsiteUrl).ToString();
+            vacancyOwnerRelationship.EmployerWebsiteUrl = employerProviderSiteLinkRequest.EmployerWebsiteUrl;
             vacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Active;
 
             vacancyOwnerRelationship = _vacancyOwnerRelationshipWriteRepository.Save(vacancyOwnerRelationship);

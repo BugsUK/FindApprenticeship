@@ -30,6 +30,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
     using Application.Interfaces;
+    using Application.Location.IoC;
     using Repositories.Sql.Schemas.Employer.IoC;
     using Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
@@ -167,6 +168,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
+                x.AddRegistry<LocationServiceRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();
