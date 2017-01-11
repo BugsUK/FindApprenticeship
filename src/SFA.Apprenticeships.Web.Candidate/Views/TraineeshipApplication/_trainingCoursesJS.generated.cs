@@ -96,7 +96,7 @@ WriteLiteral(" data-target=\"training-history-panel\"");
 
 WriteLiteral(" for=\"training-history-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected: showTrainingCourses()}\"");
 
