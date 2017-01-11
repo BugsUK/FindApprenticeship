@@ -90,12 +90,22 @@ WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"form-group inline clearfix\"");
 
+WriteLiteral(">\r\n                <label");
+
+WriteLiteral(" data-target=\"training-history-panel\"");
+
+WriteLiteral(" for=\"training-history-yes\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio\"");
+
+WriteLiteral(" data-bind=\"css: {selected: showTrainingCourses()}\"");
+
 WriteLiteral(">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 12 "..\..\Views\TraineeshipApplication\_trainingCoursesJS.cshtml"
+            #line 13 "..\..\Views\TraineeshipApplication\_trainingCoursesJS.cshtml"
                Write(Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, true, new { id = "training-history-yes", data_bind = "attr:{'checked': hasTrainingCourses() }", aria_controls = "training-history-panel", aria_expanded = "false", aria_labelledby = "trainingCoursesQuestion" }));
 
             
@@ -114,7 +124,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 16 "..\..\Views\TraineeshipApplication\_trainingCoursesJS.cshtml"
+            #line 17 "..\..\Views\TraineeshipApplication\_trainingCoursesJS.cshtml"
                Write(Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, false, new { id = "training-history-no", data_bind = "attr:{'checked': hasNoTrainingCourses() }", aria_labelledby = "hasNoTrainingCoursesQuestion" }));
 
             
