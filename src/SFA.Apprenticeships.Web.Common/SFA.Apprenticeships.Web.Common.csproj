@@ -407,7 +407,6 @@
     <Content Include="Content\libs\prototype-recruit.js" />
     <Content Include="Content\libs\refineSearch.js" />
     <Content Include="Content\libs\scripts.js" />
-    <Content Include="Content\libs\scripts.min.js" />
     <Content Include="Content\libs\sticky.js" />
     <Content Include="Content\libs\vendor\chosen.jquery.js" />
     <Content Include="Content\libs\vendor\ckeditor\adapters\jquery.js" />

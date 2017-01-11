@@ -739,7 +739,6 @@
     <Content Include="Content\_assets\js\prototype-recruit.js" />
     <Content Include="Content\_assets\js\refineSearch.js" />
     <Content Include="Content\_assets\js\scripts.js" />
-    <Content Include="Content\_assets\js\scripts.min.js" />
     <Content Include="Content\_assets\js\sticky.js" />
     <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\adapters\jquery.js" />
