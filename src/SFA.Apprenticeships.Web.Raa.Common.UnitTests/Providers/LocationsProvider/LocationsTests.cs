@@ -95,7 +95,7 @@
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>()))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>(), true))
                 .Returns(new VacancyOwnerRelationship());
 
             var provider = GetVacancyPostingProvider();
@@ -189,7 +189,7 @@
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(new List<VacancyLocation>());
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>()))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(It.IsAny<int>(), It.IsAny<string>(), true))
                 .Returns(new VacancyOwnerRelationship());
 
             var provider = GetVacancyPostingProvider();

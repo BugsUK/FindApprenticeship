@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Location.IoC
 {
+    using Interfaces.Locations;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
 
@@ -13,6 +14,8 @@
                     scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
                 });
+
+            For<IPostalAddressService>().Use<PostalAddressService>();
         }
     }
 }

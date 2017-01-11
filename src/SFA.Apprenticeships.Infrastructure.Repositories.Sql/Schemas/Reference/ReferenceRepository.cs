@@ -9,7 +9,8 @@
     using Entities;
     using Application.Interfaces;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Users;
+    using County = Domain.Entities.Raa.Reference.County;
+    using LocalAuthority = Domain.Entities.Raa.Reference.LocalAuthority;
     using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository
@@ -164,6 +165,116 @@
             _logger.Debug("Got all SSAT1s");
 
             return standardSubjectAreaTierOnes;
+        }
+
+        public IEnumerable<County> GetCounties()
+        {
+            _logger.Debug("Getting all counties");
+
+            const string sectorSql = "SELECT * FROM dbo.County ORDER BY FullName";
+
+            var counties = _getOpenConnection.Query<County>(sectorSql);
+
+            _logger.Debug($"Got {counties.Count} counties");
+
+            return counties;
+        }
+
+        public County GetCounty(int countyId)
+        {
+            _logger.Debug($"Getting county with id {countyId}");
+
+            const string sectorSql = "SELECT * FROM dbo.County WHERE CountyId = @CountyId";
+
+            var sqlParams = new
+            {
+                countyId
+            };
+
+            var county = _getOpenConnection.Query<County>(sectorSql, sqlParams).FirstOrDefault();
+
+            _logger.Debug($"Found {county}");
+
+            return county;
+        }
+
+        public County GetCounty(string countyName)
+        {
+            _logger.Debug($"Getting county with name {countyName}");
+
+            const string sectorSql = "SELECT * FROM dbo.County WHERE FullName = @CountyName";
+
+            var sqlParams = new
+            {
+                countyName
+            };
+
+            var county = _getOpenConnection.Query<County>(sectorSql, sqlParams).FirstOrDefault();
+
+            _logger.Debug($"Found {county}");
+
+            return county;
+        }
+
+        public IEnumerable<LocalAuthority> GetLocalAuthorities()
+        {
+            _logger.Debug("Getting all local authorities");
+
+            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId";
+
+            var localAuthorities = _getOpenConnection.Query<LocalAuthority, County, LocalAuthority>(sectorSql, (la, c) =>
+            {
+                la.County = c;
+                return la;
+            }, splitOn: "CountyId");
+
+            _logger.Debug($"Got {localAuthorities.Count} local authorities");
+
+            return localAuthorities;
+        }
+
+        public LocalAuthority GetLocalAuthority(int localAuthorityId)
+        {
+            _logger.Debug($"Getting local authority with id {localAuthorityId}");
+
+            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE la.LocalAuthorityId = @LocalAuthorityId";
+
+            var sqlParams = new
+            {
+                localAuthorityId
+            };
+
+            var localAuthority = _getOpenConnection.Query<LocalAuthority, County, LocalAuthority>(sectorSql, (la, c) =>
+            {
+                la.County = c;
+                return la;
+            }, sqlParams, "CountyId").FirstOrDefault();
+
+            _logger.Debug($"Found {localAuthority}");
+
+            return localAuthority;
+        }
+
+        public LocalAuthority GetLocalAuthority(string localAuthorityCodeName)
+        {
+            _logger.Debug($"Getting local authority with code name {localAuthorityCodeName}");
+
+            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE la.CodeName = @LocalAuthorityCodeName";
+
+            var sqlParams = new
+            {
+                localAuthorityCodeName
+            };
+
+            var localAuthority = _getOpenConnection.Query<LocalAuthority, County, LocalAuthority>(sectorSql, (la, c) =>
+            {
+                la.County = c;
+                return la;
+            }, sqlParams, "CountyId").FirstOrDefault();
+
+            _logger.Debug($"Found {localAuthority}");
+
+            return localAuthority;
         }
 
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()

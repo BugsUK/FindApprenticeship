@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
     using System.Collections.Generic;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
 
@@ -24,5 +25,17 @@
         IEnumerable<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
 
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
+
+        IEnumerable<County> GetCounties();
+
+        County GetCounty(int countyId);
+
+        County GetCounty(string county);
+
+        IEnumerable<LocalAuthority> GetLocalAuthorities();
+
+        LocalAuthority GetLocalAuthority(int localAuthorityId);
+
+        LocalAuthority GetLocalAuthority(string localAuthorityCodeName);
     }
 }

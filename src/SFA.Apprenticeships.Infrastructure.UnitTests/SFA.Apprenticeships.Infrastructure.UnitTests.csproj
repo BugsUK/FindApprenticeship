@@ -183,7 +183,6 @@
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTestsBase.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
-    <Compile Include="EmployerDataService\EmployerAddressValidationTests.cs" />
     <Compile Include="EmployerDataService\Mappers\BsAddressMapperTests.cs" />
     <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
     <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />

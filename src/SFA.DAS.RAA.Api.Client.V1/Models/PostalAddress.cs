@@ -35,7 +35,7 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
         /// Delivery Point Reference Number (UDPRN)
         /// For GeoPlace, this is the Unique Property ReferenceNumber (UPRN)
         /// PostCode anywhere uses PAF data, so this is the UDPRN.</param>
-        public PostalAddress(int? postalAddressId = default(int?), string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string addressLine4 = default(string), string addressLine5 = default(string), string town = default(string), string postcode = default(string), string validationSourceCode = default(string), string validationSourceKeyValue = default(string), System.DateTime? dateValidated = default(System.DateTime?), string county = default(string), GeoPoint geoPoint = default(GeoPoint))
+        public PostalAddress(int? postalAddressId = default(int?), string addressLine1 = default(string), string addressLine2 = default(string), string addressLine3 = default(string), string addressLine4 = default(string), string addressLine5 = default(string), string town = default(string), string postcode = default(string), string validationSourceCode = default(string), string validationSourceKeyValue = default(string), System.DateTime? dateValidated = default(System.DateTime?), int? countyId = default(int?), string county = default(string), int? localAuthorityId = default(int?), string localAuthorityCodeName = default(string), string localAuthority = default(string), GeoPoint geoPoint = default(GeoPoint))
         {
             PostalAddressId = postalAddressId;
             AddressLine1 = addressLine1;
@@ -48,7 +48,11 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
             ValidationSourceCode = validationSourceCode;
             ValidationSourceKeyValue = validationSourceKeyValue;
             DateValidated = dateValidated;
+            CountyId = countyId;
             County = county;
+            LocalAuthorityId = localAuthorityId;
+            LocalAuthorityCodeName = localAuthorityCodeName;
+            LocalAuthority = localAuthority;
             GeoPoint = geoPoint;
         }
 
@@ -119,8 +123,28 @@ namespace SFA.DAS.RAA.Api.Client.V1.Models
 
         /// <summary>
         /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "CountyId")]
+        public int? CountyId { get; set; }
+
+        /// <summary>
+        /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "County")]
         public string County { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthorityId")]
+        public int? LocalAuthorityId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthorityCodeName")]
+        public string LocalAuthorityCodeName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "LocalAuthority")]
+        public string LocalAuthority { get; set; }
 
         /// <summary>
         /// </summary>

@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.IoC
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
     using Application.Candidate;
     using Application.Candidate.Strategies;
@@ -92,7 +93,6 @@
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
             For<ILocationsProvider>().Use<LocationsProvider>();
-            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
             For<IReportingProvider>().Use<ReportingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();

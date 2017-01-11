@@ -500,6 +500,10 @@
                 .IgnoreMember(a => a.County) // Done by database lookup -> TODO
                                              // TODO: Hacks
                                              //.MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())
+                .ForMember(a => a.CountyId, opt => opt.MapFrom(a => a.CountyId))
+                .IgnoreMember(a => a.LocalAuthorityId)
+                .IgnoreMember(a => a.LocalAuthorityCodeName)
+                .IgnoreMember(a => a.LocalAuthority)
                 .IgnoreMember(dpa => dpa.GeoPoint)
                 .AfterMap((dbpa, dpa) =>
                 {

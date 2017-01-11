@@ -246,11 +246,8 @@
     <Compile Include="Providers\ApiUserProvider.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\CandidateProvider.cs" />
-    <Compile Include="Providers\GeoCodeAddressResult.cs" />
-    <Compile Include="Providers\GeoCodingProvider.cs" />
     <Compile Include="Providers\IApiUserProvider.cs" />
     <Compile Include="Providers\ICandidateProvider.cs" />
-    <Compile Include="Providers\IGeoCodingProvider.cs" />
     <Compile Include="Providers\IReportingProvider.cs" />
     <Compile Include="Providers\IVacancyManagementProvider.cs" />
     <Compile Include="Providers\IVacancyStatusChangeProvider.cs" />

@@ -6,9 +6,8 @@
     using Moq;
     using NUnit.Framework;
     using Common.Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces;
+    using Web.Common.Configuration;
 
     public class TestBase
     {
@@ -23,6 +22,7 @@
             MockProviderService = new Mock<IProviderService>();
             MockEmployerService = new Mock<IEmployerService>();
             MockConfigurationService = new Mock<IConfigurationService>();
+            MockConfigurationService.Setup(cs => cs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration {Features = new Features()});
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
         }
 
@@ -32,7 +32,9 @@
                 MockProviderService.Object,
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
-                MockEmployerService.Object);
+                MockEmployerService.Object,
+                new Mock<IApiClientProvider>().Object, 
+                new Mock<ILogService>().Object);
         }
     }
 }

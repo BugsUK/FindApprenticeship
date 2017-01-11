@@ -11,6 +11,7 @@
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Schemas.dbo;
+    using Sql.Schemas.Reference;
 
     [TestFixture]
     public class EmployerRepositoryTests
@@ -19,6 +20,7 @@
         private IGetOpenConnection _connection;
         private IEmployerReadRepository _employerReadRepository;
         private IEmployerWriteRepository _employerWriteRepository;
+        private IReferenceRepository _referenceRepository;
 
         [SetUp]
         public void SetUpFixture()
@@ -26,8 +28,9 @@
             _connection = new GetOpenConnectionFromConnectionString(
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
-            _employerReadRepository = new EmployerRepository(_connection, _mapper);
-            _employerWriteRepository = new EmployerRepository(_connection, _mapper);
+            _referenceRepository = new ReferenceRepository(_connection, null, null);
+            _employerReadRepository = new EmployerRepository(_connection, _mapper, _referenceRepository);
+            _employerWriteRepository = new EmployerRepository(_connection, _mapper, _referenceRepository);
         }
 
         [Test]

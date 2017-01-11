@@ -44,7 +44,11 @@
                 .ForMember(dest => dest.PostalAddressId, opt => opt.Ignore())
                 .ForMember(dest => dest.ValidationSourceCode, opt => opt.Ignore())
                 .ForMember(dest => dest.ValidationSourceKeyValue, opt => opt.Ignore())
-                .ForMember(dest => dest.DateValidated, opt => opt.Ignore());
+                .ForMember(dest => dest.DateValidated, opt => opt.Ignore())
+                .ForMember(dest => dest.CountyId, opt => opt.Ignore())
+                .ForMember(dest => dest.LocalAuthorityId, opt => opt.Ignore())
+                .ForMember(dest => dest.LocalAuthorityCodeName, opt => opt.Ignore())
+                .ForMember(dest => dest.LocalAuthority, opt => opt.Ignore());
             Mapper.CreateMap<Employer, EmployerViewModel>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.EmployerStatus));
             Mapper.CreateMap<EmployerViewModel, Employer>()

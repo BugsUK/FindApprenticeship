@@ -43,57 +43,9 @@
 
             var vacancyOwnerRelationship =
                 _vacancyOwnerRelationshipReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employerId, liveOnly) ??
-                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employerId };
+                new VacancyOwnerRelationship { ProviderSiteId = providerSiteId, EmployerId = employerId, StatusType = VacancyOwnerRelationshipStatusTypes.Live };
 
             return vacancyOwnerRelationship;
-        }
-
-        public bool IsADeletedVacancyOwnerRelationship(int providerSiteId, string edsUrn)
-        {
-            Condition.Requires(providerSiteId);
-            Condition.Requires(edsUrn).IsNotNullOrEmpty();
-
-            _logService.Debug("Calling Employer Service to get employer with EDSURN='{0}'.", edsUrn);
-
-            var employer = _employerService.GetEmployer(edsUrn);
-
-            return IsADeletedVacancyOwnerRelationship(providerSiteId, employer.EmployerId);
-        }
-
-        public bool IsADeletedVacancyOwnerRelationship(int providerSiteId, int employerId)
-        {
-            Condition.Requires(providerSiteId);
-            Condition.Requires(employerId);
-
-            _logService.Debug(
-                "Calling VacancyOwnerRelationshipReadRepository to check if the vacancy party has been deleted for provider site with Id='{0}' and employer with Id='{1}'.",
-                providerSiteId, employerId);
-
-            return _vacancyOwnerRelationshipReadRepository.IsADeletedVacancyOwnerRelationship(providerSiteId, employerId);
-        }
-
-        public void ResurrectVacancyOwnerRelationship(int providerSiteId, string edsUrn)
-        {
-            Condition.Requires(providerSiteId);
-            Condition.Requires(edsUrn).IsNotNullOrEmpty();
-
-            _logService.Debug("Calling Employer Service to get employer with EDSURN='{0}'.", edsUrn);
-
-            var employer = _employerService.GetEmployer(edsUrn);
-
-            ResurrectVacancyOwnerRelationship(providerSiteId, employer.EmployerId);
-        }
-
-        public void ResurrectVacancyOwnerRelationship(int providerSiteId, int employerId)
-        {
-            Condition.Requires(providerSiteId);
-            Condition.Requires(employerId);
-
-            _logService.Debug(
-                "Calling VacancyOwnerRelationshipWriteRepository to resurrect the vacancy party for provider site with Id='{0}' and employer with Id='{1}'.",
-                providerSiteId, employerId);
-
-            _vacancyOwnerRelationshipWriteRepository.ResurrectVacancyOwnerRelationship(providerSiteId, employerId);
         }
     }
 }

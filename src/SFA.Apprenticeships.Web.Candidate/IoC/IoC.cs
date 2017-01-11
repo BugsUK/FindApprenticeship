@@ -25,6 +25,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
     using Application.Interfaces;
+    using Application.Location.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
@@ -72,6 +73,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
+                x.AddRegistry<LocationServiceRegistry>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

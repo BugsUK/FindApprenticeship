@@ -37,13 +37,55 @@
 #endregion
 
         public DateTime DateValidated { get; set; }
+        public int CountyId { get; set; }
         public string County { get; set; }
+        public int LocalAuthorityId { get; set; }
+        public string LocalAuthorityCodeName { get; set; }
+        public string LocalAuthority { get; set; }
 
         public GeoPoint GeoPoint { get; set; }
 
         public override string ToString()
         {
             return AddressLine4 ?? AddressLine3 ?? AddressLine2 ?? AddressLine1 ?? Postcode;
+        }
+
+        protected bool Equals(PostalAddress other)
+        {
+            return string.Equals(AddressLine1, other.AddressLine1) && string.Equals(AddressLine2, other.AddressLine2) && string.Equals(AddressLine3, other.AddressLine3) && string.Equals(AddressLine4, other.AddressLine4) && string.Equals(AddressLine5, other.AddressLine5) && string.Equals(County, other.County) && CountyId == other.CountyId && DateValidated.Equals(other.DateValidated) && Equals(GeoPoint, other.GeoPoint) && string.Equals(LocalAuthority, other.LocalAuthority) && string.Equals(LocalAuthorityCodeName, other.LocalAuthorityCodeName) && LocalAuthorityId == other.LocalAuthorityId && PostalAddressId == other.PostalAddressId && string.Equals(Postcode, other.Postcode) && string.Equals(Town, other.Town) && string.Equals(ValidationSourceCode, other.ValidationSourceCode) && string.Equals(ValidationSourceKeyValue, other.ValidationSourceKeyValue);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PostalAddress) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (AddressLine1 != null ? AddressLine1.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (AddressLine2 != null ? AddressLine2.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (AddressLine3 != null ? AddressLine3.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (AddressLine4 != null ? AddressLine4.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (AddressLine5 != null ? AddressLine5.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (County != null ? County.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ CountyId;
+                hashCode = (hashCode*397) ^ DateValidated.GetHashCode();
+                hashCode = (hashCode*397) ^ (GeoPoint != null ? GeoPoint.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (LocalAuthority != null ? LocalAuthority.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (LocalAuthorityCodeName != null ? LocalAuthorityCodeName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ LocalAuthorityId;
+                hashCode = (hashCode*397) ^ PostalAddressId;
+                hashCode = (hashCode*397) ^ (Postcode != null ? Postcode.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Town != null ? Town.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (ValidationSourceCode != null ? ValidationSourceCode.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (ValidationSourceKeyValue != null ? ValidationSourceKeyValue.GetHashCode() : 0);
+                return hashCode;
+            }
         }
     }
 }

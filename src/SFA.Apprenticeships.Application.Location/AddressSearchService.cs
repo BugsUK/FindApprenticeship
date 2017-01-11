@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Location
 {
+    using System;
     using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
@@ -7,6 +8,7 @@
     using Interfaces.Generic;
     using Interfaces.Locations;
 
+    [Obsolete]
     public class AddressSearchService : IAddressSearchService
     {
         private readonly IAddressLookupProvider _addressLookupProvider;

@@ -18,5 +18,17 @@
         IList<ReleaseNote> GetReleaseNotes();
 
         IList<StandardSubjectAreaTierOne> GetStandardSubjectAreaTierOnes();
+
+        IEnumerable<County> GetCounties();
+
+        County GetCounty(int countyId);
+
+        County GetCounty(string countyName);
+
+        IEnumerable<LocalAuthority> GetLocalAuthorities();
+
+        LocalAuthority GetLocalAuthority(int localAuthorityId);
+
+        LocalAuthority GetLocalAuthority(string localAuthorityCodeName);
     }
 }

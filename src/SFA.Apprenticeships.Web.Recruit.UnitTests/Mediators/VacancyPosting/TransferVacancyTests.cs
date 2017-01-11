@@ -57,7 +57,7 @@
 
             MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
 
-            MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_vacancyOwnerRelationship.EmployerId, vacancyTransferViewModel.ProviderSiteId)).Returns(_vacancyOwnerRelationshipWithRelationship);
+            MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_vacancyOwnerRelationship.EmployerId, vacancyTransferViewModel.ProviderSiteId, true)).Returns(_vacancyOwnerRelationshipWithRelationship);
 
             var vacancyPostingProvider = GetVacancyPostingProvider();
 
@@ -96,7 +96,7 @@
             MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_existingVacancy.VacancyOwnerRelationshipId, false)).Returns(_vacancyOwnerRelationship);
             
             //This method actually returns a new VOR with a zero'd ID instead of null if it doesn't exist
-            MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_vacancyOwnerRelationship.EmployerId, vacancyTransferViewModel.ProviderSiteId)).Returns<int, int>((employerId, providerSiteId) => new VacancyOwnerRelationship { EmployerId = employerId, ProviderSiteId = providerSiteId });
+            MockProviderService.Setup(ps => ps.GetVacancyOwnerRelationship(_vacancyOwnerRelationship.EmployerId, vacancyTransferViewModel.ProviderSiteId, true)).Returns<int, int, bool>((employerId, providerSiteId, liveOnly) => new VacancyOwnerRelationship { EmployerId = employerId, ProviderSiteId = providerSiteId, StatusType = VacancyOwnerRelationshipStatusTypes.Live});
 
             MockProviderService.Setup(ps => ps.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(
                             vor =>

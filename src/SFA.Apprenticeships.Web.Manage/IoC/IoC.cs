@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
+    using Application.Location.IoC;
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
@@ -76,6 +77,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<AzureRedisCacheRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<VacancyPostingServiceRegistry>();
+                x.AddRegistry<LocationServiceRegistry>();
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

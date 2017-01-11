@@ -254,7 +254,7 @@
         }
 
         [Test]
-        public void ShouldCreateTheVacancyIfItDoesnExist()
+        public async Task ShouldCreateTheVacancyIfItDoesnExist()
         {
             // Arrange
             const string ukprn = "1234";
@@ -281,11 +281,11 @@
                 IsAnonymousEmployer = false
             };
 
-            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(viewModel);
+            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(Task.FromResult(viewModel));
 
             // Act.
             var mediator = GetMediator();
-            mediator.ConfirmEmployer(viewModel, ukprn);
+            await mediator.ConfirmEmployer(viewModel, ukprn);
 
             // Assert.
             VacancyPostingProvider.Verify(p => p.CreateVacancy(new VacancyMinimumData
@@ -328,7 +328,7 @@
                 IsAnonymousEmployer = false
             };
 
-            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(viewModel);
+            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(Task.FromResult(viewModel));
 
             VacancyPostingProvider
                 .Setup(p => p.CreateVacancy(It.IsAny<VacancyMinimumData>()))

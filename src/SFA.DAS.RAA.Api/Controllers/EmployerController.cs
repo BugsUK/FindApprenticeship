@@ -1,6 +1,5 @@
 ﻿namespace SFA.DAS.RAA.Api.Controllers
 {
-    using System.Security.Claims;
     using System.Web.Http;
     using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
@@ -22,15 +21,15 @@
         /// <summary>
         /// Endpoint for linking an employer to a provider site.
         /// </summary>
-        /// <param name="employerProviderSiteLink">Defines the provider site to link to as well as additional employer information. Note that you can specify the employer identifier in either the URL or the POST body</param>
+        /// <param name="employerProviderSiteLinkRequest">Defines the provider site to link to as well as additional employer information. Note that you can specify the employer identifier in either the URL or the POST body</param>
         /// <param name="edsUrn">The employer's secondary identifier.</param>
         /// <returns></returns>
         [Route("employer/{edsUrn}/link")]
-        [ResponseType(typeof(EmployerProviderSiteLinkResponse))]
+        [ResponseType(typeof(EmployerProviderSiteLink))]
         [SwaggerOperation("LinkEmployer")]
-        public IHttpActionResult LinkEmployer(EmployerProviderSiteLinkRequest employerProviderSiteLink, int edsUrn)
+        public IHttpActionResult LinkEmployer(EmployerProviderSiteLinkRequest employerProviderSiteLinkRequest, int edsUrn)
         {
-            return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLink, edsUrn, User.GetUkprn()));
+            return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLinkRequest, edsUrn, User.GetUkprn()));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using Application.Interfaces;
     using Application.Interfaces.Applications;
@@ -386,7 +387,7 @@
                         //This method actually returns a new VOR but with an Id of 0 if none exists however that couples this code to that implementation so we should still perform the null check 
                         var existingVacancyOwnerRelationship =
                             _providerService.GetVacancyOwnerRelationship(vacancyOwnerRelationship.EmployerId,
-                                vacancyTransferViewModel.ProviderSiteId);
+                                vacancyTransferViewModel.ProviderSiteId, true);
                         if (existingVacancyOwnerRelationship == null || existingVacancyOwnerRelationship.VacancyOwnerRelationshipId == 0)
                         {
                             //No matching VOR exists for the new provider and provider site so create it.
@@ -394,6 +395,7 @@
                             existingVacancyOwnerRelationship = existingVacancyOwnerRelationship ?? new VacancyOwnerRelationship { ProviderSiteId = vacancyTransferViewModel.ProviderSiteId, EmployerId = vacancyOwnerRelationship.EmployerId };
                             existingVacancyOwnerRelationship.EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsiteUrl;
                             existingVacancyOwnerRelationship.EmployerDescription = vacancyOwnerRelationship.EmployerDescription;
+                            existingVacancyOwnerRelationship.StatusType = VacancyOwnerRelationshipStatusTypes.Live;
                             existingVacancyOwnerRelationship = _providerService.SaveVacancyOwnerRelationship(existingVacancyOwnerRelationship);
                         }
 
@@ -1664,7 +1666,7 @@
             var vacancyLocations = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>).ToList();
 
             var vacancyOwnerRelationship =
-                _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
+                _providerService.GetVacancyOwnerRelationship(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn, true);
             viewModel.VacancyOwnerRelationshipId = vacancyOwnerRelationship.VacancyOwnerRelationshipId;
 
             var employer = _employerService.GetEmployer(vacancyOwnerRelationship.EmployerId, true);

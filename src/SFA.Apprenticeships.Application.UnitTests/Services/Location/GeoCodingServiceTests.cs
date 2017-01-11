@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
 {
     using Apprenticeships.Application.Location;
     using Domain.Entities.Raa.Locations;
