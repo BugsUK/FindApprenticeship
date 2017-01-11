@@ -109,8 +109,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </nav>
                 </div>
             </div>
-
-
         </div>
     </header>
 
@@ -140,14 +138,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         var warningMessage = controller.UserData.Pop(UserMessageConstants.WarningMessage);
                         var errorMessage = controller.UserData.Pop(UserMessageConstants.ErrorMessage);
 
-                            if (errorMessage != null)
-                            {
-                            <div role="alert" class="panel-danger">
-                                <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
+                        if (errorMessage != null)
+                        {
+                            <div class="grid-row">
+                                <div class="column-two-thirds">
+                                    <div class='error-summary' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+                                        <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
+                                    </div>
+                                </div>
                             </div>
-                            }
-                            if (warningMessage != null)
-                            {
+                        }
+                        if (warningMessage != null)
+                        {
                             <div class="grid-row">
                                 <div class="column-two-thirds">
                                     <div class="warning-summary" role="group" aria-labelledby="WarningMessageText" tabindex="-1">

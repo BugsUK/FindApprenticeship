@@ -94,8 +94,12 @@
 
                         if (errorMessage != null)
                         {
-                            <div role="alert" class="panel-danger">
-                                <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
+                            <div class="grid-row">
+                                <div class="column-two-thirds">
+                                    <div class='error-summary' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+                                        <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
+                                    </div>
+                                </div>
                             </div>
                         }
                         if (warningMessage != null)
