@@ -233,6 +233,7 @@
 
             var existingVacancy = await _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
             var newViewModel =  await _providerProvider.ConfirmVacancyOwnerRelationship(viewModel);
+            viewModel.VacancyOwnerRelationshipId = newViewModel.VacancyOwnerRelationshipId;
 
             if (existingVacancy != null)
             {
@@ -240,8 +241,6 @@
             }
             else
             {
-                viewModel.VacancyOwnerRelationshipId = newViewModel.VacancyOwnerRelationshipId;
-
                 try
                 {
                     CreateNewVacancy(viewModel, ukprn);
