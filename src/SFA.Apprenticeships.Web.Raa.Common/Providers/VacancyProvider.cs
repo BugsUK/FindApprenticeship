@@ -155,12 +155,15 @@
             {
                 foreach (VacancyLocationAddressViewModel vacancyLocationAddressViewModel in locationAddresses)
                 {
-                    var geoPoint =
-                    _geoCodingService.GetGeoPointFor(
-                        _mapper.Map<AddressViewModel, PostalAddress>(vacancyLocationAddressViewModel.Address));
-
-                    vacancyLocationAddressViewModel.Address.GeoPoint =
-                        _mapper.Map<GeoPoint, GeoPointViewModel>(geoPoint);
+                    var vacancyAddress =
+                        _mapper.Map<AddressViewModel, PostalAddress>(vacancyLocationAddressViewModel.Address);
+                    if (vacancyAddress.GeoPoint == null || vacancyAddress.GeoPoint.IsSet())
+                    {
+                        var geoPoint =
+                    _geoCodingService.GetGeoPointFor(vacancyAddress);
+                        vacancyLocationAddressViewModel.Address.GeoPoint =
+                            _mapper.Map<GeoPoint, GeoPointViewModel>(geoPoint);
+                    }
                 }
                 return locationAddresses;
             }
