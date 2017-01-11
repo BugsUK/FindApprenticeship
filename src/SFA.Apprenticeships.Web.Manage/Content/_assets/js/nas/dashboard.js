@@ -4,44 +4,20 @@ $(function () {
         history.replaceState({ searchUrl: location.href }, location.href);
     };
 
-    $(document).on('change', '#provider-site', function () {
-        var form = $('form[name="provider-site-form"]');
-        var input = $("<input>").attr("type", "hidden").attr("name", "ChangeProviderSiteAction").val("ChangeProviderSite");
+    $(document).on('change', '#role', function () {
+        var form = $('form');
+        var input = $("<input>").attr("type", "hidden").attr("name", "DashboardAction").val("ChangeRole");
         form.append(input);
-        loadResults(searchUrl, true, false, 'POST', form.serialize());
+        form.submit();
+        //loadResults(searchUrl, true, false, 'POST', form.serialize());
     });
 
-    $(document).on('change', '#page-size', function () {
-        var form = $('form[name="vacancy-search-form"]');
-        var input = $("<input>").attr("type", "hidden").attr("name", "SearchVacanciesAction").val("SearchVacancies");
+    $(document).on('change', '#regional-team', function () {
+        var form = $('form');
+        var input = $("<input>").attr("type", "hidden").attr("name", "DashboardAction").val("ChangeTeam");
         form.append(input);
-        loadResults(searchUrl, true, false, 'POST', form.serialize());
-    });
-
-    $(document).on('click', '#search-vacancies-button', function (e) {
-        e.preventDefault();
-        var form = $('form[name="vacancy-search-form"]');
-        var input = $("<input>").attr("type", "hidden").attr("name", "SearchVacanciesAction").val("SearchVacancies");
-        form.append(input);
-        loadResults(searchUrl, true, false, 'POST', form.serialize());
-    });
-
-    $(document).on('click', '.page-navigation__btn:not(#page-size-container)', function (e) {
-        e.preventDefault();
-        var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true, false, 'GET');
-    });
-
-    $(document).on('click', '.vacancy-filter', function (e) {
-        e.preventDefault();
-        var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true, false, 'GET');
-    });
-
-    $(document).on('click', '.tabbed-tab', function (e) {
-        e.preventDefault();
-        var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true, false, 'GET');
+        form.submit();
+        //loadResults(searchUrl, true, false, 'POST', form.serialize());
     });
 
     function loadResults(searchQueryUrl, addHistory, scrollTop, method, data) {

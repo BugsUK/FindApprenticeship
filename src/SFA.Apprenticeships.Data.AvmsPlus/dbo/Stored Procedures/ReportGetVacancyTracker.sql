@@ -40,9 +40,7 @@ AS
 	from @vacancyHistory vh 
 	JOIN Vacancy V ON V.VacancyId = vh.VacancyId
 	JOIN VacancyStatusType VST ON V.VacancyStatusId = VST.VacancyStatusTypeId
-	JOIN VacancyOwnerRelationship VOR ON VOR.VacancyOwnerRelationshipId = V.VacancyOwnerRelationshipId
-	JOIN ProviderSiteRelationship PSR ON PSR.ProviderSiteID = VOR.ProviderSiteID
-	JOIN Provider P ON P.ProviderID = PSR.ProviderID
+	JOIN Provider P ON P.ProviderID = V.ContractOwnerId
 	WHERE V.VacancyStatusId IN (2,3)
 	ORDER BY V.QAUserName
 

@@ -35,7 +35,7 @@
         </li>
     }
 
-    @if (Model.Status.CanEditWage(Model.VacancyType))
+    @if (Model.Status.CanEditWage(Model.VacancyType, Model.Wage.Type, Model.Wage.HoursPerWeek))
     {
         <li>
             @Html.RouteLink("Increase wage", RecruitmentRouteNames.EditWage, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })

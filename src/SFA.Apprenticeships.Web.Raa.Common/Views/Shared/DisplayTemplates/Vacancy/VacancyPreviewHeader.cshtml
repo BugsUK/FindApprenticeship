@@ -27,14 +27,14 @@
         <ul class="list sfa-align-right-tablet sfa-xlarge-top-margin">
             @if (Model.Mode == VacancyViewModel.BulkUploadMode)
             {
-                @Html.Partial("DisplayTemplates/_BulkUploadVacancyLinks", new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount, Model.VacancyType, Model.ApplicationPendingDecisionCount))
+                @Html.Partial("DisplayTemplates/_BulkUploadVacancyLinks", new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount, Model.VacancyType, Model.ApplicationPendingDecisionCount, Model.FurtherVacancyDetailsViewModel.Wage))
             }
             else
             {
                 
                 @Html.Partial(ContactDetailsAndVacancyHistoryViewModel.PartialView, Model.ContactDetailsAndVacancyHistory ?? ContactDetailsAndVacancyHistoryViewModel.EmptyContactDetailsAndVacancyHistory)
                 
-                @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount, Model.VacancyType, Model.ApplicationPendingDecisionCount))
+                @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyReferenceNumber, Model.Status, Model.ApplicationCount, Model.VacancyType, Model.ApplicationPendingDecisionCount, Model.FurtherVacancyDetailsViewModel.Wage))
             }
         </ul>
     </div>

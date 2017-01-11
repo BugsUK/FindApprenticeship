@@ -916,7 +916,6 @@
     <Content Include="Content\_assets\js\prototype-recruit.js" />
     <Content Include="Content\_assets\js\refineSearch.js" />
     <Content Include="Content\_assets\js\scripts.js" />
-    <Content Include="Content\_assets\js\scripts.min.js" />
     <Content Include="Content\_assets\js\sticky.js" />
     <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\ckeditor\adapters\jquery.js" />
@@ -1134,7 +1133,6 @@
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="Content\_assets\js\vendor\jquery.scrollTableBody-1.0.0.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
-    <Content Include="Content\_assets\js\vendor\jquery.validate.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.min.js" />
