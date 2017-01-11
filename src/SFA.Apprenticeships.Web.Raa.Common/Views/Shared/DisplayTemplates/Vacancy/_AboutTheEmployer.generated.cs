@@ -1741,13 +1741,12 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
                 }
                 else
                 {
-                var queryForMap = Model.Address.Postcode + ",+United+Kingdom";
-                var geoPointViewModel = Model.Address.GeoPoint;
-                if (geoPointViewModel != null && geoPointViewModel.IsSet())
-                {
-                    queryForMap = string.Format("{0}&center={1},{2}", queryForMap, geoPointViewModel.Latitude, geoPointViewModel.Longitude);
-                }
-
+		            var queryForMap = Model.Address.Postcode + ",+United+Kingdom";
+                    var geoPointViewModel = Model.Address.GeoPoint;
+                    if (geoPointViewModel != null && geoPointViewModel.IsSet())
+                    {
+                        queryForMap = string.Format("{0}&center={1},{2}", queryForMap, geoPointViewModel.Latitude, geoPointViewModel.Longitude);
+                    }
 
             
             #line default
@@ -1774,16 +1773,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 21070), Tuple.Create("\"", 21218)
-, Tuple.Create(Tuple.Create("", 21076), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 21076), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 25535), Tuple.Create("\"", 25656)
+, Tuple.Create(Tuple.Create("", 25541), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 25541), true)
             
-            #line 317 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 21121), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
+            #line 323 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+                                                                    , Tuple.Create(Tuple.Create("", 25586), Tuple.Create<System.Object, System.Int32>(Html.Raw(queryForMap)
             
             #line default
             #line hidden
-, 21121), false)
-, Tuple.Create(Tuple.Create("", 21154), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 21154), true)
+, 25586), false)
+, Tuple.Create(Tuple.Create("", 25608), Tuple.Create("&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 25608), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
@@ -1794,13 +1793,13 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "        </div>\r\n");
 
             
-            #line 311 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 326 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                 }
             
             #line default
             #line hidden
             
-            #line 315 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 326 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
                  
             }
             else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
@@ -1831,16 +1830,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 21734), Tuple.Create("\"", 21908)
-, Tuple.Create(Tuple.Create("", 21740), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 21740), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 26246), Tuple.Create("\"", 26420)
+, Tuple.Create(Tuple.Create("", 26252), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26252), true)
             
-            #line 320 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                        , Tuple.Create(Tuple.Create("", 21785), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
+            #line 332 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 26297), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
             
             #line default
             #line hidden
-, 21785), false)
-, Tuple.Create(Tuple.Create("", 21844), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 21844), true)
+, 26297), false)
+, Tuple.Create(Tuple.Create("", 26356), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26356), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -1851,7 +1850,7 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "    </div>\r\n");
 
             
-            #line 323 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            #line 335 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
             }
 
             
