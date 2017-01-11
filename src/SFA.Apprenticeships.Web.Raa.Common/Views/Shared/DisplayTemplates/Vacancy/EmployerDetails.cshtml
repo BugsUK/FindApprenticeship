@@ -47,6 +47,8 @@
                     <h4 class="bold-small">Vacancy location options</h4>
                     @if (Model.IsEmployerAddressValid)
                     {
+                        @Html.ValidationMessageFor(m => m.VacancyLocationType)
+
                         <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
                             @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.SpecificLocation, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"})
                             Use the main employer address
@@ -86,6 +88,7 @@
                 <div class="form-group inline clearfix blocklabel-single">
                     <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
                     <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
+                    @Html.ValidationMessageFor(m => m.IsAnonymousEmployer)
                     <label data-target="is-non-anonymous-employer-panel" for="is-non-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
                         @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "is-non-anonymous-employer", aria_controls = "is-non-anonymous-employer-panel" })
                         Yes
@@ -103,6 +106,7 @@
                 <div class="form-group inline clearfix blocklabel-single">
                     <a name="@Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()"></a>
                     <h4 class="bold-small">Is this address the vacancy location?</h4>
+                    @Html.ValidationMessageFor(m => m.VacancyLocationType)
 
                     <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
                         @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.SpecificLocation, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
@@ -130,6 +134,7 @@
                 <div class="form-group inline clearfix blocklabel-single">
                     <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
                     <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
+                    @Html.ValidationMessageFor(m => m.IsAnonymousEmployer)
 
                     <label data-target="is-anonymous-employer" for="is-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
                         @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "anonymous-employer", aria_controls = "anonymous-employer" })
