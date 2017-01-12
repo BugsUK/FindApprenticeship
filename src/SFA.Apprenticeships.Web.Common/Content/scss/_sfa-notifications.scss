@@ -80,7 +80,7 @@ $success-colour:$turquoise;
 
 // Info notification styles
 .info-summary {
-  border-color;$info-colour;
+  border-color:$info-colour;
 
   @include media(tablet) {
     border-color:$info-colour;
@@ -98,7 +98,7 @@ $success-colour:$turquoise;
 
 // Success notification styles
 .info-summary {
-  border-color;$success-colour;
+  border-color:$success-colour;
 
   @include media(tablet) {
     border-color:$success-colour;

@@ -330,17 +330,17 @@ WriteLiteral("                    </p>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                <p>\r\n                    <a");
+WriteLiteral("                <p>\r\n                                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3468), Tuple.Create("\"", 3673)
+WriteAttribute("href", Tuple.Create(" href=\"", 3484), Tuple.Create("\"", 3646)
             
             #line 70 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3475), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications,
-                                                 new {Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks})
+, Tuple.Create(Tuple.Create("", 3491), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications,
+    new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
-, 3475), false)
+, 3491), false)
 );
 
 WriteLiteral(" class=\"notInterested link-unimp icon-black\"");
@@ -351,8 +351,8 @@ WriteLiteral("><fa");
 
 WriteLiteral(" class=\"fa fa-times-circle\"");
 
-WriteLiteral("></fa>Dismiss this message</a>\r\n                </p>\r\n\r\n            </div>\r\n     " +
-"   </div>\r\n    </div>\r\n");
+WriteLiteral("></fa>Dismiss this message</a>\r\n                                </p>\r\n\r\n         " +
+"   </div>\r\n        </div>\r\n    </div>\r\n");
 
             
             #line 77 "..\..\Views\Account\Index.cshtml"
