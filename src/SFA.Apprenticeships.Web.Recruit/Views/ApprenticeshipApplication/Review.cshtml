@@ -26,17 +26,23 @@
         var decision = Model.Status == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
         var decisionDateTime = Model.Status == ApplicationStatuses.Successful ? Model.SuccessfulDateTime : Model.UnsuccessfulDateTime;
 
-        <div role="alert" class="panel-info">
-            <p>
-                <i class="fa fa-flag the-icon"></i>This candidate was made @decision
-                @if (decisionDateTime.HasValue)
-                {
-                    <span>on @Html.DisplayFor(m => decisionDateTime.Value)</span>
-                }
-            </p>
-            <p>
-                @Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
-            </p>
+
+        <div class="grid-row">
+            <div class="column-two-thirds">
+                <div class="info-summary" role="group" aria-labelledby="info-summary" tabindex="-1">
+
+                    <p id="info-summary">
+                        This candidate was made @decision
+                        @if (decisionDateTime.HasValue)
+                        {
+                            <span>on @Html.DisplayFor(m => decisionDateTime.Value)</span>
+                        }
+                    </p>
+                    <p>
+                        @Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
+                    </p>
+                </div>
+            </div>
         </div>
     }
     <div class="grid-row hgroup">

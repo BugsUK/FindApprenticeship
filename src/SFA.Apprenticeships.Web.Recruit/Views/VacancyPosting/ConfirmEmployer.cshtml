@@ -11,6 +11,8 @@
             Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save and return to Preview" : "Save and continue";
 }
 
+@Html.Partial("ValidationSummary")
+
 <div class="grid-row">
     <div class="column-two-thirds">
         <h1 class="heading-xlarge">
@@ -22,7 +24,7 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmEmployer, FormMethod.Post, new { id = "confirm-employer-form" }))
 {
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
-
+    
     <div class="column-full">
         <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
         @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button sfa-button-secondary" })

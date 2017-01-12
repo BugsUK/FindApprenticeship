@@ -1,16 +1,14 @@
 ﻿@model ModelStateDictionary
 
-<div id="error-summary" class='error-summary @(Model.IsValid ? "sfa-hide" : "")' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
-    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-        Please fix these errors
-    </h1>
+<div class="grid-row">
+<div class="column-two-thirds">
+    <div id="error-summary" class='error-summary @(Model.IsValid ? "sfa-hide" : "")' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+        <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+            Please fix these errors
+        </h1>
 
-    <!--<p>
-        Optional description of the errors and how to correct them
-    </p>-->
-
-    <ul class="error-summary-list">
-        @foreach (var modelKey in Model.Keys)
+        <ul class="error-summary-list">
+            @foreach (var modelKey in Model.Keys)
             {
                 var modelState = Model[modelKey];
                 var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
@@ -18,14 +16,16 @@
                 {
                     if (elementId == string.Empty)
                     {
-                    <li>@modelError.ErrorMessage</li>
-                }
-                else
-                {
-                    <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                        <li>@modelError.ErrorMessage</li>
+                    }
+                    else
+                    {
+                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                    }
                 }
             }
-        }
-    </ul>
+        </ul>
 
+    </div>
+</div>
 </div>
