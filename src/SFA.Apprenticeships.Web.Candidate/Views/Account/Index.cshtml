@@ -31,68 +31,68 @@
     <div class="grid-row">
         <div class="column-two-thirds">
             <div id="traineeshipPrompt" class="info-summary" role="group" aria-labelledby="InfoMessageText" tabindex="-1">
-                        <p>
-                            Have you considered a traineeship? Traineeships are designed to get someone ready for an apprenticeship.
-                        </p>
-                        <p>
-                            <a id="traineeship-overview-link"
-                               href="@Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)"
-                               onlick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/promptaccept', 'WT.dl', '99', 'WT.ti', 'Traineeship Prompt Accepted'] })">More about traineeships</a>
-                        </p>
-                        <p>
-                            <a id="dismiss-traineeship-prompts-link"
-                               class="notInterested link-unimp icon-black"
-                               href="@Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)"
-                               onclick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/promptdecline', 'WT.dl', '99', 'WT.ti', 'Traineeship Prompt Declined'] })"><i class="font-xsmall fa fa-times-circle"></i>Don't show me this again</a>
-                        </p>
-                </div>
+                <p>
+                    Have you considered a traineeship? Traineeships are designed to get someone ready for an apprenticeship.
+                </p>
+                <p>
+                    <a id="traineeship-overview-link"
+                       href="@Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)"
+                       onlick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/promptaccept', 'WT.dl', '99', 'WT.ti', 'Traineeship Prompt Accepted'] })">More about traineeships</a>
+                </p>
+                <p>
+                    <a id="dismiss-traineeship-prompts-link"
+                       class="notInterested link-unimp icon-black"
+                       href="@Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)"
+                       onclick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/promptdecline', 'WT.dl', '99', 'WT.ti', 'Traineeship Prompt Declined'] })"><i class="font-xsmall fa fa-times-circle"></i>Don't show me this again</a>
+                </p>
             </div>
         </div>
-                }
+    </div>
+}
 
-                @if (Model.ApplicationStatusNotifications.Any())
+@if (Model.ApplicationStatusNotifications.Any())
+{
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <div id="statusPrompt" class="info-summary" role="group" aria-labelledby="InfoMessageText" tabindex="-1">
+                @foreach (var applicationNotification in Model.ApplicationStatusNotifications)
                 {
-                    <div class="grid-row">
-                        <div class="column-two-thirds">
-                            <div id="statusPrompt" class="info-summary" role="group" aria-labelledby="InfoMessageText" tabindex="-1">
-                                @foreach (var applicationNotification in Model.ApplicationStatusNotifications)
-                                {
-                                    var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
-                                    <p>
-                                        Your application for @applicationNotification.Title has been @successOrUnsuccessful.
-                                        @if (applicationNotification.UnsuccessfulReason != null)
-                                        {
-                                            <a href="@Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new { id = applicationNotification.VacancyId })">Read feedback</a>
-                                        }
-                                    </p>
-                                }
-                                <p>
-                                    <a href="@Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications,
-                        new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
-                                </p>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    var successOrUnsuccessful = applicationNotification.ApplicationStatus == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
+                    <p>
+                        Your application for @applicationNotification.Title has been @successOrUnsuccessful.
+                        @if (applicationNotification.UnsuccessfulReason != null)
+                        {
+                            <a href="@Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new {id = applicationNotification.VacancyId})">Read feedback</a>
+                        }
+                    </p>
+                }
+                <p>
+                    <a href="@Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications,
+                                                 new {Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks})" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
+                </p>
 
-                    <div class="grid-row">
-                        <div class="column-two-thirds">
-                            <h1 class="heading-xlarge">My applications</h1>
-                        </div>
-                        <div class="column-one-third">
-                            <ul class="list sfa-align-right-tablet sfa-xlarge-top-margin">
-                                @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
-                                {
-                                    <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "link-unimp" })</li>
-                                }
-                                @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
-                                {
-                                    <li>
-                                        @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "link-unimp" })
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">My applications</h1>
+    </div>
+    <div class="column-one-third">
+        <ul class="list sfa-align-right-tablet sfa-xlarge-top-margin">
+            @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
+            {
+                <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "link-unimp" })</li>
+            }
+            @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+            {
+                <li>
+                    @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "link-unimp" })
+                </li>
+            }
+        </ul>
+    </div>
+</div>
 
-                    @Html.DisplayFor(m => m, MyApplicationsViewModel.PartialView)
+@Html.DisplayFor(m => m, MyApplicationsViewModel.PartialView)

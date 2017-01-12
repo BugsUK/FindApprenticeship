@@ -386,8 +386,9 @@
     <None Include="Content\scss\_select2-styles.scss" />
     <None Include="Content\scss\_sfa-custom-layouts.scss" />
     <None Include="Content\scss\_sfa-buttons.scss" />
-    <None Include="Content\scss\_form-warnings.scss" />
     <None Include="Content\scss\_inline-search.scss" />
+    <None Include="Content\scss\_sfa-form-warnings.scss" />
+    <None Include="Content\scss\_sfa-notifications.scss" />
     <None Include="Content\scss\_tabbed-nav.scss" />
     <None Include="package.json" />
     <None Include="packages.config">
