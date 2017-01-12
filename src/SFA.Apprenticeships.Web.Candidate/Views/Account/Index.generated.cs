@@ -340,11 +340,11 @@ WriteLiteral("                                    </p>\r\n");
             #line hidden
 WriteLiteral("                                <p>\r\n                                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3898), Tuple.Create("\"", 4080)
+WriteAttribute("href", Tuple.Create(" href=\"", 3898), Tuple.Create("\"", 4060)
             
             #line 70 "..\..\Views\Account\Index.cshtml"
 , Tuple.Create(Tuple.Create("", 3905), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications,
-                        new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
+    new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
@@ -475,6 +475,7 @@ WriteLiteral("                            </ul>\r\n                        </div
             
             #line 98 "..\..\Views\Account\Index.cshtml"
                                                                                  
+                }
 
             
             #line default
