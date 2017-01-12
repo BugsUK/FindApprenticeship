@@ -189,10 +189,12 @@ BEGIN TRY
 		join Employer E on E.EmployerId = VPR.EmployerId  --and vpr.ManagerIsEmployer = 1
 		left join ApprenticeshipFramework AF 
 		on AF.ApprenticeshipFrameworkId = V.ApprenticeshipFrameworkId
-		left join ApprenticeshipOccupation AO 
+		LEFT join ApprenticeshipOccupation AO 
 		on AO.ApprenticeshipOccupationId = AF.ApprenticeshipOccupationId
-		LEFT JOIN Reference.Standard std ON V.StandardId = std.StandardId
-		inner join ApprenticeshipFrameworkStatusType AFST on AF.ApprenticeshipFrameworkStatusTypeId = AFST.ApprenticeshipFrameworkStatusTypeId
+		LEFT join ApprenticeshipFrameworkStatusType AFST 
+		on AF.ApprenticeshipFrameworkStatusTypeId = AFST.ApprenticeshipFrameworkStatusTypeId
+		LEFT JOIN Reference.Standard std 
+		ON V.StandardId = std.StandardId
 		inner join LocalAuthority LA on LA.LocalAuthorityId = V.LocalAuthorityId
 		INNER JOIN vwRegionsAndLocalAuthority RLA
 			ON LA.LocalAuthorityID = RLA.LocalAuthorityID
