@@ -11,7 +11,7 @@
             Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save and return to Preview" : "Save and continue";
 }
 
-@Html.Partial("ValidationSummary")
+@Html.Partial("ValidationSummary", ViewData.ModelState)
 
 <div class="grid-row">
     <div class="column-two-thirds">
