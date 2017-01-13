@@ -57,12 +57,12 @@
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
 
-        container.removeClass("field-validation-valid").addClass("field-validation-error");
+        container.removeClass("field-validation-valid").addClass("error-message");
         error.data("unobtrusiveContainer", container);
 
         if (replace) {
             container.empty();
-            error.removeClass("input-validation-error").appendTo(container);
+            error.removeClass("error").appendTo(container);
         }
         else {
             error.hide();
@@ -95,7 +95,7 @@
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
 
         if (container) {
-            container.addClass("field-validation-valid").removeClass("field-validation-error");
+            container.addClass("field-validation-valid").removeClass("error-message");
             error.removeData("unobtrusiveContainer");
 
             if (replace) {
@@ -110,9 +110,9 @@
         $form.find(".validation-summary-errors")
             .addClass("validation-summary-valid")
             .removeClass("validation-summary-errors");
-        $form.find(".field-validation-error")
+        $form.find(".error-message")
             .addClass("field-validation-valid")
-            .removeClass("field-validation-error")
+            .removeClass("error-message")
             .removeData("unobtrusiveContainer")
             .find(">*")  // If we were using valmsg-replace, get the underlying error
                 .removeData("unobtrusiveContainer");
@@ -126,7 +126,7 @@
         if (!result) {
             result = {
                 options: {  // options structure passed to jQuery Validate's validate() method
-                    errorClass: "input-validation-error",
+                    errorClass: "error",
                     errorElement: "span",
                     errorPlacement: $.proxy(onError, form),
                     invalidHandler: $.proxy(onErrors, form),
@@ -141,11 +141,7 @@
                         .validate(this.options);
                 },
                 validate: function () {  // a validation function that is called by unobtrusive Ajax
-                    $form.validate(
-                        {
-                            ignore: ".ignore-jquery-validation"
-                        }
-                    );
+                    $form.validate();
                     return $form.valid();
                 }
             };

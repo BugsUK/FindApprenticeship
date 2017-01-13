@@ -1,11 +1,11 @@
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.Entities
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using Dapper.Contrib.Extensions;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     [System.ComponentModel.DataAnnotations.Schema.Table("dbo.Vacancy")]
     public class Vacancy : IVacancyWage
@@ -19,7 +19,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Write(false)]
         public DateTime? DateSubmitted { get; set; }
 
-        [Write(false)]
         public string AdditionalLocationInformation { get; set; }
 
         [Write(false)]
@@ -88,8 +87,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public bool EditedInRaa { get; set; }
 
         public string EmployerAnonymousName { get; set; }
+        public string EmployerAnonymousReason { get; set; }
+
+        public string AnonymousAboutTheEmployer { get; set; }
 
         [Write(false)]
+        public string AnonymousEmployerDescriptionComment { get; set; }
+        [Write(false)]
+        public string AnonymousEmployerReasonComment { get; set; }
+
+        [Write(false)]
+        public string AnonymousAboutTheEmployerComment { get; set; }
         public string EmployerDescription { get; set; }
         [Write(false)]
         public string EmployerDescriptionComment { get; set; }
@@ -266,7 +274,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         [Column(TypeName = "money")]
         public decimal? WeeklyWage { get; set; }
-        
+
         public string WorkingWeek { get; set; }
 
         [Write(false)]
@@ -307,5 +315,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         [Write(false)]
         public string LocalAuthorityCode { get; set; }
+
+        [Write(false)]
+        public bool? IsMultiLocation { get; set; }
     }
 }

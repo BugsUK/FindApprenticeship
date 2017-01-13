@@ -44,7 +44,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         {
 WriteLiteral("<fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <legend");
 
@@ -58,7 +58,7 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"school-name\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Name of most recent school/college</label>\r\n        <span");
 
@@ -81,7 +81,7 @@ WriteLiteral(" class=\"inline-fixed\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Years attended</p>\r\n        <div");
 

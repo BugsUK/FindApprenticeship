@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     // Qualification Validation Messages
     var validationMessageSelectQualificationType = "Please select qualification type";
     var validationMessageOtherQualificationRequired = "Please enter other qualification";
@@ -1066,11 +1066,11 @@
             var valueIsValid = valueAccessor().isValid();
             if (!valueIsValid && viewModel.isAnyMessageShown()) {
                 //adds the vertical bar to the input element when it is invalid
-                $(element).addClass("input-validation-error");
+                $(element).addClass("error");
             }
             else {
                 //removes the vertical bar when valid
-                $(element).removeClass("input-validation-error");
+                $(element).removeClass("error");
             }
         }
     };
@@ -1081,7 +1081,7 @@
 
             var span = document.createElement('span');
 
-            span.className = "field-validation-error";
+            span.className = "error-message";
             $(span).attr('aria-live', 'polite');
 
             var inputFormControlParent = $(element).closest(".validation-message-parent").find('.validation-message-container');
@@ -1102,8 +1102,8 @@
             messagesOnModified: true,
             insertMessages: true,
             parseInputAttributes: true,
-            errorClass: 'input-validation-error',
-            errorElementClass: 'input-validation-error'//,
+            errorClass: 'error',
+            errorElementClass: 'error'//,
             //messageTemplate: 'errorMessage',
             //grouping: { deep: true, observable: false }
         });

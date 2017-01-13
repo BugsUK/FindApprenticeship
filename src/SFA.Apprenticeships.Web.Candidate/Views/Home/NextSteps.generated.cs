@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/NextSteps.cshtml")]
@@ -64,17 +65,9 @@ WriteLiteral("\r\n\r\n<h2");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Next steps</h2>\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <p>\r\n        If your application was unsuccessful there are a few things y" +
-"ou can do\r\n        to ensure you have a better chance next time.\r\n    </p>\r\n</di" +
-"v>\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <p>\r\n        Read the <a");
+WriteLiteral(">Next steps</h2>\r\n<div>\r\n    <p>\r\n        If your application was unsuccessful th" +
+"ere are a few things you can do\r\n        to ensure you have a better chance next" +
+" time.\r\n    </p>\r\n</div>\r\n<div>\r\n    <p>\r\n        Read the <a");
 
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearnin" +
 "g/Pages/apprenticeship-application-help.aspx\"");
@@ -100,11 +93,7 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n<div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h3");
+WriteLiteral("\r\n    </div>\r\n</div>\r\n<div>\r\n    <h3");
 
 WriteLiteral(" class=\"heading-medium heading-with-check\"");
 
@@ -114,11 +103,11 @@ WriteLiteral(" class=\"font-large fa fa-users\"");
 
 WriteLiteral("></i>What the shortlisters say\r\n    </h3>\r\n    <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -132,7 +121,7 @@ WriteLiteral(@"></i>Good applicants have well-written
         </div>
         <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -142,7 +131,7 @@ WriteLiteral("></i>Your application needs to show that\r\n                you ha
 "why you are applying for the job.\r\n            </p>\r\n        </div>\r\n        <di" +
 "v");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -156,7 +145,7 @@ WriteLiteral(@"></i>Avoid poor spelling, grammar and
         </div>
         <div");
 
-WriteLiteral(" class=\"med-btm-margin\"");
+WriteLiteral(" class=\"sfa-medium-bottom-margin\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <i");
 
@@ -174,7 +163,7 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>Mistakes can spell trouble\r\n    </h3>\r\n    <details>\r\n        <summary>More " +
 "details</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>
@@ -200,7 +189,7 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>Tailored applications, not mass mailshot\r\n    </h3>\r\n    <details>\r\n        " +
 "<summary>More details</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(@">
             <p>
@@ -226,11 +215,11 @@ WriteLiteral(" class=\"font-large fa fa-check-square-o\"");
 WriteLiteral("></i>The perfect apprentice\r\n    </h3>\r\n    <details>\r\n        <summary>More deta" +
 "ils</summary>\r\n        <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"detail-content panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n            Employers want an apprentice who’s:\r\n            <ul");
 
-WriteLiteral(" class=\"list-bullet med-btm-margin\"");
+WriteLiteral(" class=\"list list-bullet\"");
 
 WriteLiteral(@">
                 <li>reliable</li>
@@ -276,7 +265,7 @@ WriteLiteral("</div>\r\n    </div>\r\n</div>\r\n<ol");
 
 WriteLiteral(" id=\"newAppChanges\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(">\r\n    <li");
 

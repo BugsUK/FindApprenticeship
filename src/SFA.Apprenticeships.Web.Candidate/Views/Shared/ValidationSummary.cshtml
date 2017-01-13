@@ -1,8 +1,13 @@
 ﻿@model ModelStateDictionary
 
-<div id="validation-summary" class='@(Html.ViewData.ModelState.IsValid ? "validation-summary-valid" : "validation-summary-errors") panel panel-danger' data-valmsg-summary="true">
-    <div class="panel-body">
-        <ul>
+<div class="grid-row">
+<div class="column-two-thirds">
+    <div id="error-summary" class='error-summary @(Model.IsValid ? "sfa-hide" : "")' role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+        <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+            Please fix these errors
+        </h1>
+
+        <ul class="error-summary-list">
             @foreach (var modelKey in Model.Keys)
             {
                 var modelState = Model[modelKey];
@@ -20,5 +25,7 @@
                 }
             }
         </ul>
+
     </div>
+</div>
 </div>

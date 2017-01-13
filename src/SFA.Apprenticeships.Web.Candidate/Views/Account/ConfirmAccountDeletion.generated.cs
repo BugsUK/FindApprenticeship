@@ -71,23 +71,19 @@ WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"hgroup\"");
 
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n        <h1");
+WriteLiteral(">\r\n    <div>\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Confirm account deletion</h1>\r\n        <h2");
+WriteLiteral(">Confirm account deletion\r\n            <span");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">You will no longer be able to use this service, and your account data will be lo" +
-"st.​</h2>\r\n    </div>\r\n</div>\r\n\r\n");
+"st.​</span>\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 15 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+            #line 16 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
 Write(Html.ActionLink("Delete account", "SetDeletionPendingForAccount", "Account", new {@class = "button"}));
 
             
@@ -96,7 +92,7 @@ Write(Html.ActionLink("Delete account", "SetDeletionPendingForAccount", "Account
 WriteLiteral("\r\n");
 
             
-            #line 16 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+            #line 17 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
 Write(Html.ActionLink("Cancel", "DeleteAccountSettings", "Account"));
 
             

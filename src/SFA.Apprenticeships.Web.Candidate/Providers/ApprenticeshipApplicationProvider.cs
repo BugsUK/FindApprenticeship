@@ -10,7 +10,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Globalization;
@@ -480,7 +479,7 @@
 
             var searchParameters = new ApprenticeshipSearchParameters
             {
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = VacancyLocationType.NonNational,
                 ApprenticeshipLevel = searchReturnViewModel.ApprenticeshipLevel,
                 SortType = VacancySearchSortType.Distance,
                 Location = searchLocation,
@@ -559,12 +558,12 @@
         {
             // TODO: why have a patch method like this? should be done in mapper.
             var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
-
+            
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
                 apprenticeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable;
                 apprenticeshipApplicationViewModel.Status = ApplicationStatuses.ExpiredOrWithdrawn;
-
+                
                 return apprenticeshipApplicationViewModel;
             }
 
@@ -578,6 +577,10 @@
             apprenticeshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = vacancyDetailViewModel.SupplementaryQuestion1;
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
+
+            // add in provider contact details
+            apprenticeshipApplicationViewModel.ProviderName = vacancyDetailViewModel.ProviderName;
+            apprenticeshipApplicationViewModel.Contact = vacancyDetailViewModel.Contact;
 
             return apprenticeshipApplicationViewModel;
         }

@@ -3,18 +3,20 @@
     ViewBag.Title = "Agency home";
 }
 
-<div class="grid-wrapper">
-    <section class="grid grid-2-3">
-        <div class="inner-block-padr">
-            <h1 class="heading-xlarge">
-                Recruitment
-            </h1>
-            <p>
-                Review vacancies, search for providers, search for candidates...
-            </p>
-            <div class="get-started form-group">
-                <a href="@Url.RouteUrl(ManagementRouteNames.SignIn)" class="button">Agency</a>
-            </div>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Recruitment
+        </h1>
+    </div>
+</div>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <p>
+            Review vacancies, search for providers, search for candidates...
+        </p>
+        <div class="get-started form-group">
+            <a href="@Url.RouteUrl(ManagementRouteNames.SignIn)" class="button">Agency</a>
         </div>
-    </section>
+    </div>
 </div>

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Register
 {
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using Common.ViewModels.Locations;
     using Constants.ViewModels;
@@ -20,6 +21,8 @@
         [Display(Name = RegisterViewModelMessages.LastnameMessages.LabelText)]
         public string Lastname { get; set; }
 
+
+        [Display(Name = "Date of birth")]
         public DateViewModel DateOfBirth { get; set; }
 
         public AddressViewModel Address{ get; set; }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using System;
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
@@ -230,10 +231,13 @@
             _serverValidator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSets.ErrorsAndWarnings);
         }
 
-        [TestCase(16, false)]
-        [TestCase(2016, true)]
-        public void ClosingDateYearFormat(int year, bool expectValid)
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ClosingDateYearFormat(bool expectValid)
         {
+            var currentYear = DateTime.UtcNow.Year;
+            var year = expectValid ? currentYear : currentYear - 2000; //Either 20XX or XX
+
             var viewModel = new VacancyDatesViewModel
             {
                 ClosingDate = new DateViewModel

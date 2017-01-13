@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Candidate.ViewModels.VacancySearch;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Ploeh.AutoFixture;
 
     public class ApprenticeshipSearchResponseViewModelBuilder
@@ -61,7 +61,7 @@
                     .Build<ApprenticeshipVacancySummaryViewModel>()
                     .With(x => x.IsPositiveAboutDisability, _isPositiveAboutDisability)
                     .With(x => x.NumberOfPositions, _numberOfPositions)
-                    .With(x => x.VacancyLocationType, ApprenticeshipLocationType.NonNational)
+                    .With(x => x.VacancyLocationType, VacancyLocationType.NonNational)
                     .CreateMany(hits)
                     .ToList();                
             }

@@ -1,0 +1,535 @@
+﻿@import "_colours";
+@import "_conditionals";
+@import '_shims';
+@import '_css3';
+
+/* -------------------------------------------------------------------
+SFA navigation
+------------------------------------------------------------------- */
+
+.sfa-navigation-wrapper {
+    overflow:hidden;
+    padding: 10px 0 8px;
+    border-bottom: 1px solid #bfc1c3;
+    .sfa-navigation {
+        font-size:14px;
+        @include media(tablet){
+            text-align:right;
+            float:right !important;
+            font-size:16px;
+        }
+        .sfa-navigation-items {
+            a{
+                margin:0 5px 0 0;
+                @include media(desktop){
+                    margin:0 0 0 5px;
+                }
+            }
+        }
+        .sfa-user-navigation {
+            margin-bottom:5px;
+            span {
+                padding-right:5px;
+            }
+        }
+    }
+    &.phase-banner {
+        .sfa-navigation {
+            margin-top:10px;
+            @include media(tablet){
+                margin-top:0px;
+            }
+            span {
+                display:inline;
+            }
+        }
+    }
+}
+
+.sfa-list-nav {
+    margin-bottom: 30px;
+    padding: 0;
+    li {
+        list-style: none;
+        margin-bottom: 10px;
+        @include media(tablet) {
+            display:inline-block;
+            margin-right: 30px;
+        }
+        &.toggle-content {
+            display: none;
+        }
+    }
+}
+
+/* -------------------------------------------------------------------
+Hide element (window size)
+------------------------------------------------------------------- */
+
+.sfa-hide {
+    display: none;
+    &-mobile {
+        @include media(mobile){
+            display:none;
+        }
+    }
+    &-tablet {
+        @include media(tablet){
+            display:none;
+        }
+    }
+    &-desktop {
+        @include media(desktop){
+            display:none;
+        }
+    }
+}
+
+/* -------------------------------------------------------------------
+Custom margins
+------------------------------------------------------------------- */
+
+.sfa-small-top-margin {
+    margin-top: 5px !important;
+}
+
+.sfa-small-bottom-margin {
+    margin-bottom: 5px !important;
+}
+
+.sfa-medium-top-margin {
+    margin-top: 10px !important;
+}
+
+.sfa-medium-bottom-margin {
+    margin-bottom: 10px !important;
+}
+
+.sfa-medium-right-margin {
+    margin-right: 10px !important;
+}
+
+.sfa-large-bottom-margin {
+    margin-bottom: 15px !important;
+}
+
+.sfa-xlarge-bottom-margin {
+    margin-bottom: 15px !important;
+    @include media(tablet){
+        margin-bottom: 30px !important;
+    }
+}
+
+.sfa-xxlarge-bottom-margin {
+    margin-bottom: 30px !important;
+    @include media(tablet){
+        margin-bottom: 60px !important;
+    }
+}
+
+.sfa-xlarge-top-margin {
+    margin-top: 15px !important;
+    @include media(tablet){
+        margin-top: 30px !important;
+    }
+}
+
+.sfa-p-margin-bottom {
+    margin-bottom: 1.05263em;
+}
+
+/* -------------------------------------------------------------------
+Removed Margins
+------------------------------------------------------------------- */
+
+.sfa-no-margins {
+    margin: 0 !important;
+}
+
+.sfa-no-right-margin {
+    margin-right: 0 !important;
+}
+
+.sfa-no-left-margin {
+    margin-left: 0 !important;
+}
+
+.sfa-no-bottom-margin {
+    margin-bottom: 0 !important;
+}
+
+.sfa-no-top-margin {
+    margin-top: 0 !important;
+}
+
+/* -------------------------------------------------------------------
+Custom padding
+------------------------------------------------------------------- */
+
+.sfa-small-top-padding {
+    padding-top: 5px !important;
+}
+
+.sfa-medium-bottom-padding {
+    padding-bottom: 10px !important;
+}
+
+.sfa-large-bottom-padding {
+    padding-bottom: 15px !important;
+}
+
+.sfa-xlarge-bottom-padding {
+    padding-bottom: 30px !important;
+}
+
+.sfa-xlarge-top-padding {
+    padding-top: 30px !important;
+}
+
+/* -------------------------------------------------------------------
+Custom Font Awesome
+------------------------------------------------------------------- */
+
+i.fa {
+    margin-right:.3em;
+}
+
+/* -------------------------------------------------------------------
+Custom form elements
+------------------------------------------------------------------- */
+
+.sfa-input-auto-width {
+    margin-bottom:5px;
+    @include media(tablet){
+        margin-bottom:0px;
+        width:auto !important;
+    }
+}
+
+.sfa-form-radio, .sfa-form-checkbox {
+    padding-left:18px;
+    input {
+        margin-left:-18px !important;
+    }
+}
+
+.sfa-form-control-after {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 16px;
+    line-height: 1.25;
+    display: block;
+    color: #6f777b;
+    font-weight: normal;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    @include media(tablet){
+        font-size: 19px;
+        line-height: 1.31579;
+    }
+}
+
+/* -------------------------------------------------------------------
+Categories and sub-categories
+------------------------------------------------------------------- */
+
+ul#category-list {
+    li {
+        //overflow:hidden;
+        details {
+            padding-left:22px;
+            ul {
+                float:none;
+            }
+        }
+    }
+}
+
+.sfa-scrollable {
+    max-height: 11em;
+    overflow-y:auto;
+    @include media(tablet){
+        max-height: 20em;
+    }
+    @include media(desktop){
+        max-height:31em;
+    }
+}
+
+/* -------------------------------------------------------------------
+Tabbed content
+------------------------------------------------------------------- */
+
+.browsetab, .searchtab, .savedsearchtab {
+    display: none !important;
+    &.active {
+        display:inline-block !important;
+    }
+}
+
+/* -------------------------------------------------------------------
+Saved searches
+------------------------------------------------------------------- */
+.sfa-saved-search {
+    &:last-child {
+        margin-bottom:0 !important;
+    }
+}
+
+/* -------------------------------------------------------------------
+Custom Typography
+------------------------------------------------------------------- */
+
+.sfa-table-basic {
+    width:auto;
+    th, td {
+        border-bottom:none;
+        padding:0 0.75em 0.75em 0;
+    }
+}
+
+/* -------------------------------------------------------------------
+Custom list
+------------------------------------------------------------------- */
+
+// Detail list mimic GDS .list ul and li pattern
+dl.sfa-dl{
+    .sfa-di { //detail list item. Wraps dt and dd elements to act as a single li
+        margin-bottom: 5px;
+    }
+    .dt {
+        font-weight:bold;
+        font-weight:700;
+    }
+}
+
+/* -------------------------------------------------------------------
+Text editor generated text
+------------------------------------------------------------------- */
+
+.sfa-if-first:first-child { // Apply class to child element which, if first requires a style to be applied
+    .heading-small:first-child {
+        margin-top: 0.3125em;
+        @include media (tablet){
+            margin-top: 0.26316em
+        }
+    }
+}
+
+.sfa-text-editor-generated { // Class to be applied to containers of content output by text editor to style bullet and number points
+    // Mimics GDS .list class
+    ul, ol {
+        padding: 0;
+        margin-top: 5px;
+        margin-bottom: 20px;
+
+        li {
+          margin-bottom: 5px; 
+        }
+    }
+    // Mimics GDS .list-bullet
+    ul {
+        list-style-type: disc;
+        padding-left: 20px; 
+    }
+    // Mimics GDS .list-numbeer 
+    ol {
+        list-style-type: decimal;
+        padding-left: 20px; 
+    }
+    strong {
+        font-weight:700;
+    }
+}
+
+/* -------------------------------------------------------------------
+Alignment
+------------------------------------------------------------------- */
+
+.sfa-align-right {
+    text-align:right;
+    &-tablet {
+        @include media(tablet){
+            text-align:right;
+        }
+    }
+}
+
+.sfa-align-center {
+    text-align:center;
+}
+
+.sfa-pull-right {
+    float: right !important;
+    &-tablet {
+        @include media(tablet){
+            float: right !important;
+        }
+    }
+}
+
+
+/* -------------------------------------------------------------------
+Custom expand content
+------------------------------------------------------------------- */
+
+@include media(mobile) {
+    .sfa-mob-collpanel-trigger:after {
+        content:" ▼";
+        display: inline-block;
+        font-size: 12px;
+        height: 14px;
+        padding-left: 10px;
+        vertical-align: middle
+    }
+
+    .sfa-mob-collpanel-trigger.triggered:after {
+        content: " ▲"
+    }
+}
+
+@include media(mobile) {
+    .sfa-mob-collpanel.panel-open {
+        display:block
+    }
+}
+
+.sfa-collpanel-trigger:after {
+    content:" ▼";
+    display: inline-block;
+    font-size: 12px;
+    height: 14px;
+    padding-left: 10px;
+    vertical-align: middle
+}
+
+.sfa-collpanel-trigger.triggered:after {
+    content: " ▲"
+}
+
+.sfa-collpanel.panel-open {
+    display:block
+}
+
+
+
+/* -------------------------------------------------------------------
+Misc - TO BE ORGANISED
+------------------------------------------------------------------- */
+
+.sfa-saving-prompt {
+    background: #28a197;
+    border-bottom: 3px solid #1e7871;
+    color: #fff;
+    opacity: .9;
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    padding: 10px 15px;
+}
+
+.sfa-disabled {
+    opacity:0.5;
+}
+
+.force-full-width {
+    width: 100% !important;
+}
+
+.js-enabled .nojs-notice {
+    display: none !important;
+}
+
+iframe, object, embed {
+    max-width: 100%;
+}
+
+.preserve-formatting {
+    p, li, span { 
+        white-space: pre-line;
+    }
+}
+
+.grid-row-padded {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.sfa-section-bordered { 
+    border-bottom: 1px solid $grey-2;
+}
+
+.sfa-table {
+    font-size: 14px;
+
+    * {
+        font-size: 14px;
+    }
+}
+
+.data {
+    text-align: center;
+
+    a, a:hover {
+        text-decoration: none !important;
+    }
+
+    p {
+        text-decoration: underline;
+    }
+}
+
+.secondary-text {
+    color: $secondary-text-colour;
+}
+
+.search-result {
+    position: relative;
+    padding-bottom:15px;
+    margin-bottom:15px;
+    @include media(tablet){
+        padding-bottom:30px;
+        margin-bottom:30px;
+    }
+}
+
+.save-vacancy {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.search-result .map {
+    width: 100%;
+    height: 200px;
+}
+
+@media (min-width: 641px) {
+    .search-result .map {
+        height: 125px;
+    }
+}
+
+.map-container {
+    position: relative
+}
+
+.map-container .view-googlemaps {
+    background: rgba(255,255,255,.8);
+    display: inline-block;
+    padding: 1px 4px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10
+}
+
+.toggle-content--mob
+{
+    @include media (0,641px){
+        display: none;
+    }
+}

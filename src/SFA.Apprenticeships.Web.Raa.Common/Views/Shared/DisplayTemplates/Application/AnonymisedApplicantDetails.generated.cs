@@ -44,23 +44,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         {
 WriteLiteral("\r\n");
 
-WriteLiteral("<section");
+WriteLiteral("<section>\r\n    <div");
 
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n        <ul");
 
 WriteLiteral(" class=\"list-text\"");
 
-WriteLiteral(">\r\n            <li><span");
-
-WriteLiteral(" class=\"\"");
-
-WriteLiteral(">Applicant ID:</span></li>\r\n            <li>");
+WriteLiteral(">\r\n            <li><span >Applicant ID:</span></li>\r\n            <li>");
 
             
             #line 8 "..\..\Views\Shared\DisplayTemplates\Application\AnonymisedApplicantDetails.cshtml"

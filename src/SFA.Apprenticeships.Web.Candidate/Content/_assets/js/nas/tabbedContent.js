@@ -1,4 +1,4 @@
-﻿$('.tabbed-tab').attr('href', "#");
+$('.tabbed-tab').attr('href', "#");
 
 $('.tabbed-tab').on('click', function () {
     tabSelected($(this), true);

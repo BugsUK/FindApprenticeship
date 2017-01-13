@@ -65,7 +65,7 @@ WriteLiteral("\r\n");
 
             
             #line 6 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
- using (Html.BeginRouteForm(ManagementRouteNames.RequirementsAndProspoects, FormMethod.Post))
+ using (Html.BeginRouteForm(ManagementRouteNames.RequirementsAndProspoects, FormMethod.Post, new { id = "vacancy-requirements-and-prospects-form" }))
 {
     
             
@@ -88,7 +88,7 @@ Write(Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <button");
 

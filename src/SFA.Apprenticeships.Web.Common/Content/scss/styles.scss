@@ -1,0 +1,24 @@
+﻿@import "_sfa-custom-layouts";
+@import "_govuk-custom"; 
+@import "conditionals";
+
+@import "_sfa-buttons";
+@import "_tabbed-nav";
+@import "_inline-search";
+@import "_link-styles";
+@import "_page-nav";
+
+@import "_select2-styles";
+@import "_address-service-styles";
+
+@import "_joyride-styles";
+
+$path: "/Content/_assets/img/";
+
+@import "_govuk-elements";
+
+@import "_sfa-form-warnings";
+@import "_forms";
+
+@import "_sfa-banners.scss";
+@import "_sfa-notifications.scss";

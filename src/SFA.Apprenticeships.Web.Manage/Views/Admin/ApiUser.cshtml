@@ -8,7 +8,7 @@
 
 <p>@Html.RouteLink("Manage API Users", ManagementRouteNames.AdminApiUsers)</p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditApiUser))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditApiUser, FormMethod.Post, new { id = "admin-edit-api-user-form" }))
 {
     @Html.HiddenFor(m => m.ExternalSystemId)
 
@@ -17,7 +17,7 @@
             <li>External System ID (Username): @Model.ExternalSystemId</li>
             @if (!string.IsNullOrEmpty(Model.Password))
             {
-                <li>Password: @Model.Password <strong>Copy this down immediately! It will not be shown again. Please add it to the API Users.xlsx spreadsheet in the private repository</strong></li>
+                <li>Password: @Model.Password <span class="bold-small">Copy this down immediately! It will not be shown again. Please add it to the API Users.xlsx spreadsheet in the private repository</span></li>
             }
             <li>Company ID: @Model.CompanyId</li>
             <li>Company Name: @Model.CompanyName</li>

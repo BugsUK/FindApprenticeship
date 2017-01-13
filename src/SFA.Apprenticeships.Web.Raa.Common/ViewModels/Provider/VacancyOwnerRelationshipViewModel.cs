@@ -1,16 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using Employer;
     using FluentValidation.Attributes;
-    using Vacancy;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     using Validators.Provider;
 
-    [Validator(typeof (VacancyOwnerRelationshipViewModelValidator))]
+    [Validator(typeof(VacancyOwnerRelationshipViewModelValidator))]
     public class VacancyOwnerRelationshipViewModel
     {
         public const string PartialView = "Vacancy/EmployerDetails";
@@ -23,6 +22,31 @@
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.EmployerDescription.LabelText)]
         public string EmployerDescription { get; set; }
 
+        [AllowHtml]
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerDescription.LabelText)]
+        public string AnonymousEmployerDescription { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerDescriptionComment.LabelText)]
+        public string AnonymousEmployerDescriptionComment { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerReason.LabelText,
+            Description = VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerReason.HintText)]
+        public string AnonymousEmployerReason { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousEmployerReasonComment.LabelText)]
+        public string AnonymousEmployerReasonComment { get; set; }
+
+        public bool? IsAnonymousEmployer { get; set; }
+
+        public string OriginalFullName { get; set; }
+
+        [AllowHtml]
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployer.LabelText)]
+        public string AnonymousAboutTheEmployer { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.AnonymousAboutTheEmployerDescriptionComment.LabelText)]
+        public string AnonymousAboutTheEmployerComment { get; set; }
+
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.EmployerWebsiteUrl.LabelText)]
         public string EmployerWebsiteUrl { get; set; }
 
@@ -30,10 +54,13 @@
 
         public Guid VacancyGuid { get; set; }
 
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
+
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsNationwide.LabelText)]
+        public int? NumberOfPositionsNationwide { get; set; }
 
         public bool ComeFromPreview { get; set; }
 
@@ -50,6 +77,10 @@
         [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsComment.LabelText)]
         public string NumberOfPositionsComment { get; set; }
 
+        [Display(Name = VacancyOwnerRelationshipViewModelMessages.NumberOfPositionsForNationWideComment.LabelText)]
+        public string NumberOfPositionsNationwideComment { get; set; }
+
         public bool IsEmployerAddressValid { get; set; }
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
     }
 }

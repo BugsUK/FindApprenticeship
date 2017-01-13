@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities
 {
-    using System;
     using Nest;
+    using System;
 
     [ElasticType(Name = "traineeship")]
     public class TraineeshipSummary : IVacancySummary

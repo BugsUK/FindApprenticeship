@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
 
     if (Modernizr.history) {
         history.replaceState({ searchUrl: location.href }, location.href);

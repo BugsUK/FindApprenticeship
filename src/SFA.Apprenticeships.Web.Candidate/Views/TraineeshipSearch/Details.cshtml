@@ -1,4 +1,5 @@
-﻿@model TraineeshipVacancyDetailViewModel
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@model TraineeshipVacancyDetailViewModel
 @{
     ViewBag.Title = Model.Title + " - Find a traineeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,154 +11,236 @@
 }
 
 <div itemscope itemtype="http://schema.org/JobPosting">
-    <div class="grid-wrapper">
-        <div class="grid grid-2-3">
-            <div class="hgroup text">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)</h1>
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
-            </div>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
+                @HtmlExtensions.EscapeHtmlEncoding(Html, Model.Title)
+                <span class="heading-secondary " id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</span>
+            </h1>
         </div>
-        <div class="grid grid-1-3">
-            @if (ViewBag.SearchReturnUrl != null)
-            {
-                <a href="@ViewBag.SearchReturnUrl" title="Return to search results" class="page-link" id="lnk-return-search-results">Return to search results</a>
-            }
-            else
-            {
-                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id = "lnk-find-traineeship", @class = "page-link" })
-            }
-            <p class="page-link hide-nojs">
-                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
-            </p>
+        <div class="column-one-third">
+            <ul class="list sfa-align-right-tablet sfa-xlarge-top-margin">
+                @if (ViewBag.SearchReturnUrl != null)
+                {
+                    <li>
+                        <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "lnk-find-traineeship", @class = "" })
+                    </li>
+                }
+                <li class="hide-nojs">
+                    <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
+                </li>
+            </ul>
         </div>
     </div>
 
     @if (!Model.HasError())
     {
-        <section class=" grid-wrapper">
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <p class="@Model.Description.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description))</p>
+        <section class="grid-row">
+            <div class="column-two-thirds">
+                <div class="sfa-text-editor-generated @Model.Description.GetPreserveFormattingCssClass()">
+                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.Description)
                 </div>
             </div>
-            <div class="grid grid-1-3">
+            <div class="column-one-third">
                 @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top") })
             </div>
         </section>
-        <section class="section-border grid-wrapper">
-            <h2 class="heading-large">Traineeship details</h2>
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <p id="vacancy-full-descrpition" class="@Model.FullDescription.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription))</p>
-                    <h3 class="heading-medium">Training to be provided</h3>
-                    <p class="@Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided))</p>
+        <section class="grid-row">
+            <div class="column-two-thirds">
+                <h2 class="heading-large">Traineeship details</h2>
+            </div>
+            <div class="column-two-thirds sfa-mimic-heading-small-top-margin">
+                <div id="vacancy-full-descrpition" class="sfa-text-editor-generated @Model.FullDescription.GetPreserveFormattingCssClass()">
+                    <p>@HtmlExtensions.EscapeHtmlEncoding(Html, Model.FullDescription)</p>
+                </div>
+                <h3 class="heading-medium">Training to be provided</h3>
+                <div class="sfa-text-editor-generated @Model.TrainingToBeProvided.GetPreserveFormattingCssClass()">
+                    @HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingToBeProvided)
                 </div>
             </div>
-            <div class="grid grid-1-3">
-                @if (!Model.IsEmployerAnonymous)
-                {
-                    <h3 class="bold-small">Training provider</h3>
+            <div class="column-one-third">
+                <ul class="list">
+                    @if (!Model.IsEmployerAnonymous)
+                    {
+                        <li class="sfa-if-first">
+                            <h3 class="heading-small">Training provider</h3>
                             <p>@Model.RecruitmentAgency</p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="sfa-if-first">
+                            <h3 class="heading-small">Training provider</h3>
+                            <p>@Model.ProviderName</p>
+                        </li>
+                    }
+                    <li>
+                        <h3 class="heading-small">Contact</h3>
+                        <p>@Model.Contact</p>
+                    </li>
+
+                    <li>
+                        <h3 class="heading-small">Traineeship duration</h3>
+                        <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(Model.ExpectedDuration) ? "Not specified" : Model.ExpectedDuration)</p>
+                    </li>
+
+                    <li>
+                        <h3 class="heading-small">Possible start date</h3>
+                        <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
+                    </li>
+
+                    <li>
+                        <h3 class="heading-small">Date posted</h3>
+                        <p id="vacancy-posted-date">@Model.PostedDate.ToFriendlyDaysAgo()</p>
+                    </li>
+
+                    @if (Model.Distance != null)
+                    {
+                        <li>
+                            <h3 class="heading-small">Distance</h3>
+                            <p id="vacancy-distance">@Model.Distance miles</p>
+                        </li>
+                    }
+                    <li>
+                        <h3 class="heading-small">Reference number</h3>
+                        <p id="vacancy-reference-id">@Model.VacancyReference</p>
+                    </li>
+                    @if (Model.VacancyLocationType != VacancyLocationType.National)
+                    {
+                        <li>
+                            <h3 class="heading-small">Positions</h3>
+                            <p id="number-of-positions">@Model.NumberOfPositions available</p>
+                        </li>
+                    }
+                </ul>
+            </div>
+           
+        </section>
+        <hr class="sfa-no-bottom-margin" />
+        <section class="grid-row" id="vacancy-info">
+            <div class="column-two-thirds">
+                <h2 class="heading-large">Employer</h2>
+            </div>
+            <div class="column-one-half">
+                <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "sfa-no-bottom-margin" : "")">@Model.EmployerName</p>
+                @if (Model.IsEmployerAnonymous)
+                {
+                    if (Model.VacancyLocationType != VacancyLocationType.National)
+                    {
+                        <div itemscope itemtype="http://schema.org/PostalAddress">
+                            <h3 class="heading-small">Address</h3>
+                            <div itemprop="address">
+                                <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                            </div>
+                        </div>
+                    }
                 }
                 else
                 {
-                    <h3 class="bold-small">Training provider</h3>
-                    <p>@Model.ProviderName</p>
+                    if (Model.IsWellFormedEmployerWebsiteUrl)
+                    {
+                        <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>@Model.EmployerWebsite</p>
+                    }
+                    if (Model.VacancyLocationType != VacancyLocationType.National)
+                    {
+                        <div itemscope itemtype="http://schema.org/PostalAddress">
+                            <h3 class="heading-small">Address</h3>
+                            <div itemprop="address">
+                                <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
+                                <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
+                                <p class="sfa-small-bottom-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
+                                <p class="sfa-small-bottom-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                <p class="sfa-small-bottom-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
+                                <p itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                            </div>
+                        </div>
+                    }
                 }
-                
-
-                <h3 class="bold-small">Contact</h3>
-                <p>@Model.Contact</p>
-                <h3 class="bold-small">Traineeship duration</h3>
-                <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
-                <h3 class="bold-small">Possible start date</h3>
-                <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
-                <h3 class="bold-small">Date posted</h3>
-                <p id="vacancy-posted-date">@Model.PostedDate.ToFriendlyDaysAgo()</p>
-                @if (Model.Distance != null)
-                {
-                    <h3 class="bold-small">Distance</h3>
-                            <p id="vacancy-distance">@Model.Distance miles</p>
-                }
-
-                <h3 class="bold-small">Reference number</h3>
-                <p id="vacancy-reference-id">@Model.VacancyReference</p>
-
-                <h3 class="bold-small">Positions</h3>
-                <p id="number-of-positions">@Model.NumberOfPositions available</p>
-
             </div>
-        </section>
-        <section class="section-border grid-wrapper" id="vacancy-info">
-            <h2 class="heading-large">Employer</h2>
-            <div class="grid-wrapper">
-                <div class="grid grid-1-2">
-                    <div class="inner-block-padr">
-                        <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
-                        @if (Model.IsWellFormedEmployerWebsiteUrl)
+            @if (Model.VacancyLocationType != VacancyLocationType.National)
+            {
+                <div class="column-one-half hide-print">
+                    <div class="ad-details__map">
+                        <div class="map-overlay" onclick="style.pointerEvents = 'none'"></div>
+                        @if (Model.IsEmployerAnonymous)
                         {
-                            <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
+                            <div id="anonymous-map">
+                                <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/view?center=@Model.VacancyAddress.GeoPoint.Latitude,@Model.VacancyAddress.GeoPoint.Longitude&amp;zoom=9&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            </div>
                         }
                         else
                         {
-                            <p>@Model.EmployerWebsite</p>
+                            <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                         }
-                        <div itemscope itemtype="http://schema.org/PostalAddress">
-                            <h3 class="bold-small">Address</h3>
-                            <div itemprop="address">
-                                <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
-                                <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
-                                <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
-                                <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
-                                <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
-                                <p class="" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-1-2 hide-print">
-                    <div class="ad-details__map">
-                        <div class="map-overlay" onclick="style.pointerEvents = 'none'"></div>
-                        <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+
                         <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                     </div>
                 </div>
-
-                @if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
-                {
-                    <div class="grid text">
-                        <p></p>
-                        <h3 class="bold-small">
-                            Additional location information
-                        </h3>
-                        <p>@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation))</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
+            {
+                <div class="grid-row">
+                    <p></p>
+                    <h3 class="heading-small">
+                        Additional location information
+                    </h3>
+                    <div class="sfa-text-editor-generated">
+                        @HtmlExtensions.EscapeHtmlEncoding(Html, Model.AdditionalLocationInformation)
                     </div>
-                }
-            </div>
+                </div>
+            }
         </section>
-        <section class="section-border grid-wrapper" id="course-info">
-            <div class="text">
+        <hr class="sfa-no-bottom-margin" />
+        <section class="grid-row" id="course-info">
+            <div class="column-two-thirds">
                 <h2 class="heading-large">Desired skills and what this will lead to</h2>
-                <h3 class="heading-small">Desired skills and qualities</h3>
-                <p class="@Model.SkillsRequired.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired))</p>
-                <p class="@Model.PersonalQualities.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities))</p>
-
+            </div>
+            <div class="column-two-thirds">
+                <div class="sfa-if-first">
+                    <h3 class="heading-small">Desired skills and qualities</h3>
+                    <div class="sfa-text-editor-generated @Model.SkillsRequired.GetPreserveFormattingCssClass()">
+                        @HtmlExtensions.EscapeHtmlEncoding(Html, Model.SkillsRequired)
+                    </div>
+                    <div class="sfa-text-editor-generated @Model.PersonalQualities.GetPreserveFormattingCssClass()">
+                        @HtmlExtensions.EscapeHtmlEncoding(Html, Model.PersonalQualities)
+                    </div>
+                </div>
                 @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
-        {
+                {
+                <div class="sfa-if-first">
                     <h3 class="heading-small">What this will lead to</h3>
-                    <p id="vacancy-future-prospects" class="@Model.FutureProspects.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects))</p>
+                    <div id="vacancy-future-prospects" class="sfa-text-editor-generated @Model.FutureProspects.GetPreserveFormattingCssClass()">
+                        @HtmlExtensions.EscapeHtmlEncoding(Html, Model.FutureProspects)
+                    </div>
+                </div>
                 }
             </div>
         </section>
-
+        <hr class="sfa-no-bottom-margin" />
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
-            <section class="grid-wrapper">
-                <div class="text">
+            <section class="grid-row">
+                <div class="column-two-thirds">
                     <h2 class="heading-large">Other information</h2>
-                    <p id="vacany-other-information" class="@Model.OtherInformation.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation))</p>
+                </div>
+                <div class="column-two-thirds sfa-remove-heading-small-top-margin">
+                    <div id="vacany-other-information" class="sfa-text-editor-generated @Model.OtherInformation.GetPreserveFormattingCssClass()">
+                        @HtmlExtensions.EscapeHtmlEncoding(Html, Model.OtherInformation)
+                    </div>
                 </div>
             </section>
+            <hr class="sfa-no-bottom-margin" />
         }
     }
 </div>

@@ -19,7 +19,7 @@
         <h1 class="heading-xlarge" itemprop="title">
             Applications for @Model.ApplicantDetails.Name
         </h1>
-        <p class="subtitle" itemprop="ApplicantId">Applicant ID - @Model.ApplicantDetails.ApplicantId</p>
+        <p class="heading-secondary " itemprop="ApplicantId">Applicant ID - @Model.ApplicantDetails.ApplicantId</p>
     </div>
     <details>
         <summary>Contact details for @Model.ApplicantDetails.Name</summary>
@@ -27,7 +27,7 @@
     </details>
 </section>
 
-<section class="no-btm-margin" id="applicationsSection">
+<section class="sfa-no-bottom-margin" id="applicationsSection">
     <table class="vert-top" id="applicationTable">
         <colgroup>
             <col>
@@ -124,20 +124,20 @@
 
     <a href="@prevLink"
        style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
-       class="page-navigation__btn previous grid grid-1-3">
+       class="page-navigation__btn previous grid column-one-third">
         <i class="arrow-button fa fa-angle-left"></i>
-        <span class="description">Previous <span class="hide-mob">page</span></span>
+        <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
         <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
     </a>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.SortCandidate))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.SortCandidate, FormMethod.Post, new { id = "sort-candidate-form" }))
 {
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.CandidateGuid)
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.OrderByField)
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.Order)
-    <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
+    <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
         <label for="page-size" class="heading-small inline">Display results</label>
-        @Html.DropDownListFor(m => m.CandidateApplicationsSearch.PageSize, Model.CandidateApplicationsSearch.PageSizes, new {id = "page-size"})
+        @Html.DropDownListFor(m => m.CandidateApplicationsSearch.PageSize, Model.CandidateApplicationsSearch.PageSizes, new {id = "page-size", @class = "form-control" })
         <noscript>
             <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
         </noscript>
@@ -146,9 +146,9 @@
 
     <a href="@nextLink"
        style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
-       class="page-navigation__btn next grid grid-1-3">
+       class="page-navigation__btn next grid column-one-third">
         <i class="arrow-button fa fa-angle-right"></i>
-        <span class="description">Next <span class="hide-mob">page</span></span>
+        <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
         <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
     </a>
 

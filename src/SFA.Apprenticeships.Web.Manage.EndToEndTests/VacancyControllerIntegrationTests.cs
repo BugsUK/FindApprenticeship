@@ -14,6 +14,7 @@
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Vacancy;
+    using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
 
     [TestFixture]

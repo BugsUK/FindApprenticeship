@@ -1,12 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Application.Interfaces;
+    using Attributes;
+    using Common.Attributes;
     using Constants;
+    using Domain.Entities.Raa;
+    using FluentValidation.Mvc;
     using Mediators.VacancyManagement;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyManagement;
 
+    [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+    [OwinSessionTimeout]
     public class VacancyManagementController : RecruitmentControllerBase
     {
         private readonly IVacancyManagementMediator _vacancyManagementMediator;
@@ -35,6 +44,43 @@
             var response = _vacancyManagementMediator.Delete(vacancyViewModel);
             SetUserMessage(response.Message);
             return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, vacancyViewModel.RouteValues);
+        }
+
+        [HttpGet]
+        [ActionName("EditWage")]
+        public ActionResult EditWageGet(int vacancyReferenceNumber)
+        {
+            var result = _vacancyManagementMediator.EditWage(vacancyReferenceNumber);
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.NotFound)
+            {
+                return HttpNotFound();
+            }
+            return View(result.ViewModel);
+        }
+
+        [HttpPost]
+        [ActionName("EditWage")]
+        public async Task<ActionResult> EditWagePost(EditWageViewModel editWageViewModel)
+        {
+            var result = await _vacancyManagementMediator.EditWage(editWageViewModel);
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.NotFound)
+            {
+                return HttpNotFound();
+            }
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.FailedValidation)
+            {
+                ModelState.Clear();
+                result.ValidationResult.AddToModelState(ModelState, string.Empty);
+                return View(result.ViewModel);
+            }
+            if (result.Code == VacancyManagementMediatorCodes.EditWage.Ok)
+            {
+                var routeName = result.ViewModel.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                    RecruitmentRouteNames.VacancyApplications :
+                    RecruitmentRouteNames.PreviewVacancy;
+                return RedirectToRoute(routeName, new {vacancyReferenceNumber = result.ViewModel.VacancyReferenceNumber});
+            }
+            return View(result.ViewModel);
         }
     }
 }

@@ -115,7 +115,6 @@ BEGIN
 		INNER JOIN Provider                   VO  ON  Vac.ContractOwnerID = VO.ProviderID
 		LEFT OUTER JOIN SectorSuccessRates    ssr ON  VO.ProviderID = ssr.ProviderID 
 			                                      AND occ.ApprenticeshipOccupationId = ssr.SectorID
-        LEFT OUTER JOIN County                cty ON  vac.CountyId = cty.CountyId 
         LEFT OUTER JOIN AdditionalQuestion    aq1 ON  vac.vacancyId = aq1.vacancyId 
                                                   AND aq1.QuestionId = 1           
         LEFT OUTER JOIN AdditionalQuestion    aq2 ON  vac.vacancyId = aq2.vacancyId 
@@ -137,6 +136,7 @@ BEGIN
                 GROUP BY vacancyid
 			) AS vt ON vt.VacancyId = vac.VacancyId
 		LEFT OUTER JOIN dbo.LocalAuthority                la   ON  vac.LocalAuthorityId          = la.LocalAuthorityId		
+        LEFT OUTER JOIN County							  cty  ON  la.CountyId                   = cty.CountyId 
 		--INNER JOIN dbo.LSCRegion reg ON la.LSCRegionId = reg.LSCRegionId
 		LEFT OUTER JOIN dbo.LocalAuthorityGroupMembership LAGM ON  LA.LocalAuthorityId           = LAGM.LocalAuthorityID
 		LEFT OUTER JOIN dbo.LocalAuthorityGroup           LAG  ON  LAGM.LocalAuthorityGroupID    = LAG.LocalAuthorityGroupID

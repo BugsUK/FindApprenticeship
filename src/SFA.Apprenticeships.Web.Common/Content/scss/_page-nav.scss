@@ -1,0 +1,64 @@
+﻿
+.page-navigation {
+}
+
+.page-navigation .description {
+    display: block
+}
+
+.page-navigation .counter {
+    display: block;
+    font-size: 14px
+}
+
+@media(max-width: 640px) {
+    .page-navigation .hide-mob {
+        display:none
+    }
+}
+
+.page-navigation__btn {
+    display: inline-block;
+    font-size: 1em;
+    margin-right: -4px;
+    overflow: hidden;
+    padding: 1.2em .6em 1.2em .6em !important;
+    text-decoration: none;
+    vertical-align: top;
+    width: 50%;
+}
+
+.page-navigation__btn .arrow-button {
+    color: #2e358b;
+    float: left;
+    font-size: 3.5em;
+    margin-right: 10px;
+    margin-top: -.2em;
+    margin-bottom: -.2em;
+}
+
+.page-navigation__btn.previous {
+    text-align: left
+}
+
+.page-navigation__btn.next {
+    text-align: right
+}
+
+.page-navigation__btn.next .arrow-button {
+    float: right;
+    margin-left: 10px;
+    margin-right: 0
+}
+
+.page-navigation__btn:hover {
+    text-decoration: underline
+}
+
+.page-navigation__btn:hover .arrow-button {
+    color: #2e8aca
+}
+
+.page-navigation__btn:active,.page-navigation__btn:focus {
+    background-color: #f8f8f8
+}

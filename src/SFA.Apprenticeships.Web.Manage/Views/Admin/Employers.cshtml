@@ -6,7 +6,7 @@
 
 <h1 id="heading" class="heading-xlarge">Employers</h1>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminEmployers))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEmployers, FormMethod.Post, new { id = "admin-employers-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -25,8 +25,8 @@
 
     if (!Model.NoResults)
     {
-        <div class="grid-wrapper">
-            <div class="grid grid-1-1">
+        <div class="grid-row">
+            <div class="column-full">
                 <table>
                     <colgroup>
                         <col>

@@ -45,5 +45,35 @@
         [Display(Name = ApplicationViewModelMessages.UnSuccessfulReason.LabelText)]
         [Required(ErrorMessage = ApplicationViewModelMessages.UnSuccessfulReason.RequiredErrorText)]
         public string UnSuccessfulReason { get; set; }
+
+        public string ApplicationStatusDescription
+        {
+            get
+            {
+                switch (Status)
+                {
+                    case ApplicationStatuses.Draft:
+                        return "Draft";
+
+                    case ApplicationStatuses.Submitted:
+                    case ApplicationStatuses.Submitting:
+                        return "Submitted";
+
+                    case ApplicationStatuses.InProgress:
+                        return "In progress";
+
+                    case ApplicationStatuses.ExpiredOrWithdrawn:
+                        return "Expired or withdrawn";
+
+                    case ApplicationStatuses.Successful:
+                        return "Successful";
+
+                    case ApplicationStatuses.Unsuccessful:
+                        return "Unsuccessful";
+                }
+
+                return string.Empty;
+            }
+        }
     }
 }

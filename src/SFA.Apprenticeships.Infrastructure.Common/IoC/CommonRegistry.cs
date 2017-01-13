@@ -1,13 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
     using SFA.Infrastructure.Interfaces;
-    using Caching.Memory.IoC;
     using Configuration;
     using CurrentUser;
     using DateTime;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
+    using Application.Interfaces;
+    using Application.Interfaces.Caching;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
     using StructureMap.Configuration.DSL;
@@ -31,7 +29,7 @@
                     .Ctor<IConfigurationService>()
                     .Named("ConfigurationService")
                     .Ctor<ICacheService>()
-                    .Named(MemoryCacheRegistry.MemoryCacheName);
+                    .Named(cacheConfiguration.DefaultCache);
             }
         }
     }

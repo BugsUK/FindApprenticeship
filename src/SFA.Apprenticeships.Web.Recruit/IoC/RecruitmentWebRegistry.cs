@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.IoC
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
     using Application.Candidate;
     using Application.Candidate.Strategies;
@@ -23,6 +24,7 @@
     using Application.Location;
     using Application.Organisation;
     using Application.Provider;
+    using Application.Provider.Strategies;
     using Application.ReferenceData;
     using Application.Reporting;
     using Application.UserAccount;
@@ -91,13 +93,13 @@
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
             For<ILocationsProvider>().Use<LocationsProvider>();
-            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
             For<IReportingProvider>().Use<ReportingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IVacancyStatusChangeProvider>().Use<VacancyStatusChangeProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
             For<IApiUserProvider>().Use<ApiUserProvider>();
-            For<IStandardsAndFrameworksProvider>().Use<StandardsAndFrameworksProvider>();
+            For<IVacancyQAProvider>().Use<VacancyProvider>();
+            For<IApiClientProvider>().Use<ApiClientProvider>();
         }
 
         private void RegisterServices()
@@ -157,8 +159,9 @@
             For<IGetCandidateSummariesStrategy>().Use<GetCandidateSummariesStrategy>();
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
-
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
             For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<Infrastructure.Repositories.Sql.Schemas.dbo.CandidateRepository>();
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
         }
 
         private void RegisterMediators()

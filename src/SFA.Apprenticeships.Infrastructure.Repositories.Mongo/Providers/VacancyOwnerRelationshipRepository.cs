@@ -27,7 +27,7 @@
             _logger = logger;
         }
 
-        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
+        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId, bool liveOnly = true)
         {
             _logger.Debug("Called Mongodb to get provider site employer link with providerSiteErn={0}, edsUrn={1}", providerSiteId, employerId);
 
@@ -56,11 +56,6 @@
             return entities;
         }
 
-        public bool IsADeletedVacancyOwnerRelationship(int providerSiteId, int employerId)
-        {
-            throw new NotImplementedException();
-        }
-
         public VacancyOwnerRelationship Save(VacancyOwnerRelationship vacancyOwnerRelationship)
         {
             _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", vacancyOwnerRelationship.EmployerId);
@@ -78,11 +73,6 @@
             _logger.Debug("Saved provider site employer link to Mongodb with ERN={0}", vacancyOwnerRelationship.EmployerId);
 
             return _mapper.Map<MongoVacancyOwnerRelationship, VacancyOwnerRelationship>(mongoEntity);
-        }
-
-        public void ResurrectVacancyOwnerRelationship(int providerSiteId, int employerId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

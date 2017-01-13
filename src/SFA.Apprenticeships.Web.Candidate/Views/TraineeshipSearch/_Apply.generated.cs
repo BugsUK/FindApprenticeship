@@ -47,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipSearch/_Apply.cshtml")]
@@ -79,7 +80,7 @@ WriteLiteral("\r\n\r\n");
             #line hidden
 WriteLiteral("    <p");
 
-WriteLiteral(" class=\"no-btm-margin\"");
+WriteLiteral(" class=\"sfa-no-bottom-margin\"");
 
 WriteLiteral(">This traineeship requires you to apply through the employer\'s website.</p>\r\n");
 
@@ -98,14 +99,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 545), Tuple.Create("\"", 569)
+WriteAttribute("href", Tuple.Create(" href=\"", 552), Tuple.Create("\"", 576)
             
             #line 15 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 552), Tuple.Create<System.Object, System.Int32>(Model.VacancyUrl
+, Tuple.Create(Tuple.Create("", 559), Tuple.Create<System.Object, System.Int32>(Model.VacancyUrl
             
             #line default
             #line hidden
-, 552), false)
+, 559), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -161,13 +162,13 @@ WriteLiteral("        <p");
 
 WriteLiteral(" id=\"date-applied\"");
 
-WriteLiteral(" class=\"no-btm-margin\"");
+WriteLiteral(" class=\"sfa-no-bottom-margin\"");
 
 WriteLiteral(">You applied on ");
 
             
             #line 26 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                                             Write(Html.DisplayFor(m => m.DateApplied, "Date"));
+                                                                    Write(Html.DisplayFor(m => m.DateApplied, "Date"));
 
             
             #line default
@@ -205,14 +206,14 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Apply for traineeship\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1450), Tuple.Create("\"", 1532)
+WriteAttribute("href", Tuple.Create(" href=\"", 1464), Tuple.Create("\"", 1546)
             
             #line 32 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                               , Tuple.Create(Tuple.Create("", 1457), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
+                               , Tuple.Create(Tuple.Create("", 1471), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 1457), false)
+, 1471), false)
 );
 
 WriteLiteral(" ");
@@ -239,14 +240,14 @@ WriteLiteral("        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1767), Tuple.Create("\"", 1823)
+WriteAttribute("href", Tuple.Create(" href=\"", 1781), Tuple.Create("\"", 1837)
             
             #line 36 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1774), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 1788), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1774), false)
+, 1788), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n");
@@ -271,14 +272,14 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Sign in to apply\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2019), Tuple.Create("\"", 2101)
+WriteAttribute("href", Tuple.Create(" href=\"", 2033), Tuple.Create("\"", 2115)
             
             #line 41 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                      , Tuple.Create(Tuple.Create("", 2026), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
+                      , Tuple.Create(Tuple.Create("", 2040), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 2026), false)
+, 2040), false)
 );
 
 WriteLiteral(" ");
@@ -313,13 +314,13 @@ WriteLiteral("    <p");
 
 WriteLiteral(" id=\"vacancy-closing-date\"");
 
-WriteLiteral(" class=\"copy-16\"");
+WriteLiteral(" class=\"font-xsmall\"");
 
 WriteLiteral(">Closing date: ");
 
             
             #line 46 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                                          Write(Model.ClosingDate.ToFriendlyClosingToday());
+                                                              Write(Model.ClosingDate.ToFriendlyClosingToday());
 
             
             #line default

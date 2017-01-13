@@ -203,6 +203,7 @@ as
   at.Fullname VancacyType, --vac.VancacyType,  
   af.Fullname VacancyCategory,  
   ao.FullName VacancySector,  
+  std.FullName VacancyStandard,
   ast.Fullname ApplicationStatus,  
   DATEDIFF(dd,aph2.ApplicationHistoryEventDate, getDate()) as  NumberOfDaysApplicationAtThisStatus,  
   aph.ApplicationHistoryEventDate ApplicationHistoryEventDate,--ah.ApplicationHistoryEventDate DateApplicationMade, -- need date when it was created....  
@@ -255,10 +256,12 @@ as
    ON vac.VacancyStatusId = vst.VacancyStatusTypeId  
    JOIN ApprenticeshipType at  
     on at.ApprenticeshipTypeId = vac.ApprenticeshipType  
-   JOIN ApprenticeshipFramework af  
+   LEFT JOIN ApprenticeshipFramework af  
     on af.ApprenticeshipFrameworkId = vac.ApprenticeshipFrameworkId  
-   JOIN dbo.ApprenticeshipOccupation AO ON af.ApprenticeshipOccupationId  
+   LEFT JOIN dbo.ApprenticeshipOccupation AO ON af.ApprenticeshipOccupationId  
    = AO.ApprenticeshipOccupationId  
+   LEFT JOIN Reference.Standard std ON vac.StandardId  
+   = std.StandardId  
   
    JOIN dbo.VacancyOwnerRelationship vpr  
     on vpr.VacancyOwnerRelationshipId = vac.VacancyOwnerRelationshipId  

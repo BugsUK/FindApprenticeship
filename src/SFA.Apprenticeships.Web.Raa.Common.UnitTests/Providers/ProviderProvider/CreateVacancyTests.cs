@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderProvider
 {
-    using System;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using System;
+    using System.Threading.Tasks;
     using ViewModels.Employer;
     using ViewModels.Provider;
-    using ViewModels.Vacancy;
     using Web.Common.ViewModels.Locations;
 
     [TestFixture]
@@ -16,7 +16,7 @@
     public class CreateVacancyTests : TestBase
     {
         [Test]
-        public void ShouldUpdateVacancyProviderSiteEmployerLinkIfTheVacancyAlreadyExists()
+        public async Task ShouldUpdateVacancyProviderSiteEmployerLinkIfTheVacancyAlreadyExists()
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
@@ -37,7 +37,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
                 .Returns(vacancyOwnerRelationship);
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(vacancyOwnerRelationship);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
@@ -45,7 +45,7 @@
             var provider = GetProviderProvider();
 
             // Act
-            provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
+            await provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
             {
                 ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel
@@ -55,7 +55,7 @@
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid,
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = 4
             });
 
@@ -71,7 +71,7 @@
         }
 
         [Test]
-        public void ShouldNotUpdateVacancyProviderSiteEmployerLinkIfTheVacancyDoesNotExist()
+        public async Task ShouldNotUpdateVacancyProviderSiteEmployerLinkIfTheVacancyDoesNotExist()
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
@@ -92,7 +92,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(nullApprenticeshipVacancy);
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(providerSiteEmployerLink))
                 .Returns(providerSiteEmployerLink);
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(providerSiteEmployerLink);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
@@ -100,7 +100,7 @@
             var provider = GetProviderProvider();
 
             // Act
-            provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
+            await provider.ConfirmVacancyOwnerRelationship(new VacancyOwnerRelationshipViewModel
             {
                 ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel
@@ -137,17 +137,17 @@
                 ProviderSiteId = providerSiteId,
                 EmployerId = employerId,
                 EmployerDescription = "Description",
-                EmployerWebsiteUrl = "Url"
+                EmployerWebsiteUrl = "Url",
+                StatusType = VacancyOwnerRelationshipStatusTypes.Deleted
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
             MockProviderService.Setup(s => s.SaveVacancyOwnerRelationship(vacancyOwnerRelationship))
                 .Returns(vacancyOwnerRelationship);
-            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn))
+            MockProviderService.Setup(s => s.GetVacancyOwnerRelationship(providerSiteId, edsErn, false))
                 .Returns(vacancyOwnerRelationship);
             MockEmployerService.Setup(s => s.GetEmployer(employerId, It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
-            MockProviderService.Setup(s => s.IsADeletedVacancyOwnerRelationship(providerSiteId, edsErn)).Returns(true);
 
             var provider = GetProviderProvider();
 
@@ -162,14 +162,12 @@
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid,
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = 4
             });
 
             // Assert
-            MockProviderService.Verify(s => s.ResurrectVacancyOwnerRelationship(providerSiteId, edsErn));
-
-
+            MockProviderService.Verify(s => s.SaveVacancyOwnerRelationship(It.Is<VacancyOwnerRelationship>(vor => vor.StatusType == VacancyOwnerRelationshipStatusTypes.Live)));
         }
     }
 }

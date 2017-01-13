@@ -7,5 +7,6 @@
     {
         IServiceResult Delete(int vacancyId);
         IServiceResult<VacancySummary> FindSummary(int vacancyId);
+        IServiceResult<VacancySummary> FindSummaryByReferenceNumber(int vacancyReferenceNumber);
     }
 }

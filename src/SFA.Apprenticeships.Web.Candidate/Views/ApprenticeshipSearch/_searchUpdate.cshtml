@@ -1,11 +1,10 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @model ApprenticeshipSearchViewModel
 
-<section class="grid grid-1-3">
-    <div>
+<section class="column-one-third">
         <fieldset class="search-filter">
-            <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
-            <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
+            <legend class="heading-medium sfa-mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
+            <div class="sfa-mob-collpanel toggle-content--mob" id="editSearchPanel">
                 @if (Model.SearchMode == ApprenticeshipSearchMode.Category)
                 {
                     @Html.Partial("_categoriesAndSubCategories", Model);
@@ -13,13 +12,13 @@
 
                 @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
                 {
-                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden width-all-3-4 small-btm-margin" })
-                    @Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
+                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden form-control form-control-auto sfa-small-bottom-margin" })
+                    @Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" }, controlHtmlAttributes: new { @class = "form-control form-control-4-4" })
                 }
 
-                <div class="para-btm-margin">
-                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" })
-                    <a href="#" class="geolocater inl-block hide-nojs " id="getLocation">Use current location</a>
+                <div class="form-group">
+                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "sfa-small-bottom-margin" }, controlHtmlAttributes : new { @class = "form-control form-control-4-4" })
+                    <a href="#" class="geolocater hide-nojs " id="getLocation">Use current location</a>
                 </div>
                 
 
@@ -27,11 +26,11 @@
                     var open = Model.LocationSearches.Any() ? "open " : "";
                     var hidden = Model.LocationSearches.Any() ? "" : "hidden ";
                 }
-                <details @(open) class="@(open)@(hidden)form-group form-group-compound" id="locationSuggestions">
-                    <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
+                <details @(open) class="@(open)@(hidden)form-group" id="locationSuggestions">
+                    <summary tabindex="0" aria-describedby="locSuggestionsAria"><span class="summary">Did you mean:</span></summary>
                     <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
-                    <div class="detail-content panel-indent">
-                        <ul id="location-suggestions" class="list-text list-max-11">
+                    <div class="panel panel-border-narrow sfa-scrollable">
+                        <ul id="location-suggestions" class="list">
                             @foreach (var locationSearch in Model.LocationSearches)
                             {
                                 <li><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults, locationSearch.RouteValues)">@locationSearch.Location</a></li>
@@ -41,15 +40,15 @@
                 </details>
 
                 <div class="form-group">
-                    <label for="loc-within" class="form-label">Within</label>
-                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" })
+                    <label for="loc-within" class="form-label-bold">Within</label>
+                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control form-control-auto" })
                 </div>
                 <div class="form-group">
-                    <label for="apprenticeship-level" class="form-label">Apprenticeship level</label>
-                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel" })
+                    <label for="apprenticeship-level" class="form-label-bold">Apprenticeship level</label>
+                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel", @class = "form-control form-control-auto" })
                 </div>
                 <div class="form-group form-group-compound">
-                    <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
+                    <button class="button" id="search-button" name="SearchAction" value="Search">Update results</button>
                 </div>
                 <div class="form-group">
                     @Html.RouteLink("Start again", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode, reset = true }, new { @id = "start-again-link" })
@@ -68,5 +67,4 @@
                 <input id="LocationType" name="LocationType" type="hidden" value="@Model.LocationType" />
             </div>
         </fieldset>
-    </div>
 </section>

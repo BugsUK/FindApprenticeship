@@ -1,4 +1,4 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
 
 @model ApprenticeshipSearchViewModel
 
@@ -9,30 +9,30 @@
 <div id="saved-searches" class="tabbed-element savedsearchtab @divClass">
     @if (Model.SavedSearches != null && Model.SavedSearches.Any())
     {
-
-        <ul id="saved-searches-list" class="list-text list-checkradio">
+        <ul id="saved-searches-list" class="list list-checkradio">
             @foreach (var savedSearch in Model.SavedSearches)
             {
                 <li>
-                    <input type="radio" name="SavedSearchId" id="saved-search-@savedSearch.Id" value="@savedSearch.Id">
-                    <div>
-                        <label id="saved-search-label-@savedSearch.Id" for="saved-search-@savedSearch.Id">@savedSearch.Name</label>
-                        @if (savedSearch.DateProcessed.HasValue)
-                        {
-                            <span class="inl-block font-xsmall">(New matches: @savedSearch.DateProcessed.Value.ToFriendlyDaysAgo())</span>
-                        }
-                    </div>
-                    
+                    <label name="SavedSearchId" id="saved-search-label-@savedSearch.Id" for="saved-search-@savedSearch.Id" class="form-radio sfa-form-radio">
+                        <input type="radio" name="SavedSearchId" id="saved-search-@savedSearch.Id" value="@savedSearch.Id">
+                        @savedSearch.Name
+                    </label>
+                    @if (savedSearch.DateProcessed.HasValue)
+                    {
+                        <span class="inl-block font-xsmall">(New matches: @savedSearch.DateProcessed.Value.ToFriendlyDaysAgo())</span>
+                    }
+
+
                     @if (savedSearch.ApprenticeshipLevel != "All")
                     {
-                        <p class="font-xsmall no-btm-margin">
+                        <p class="font-xsmall sfa-no-bottom-margin">
                             <b>Apprenticeship level:</b> <span id="saved-search-apprenticeship-level-@savedSearch.Id">@savedSearch.ApprenticeshipLevel</span>
                         </p>
                     }
-                    
+
                     @if (!string.IsNullOrWhiteSpace(savedSearch.SubCategoriesFullNames))
                     {
-                        <p class="font-xsmall no-btm-margin">
+                        <p class="font-xsmall sfa-no-bottom-margin">
                             <b>Sub-categories:</b> <span id="saved-search-subcategories-@savedSearch.Id">@savedSearch.SubCategoriesFullNames</span>
                         </p>
                     }
@@ -42,7 +42,7 @@
     }
     else
     {
-        <p class="text" id="saved-searches-prompt">
+        <p  id="saved-searches-prompt">
             You can run your saved searches from here. When you search using keyword or category, you can save this search by clicking “Receive alerts for this search” on the results page.
         </p>
     }

@@ -9,7 +9,12 @@
     {
         public WageViewModel Convert(ResolutionContext context)
         {
-            var wage = (Wage) context.SourceValue;
+            var wage = (Wage)context.SourceValue;
+            return Convert(wage);
+        }
+
+        public WageViewModel Convert(Wage wage)
+        {
             var result = new WageViewModel();
 
             result.HoursPerWeek = wage.HoursPerWeek;

@@ -1,17 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Mappers
 {
-    using System;
-    using System.Collections.Generic;
+    using Application.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
-    using Application.Interfaces;
+    using System;
+    using System.Collections.Generic;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
 
     public class TraineeshipVacancyDetailMapper
     {
@@ -44,8 +46,9 @@
                 RealityCheck = vacancy.ThingsToConsider,
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
-                EmployerName = employer.FullName,
+                EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.FullName : vacancy.EmployerAnonymousName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                AnonymousAboutTheEmployer = vacancy.AnonymousAboutTheEmployer,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancy.EmployerDescription,
                 EmployerWebsite = vacancy.EmployerWebsiteUrl,
@@ -76,7 +79,8 @@
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),
-                AdditionalLocationInformation = vacancy.AdditionalLocationInformation
+                AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
+                VacancyLocationType = vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide ? VacancyLocationType.National : VacancyLocationType.NonNational
             };
 
             return detail;

@@ -1,4 +1,4 @@
-﻿var dirtyFormDialog = (function () {
+var dirtyFormDialog = (function () {
 
     var hasToShowMessage,
         initialFormValue,

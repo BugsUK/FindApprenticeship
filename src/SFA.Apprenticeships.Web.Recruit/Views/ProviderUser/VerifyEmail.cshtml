@@ -7,12 +7,12 @@
 
 <h1 id="accountCreated" class="heading-xlarge">Verify email</h1>
 
-<p class="text">
-    An email has been sent to <b class="">@Model.EmailAddress</b>.
+<p >
+    An email has been sent to <b >@Model.EmailAddress</b>.
     It’ll contain a 6-character code you’ll need in order to verify your email address.
 </p>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.VerifyEmail, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.VerifyEmail, FormMethod.Post, new { id = "verify-email-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

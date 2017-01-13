@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/Privacy.cshtml")]
@@ -70,11 +71,7 @@ WriteLiteral(" id=\"h1header\"");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Privacy and cookies</h1>\r\n</div>\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral(">Privacy and cookies</h1>\r\n</div>\r\n\r\n<section >\r\n    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -99,11 +96,8 @@ WriteLiteral(@">Skills Funding Agency personal information charter</a>.
     </ul>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -111,11 +105,8 @@ WriteLiteral(@">How long we hold your data</h2>
     <p>If you haven’t signed in for 12 months or activated your account within 30 days of registering we’ll delete your account and remove your personal details. You’ll need to register again to use the service.</p>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -135,17 +126,13 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(" href=\"http://www.aboutcookies.org/\"");
 
-WriteLiteral(">edit and delete cookies</a>.</p>\r\n</section>\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+WriteLiteral(">edit and delete cookies</a>.</p>\r\n</section>\r\n\r\n<section >\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(@">Webtrends analytics cookie</h2>
+WriteLiteral(@">Webtrends analytics cookies</h2>
     <p>We use Webtrends to collect information about how you use the service. This information helps us to make improvements.</p>
-    <p>The Webtrends analytics cookie collects and stores information about:</p>
+    <p>The Webtrends analytics cookies collect and store information about:</p>
     <ul>
         <li>the pages you visit</li>
         <li>how long you spend on each page</li>
@@ -154,14 +141,14 @@ WriteLiteral(@">Webtrends analytics cookie</h2>
     </ul>
     <p>Webtrends isn’t allowed to use or share our analytics data with anyone, but you can <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2748), Tuple.Create("\"", 2796)
+WriteAttribute("href", Tuple.Create(" href=\"", 2700), Tuple.Create("\"", 2748)
             
             #line 52 "..\..\Views\Home\Privacy.cshtml"
-                    , Tuple.Create(Tuple.Create("", 2755), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.WebTrendsOptOut)
+                    , Tuple.Create(Tuple.Create("", 2707), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.WebTrendsOptOut)
             
             #line default
             #line hidden
-, 2755), false)
+, 2707), false)
 );
 
 WriteLiteral(">opt out</a> if you wish.</p>\r\n    <table>\r\n        <colgroup>\r\n            <col");
@@ -239,11 +226,75 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
+<section >
+    <h2");
 
-WriteLiteral(" class=\"text\"");
+WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(">\r\n    <h2");
+WriteLiteral(@">Measuring website usage (Google Analytics)</h2>
+    <p>We also use Google Analytics software to collect information about how you use this service. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.</p>
+    <p>We don’t collect or store your personal information (for example, your name or address) so this information can’t be used to identify who you are.</p>
+    <p>We don’t allow Google to use or share our analytics data.</p>
+    <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(">Google Analytics cookies</h2>\r\n    <p>Google Analytics sets the following cookie" +
+"s:</p>\r\n    <table>\r\n        <colgroup>\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t60\"");
+
+WriteLiteral(" />\r\n            <col");
+
+WriteLiteral(" class=\"t20\"");
+
+WriteLiteral(@" />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Purpose
+                </th>
+                <th>
+                    Expires
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                _ga
+            </td>
+            <td>
+                To help us to understand how you have used the service so that we can administer apprenticeships in England
+            </td>
+            <td>
+                2 years
+            </td>
+        </tr>
+        <tr>
+            <td>
+                _gat
+            </td>
+            <td>
+                Used to manage the rate at which page view requests are made
+            </td>
+            <td>
+                10 minutes
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -302,11 +353,8 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -350,36 +398,11 @@ WriteLiteral(@" />
                 2 years
             </td>
         </tr>
-        <tr>
-            <td>
-                _ga
-            </td>
-            <td>
-                Allows Google to uniquely identify you as a visitor.
-            </td>
-            <td>
-                2 years
-            </td>
-        </tr>
-        <tr>
-            <td>
-                _gat
-            </td>
-            <td>
-                Helps reduce congestion if there are too many visitors at any time. 
-            </td>
-            <td>
-                10 minutes
-            </td>
-        </tr>
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -416,11 +439,7 @@ WriteLiteral(" />\r\n            <col />\r\n        </colgroup>\r\n        <thea
 "\n            </td>\r\n            <td>\r\n                Stores settings used to cu" +
 "stomise the display of search results for your user.\r\n            </td>\r\n       " +
 "     <td>\r\n                Session\r\n            </td>\r\n        </tr>\r\n    </tabl" +
-"e>\r\n</section>\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+"e>\r\n</section>\r\n\r\n<section >\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -492,11 +511,8 @@ WriteLiteral(@" />
     </table>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h2");
+<section >
+    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 

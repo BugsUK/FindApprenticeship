@@ -5,7 +5,7 @@
     using Application.Interfaces.Vacancies;
     using Candidate.Mappers;
     using Candidate.Providers;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Moq;
 
     using SFA.Apprenticeships.Application.Interfaces;

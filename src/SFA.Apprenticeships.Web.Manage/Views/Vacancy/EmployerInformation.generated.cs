@@ -27,20 +27,20 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 2 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Manage;
     
-    #line 2 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-    using SFA.Apprenticeships.Web.Manage.Constants;
-    
-    #line default
-    #line hidden
-    
     #line 3 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-    using SFA.Apprenticeships.Web.Raa.Common.Extensions;
+    using SFA.Apprenticeships.Web.Manage.Constants;
     
     #line default
     #line hidden
@@ -68,19 +68,18 @@ WriteLiteral("\r\n");
   
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save" : "Save and continue";
+    var saveButtonText = Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save" : "Save and continue";
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -89,22 +88,22 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 21 "..\..\Views\Vacancy\EmployerInformation.cshtml"
- using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
+            #line 20 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+ using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post, new { id = "employer-information-form" }))
 {   
     
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 22 "..\..\Views\Vacancy\EmployerInformation.cshtml"
 Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 22 "..\..\Views\Vacancy\EmployerInformation.cshtml"
                                                                            
 
 
@@ -113,7 +112,7 @@ Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid grid-1-1\"");
+WriteLiteral(" class=\"column-full\"");
 
 WriteLiteral(">\r\n        <button");
 
@@ -128,7 +127,7 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 25 "..\..\Views\Vacancy\EmployerInformation.cshtml"
                                                                                               Write(saveButtonText);
 
             
@@ -139,7 +138,7 @@ WriteLiteral("</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
    Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
@@ -148,7 +147,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 29 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 28 "..\..\Views\Vacancy\EmployerInformation.cshtml"
 }
 
             
@@ -165,6 +164,12 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(@">
 
         $(""#NumberOfPositionsJS"").attr(""id"", ""NumberOfPositions"").attr(""Name"", ""NumberOfPositions"");
+        $(""#NumberOfPositionsNWJS"").attr(""id"", ""NumberOfPositionsNationwide"").attr(""Name"", ""NumberOfPositionsNationwide"");
+
+        $(""#NonAnonymousEmployerJS"").attr(""id"", ""NonAnonymousEmployer"").attr(""Name"", ""NonAnonymousEmployer"");
+        $(""#AnonymousEmployerJS"").attr(""id"", ""AnonymousEmployer"").attr(""Name"", ""AnonymousEmployer"");
+        
+
         $(""#location-type-main-location"").on('click', function () {
                 $(""#confirmEmployer"").text(""Save"");
         });

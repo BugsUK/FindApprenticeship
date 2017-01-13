@@ -5,10 +5,10 @@
 
 <section>
     <!--<h1 class="heading-xlarge">Information radiator</h1>-->
-    <div class="grid-wrapper" style="Margin-Bottom: 20px">
+    <div class="grid-row" style="Margin-Bottom: 20px">
         <h2 class="heading-medium">Providers (@Model.TotalProviders in total, @Model.TotalProvidersMigrated with accounts in recruit)</h2>
     </div>
-    <div class="grid-wrapper" style="Margin-Bottom: 20px">
+    <div class="grid-row" style="Margin-Bottom: 20px">
         <h2 class="heading-medium">Vacancies (@Model.TotalVacanciesInReviewViaRaa awaiting review via manage)</h2>
         <ul class="vacancies-summary">
             <li>
@@ -31,7 +31,7 @@
                 <figure class="data">
                     <p class="count">@Model.TotalVacanciesApprovedViaRaa</p>
                     <figcaption>
-                        <h2>of those, total made live (@(Math.Round((double)Model.TotalVacanciesApprovedViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
+                        <h2>of submitted, total made live (@(Math.Round((double)Model.TotalVacanciesApprovedViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -39,7 +39,7 @@
                 <figure class="data">
                     <p class="count">@Model.TotalVacanciesReferredViaRaa</p>
                     <figcaption>
-                        <h2>of those, total referred at least once (@(Math.Round((double)Model.TotalVacanciesReferredViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
+                        <h2>of submitted, total referred at least once (@(Math.Round((double)Model.TotalVacanciesReferredViaRaa / Model.TotalVacanciesSubmittedViaRaa * 100, 1))%)</h2>
                     </figcaption>
                 </figure>
             </li>
@@ -113,7 +113,7 @@
             </li>
         </ul>
     </div>
-    <div class="grid-wrapper" style="Margin-Bottom: 20px">
+    <div class="grid-row" style="Margin-Bottom: 20px">
         <h2 class="heading-medium">Applications</h2>
         <ul class="vacancies-summary">
             <li>

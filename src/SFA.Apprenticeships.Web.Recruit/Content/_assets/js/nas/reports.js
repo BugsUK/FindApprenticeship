@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var downloadButton = $('#DownloadReport');
     if (downloadButton.length) {
         var validateButton = $('#ValidateReportParameters');

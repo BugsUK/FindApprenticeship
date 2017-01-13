@@ -1,30 +1,29 @@
 namespace SFA.Apprenticeships.Application.Employer.Strategies
 {
-    using System.Linq;
-    using Domain.Entities.Raa.Locations;
+    using System.Collections.Generic;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces;
     using Interfaces.Organisations;
-    using Location;
 
     public class GetByEdsUrnStrategy : IGetByEdsUrnStrategy
     {
+        private readonly IEqualityComparer<Employer> _employerVerifiedOrganisationComparer = new EmployerVerifiedOrganisationComparer();
+
         private readonly IEmployerReadRepository _employerReadRepository;
         private readonly IEmployerWriteRepository _employerWriteRepository;
         private readonly IOrganisationService _organisationService;
-        private readonly IAddressLookupProvider _addressLookupProvider;
         private readonly IMapper _mapper;
         private readonly ILogService _logService;
 
-        public GetByEdsUrnStrategy(IEmployerReadRepository employerReadRepository, IEmployerWriteRepository employerWriteRepository, IOrganisationService organisationService, IAddressLookupProvider addressLookupProvider, IMapper mapper, ILogService logService)
+        public GetByEdsUrnStrategy(IEmployerReadRepository employerReadRepository, IEmployerWriteRepository employerWriteRepository, IOrganisationService organisationService, IMapper mapper, ILogService logService)
         {
             _employerReadRepository = employerReadRepository;
             _employerWriteRepository = employerWriteRepository;
             _organisationService = organisationService;
             _mapper = mapper;
             _logService = logService;
-            _addressLookupProvider = addressLookupProvider;
         }
 
         public Employer Get(string edsUrn)
@@ -32,52 +31,44 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
             _logService.Debug("Calling Employer Repository to get employer with ERN='{0}'.", edsUrn);
 
             var employer = _employerReadRepository.GetByEdsUrn(edsUrn);
-            if (employer == null)
+
+            //Retrieve the master record of the employer from the service and use to update the employer if neccessary
+            try
             {
-                _logService.Info("No record of employer with ERN='{0}' found in Employer Repository. Calling Organisation Service to get employer", edsUrn);
-
                 var organisationSummary = _organisationService.GetVerifiedOrganisationSummary(edsUrn);
+                if (organisationSummary != null)
+                {
+                    var referenceEmployer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
 
-                //We don't know about this employer yet so get the reference from the organisation service and store for future use
-                employer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
+                    if (referenceEmployer.Address.AddressLine1 == null)
+                    {
+                        throw new CustomException(Application.Employer.ErrorCodes.InvalidAddress);
+                    }
 
-                PatchCountyAndTown(employer, organisationSummary.Address);
-
-                employer = _employerWriteRepository.Save(employer);
+                    if (employer == null)
+                    {
+                        employer = _employerWriteRepository.Save(referenceEmployer);
+                    }
+                    else if (!_employerVerifiedOrganisationComparer.Equals(employer, referenceEmployer))
+                    {
+                        //Update employer with new data and save
+                        employer.FullName = referenceEmployer.FullName;
+                        employer.TradingName = referenceEmployer.TradingName;
+                        employer.Address = referenceEmployer.Address;
+                        employer = _employerWriteRepository.Save(employer);
+                    }
+                }
+            }
+            catch (CustomException ex)
+            {
+                _logService.Warn($"Exception thrown when trying to retrieve verified organisation with edsurn {edsUrn}", ex);
+                if (employer == null)
+                {
+                    throw;
+                }
             }
 
             return employer;
-        }
-
-        private void PatchCountyAndTown(Employer employer, PostalAddress employerAddress)
-        {
-            // There are some special cases where the town is not set either.
-            // We need the town to be different from null to be able to insert the employer in the DB
-            PatchTown(employer);
-
-            PatchCounty(employer, employerAddress);
-        }
-
-        private void PatchCounty(Employer employer, PostalAddress postalAddress)
-        {
-            if (string.IsNullOrWhiteSpace(employer.Address.County))
-            {
-                // If we can find the address on postcode anywhere, we patch the county.
-                // If we can't, we patch the county from the employer's address itself
-                var address =
-                    _addressLookupProvider.GetPossibleAddresses(postalAddress.Postcode)
-                        .FirstOrDefault();
-
-                employer.Address.County = address != null ? address.County : employer.Address.Town;
-            }
-        }
-
-        private static void PatchTown(Employer employer)
-        {
-            if (string.IsNullOrWhiteSpace(employer.Address.Town))
-            {
-                employer.Address.Town = employer.Address.AddressLine4 ?? employer.Address.AddressLine3;
-            }
         }
     }
 }

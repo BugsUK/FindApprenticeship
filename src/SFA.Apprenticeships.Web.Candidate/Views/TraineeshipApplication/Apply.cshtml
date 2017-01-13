@@ -10,13 +10,13 @@
     <button class="button hide-button" type="submit" name="ApplicationAction" value="Apply" tabindex="-1">Apply</button>
     @Html.AntiForgeryToken()
     <h1 class="heading-xlarge">Application form</h1>
-    <section class="section-border">
-        <div class="text">
+    <section class="sfa-section-bordered">
+        <div>
             <div class="hgroup-medium">
                 @Html.HiddenFor(m => m.VacancyDetail.Title)
                 <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
                 @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
-                <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
+                <p class="heading-secondary " id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
             </div>
             @Html.HiddenFor(m => m.VacancyDetail.Description)
             <p id="vacancy-summary" class="@Model.VacancyDetail.Description.GetPreserveFormattingCssClass()">@Model.VacancyDetail.Description</p>

@@ -1,4 +1,4 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
 
 @model ApprenticeshipSearchViewModel
 
@@ -7,31 +7,29 @@
 }
 
 <div id="categories" class="form-group tabbed-element browsetab @divClass">
-    <span class="form-label" id="categoryLabelTour">Browse by category</span>
-    <div class="grid-wrapper">
+    <span class="form-label-bold" id="categoryLabelTour">Browse by category</span>
+    <div class="grid-row">
         @{
             if (Model.Categories != null && Model.Categories.Any())
             {
                 var categories = Model.Categories.ToList();
                 var categorySplitCount = categories.Count/2 + categories.Count%2;
 
-                <div class="grid grid-1-2">
-                    <div class="inner-block-padr">
-                        <ul id="category-list-left" class="font-xsmall list-text list-checkradio">
-                            @for (var i = 0; i < categorySplitCount; i++)
-                            {
-                                var category = categories[i];
-                                var inputId = string.Format("category-{0}", category.CodeName.ToLower());
-                                var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
-                                <li>
-                                    <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
-                                </li>
-                            }
-                        </ul>
-                    </div>
+                <div class="column-one-half">
+                    <ul id="category-list-left" class="font-xsmall list-text list-checkradio">
+                        @for (var i = 0; i < categorySplitCount; i++)
+                        {
+                            var category = categories[i];
+                            var inputId = string.Format("category-{0}", category.CodeName.ToLower());
+                            var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
+                            <li>
+                                <label for="@inputId" class="form-radio sfa-form-radio"><input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName">@FullNameFormatter.Format(category.FullName)</label>
+                            </li>
+                        }
+                    </ul>
                 </div>
 
-                <div class="grid grid-1-2">
+                <div class="column-one-half">
                     <ul id="category-list-right" class="font-xsmall list-text list-checkradio">
                         @for (var i = categorySplitCount; i < categories.Count; i++)
                         {
@@ -39,7 +37,7 @@
                             var inputId = string.Format("category-{0}", category.CodeName.ToLower());
                             var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
                             <li>
-                                <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
+                                <label for="@inputId" class="form-radio sfa-form-radio"><input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName">@FullNameFormatter.Format(category.FullName)</label>
                             </li>
                         }
                     </ul>
@@ -47,7 +45,7 @@
             }
             else
             {
-                <div id="category-load-failed" class="field-validation-error">Category search is currently unavailable. Please try again or use the keyword search</div>
+                <div id="category-load-failed" class="error-message">Category search is currently unavailable. Please try again or use the keyword search</div>
             }
         }
     </div>

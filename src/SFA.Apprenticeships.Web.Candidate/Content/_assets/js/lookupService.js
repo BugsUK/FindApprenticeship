@@ -1,4 +1,4 @@
-﻿// TODO: get 'postcode' messages from C#
+// TODO: get 'postcode' messages from C#
 
 $(document).ready(function () {
 
@@ -213,7 +213,7 @@ $(document).ready(function () {
         var $emailAvailableMessage = $('#email-available-message');
 
         var setErrorMessage = function () {
-            $emailAvailableMessage.html('<p class="text">Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
+            $emailAvailableMessage.html('<p >Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
         };
 
         var cleanErrorMessage = function () {

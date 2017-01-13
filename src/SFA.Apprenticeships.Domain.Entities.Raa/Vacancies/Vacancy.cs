@@ -58,6 +58,9 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public VacancySource VacancySource { get; set; }
         public string WageComment { get; set; }
         public string WorkingWeekComment { get; set; }
+        public string AnonymousEmployerDescriptionComment { get; set; }
+        public string AnonymousEmployerReasonComment { get; set; }
+        public string AnonymousAboutTheEmployerComment { get; set; }
 
         public object Clone()
         {
@@ -127,7 +130,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 FirstQuestionComment = FirstQuestionComment,
                 SecondQuestionComment = SecondQuestionComment,
                 AdditionalLocationInformation = AdditionalLocationInformation,
-                IsEmployerLocationMainApprenticeshipLocation = IsEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = VacancyLocationType,
                 NumberOfPositions = NumberOfPositions,
                 EmployerDescriptionComment = EmployerDescriptionComment,
                 EmployerWebsiteUrlComment = EmployerWebsiteUrlComment,
@@ -144,7 +147,10 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 Address = Address,
                 ContractOwnerId = ContractOwnerId,
                 OriginalContractOwnerId = OriginalContractOwnerId,
-                EditedInRaa = EditedInRaa
+                EditedInRaa = EditedInRaa,
+                AnonymousEmployerReasonComment = AnonymousEmployerReasonComment,
+                AnonymousEmployerDescriptionComment = AnonymousEmployerDescriptionComment,
+                AnonymousAboutTheEmployerComment = AnonymousAboutTheEmployerComment
             };
         }
 

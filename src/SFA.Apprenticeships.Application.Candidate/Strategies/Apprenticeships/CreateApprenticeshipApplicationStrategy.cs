@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
-    using System;
     using Application.Entities;
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using System;
     using Vacancy;
 
     public class CreateApprenticeshipApplicationStrategy : ICreateApprenticeshipApplicationStrategy, ISaveApprenticeshipVacancyStrategy
@@ -79,7 +79,7 @@
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null) return null;
-            
+
             var candidate = _candidateReadRepository.Get(candidateId);
 
             var applicationTemplate = saveVacancy
@@ -128,10 +128,10 @@
                     IsPositiveAboutDisability = vacancyDetails.IsPositiveAboutDisability,
                     StartDate = vacancyDetails.StartDate,
                     ClosingDate = vacancyDetails.ClosingDate,
-                    Description = vacancyDetails.Description,
+                    Description = vacancyDetails.IsEmployerAnonymous ? vacancyDetails.AnonymousAboutTheEmployer : vacancyDetails.EmployerDescription,
                     NumberOfPositions = vacancyDetails.NumberOfPositions,
                     Location = null, // NOTE: no equivalent in legacy vacancy details.
-                    VacancyLocationType = vacancyDetails.VacancyLocationType
+                    VacancyLocationType = vacancyDetails.VacancyLocationType,
                 },
                 // Populate apprenticeshipApplication template with candidate's most recent information.
                 CandidateInformation = applicationTemplate

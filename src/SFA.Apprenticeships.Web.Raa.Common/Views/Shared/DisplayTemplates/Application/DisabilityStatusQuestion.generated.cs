@@ -62,7 +62,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"disability-label\"");
 

@@ -73,12 +73,13 @@
 	[UpdatedDateTime]				   DATETIME			NULL,
 	[EditedInRaa]					   BIT				NOT NULL DEFAULT ((0)),
 	[VacancySourceId]			       INT				NOT NULL DEFAULT ((1)),
-	[OfflineVacancyTypeId]		       INT				NULL
+	[OfflineVacancyTypeId]		       INT				NULL,
+	[EmployerAnonymousReason]          NVARCHAR (240)   NULL,
+	[AnonymousAboutTheEmployer]        NVARCHAR (MAX)   NULL
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
-	CONSTRAINT [CK_FrameworkId_StandardId] CHECK ([ApprenticeshipFrameworkId] IS NOT NULL AND [StandardId] IS NULL OR [ApprenticeshipFrameworkId] IS NULL AND [StandardId] IS NOT NULL OR [ApprenticeshipFrameworkId] IS NULL AND [StandardId] IS NULL),
-    CONSTRAINT [FK_Vacancy_ApprenticeshipFramework] FOREIGN KEY ([ApprenticeshipFrameworkId]) REFERENCES [dbo].[ApprenticeshipFramework] ([ApprenticeshipFrameworkId]),
+	CONSTRAINT [FK_Vacancy_ApprenticeshipFramework] FOREIGN KEY ([ApprenticeshipFrameworkId]) REFERENCES [dbo].[ApprenticeshipFramework] ([ApprenticeshipFrameworkId]),
     CONSTRAINT [FK_Vacancy_ApprenticeshipType] FOREIGN KEY ([ApprenticeshipType]) REFERENCES [dbo].[ApprenticeshipType] ([ApprenticeshipTypeId]),
     CONSTRAINT [FK_Vacancy_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_Vacancy_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),

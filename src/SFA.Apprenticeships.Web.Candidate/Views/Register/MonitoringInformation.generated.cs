@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Register/MonitoringInformation.cshtml")]
@@ -64,16 +65,13 @@ WriteLiteral("\r\n\r\n<h2");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Tell us more about you</h2>\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    Please give us a little more information about you. This will help us to\r\n" +
-"    understand how effective the service is.\r\n</p>\r\n\r\n");
+WriteLiteral(">Tell us more about you</h2>\r\n<p >\r\n    Please give us a little more information " +
+"about you. This will help us to\r\n    understand how effective the service is.\r\n<" +
+"/p>\r\n\r\n");
 
             
             #line 14 "..\..\Views\Register\MonitoringInformation.cshtml"
- using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post))
+ using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post, new { id = "monitoring-information-form" }))
 {
     
             
@@ -176,19 +174,19 @@ WriteLiteral(" id=\"save-continue-button\"");
 
 WriteLiteral(">Save and continue</button>\r\n        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 932), Tuple.Create("\"", 990)
+WriteAttribute("href", Tuple.Create(" href=\"", 964), Tuple.Create("\"", 1022)
             
             #line 25 "..\..\Views\Register\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 939), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
+, Tuple.Create(Tuple.Create("", 971), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
             
             #line default
             #line hidden
-, 939), false)
+, 971), false)
 );
 
 WriteLiteral(" id=\"skip-link\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" title=\"Skip telling us more\"");
 

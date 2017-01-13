@@ -111,8 +111,8 @@
       <HintPath>..\packages\WindowsAzure.Storage.5.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
@@ -147,7 +147,6 @@
     <Compile Include="Configuration\ConfigurationCacheKey.cs" />
     <Compile Include="Configuration\ConfigurationExpressionExtension.cs" />
     <Compile Include="Configuration\CachedConfigurationService.cs" />
-    <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="CurrentUser\CurrentUserService.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="Mappers\MapperEngine.cs" />

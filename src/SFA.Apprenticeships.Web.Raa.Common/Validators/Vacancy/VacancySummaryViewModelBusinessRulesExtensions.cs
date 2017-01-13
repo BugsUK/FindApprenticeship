@@ -6,10 +6,10 @@
     using Constants.ViewModels;
     using Domain.Entities.Extensions;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Raa.Vacancies.Constants;
     using Domain.Entities.Vacancies;
     using Extensions;
     using FluentValidation.Results;
-    using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Web.Common.ViewModels;
@@ -134,7 +134,7 @@
             var unitPrecondition = unitToMeasure != WageUnit.NotApplicable;
             if (amount.HasValue && viewModel.Wage.Classification == WageClassification.Custom && unitPrecondition && viewModel.Wage.HoursPerWeek.HasValue && viewModel.Wage.HoursPerWeek > 0)
             {
-                var hourRate = GetHourRate(amount.Value, unitToMeasure, viewModel.Wage.HoursPerWeek.Value);
+                var hourRate = Wages.GetHourRate(amount.Value, unitToMeasure, viewModel.Wage.HoursPerWeek.Value);
 
                 DateTime possibleStartDate;
                 var wageRange = viewModel.VacancyDatesViewModel.GetWageRangeForPossibleStartDate(out possibleStartDate);
@@ -153,23 +153,6 @@
             }
 
             return null;
-        }
-
-        private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)
-        {
-            switch (wageUnit)
-            {
-                case WageUnit.Weekly:
-                    return wage / hoursPerWeek;
-                case WageUnit.Annually:
-                    return wage / 52m / hoursPerWeek;
-                case WageUnit.Monthly:
-                    return wage / 52m * 12 / hoursPerWeek;
-                case WageUnit.NotApplicable:
-                    return 0;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wageUnit), wageUnit, null);
-            }
         }
     }
 

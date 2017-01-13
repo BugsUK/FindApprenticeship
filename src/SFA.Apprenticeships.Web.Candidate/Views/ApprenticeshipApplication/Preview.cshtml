@@ -7,13 +7,13 @@
 }
 <div class="progress-indicator progress-indicator-horizontal hide-print">
     <ul>
-        <li><span class="hide-tablet">Step </span>1<span class="hide-tablet"> of 3</span>. Application form</li>
-        <li class="active"><span class="hide-tablet">Step </span>2<span class="hide-tablet"> of 3</span>. Check your application</li>
-        <li><span class="hide-tablet">Step </span>3<span class="hide-tablet"> of 3</span>. Submitted</li>
+        <li><span class="sfa-hide-tablet">Step </span>1<span class="sfa-hide-tablet"> of 3</span>. Application form</li>
+        <li class="active"><span class="sfa-hide-tablet">Step </span>2<span class="sfa-hide-tablet"> of 3</span>. Check your application</li>
+        <li><span class="sfa-hide-tablet">Step </span>3<span class="sfa-hide-tablet"> of 3</span>. Submitted</li>
     </ul>
 </div>
 
-@using (Html.BeginForm(null, "ApprenticeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { autocomplete = "off" }))
+@using (Html.BeginForm(null, "ApprenticeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "apprenticeship-application-form", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -25,13 +25,13 @@
          </div>
      }
 
-    <div class="grid-wrapper">
-        <div class="grid-2-3 grid">
+    <div class="grid-row">
+        <div class="column-two-thirds grid">
             <h1 class="heading-xlarge hide-print">Check your application</h1>
             <h1 class="heading-xlarge toggle-content hide-nojs show-print">Your application</h1>
         </div>
-        <div class="grid grid-1-3">
-            <div class="page-link hide-nojs">
+        <div class="column-one-third">
+            <div class="hide-nojs">
                 <p>
                     <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
                 </p>
@@ -39,10 +39,10 @@
         </div>
     </div>
 
-    <div class="text">
+    <div>
         @Html.HiddenFor(m => m.VacancyDetail.Title)
         @Html.HiddenFor(m => m.VacancyDetail.VacancyReference)
-        <div class="panel-indent">
+        <div class="panel panel-border-narrow">
             <p class="para-btm-margin hide-print">Check your answers before submitting and make sure they're relevant to the apprenticehip: <b>@Model.VacancyDetail.Title</b>.
             <p class="para-btm-margin toggle-content hide-nojs show-print">Application for <b>@Model.VacancyDetail.Title</b></p>
             <p class="para-btm-margin toggle-content hide-nojs show-print">Apprenticeship reference number: <b>@Model.VacancyDetail.VacancyReference</b></p>
@@ -58,7 +58,7 @@
     @Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCourses")
     @Html.DisplayFor(m => m.Candidate.AboutYou)
 
-    <section class="section-border">
+    <section class="sfa-section-bordered">
         <h2 class="heading-large">
             Additional questions
             @if (ViewBag.VacancyId != null)
@@ -83,7 +83,7 @@
                 <li>are able to get to the apprenticeship location easily</li>
             </ul>
         </div>
-        @Html.FormCheckBoxFor(m => m.AcceptSubmit, labelHtmlAttributes: new {@class = "block-label para-btm-margin"})
+        @Html.FormCheckBoxFor(m => m.AcceptSubmit, labelHtmlAttributes: new {@class = "block-label selection-button-checkbox para-btm-margin" })
     </div>
 
     <div class="form-group hide-print">

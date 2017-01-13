@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates.Applic
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Application/WorkExperience.cshtml")]
@@ -53,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates.Applic
         {
 WriteLiteral("<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <h2");
 
@@ -79,15 +80,15 @@ WriteLiteral("            <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 227), Tuple.Create("\"", 338)
+WriteAttribute("href", Tuple.Create(" href=\"", 233), Tuple.Create("\"", 344)
             
             #line 8 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-, Tuple.Create(Tuple.Create("", 234), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+, Tuple.Create(Tuple.Create("", 240), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 234), false)
-, Tuple.Create(Tuple.Create("", 318), Tuple.Create("#applyWorkExperience", 318), true)
+, 240), false)
+, Tuple.Create(Tuple.Create("", 324), Tuple.Create("#applyWorkExperience", 324), true)
 );
 
 WriteLiteral(">\r\n                <i");
@@ -158,11 +159,11 @@ WriteLiteral(" class=\"grid-3-4 nobreak-print\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"grid-wrapper work-history-item\"");
+WriteLiteral(" class=\"grid-row work-history-item\"");
 
 WriteLiteral(">\r\n\r\n                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <table");
 
@@ -235,7 +236,7 @@ WriteLiteral("</span>\r\n                                </td>\r\n              
 "\r\n                        </tbody>\r\n                    </table>\r\n              " +
 "  </div>\r\n                <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                    <table");
 

@@ -5,33 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 id="account-unlock-h1" class="heading-large">Account locked</h1>
-<p class="text">You should receive a 6-character code in your email. Enter the code to unlock your account.</p>
-
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginRouteForm(RouteNames.Unlock, FormMethod.Post, new { @id = "account-unlock-form" }))
-{
-    @Html.AntiForgeryToken();
-    <div class="form-group">
-        @Html.FormTextFor(
-                m => m.EmailAddress,
-                containerHtmlAttributes: new { @class = "form-group-withlink" },
-                controlHtmlAttributes: new { type = "email", autofocus = "autofocus", spellcheck = "false" })
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 id="account-unlock-h1" class="heading-xlarge">Account locked</h1>
+        <p>You should receive a 6-character code in your email. Enter the code to unlock your account.</p>
 
+        @using (Html.BeginRouteForm(RouteNames.Unlock, FormMethod.Post, new { @id = "account-unlock-form" }))
+        {
+            @Html.AntiForgeryToken()
+            ;
+            @Html.FormTextFor(
+            m => m.EmailAddress,
+            controlHtmlAttributes: new { type = "email", autofocus = "autofocus", spellcheck = "false" })
 
+            @Html.FormTextFor(
+            m => m.AccountUnlockCode,
+            controlHtmlAttributes: new { @maxlength = "6" })
+
+            <div class="form-group inline">
+                <button class="button" id="verify-code-button" type="submit" name="LoginAction" value="Unlock">Unlock account</button>
+                <button id="ResendAccountUnlockCodeLink" type="submit" name="LoginAction" class="button sfa-button-secondary" value="Resend" formnovalidate>Resend code</button>
+            </div>
+        }
     </div>
-
-    @Html.FormTextFor(
-        m => m.AccountUnlockCode, 
-        controlHtmlAttributes: new { @maxlength = "6" }, 
-        containerHtmlAttributes: new { @class = "form-group-withlink" })
-    
-    <div class="form-group">
-        <button class="button hide-button" type="submit" name="LoginAction" value="Unlock" tabindex="-1">Unlock account</button>
-        <button id="ResendAccountUnlockCodeLink" type="submit" name="LoginAction" class="button-link" value="Resend" formnovalidate>Resend code</button>
-        <p>
-            <button class="button" id="verify-code-button" type="submit" name="LoginAction" value="Unlock">Unlock account</button>
-        </p>
-    </div>
-}
+</div>

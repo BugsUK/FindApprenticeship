@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.ReferenceData
 {
     using System.Collections.Generic;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
 
@@ -22,7 +23,19 @@
 
         IList<ReleaseNote> GetReleaseNotes(DasApplication dasApplication);
 
-        Standard CreateStandard(Standard standard);
+        IEnumerable<County> GetCounties();
+
+        County GetCounty(int countyId);
+
+        County GetCounty(string countyName);
+
+        IEnumerable<LocalAuthority> GetLocalAuthorities();
+
+        LocalAuthority GetLocalAuthority(int localAuthorityId);
+
+        LocalAuthority GetLocalAuthority(string localAuthorityCodeName);
+		
+		Standard CreateStandard(Standard standard);
 
         Standard GetStandard(int standardId);
 

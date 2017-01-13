@@ -106,6 +106,7 @@
     <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
     <UseWebProjectPorts>False</UseWebProjectPorts>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
+	<ServiceOutputDirectory>c:\azure\</ServiceOutputDirectory>
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>

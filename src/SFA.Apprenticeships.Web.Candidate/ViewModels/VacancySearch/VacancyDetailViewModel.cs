@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
-    using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using ApprenticeshipLevel = Domain.Entities.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Vacancies.TrainingType;
 
     //TODO move type specific properties into sub classes, remove unused properties
@@ -50,7 +49,7 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
-        public ApprenticeshipLocationType VacancyLocationType { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         [UIHint("Date")]
         [DataType(DataType.DateTime)]

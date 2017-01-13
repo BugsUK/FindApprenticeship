@@ -9,60 +9,60 @@
 
 @if (Model.VacancyType == VacancyType.Apprenticeship)
 {
-    <section class="section-border grid-wrapper" id="provider-info">
-        <h2 class="heading-large">Training provider</h2>
-        <div class="grid grid-2-3">
-            <div class="inner-block-padr">
-                <div class="text">
-                    <div class="@editableItemClass">
-                        @if (!Model.IsCandidateView)
-                        {
-                            <h3 class="heading-small">
-                                Training to be provided
-                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
-                            </h3>
-                        }
-                        @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.TrainingProvided))
-                        {
-                            <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                        }
-                        else
-                        {
-                            <p id="vacancy-training-to-be-provided" class="@Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingDetailsViewModel.TrainingProvided))</p>
-                        }
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
+    <section class="grid-row" id="provider-info">
+        <div class="column-full">
+            <h2 class="heading-large">Training provider</h2>
+        </div>
+        <div class="column-two-thirds">
+            <div class="@editableItemClass sfa-if-first">
+                @if (!Model.IsCandidateView)
+                {
+                    <h3 class="heading-small">
+                        Training to be provided
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
+                    </h3>
+                }
+                @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.TrainingProvided))
+                {
+                    <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                }
+                else
+                {
+                    <div id="vacancy-training-to-be-provided" class="sfa-text-editor-generated @Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">
+                        @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.TrainingDetailsViewModel.TrainingProvided))
                     </div>
-                    <div class="@editableItemClass">
-                        @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Frameworks)
-                        {
-                            <h3 class="heading-small">
-                                Apprenticeship framework
-                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsViewModel.FrameworkCodeNameComment, Model.TrainingDetailsLink))
-                            </h3>
-                            <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.FrameworkCodeNameComment))
-                        }
-                        @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Standards)
-                        {
-                            <h3 class="heading-small">
-                                Apprenticeship standard
-                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsViewModel.StandardIdComment, Model.TrainingDetailsLink))
-                            </h3>
-                            <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.StandardIdComment))
-                        }
-                    </div>
-                </div>
+                }
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
+            </div>
+            <div class="@editableItemClass">
+                @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Frameworks)
+                {
+                    <h3 class="heading-small">
+                        Apprenticeship framework
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsViewModel.FrameworkCodeNameComment, Model.TrainingDetailsLink))
+                    </h3>
+                    <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.FrameworkCodeNameComment))
+                }
+                @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Standards)
+                {
+                    <h3 class="heading-small">
+                        Apprenticeship standard
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsViewModel.StandardIdComment, Model.TrainingDetailsLink))
+                    </h3>
+                    <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.StandardIdComment))
+                }
             </div>
         </div>
-        <div class="grid grid-1-3">
-            <div class="text">
-                <h3 class="bold-small">Training provider</h3>
+        <div class="column-one-third">
+            <div class="sfa-if-first">
+                <h3 class="heading-small">Training provider</h3>
                 <p id="vacancy-provider-name">@Model.Provider.TradingName</p>
             </div>
 
-            <div class="text @editableItemClass">
-                <h3 class="bold-small">
+            <div class="@editableItemClass">
+                <h3 class="heading-small">
                     Contact
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
                 </h3>
@@ -72,12 +72,13 @@
                 }
                 else
                 {
-                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
-                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
-                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
+                    <p class="sfa-small-bottom-margin">@Model.TrainingDetailsViewModel.ContactName</p>
+                    <p class="sfa-small-bottom-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
+                    <p class="sfa-small-bottom-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
                 }
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
             </div>
         </div>
     </section>
+    <hr class="sfa-no-bottom-margin" />
 }

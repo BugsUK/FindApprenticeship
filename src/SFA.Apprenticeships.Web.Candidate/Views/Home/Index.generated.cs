@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/Index.cshtml")]
@@ -62,15 +63,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <section");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n            <h1");
 
@@ -86,7 +83,7 @@ WriteLiteral(">Use the new service</h2>\r\n            <p>Find and apply for app
 "ngland. You can create a new account if you haven’t got one.</p>\r\n\r\n            " +
 "<div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p>You won’t be able to sign in using your account details fro" +
 "m the original service.</p>\r\n            </div>\r\n\r\n            <div");
@@ -98,7 +95,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 20 "..\..\Views\Home\Index.cshtml"
+            #line 19 "..\..\Views\Home\Index.cshtml"
            Write(Html.RouteLink("Start now", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "vacancysearch", @class = "button" }));
 
             
@@ -110,7 +107,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Before you start</h2>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p>The application process is different in <a");
 
@@ -163,7 +160,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Contact us</h2>\r\n            <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">Telephone: 0800 015 0400</p>\r\n            <p><a");
 
@@ -174,9 +171,9 @@ WriteLiteral(">nationalhelpdesk@findapprenticeship.service.gov.uk</a></p>\r\n\r\
 
 WriteLiteral(" href=\"https://www.gov.uk/performance/bis-apprenticeship-vacancies-applications\"");
 
-WriteLiteral(">service is performing</a>.</p>\r\n        </div>\r\n    </section>\r\n    <section");
+WriteLiteral(">service is performing</a>.</p>\r\n    </section>\r\n    <section");
 
-WriteLiteral(" class=\"grid grid-1-3 gov-border\"");
+WriteLiteral(" class=\"column-one-third gov-border\"");
 
 WriteLiteral(">\r\n        <br>\r\n        <h2");
 
@@ -184,7 +181,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Apprenticeships, 14 to 19 education and training for work</h2>\r\n        <p");
 
-WriteLiteral(" class=\"copy-16\"");
+WriteLiteral(" class=\"font-xsmall\"");
 
 WriteLiteral("><a");
 
@@ -196,7 +193,7 @@ WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(">Elsewhere on the web</h2>\r\n        <p");
 
-WriteLiteral(" class=\"copy-16 small-btm-margin\"");
+WriteLiteral(" class=\"font-xsmall sfa-small-bottom-margin\"");
 
 WriteLiteral("><a");
 
@@ -209,7 +206,7 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">Help with your application</a></p>\r\n        <p");
 
-WriteLiteral(" class=\"copy-16\"");
+WriteLiteral(" class=\"font-xsmall\"");
 
 WriteLiteral("><a");
 

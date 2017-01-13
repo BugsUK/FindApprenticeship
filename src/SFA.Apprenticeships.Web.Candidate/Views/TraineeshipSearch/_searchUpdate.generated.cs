@@ -54,35 +54,31 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
         {
 WriteLiteral("<section");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third\"");
 
-WriteLiteral(">\r\n    <div>\r\n        <fieldset");
+WriteLiteral(">\r\n        <fieldset");
 
 WriteLiteral(" class=\"search-filter\"");
 
-WriteLiteral(">\r\n\r\n            <legend");
+WriteLiteral(">\r\n            <legend");
 
-WriteLiteral(" class=\"heading-medium mob-collpanel-trigger\"");
+WriteLiteral(" class=\"heading-medium sfa-mob-collpanel-trigger\"");
 
 WriteLiteral(" id=\"editSearchToggle\"");
 
 WriteLiteral(">Edit search</legend>\r\n            <div");
 
-WriteLiteral(" class=\"mob-collpanel toggle-content--mob\"");
+WriteLiteral(" class=\"sfa-mob-collpanel toggle-content--mob\"");
 
 WriteLiteral(" id=\"editSearchPanel\"");
 
-WriteLiteral(">\r\n\r\n                <div");
-
-WriteLiteral(" class=\"para-btm-margin\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n\r\n                \r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 11 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-               Write(Html.FormTextFor(m=>m.ReferenceNumber, "Reference number"));
+            #line 9 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+               Write(Html.FormTextFor(m=>m.ReferenceNumber, "Reference number", controlHtmlAttributes: new { @class = "form-control-4-4" }));
 
             
             #line default
@@ -92,30 +88,34 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 12 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new {@class = "small-btm-margin"}));
+            #line 10 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+               Write(Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-4-4" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <a");
+WriteLiteral("\r\n                    <div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n                        <a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"geolocater inl-block hide-nojs \"");
+WriteLiteral(" class=\"geolocater hide-nojs \"");
 
 WriteLiteral(" id=\"getLocation\"");
 
-WriteLiteral(">Use current location</a>\r\n                </div>\r\n                \r\n");
+WriteLiteral(">Use current location</a>\r\n                    </div>\r\n");
 
             
-            #line 16 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 14 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 14 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                   
                     var open = Model.LocationSearches.Any() ? "open " : "";
                     var hidden = Model.LocationSearches.Any() ? "" : "hidden ";
@@ -126,7 +126,7 @@ WriteLiteral(">Use current location</a>\r\n                </div>\r\n           
 WriteLiteral("\r\n                <details ");
 
             
-            #line 20 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 18 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                      Write(open);
 
             
@@ -135,27 +135,30 @@ WriteLiteral("\r\n                <details ");
 WriteLiteral(" class=\"");
 
             
-            #line 20 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 18 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                                     Write(open);
 
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 18 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                                            Write(hidden);
 
             
             #line default
             #line hidden
-WriteLiteral("form-group form-group-compound\" id=\"locationSuggestions\">\r\n                    <s" +
-"ummary");
+WriteLiteral("form-group\" id=\"locationSuggestions\">\r\n                    <summary");
 
 WriteLiteral(" tabindex=\"0\"");
 
 WriteLiteral(" aria-describedby=\"locSuggestionsAria\"");
 
-WriteLiteral(">Did you mean:</summary>\r\n                    <p");
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Did you mean:</span></summary>\r\n                    <p");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 
@@ -165,24 +168,24 @@ WriteLiteral(" id=\"locSuggestionsAria\"");
 
 WriteLiteral("></p>\r\n                    <div");
 
-WriteLiteral(" class=\"detail-content panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow sfa-scrollable\"");
 
 WriteLiteral(">\r\n                        <ul");
 
 WriteLiteral(" id=\"location-suggestions\"");
 
-WriteLiteral(" class=\"list-text list-max-11\"");
+WriteLiteral(" class=\"list\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 25 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 23 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 23 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                              foreach (var locationSearch in Model.LocationSearches)
                             {
 
@@ -191,20 +194,20 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1548), Tuple.Create("\"", 1624)
+WriteAttribute("href", Tuple.Create(" href=\"", 1665), Tuple.Create("\"", 1741)
             
-            #line 27 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 1555), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
+            #line 25 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+, Tuple.Create(Tuple.Create("", 1672), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)
             
             #line default
             #line hidden
-, 1555), false)
+, 1672), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 25 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                                                                                                                Write(locationSearch.Location);
 
             
@@ -213,7 +216,7 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 28 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 26 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
                             }
 
             
@@ -228,15 +231,15 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"loc-within\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Within</label>\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 35 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" }));
+            #line 33 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+               Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance", @class = "form-control form-control-auto" }));
 
             
             #line default
@@ -247,7 +250,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <button");
 
-WriteLiteral(" class=\"button no-btm-margin\"");
+WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" id=\"search-button\"");
 
@@ -270,7 +273,7 @@ WriteLiteral("></div>\r\n                </div>\r\n\r\n");
 WriteLiteral("                ");
 
             
-            #line 44 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 42 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
            Write(Html.HiddenFor(m => m.Latitude));
 
             
@@ -281,7 +284,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 45 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+            #line 43 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
            Write(Html.HiddenFor(m => m.Longitude));
 
             
@@ -297,17 +300,17 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2786), Tuple.Create("\"", 2816)
+WriteAttribute("value", Tuple.Create(" value=\"", 2937), Tuple.Create("\"", 2967)
             
-            #line 47 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2794), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+            #line 45 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
+, Tuple.Create(Tuple.Create("", 2945), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 2794), false)
+, 2945), false)
 );
 
-WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n    \r\n\r\n</section>");
+WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n</section>");
 
         }
     }

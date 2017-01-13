@@ -1,98 +1,28 @@
-  if( !$('html.no-js').length ) {
-    $( '[data-editable]' ).each( appendTools );
-    $( 'body' ).delegate( '.adder', 'click', focusField );
-    $( 'body' ).delegate( '.editor', 'click', focusField );
-    $( '[data-editable] input, [data-editable] textarea' ).on( 'focus', removeEmpty );
-    $( '[data-editable] input, [data-editable] textarea' ).on( 'blur', isFieldEmpty );
-    $( '[data-editable] textarea' ).each(function () {
-      this.setAttribute( 'style', 'height:' + ( this.scrollHeight ) + 'px;overflow-y:hidden;' );
-    }).on('input', autoResize );
-  }
+$(function() {
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        }
+    };
 
-  //append tools
-  function appendTools(){
-    var $this = $( this ),
-        $field = $this, //.parent(),
-        $aLabel = $this.find( 'label' ).text(),
-        $adder,
-        $editor;
-    if ( !$this.val() ) {
-      $this.addClass( 'empty' );
+    if (isMobile.any()) {
+        FastClick.attach(document.body);
     }
-    $adder = $( 
-      '<div class="adder" style="width:' 
-      + $field.innerWidth() 
-      + 'px; height: ' 
-      + $field.innerHeight() 
-      + 'px; line-height: ' 
-      + $field.innerHeight() 
-      + 'px;"><span>' + $aLabel + '</span> <strong></strong></div>' 
-    );
-    $editor = $( 
-      '<div class="editor" style="width:' 
-      + $field.innerWidth() 
-      + 'px;"><span>edit</span></div>' 
-    );
-    $this.append( $adder ).append( $editor );
-  };
-
-  // auto adjust the height of
-  function autoResize() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-  };
-
-  // pass focus to proper field
-  function focusField( event ){
-    var $element = $( event.currentTarget );
-    $element.parents( '[data-editable]' ).addClass('edited');
-    $element.parent().find( 'input, textarea, select' ).trigger('focus');
-  };
-
-  // remove empty class for editing
-  function removeEmpty( event ){
-    var $element = $( event.currentTarget );
-    $element.parents( '[data-editable]' ).removeClass('empty');
-    $element.parents( '[data-editable]' ).removeClass('full');
-  };
-
-  // check if empty and add proper class ( empty or full )
-  function isFieldEmpty( event ){
-    var $element = $( event.currentTarget );
-    $element.parents( '[data-editable]' ).removeClass('edited');
-    if( $element.val() === "" ) {
-      $element.parents( '[data-editable]' ).addClass('empty');
-    } else {
-      $element.parents( '[data-editable]' ).addClass('full');
-    }
-  };;$(function() {
-
-  var isMobile = {
-    Android: function() {
-        return navigator.userAgent.match(/Android/i);
-    },
-    BlackBerry: function() {
-        return navigator.userAgent.match(/BlackBerry/i);
-    },
-    iOS: function() {
-        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    },
-    Opera: function() {
-        return navigator.userAgent.match(/Opera Mini/i);
-    },
-    Windows: function() {
-        return navigator.userAgent.match(/IEMobile/i);
-    },
-    any: function() {
-        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-    }
-  };
-
-  if (isMobile.any()) {
-    FastClick.attach(document.body);
-
-    $('input[autofocus]').removeAttr('autofocus');
-  }
 
   function isAndroid() {
     var nua = navigator.userAgent,
@@ -110,35 +40,24 @@
     return false;
   });
 
-  $('.mob-collpanel-trigger').on('click', function() {
-    $(this).next('.mob-collpanel').toggleClass('panel-open');
+  $(document).on('click', '.sfa-mob-collpanel-trigger', function () {
+    $(this).next('.sfa-mob-collpanel').toggleClass('panel-open');
     $(this).toggleClass('triggered');
     return false;
   });
 
-  $('.collpanel-trigger').on('click', function() {
-    $(this).next('.collpanel').toggleClass('panel-open');
+  $('.sfa-collpanel-trigger').on('click', function() {
+    $(this).next('.sfa-collpanel').toggle();
     $(this).toggleClass('triggered');
     return false;
   });
 
   $('.button-toggler').on('click', function() {
     var $this = $(this),
-        $target = $this.attr('data-target-on');
+        $target = $this.attr('data-target');
 
     $('#' + $target).toggleClass('toggle-content');
 
-    return false;
-  });
-
-  $('.select-toggler').on('change', function() {
-    var $this = $(this),
-        $target = $("option:selected", this).attr('data-target');
-        $targetOn = $("option:selected", this).attr('data-target-on');
-        $targetOff = $("option:selected", this).attr('data-target-off');
-    $('#' + $target).toggleClass('toggle-content');
-    $('#' + $targetOn).removeClass('toggle-content');
-    $('#' + $targetOff).addClass('toggle-content');
     return false;
   });
 
@@ -150,46 +69,6 @@
     if($(this).val() == '') {
       $('.linked-input-slave').addClass('hidden');
     }
-  });
-
-  $(".block-label").each(function(){
-    var $target = $(this).attr('data-target');
-
-    // Add focus
-    $(".block-label input").focus(function() {
-      $("label[for='" + this.id + "']").addClass("add-focus");
-      }).blur(function() {
-      $("label").removeClass("add-focus");
-    });
-    // Add selected class
-    $('input:checked').parent().addClass('selected');
-
-    if($(this).hasClass('selected')) {
-      $('#' + $target).show();
-    }
-  });
-
-  // Add/remove selected class
-  $('.block-label').on('click', 'input[type=radio], input[type=checkbox]', function() {
-    var $this   = $(this),
-        $target = $this.parent().attr('data-target');
-
-    $('input:not(:checked)').parent().removeClass('selected');
-    $('input:checked').parent().addClass('selected');
-
-    if($target == undefined) {
-      $this.closest('.form-group').next('.toggle-content').hide().attr('aria-hidden', true);
-      $this.closest('.form-group').find('[aria-expanded]').attr('aria-expanded', false);
-    } else {
-      $('#' + $target).show();
-
-      if($this.closest('.form-group').hasClass('blocklabel-single')) {
-
-        console.log('merp');
-        $this.closest('.blocklabel-single-container').find('.blocklabel-content').not('#' + $target).hide();
-      }
-    }
-
   });
 
   $('.amend-answers').on('click', function() {
@@ -227,12 +106,6 @@
   $('textarea').each(function() {
     characterCount(this);
   });
-
-  setTimeout(function() {
-    $('textarea[data-value]').each(function() {
-      characterCount(this);
-    });
-  }, 1000);
 
   function characterCount(that) {
     var $this         = $(that),
@@ -356,47 +229,21 @@
     }
   });
 
-  //----------Radio expanding lists IE8
+    //----------Radio expanding lists IE8
 
-  if($('html').hasClass('lt-ie9')) {
-     $('.list-checkradio input[type=radio]:checked').siblings('details').addClass('ie8-details');
+     if($('html').hasClass('lt-ie9')) {
+         $('.list-checkradio input[type=radio]:checked').siblings('details').addClass('ie8-details');
 
-     $('.list-checkradio > li').on('click', function () {
-       var $this = $(this),
-           $thisDetails = $this.find('details');
+         $('.list-checkradio > li').on('click', function () {
+             var $this = $(this),
+                 $thisDetails = $this.find('details');
 
-       $('.list-checkradio input[type=radio]').not(':checked').siblings('details').removeClass('ie8-details');
+             $('.list-checkradio input[type=radio]').not(':checked').siblings('details').removeClass('ie8-details');
 
-       $thisDetails.addClass('ie8-details');
+             $thisDetails.addClass('ie8-details');
 
-     });
-   }
-
-  //----------Tabbed content
-
-  $('.tabbed-tab').attr('href', "#");
-
-  $('.tabbed-tab').on('click', function() {
-      var $this = $(this),
-          $tabId = $this.attr('tab');
-
-      $this.addClass('active');
-
-      $('.tabbed-tab').not($('[tab="' + $tabId + '"]')).removeClass('active');
-
-      if ($($tabId).length) {
-          $($tabId).show();
-
-          $('.tabbed-content').not($tabId).hide();
-      } else {
-          var $tabClass = '.' + $tabId.substr(1);
-
-          $('.tabbed-element' + $tabClass).show();
-          $('.tabbed-element').not($tabClass).hide();
-      }
-
-      return false;
-  });
+         });
+     }
 
   //------- Select to inject content to text input
 
@@ -409,15 +256,15 @@
 
       $theInput.val($thisOptionText);
 
-      $('.selfServe').each(function() {
-        if($(this).prop('id') == $selectedVal) {
-          $(this).show();
-          $('.selfServe').not($(this)).hide();
-        }
+      $('.selfServe').each(function () {
+          if ($(this).prop('id') == $selectedVal) {
+              $(this).show();
+              $('.selfServe').not($(this)).hide();
+          }
       });
 
-      if($('#' + $selectedVal).length == 0) {
-        $('.selfServe').hide();
+      if ($('#' + $selectedVal).length == 0) {
+          $('.selfServe').hide();
       }
 
       if ($selectedVal == "noSelect") {
@@ -427,22 +274,24 @@
       $theInput.focusout();
   });
 
-  //------- Add chosen plugin behaviour to non-touch browsers
-  $('.chosen-select').select2();
+    //------- Inline details toggle
 
-  //------- Inline details toggle
-
-  $('.summary-style').on('click', function() {
-    $this = $(this);
-
-    $this.toggleClass('open');
-
-    $this.next('.detail-content').toggle();
+  $(document).on('click', '.summary-style', function (e) {
+      e.preventDefault();
+      $this = $(this);
+      $this.toggleClass('open');
+      $this.next('.detail-content').toggle();
   });
 
+    //------- Print button
 
-});
-;/*
+  $('.print-trigger').on('click', function (e) {
+      window.print();
+
+      e.preventDefault();
+  });
+
+});;/*
  *  jQuery Password Strength - v0.0.1
  *
  *  Made by Henry Charge
@@ -550,204 +399,6 @@
 
 })( jQuery, window, document );
 ;$(function() {
-  //-------- Maps on results
-
-  if($('.search-results__item').length > 0) {
-    var miles = 5,
-        radiusCircle,
-        theMaps = [],
-        directionsDisplay = [],
-        directionsService = [],
-        vacancyLength = $('.vacancy-link').length,
-        originLat = ($.cookie('gotLocation') ? $.jStorage.get('currentLat') : Number($('#Latitude').val())),
-        originLon = ($.cookie('gotLocation') ? $.jStorage.get('currentLong') : Number($('#Longitude').val())),
-        originLocation = new google.maps.LatLng(originLat,originLon);
-
-    for (var i = 0; i < vacancyLength; i++){
-      directionsDisplay[i] = new google.maps.DirectionsRenderer({suppressMarkers: true});
-      directionsService[i] = new google.maps.DirectionsService();
-    };
-
-    //--- Radius map
-
-    var radiusMapOptions = {
-      center: { lat: originLat, lng: originLon},
-      zoom: 10,
-      panControl: false,
-      zoomControl: true,
-      mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      overviewMapControl: false,
-      scrollwheel: false
-    };
-
-    var radiusMap = new google.maps.Map(document.getElementById('map-canvas'), radiusMapOptions);
-
-    var distanceCircle = {
-      strokeColor: '#005ea5',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#005ea5',
-      fillOpacity: 0.25,
-      map: radiusMap,
-      center: radiusMapOptions.center,
-      radius: miles * 1609.344
-    }
-
-    radiusCircle = new google.maps.Circle(distanceCircle);
-
-    //--- Maps on each result
-    $('.vacancy-link').each(function () {
-
-      var vacancyMap = $(this).closest('.search-results__item').find('.map')[0],
-          vacancyLat = $(this).attr('data-vac-lat'),
-          vacancyLon = $(this).attr('data-vac-long'),
-          latlng = new google.maps.LatLng(vacancyLat,vacancyLon);
-
-      var myOptions = {
-          zoom: 10,
-          center: latlng,
-          mapTypeControl: false,
-          overviewMapControl: false,
-          panControl: false,
-          scaleControl: false,
-          scrollwheel: false,
-          streetViewControl: false,
-          zoomControl: true,
-          zoomControlOptions: {
-              style: google.maps.ZoomControlStyle.SMALL
-          }
-      };
-      var map = new google.maps.Map(vacancyMap, myOptions);
-
-      theMaps.push(map);
-
-      var markerIcon = new google.maps.MarkerImage(
-                    '../_assets/img/icon-location.png',
-                    null, /* size is determined at runtime */
-                    null, /* origin is 0,0 */
-                    null, /* anchor is bottom center of the scaled image */
-                    new google.maps.Size(20, 32));
-
-      var marker = new google.maps.Marker({
-          icon: markerIcon,
-          position: latlng,
-          map: map
-      });
-
-    });
-
-    function calcRoute(transportMode, latLong, journeyTime, mapNumber) {
-
-      directionsDisplay[mapNumber].setMap(theMaps[mapNumber]);
-
-      var request = {
-          origin: originLocation,
-          destination: latLong,
-          travelMode: google.maps.TravelMode[transportMode]
-      };
-      directionsService[mapNumber].route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-
-          $(journeyTime).text(response.routes[0].legs[0].duration.text);
-
-          directionsDisplay[mapNumber].setDirections(response);
-        }
-      });
-    }
-
-    $('.select-mode').on('change', function() {
-      var $this = $(this),
-          $thisVal = $this.val(),
-          $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
-          $thisLat = $thisVacLink.attr('data-vac-lat'),
-          $thisLong = $thisVacLink.attr('data-vac-long'),
-          $thisLatLong = new google.maps.LatLng($thisLat, $thisLong),
-          $durationElement = $this.next('.journey-time'),
-          $mapNumber = $this.closest('.search-results__item').index();
-
-      calcRoute($thisVal, $thisLatLong, $durationElement, $mapNumber);
-    });
-
-    $('.search-results__item .summary-style').on('click', function(originLocation) {
-      var $this = $(this),
-          $thisVal = $this.next('.detail-content').find('.select-mode option:selected').val(),
-          $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
-          $thisMap = $this.closest('.search-results__item').find('.map'),
-          $thisLat = $thisVacLink.attr('data-vac-lat'),
-          $thisLong = $thisVacLink.attr('data-vac-long'),
-          $thisLatLong = new google.maps.LatLng($thisLat, $thisLong),
-          $durationElement = $this.next('.detail-content').find('.journey-time'),
-          $mapNumber = $this.closest('.search-results__item').index();
-
-      calcRoute($thisVal, $thisLatLong, $durationElement, $mapNumber);
-
-    });
-  }
-
-  if($('#getLocation').length > 0) {
-
-    function geoFindMe() {
-        var output = document.getElementById("Location"),
-            latVal,
-            longVal;
-
-        if (!navigator.geolocation) {
-            output.placeholder = "Geolocation is not supported by your browser";
-            return;
-        }
-
-        function success(position) {
-            var latVal = position.coords.latitude,
-                longVal = position.coords.longitude,
-                url = "https://api.postcodes.io/postcodes?lon=" + longVal + "&lat=" + latVal + "&wideSearch=true",
-                json;
-
-            $.get(url)
-            .done(function (data) {
-                json = data;
-
-                // console.log(json);
-
-                output.value = json.result[0].postcode;
-                output.placeholder = "";
-                })
-            .fail(function () {
-                output.value = "Unable to retrieve postcode"
-            });
-
-        };
-
-        function error() {
-            output.placeholder = "Unable to retrieve your location";
-        };
-
-        output.placeholder = "Locating…";
-
-        navigator.geolocation.getCurrentPosition(success, error, { maximumAge: 600000 });
-
-    }
-
-    $('.geolocation #geoLocateContainer').append(' or <span class="fake-link geolocater inl-block hide-nojs" id="getLocation">use current location</span>');
-
-    $('.geolocation').on('click', '#getLocation', function () {
-        geoFindMe();
-    });
-
-  }
-
-  if($('.search-results__item').length > 0 && $.cookie('gotLocation')) {
-    var locationLat = $.jStorage.get('currentLat'),
-        locationLong = $.jStorage.get('currentLong'),
-        locPostCode = $.jStorage.get('currentPostCode');
-
-    $('#Latitude').val(locationLat);
-    $('#Longitude').val(locationLong);
-    $('#Location').val(locPostCode);
-
-  }
-});;$(function() {
 
   //-- Faking details behaviour
 
@@ -793,5 +444,47 @@
   }
 
 
+  $(document).on('click', '.block-label input[type=radio], .form-checkbox input[type=radio], .form-radio input[type=radio], .block-label input[type=checkbox], .form-checkbox input[type=checkbox], .form-radio input[type=checkbox]', function () {
+          var $this = $(this),
+              $target = $this.parent().attr('data-target');
+
+          $('input:not(:checked)').parent().removeClass('selected');
+          $('input:checked').parent().addClass('selected');
+
+          if ($target == undefined) {
+              $this.closest('.form-group').next('.toggle-content').hide().attr('aria-hidden', true);
+              $this.closest('.form-group').find('[aria-expanded]').attr('aria-expanded', false);
+          } else {
+              $('#' + $target).show();
+
+              if ($this.closest('.form-group').hasClass('blocklabel-single')) {
+                  $this.closest('.blocklabel-single-container').find('.blocklabel-content').not('#' + $target).hide();
+              }
+          }
+
+      });
+
+    // section can be run again on ajax load
+    setupCategorySelectors();
+
 });
 
+
+function setupCategorySelectors() {
+    $(".block-label, .form-checkbox, .form-radio").each(function () {
+        var $target = $(this).attr('data-target');
+
+        // Add focus
+        $(".block-label input").focus(function () {
+            $("label[for='" + this.id + "']").addClass("add-focus");
+        }).blur(function () {
+            $("label").removeClass("add-focus");
+        });
+        // Add selected class
+        $('input:checked').parent().addClass('selected');
+
+        if ($(this).hasClass('selected')) {
+            $('#' + $target).show();
+        }
+    });
+}

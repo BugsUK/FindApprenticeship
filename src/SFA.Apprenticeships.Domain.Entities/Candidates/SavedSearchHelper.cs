@@ -7,7 +7,7 @@
     using System.Security.Policy;
     using System.Text;
     using Extensions;
-    using Vacancies.Apprenticeships;
+    using Vacancies;
 
     public static class SavedSearchHelper
     {

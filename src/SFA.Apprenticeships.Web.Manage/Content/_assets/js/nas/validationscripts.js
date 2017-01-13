@@ -1,4 +1,4 @@
-﻿$(document).ready(function() {
+$(document).ready(function() {
 
     $("form").each(function () {
         var validator = $.data(this, 'validator');

@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
 
     $('#keywords-tab-control').on('click', function () {
         if ($('.joyride-content-wrapper').is(':visible')) {

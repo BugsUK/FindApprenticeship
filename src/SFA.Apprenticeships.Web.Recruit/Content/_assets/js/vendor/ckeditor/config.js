@@ -18,12 +18,10 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Underline,Subscript,Superscript,Stylescombo';
 
 	// Set the most common block elements.
-	config.format_tags = 'p;h3';
+	//config.format_tags = 'p;h1;h2;h3;pre';
 
-    // Simplify the dialog windows.
-	config.language = 'en-gb';
+	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
-    config.disableNativeSpellChecker = false;
-	config.pasteFromWordRemoveFontStyles = false;
-	config.extraPlugins = 'pastefromword';
+
+	//config.disableNativeSpellChecker = false;
 };

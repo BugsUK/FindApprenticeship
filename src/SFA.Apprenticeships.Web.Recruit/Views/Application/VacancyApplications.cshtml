@@ -13,7 +13,7 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyApplications, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyApplications, FormMethod.Post, new { id = "vacancy-applications-form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -32,78 +32,82 @@
             </div>
             <div class="grid-wrapper">
                 <div class="grid grid-2-3">
-                    <div class="inner-block-padr">
-                        <div>
-                            <div class="text" itemprop="description">
-                                <p id="vacancy-description" class="@Model.ShortDescription.GetPreserveFormattingCssClass()">@Model.ShortDescription</p>
-                                <p>
-                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})" class="disp-block">View @(Model.VacancyType == VacancyType.Traineeship ? "traineeship" : "apprenticeship")</a>
-                                </p>
-                            </div>
+                    <div>
+                        <div itemprop="description">
+                            <p id="vacancy-description" class="@Model.ShortDescription.GetPreserveFormattingCssClass()">@Model.ShortDescription</p>
+                            <p>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})" class="disp-block">View @(Model.VacancyType == VacancyType.Traineeship ? "traineeship" : "apprenticeship")</a>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="grid grid-1-3">
-                    <p class="small-btm-margin">
-                        Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
-                    </p>
-                    @Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications, Model.VacancyType,Model.TotalNumberOfApplicationsWithPendingDecisions), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
+                    <ul class="list">
+                        <li class="sfa-small-bottom-margin">
+                            Closing date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
+                        </li>
+                    	@Html.Partial(VacancyLinksViewModel.PartialView, new VacancyLinksViewModel(Model.VacancyApplicationsSearch.VacancyReferenceNumber, Model.Status, Model.TotalNumberOfApplications, Model.VacancyType, Model.TotalNumberOfApplicationsWithPendingDecisions, Model.Wage), new ViewDataDictionary { { "vacancyTypeText", vacancyTypeText } })
+                    </ul>
                 </div>
             </div>
         </section>
 
-    @if (Model.VacancyType != VacancyType.Traineeship)
-    {
-        <section>
-            <div class="panel-indent text">
-                @{
-                    var daysTillClose = (Model.ClosingDate - DateTime.UtcNow).Days;
-
-                    if (daysTillClose == 0)
-                    {
-                        <p>This @vacancyTypeText is closing today</p>
+        @if (Model.VacancyType != VacancyType.Traineeship)
+        {
+            <section>
+                <div class="panel-indent text">
+                    @{
+                        var daysTillClose = (Model.ClosingDate - DateTime.UtcNow).Days;
+                        var hoursTillClose = (Model.ClosingDate - DateTime.UtcNow).Hours;
+                        if (daysTillClose == 0 && hoursTillClose == 0)
+                        {
+                            <p>This @vacancyTypeText is closed</p>
+                        }
+                        else if (daysTillClose == 0)
+                        {
+                            <p>This @vacancyTypeText is closing today</p>
+                        }
+                        else if (daysTillClose == 1)
+                        {
+                            <p>This @vacancyTypeText is due to close in 1 day</p>
+                        }
+                        else if (daysTillClose > 1 && daysTillClose <= 5)
+                        {
+                            <p>This @vacancyTypeText is due to close in @daysTillClose days</p>
+                        }
                     }
-                    if (daysTillClose == 1)
+
+                    @if (Model.SuccessfulApplicationsCount == 1)
                     {
-                        <p>This @vacancyTypeText is due to close in 1 day</p>
+                        <p>You've made 1 candidate successful</p>
                     }
-                    if (daysTillClose > 1 && daysTillClose <= 5)
+                    else if (Model.SuccessfulApplicationsCount > 1)
                     {
-                        <p>This @vacancyTypeText is due to close in @daysTillClose days</p>
+                        <p>You've made @Model.SuccessfulApplicationsCount candidates successful</p>
                     }
-                }
 
-                @if (Model.SuccessfulApplicationsCount == 1)
-                {
-                    <p>You've made 1 candidate successful</p>
-                }
-                else if (Model.SuccessfulApplicationsCount > 1)
-                {
-                    <p>You've made @Model.SuccessfulApplicationsCount candidates successful</p>
-                }
+                    @if (Model.UnsuccessfulApplicationsCount == 1)
+                    {
+                        <p>You've made 1 candidate unsuccessful</p>
+                    }
+                    else if (Model.UnsuccessfulApplicationsCount > 1)
+                    {
+                        <p>You've made @Model.UnsuccessfulApplicationsCount candidates unsuccessful</p>
+                    }
 
-                @if (Model.UnsuccessfulApplicationsCount == 1)
-                {
-                    <p>You've made 1 candidate unsuccessful</p>
-                }
-                else if (Model.UnsuccessfulApplicationsCount > 1)
-                {
-                    <p>You've made @Model.UnsuccessfulApplicationsCount candidates unsuccessful</p>
-                }
+                    @if (Model.NewApplicationsCount + Model.InProgressApplicationsCount == 1)
+                    {
+                        <p>1 candidate needs to be notified whether their application has been successful/unsuccessful</p>
+                    }
+                    else if (Model.NewApplicationsCount + Model.InProgressApplicationsCount > 1)
+                    {
+                        <p>@(Model.NewApplicationsCount + Model.InProgressApplicationsCount) candidates need to be notified whether their applications have been successful/unsuccessful</p>
+                    }
+                </div>
+            </section>
+                        }
 
-                @if (Model.NewApplicationsCount + Model.InProgressApplicationsCount == 1)
-                {
-                    <p>1 candidate needs to be notified whether their application has been successful/unsuccessful</p>
-                }
-                else if (Model.NewApplicationsCount + Model.InProgressApplicationsCount > 1)
-                {
-                    <p>@(Model.NewApplicationsCount + Model.InProgressApplicationsCount) candidates need to be notified whether their applications have been successful/unsuccessful</p>
-                }
-            </div>
-        </section>
-    }
-
-        <section class="no-btm-margin" id="applicationsSection">
+        <section class="sfa-section-bordered" id="applicationsSection">
             @{
                 var filterType = Model.VacancyApplicationsSearch.FilterType;
             }
@@ -116,96 +120,91 @@
                     }
                 </h2>
             </div>
+        </section>
 
-            <section class="grid-wrapper">
-                <ul class="applications-summary">
-                    <li>
-                        @if (filterType == VacancyApplicationsFilterTypes.New)
-                        {
-                            <figure class="data">
-                                <p class="count">@Model.NewApplicationsCount</p>
-                                <figcaption>
-                                    <h2>New</h2></figcaption>
-                            </figure>
-                        }
-                        else
-                        {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New).RouteValues)" class="vacancy-filter">
-                                <figure class="data">
-                                    <p class="count">@Model.NewApplicationsCount</p>
-                                    <figcaption>
-                                        <h2>New</h2></figcaption>
-                                </figure>
-                            </a>
-                        }
-                    </li>
-                    <li>
-                        @if (filterType == VacancyApplicationsFilterTypes.InProgress)
-                        {
-                            <figure class="data">
-                                <p class="count">@Model.InProgressApplicationsCount</p>
-                                <figcaption>
-                                    <h2>In progress</h2></figcaption>
-                            </figure>
-                        }
-                        else
-                        {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.InProgress).RouteValues)" class="vacancy-filter">
-                                <figure class="data">
-                                    <p class="count">@Model.InProgressApplicationsCount</p>
-                                    <figcaption>
-                                        <h2>In progress</h2></figcaption>
-                                </figure>
-                            </a>
-                        }
-                    </li>
-
-                    @if (Model.VacancyType != VacancyType.Traineeship)
+        <section class="sfa-medium-bottom-padding sfa-xlarge-top-padding sfa-section-bordered">
+            <div class="grid-row">
+                <div class="column-one-quarter">
+                    @if (filterType == VacancyApplicationsFilterTypes.New)
                     {
-                        <li>
-                            @if (filterType == VacancyApplicationsFilterTypes.Successful)
-                            {
-                                <figure class="data">
-                                    <p class="count">@Model.SuccessfulApplicationsCount</p>
-                                    <figcaption>
-                                        <h2>Successful</h2></figcaption>
-                                </figure>
-                            }
-                            else
-                            {
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Successful).RouteValues)" class="vacancy-filter">
-                                    <figure class="data">
-                                        <p class="count">@Model.SuccessfulApplicationsCount</p>
-                                        <figcaption>
-                                            <h2>Successful</h2></figcaption>
-                                    </figure>
-                                </a>
-                            }
-                        </li>
-                        <li>
-                            @if (filterType == VacancyApplicationsFilterTypes.Unsuccessful)
-                            {
-                                <figure class="data">
-                                    <p class="count">@Model.UnsuccessfulApplicationsCount</p>
-                                    <figcaption>
-                                        <h2>Unsuccessful</h2></figcaption>
-                                </figure>
-                            }
-                            else
-                            {
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Unsuccessful).RouteValues)" class="vacancy-filter">
-                                    <figure class="data">
-                                        <p class="count">@Model.UnsuccessfulApplicationsCount</p>
-                                        <figcaption>
-                                            <h2>Unsuccessful</h2></figcaption>
-                                    </figure>
-                                </a>
-                            }
-                        </li>
+                        <div class="data">
+                            <h2 class="bold-xlarge">@Model.NewApplicationsCount</h2>
+                            <p class="bold-xsmall">New</p>
+                        </div>
                     }
-                </ul>
-            </section>
+                    else
+                    {
+                        <div class="data">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New).RouteValues)" class="vacancy-filter">
+                                <h2 class="bold-xlarge">@Model.NewApplicationsCount</h2>
+                                <p class="bold-xsmall">New</p>
+                            </a>
+                        </div>
+                    }
+                </div>
+                <div class="column-one-quarter">
+                    @if (filterType == VacancyApplicationsFilterTypes.InProgress)
+                    {
+                        <div class="data">
+                            <h2 class="bold-xlarge">@Model.InProgressApplicationsCount</h2>
+                            <p class="bold-xsmall">In progress</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="data">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.InProgress).RouteValues)" class="vacancy-filter">
 
+                                <h2 class="bold-xlarge">@Model.InProgressApplicationsCount</h2>
+                                <p class="bold-xsmall">In progress</p>
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                @if (Model.VacancyType != VacancyType.Traineeship)
+                {
+                    <div class="column-one-quarter">
+                        @if (filterType == VacancyApplicationsFilterTypes.Successful)
+                        {
+                            <div class="data">
+                                <h2 class="bold-xlarge">@Model.SuccessfulApplicationsCount</h2>
+                                <p class="bold-xsmall">Successful</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="data">
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Successful).RouteValues)" class="vacancy-filter">
+                                    <h2 class="bold-xlarge">@Model.SuccessfulApplicationsCount</h2>
+                                    <p class="bold-xsmall">Successful</p>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    <div class="column-one-quarter">
+                        @if (filterType == VacancyApplicationsFilterTypes.Unsuccessful)
+                        {
+                            <div class="data">
+                                <h2 class="bold-xlarge" class="count">@Model.UnsuccessfulApplicationsCount</h2>
+                                <p class="bold-xsmall">Unsuccessful</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <figure class="data">
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Unsuccessful).RouteValues)" class="vacancy-filter">
+                                    <h2 class="bold-xlarge" class="count">@Model.UnsuccessfulApplicationsCount</h2>
+                                    <p class="bold-xsmall">Unsuccessful</p>
+                                </a>
+                            </figure>
+                        }
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section>
             @{
                 var open = Model.VacancyApplicationsSearch.IsCandidateSearch() ? "open" : "";
             }
@@ -220,12 +219,12 @@
                         <button id="search-candidates-button" type="submit" class="button">Search</button>
                         @if (Model.VacancyApplicationsSearch.IsCandidateSearch())
                         {
-                            @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, true).RouteValues, new {@class = "vacancy-filter"})
+                            @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, true).RouteValues, new { @class = "vacancy-filter" })
                         }
                     </div>
                 </div>
             </details>
-        
+
             <table class="vert-top" id="applicationTable">
                 <colgroup>
                     <col>
@@ -237,145 +236,145 @@
                     <col>
                 </colgroup>
                 <thead>
-                <tr>
-                    <th>
-                        @{
-                            var newOrder = Model.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
-                            var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
-                                Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                        }
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldLastName, newOrder).RouteValues)" class="vacancy-filter">
-                            <span class="font-black">Surname <i class="fa @surnameSortClass" aria-hidden="true"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                        @{
-                            var firstNameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ?
-                                Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                        }
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldFirstName, newOrder).RouteValues)" class="vacancy-filter">
-                            <span class="font-black">First name <i class="fa @firstNameSortClass" aria-hidden="true"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                        <span class="font-black">Applicant ID</span>
-                    </th>
-                    <th>
-                        @{
-                            var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
-                                Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                        }
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes, newOrder).RouteValues)" class="vacancy-filter">
-                            <span class="font-black">Vacancy manager notes <i class="fa @managerNotesSortClass" aria-hidden="true"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                        @{
-                            var submittedSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldSubmitted ?
-                                Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                        }
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldSubmitted, newOrder).RouteValues)" class="vacancy-filter">
-                            <span class="font-black">Submitted <i class="fa @submittedSortClass" aria-hidden="true"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                        @{
-                            var statusSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldStatus ?
-                                Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
-                        }
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldStatus, newOrder).RouteValues)" class="vacancy-filter">
-                            <span class="font-black">Status <i class="fa @statusSortClass" aria-hidden="true"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
+                    <tr>
+                        <th>
+                            @{
+                                var newOrder = Model.VacancyApplicationsSearch.Order == Order.Ascending ? Order.Descending : Order.Ascending;
+                                var surnameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldLastName ?
+                                    Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                            }
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldLastName, newOrder).RouteValues)" class="vacancy-filter">
+                                <span class="font-black">Surname <i class="fa @surnameSortClass" aria-hidden="true"></i></span>
+                            </a>
+                        </th>
+                        <th>
+                            @{
+                                var firstNameSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldFirstName ?
+                                    Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                            }
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldFirstName, newOrder).RouteValues)" class="vacancy-filter">
+                                <span class="font-black">First name <i class="fa @firstNameSortClass" aria-hidden="true"></i></span>
+                            </a>
+                        </th>
+                        <th>
+                            <span class="font-black">Applicant ID</span>
+                        </th>
+                        <th>
+                            @{
+                                var managerNotesSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes ?
+                                    Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                            }
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldManagerNotes, newOrder).RouteValues)" class="vacancy-filter">
+                                <span class="font-black">Vacancy manager notes <i class="fa @managerNotesSortClass" aria-hidden="true"></i></span>
+                            </a>
+                        </th>
+                        <th>
+                            @{
+                                var submittedSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldSubmitted ?
+                                    Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                            }
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldSubmitted, newOrder).RouteValues)" class="vacancy-filter">
+                                <span class="font-black">Submitted <i class="fa @submittedSortClass" aria-hidden="true"></i></span>
+                            </a>
+                        </th>
+                        <th>
+                            @{
+                                var statusSortClass = Model.VacancyApplicationsSearch.OrderByField == VacancyApplicationsSearchViewModel.OrderByFieldStatus ?
+                                    Model.VacancyApplicationsSearch.Order == Order.Ascending ? "fa-sort-up" : "fa-sort-down" : "fa-sort";
+                            }
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsSearchViewModel.OrderByFieldStatus, newOrder).RouteValues)" class="vacancy-filter">
+                                <span class="font-black">Status <i class="fa @statusSortClass" aria-hidden="true"></i></span>
+                            </a>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                @if (Model.HasApplications)
+                    @if (Model.HasApplications)
                 {
                     foreach (var applicationSummary in Model.ApplicationSummaries.Page)
                     {
-                        <tr class="applicant">
-                            <td>
-                                <h4 class="applicant-name">@applicationSummary.LastName</h4>
-                            </td>
-                            <td>
-                                <h4 class="applicant-name">@applicationSummary.FirstName</h4>
-                            </td>
-                            <td>
-                                @applicationSummary.ApplicantID
-                            </td>
-                            <td>
-                                @{
-                                    var notes = applicationSummary.Notes;
-                                    if (notes != null && notes.Length > 20)
-                                    {
-                                        notes = notes.Substring(0, 20) + "...";
+                            <tr class="applicant">
+                                <td>
+                                    <h4 class="applicant-name">@applicationSummary.LastName</h4>
+                                </td>
+                                <td>
+                                    <h4 class="applicant-name">@applicationSummary.FirstName</h4>
+                                </td>
+                                <td>
+                                    @applicationSummary.ApplicantID
+                                </td>
+                                <td>
+                                    @{
+                                        var notes = applicationSummary.Notes;
+                                        if (notes != null && notes.Length > 20)
+                                        {
+                                            notes = notes.Substring(0, 20) + "...";
+                                        }
                                     }
-                                }
-                                @notes
-                            </td>
-                            <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
-                            <td>
-                                @Html.Partial("_applicationStatus", applicationSummary.Status)
-                            </td>
-                            <td>
-                                <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId).RouteValues)" title="View @applicationSummary.ApplicantName application">View application</a><br/>
-                                <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new {application = applicationSummary.AnonymousLinkData})" title="View anonymous application">Anonymous view</a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr><td colspan="7">No results</td></tr>
-                }
+                                    @notes
+                                </td>
+                                <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
+                                <td>
+                                    @Html.Partial("_applicationStatus", applicationSummary.Status)
+                                </td>
+                                <td>
+                                    <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ReviewTraineeshipApplication : RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId).RouteValues)" title="View @applicationSummary.ApplicantName application">View application</a><br />
+                                    <a href="@Url.RouteUrl(Model.VacancyType == VacancyType.Traineeship ? RecruitmentRouteNames.ViewAnonymousTraineeshipApplication : RecruitmentRouteNames.ViewAnonymousApprenticeshipApplication, new {application = applicationSummary.AnonymousLinkData})" title="View anonymous application">Anonymous view</a>
+                                </td>
+                            </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr><td colspan="7">No results</td></tr>
+                                        }
                 </tbody>
             </table>
         </section>
     </div>
 
-    if (Model.HasApplications)
-    {
-        <div class="page-navigation">
+                                        if (Model.HasApplications)
+                                        {
+                                            <div class="page-navigation">
 
-            @{
-                var currentPage = Model.ApplicationSummaries.CurrentPage;
-                var totalNumberOfPages = Model.ApplicationSummaries.TotalNumberOfPages;
-                var prevLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage - 1).RouteValues);
-                var nextLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage + 1).RouteValues);
-            }
+                                                @{
+                                                    var currentPage = Model.ApplicationSummaries.CurrentPage;
+                                                    var totalNumberOfPages = Model.ApplicationSummaries.TotalNumberOfPages;
+                                                    var prevLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage - 1).RouteValues);
+                                                    var nextLink = Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, currentPage + 1).RouteValues);
+                                                }
 
-            <a href="@prevLink"
-               style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
-               class="page-navigation__btn previous grid grid-1-3">
-                <i class="arrow-button fa fa-angle-left"></i>
-                <span class="description">Previous <span class="hide-mob">page</span></span>
-                <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
-            </a>
+                                                <a href="@prevLink"
+                                                   style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
+                                                   class="page-navigation__btn previous grid grid-1-3">
+                                                    <i class="arrow-button fa fa-angle-left"></i>
+                                                    <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
+                                                    <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
+                                                </a>
 
-            <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
-                <label for="page-size" class="heading-small inline">Display results</label>
-                @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new {id = "page-size"})
-                <noscript>
-                    <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
-                </noscript>
-            </div>
+                                                <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
+                                                    <label for="page-size" class="heading-small inline">Display results</label>
+                                                    @Html.DropDownListFor(m => m.VacancyApplicationsSearch.PageSize, Model.VacancyApplicationsSearch.PageSizes, new { id = "page-size" })
+                                                    <noscript>
+                                                        <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
+                                                    </noscript>
+                                                </div>
 
-            <a href="@nextLink"
-               style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
-               class="page-navigation__btn next grid grid-1-3">
-                <i class="arrow-button fa fa-angle-right"></i>
-                <span class="description">Next <span class="hide-mob">page</span></span>
-                <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
-            </a>
+                                                <a href="@nextLink"
+                                                   style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
+                                                   class="page-navigation__btn next grid grid-1-3">
+                                                    <i class="arrow-button fa fa-angle-right"></i>
+                                                    <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
+                                                    <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
+                                                </a>
 
-        </div>
-    }
-}
+                                            </div>
+                                                        }
+                                                    }
 
-<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+<div class="sfa-saving-prompt toggle-content hide-nojs" id="ajaxLoading">
     Loading
 </div>
 

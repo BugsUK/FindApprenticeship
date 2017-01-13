@@ -1,20 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Mappers
 {
-    using System;
-    using System.Collections.Generic;
     using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Extensions;
     using Presentation;
-
     using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Collections.Generic;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ApprenticeshipVacancyDetailMapper
@@ -25,7 +24,7 @@
 
             var subcategory = vacancy.GetSubCategory(categories);
             LogSubCategory(vacancy, logService, subcategory);
-            
+
             var detail = new ApprenticeshipVacancyDetail
             {
                 Id = vacancy.VacancyId,
@@ -54,8 +53,9 @@
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.FullName,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                AnonymousAboutTheEmployer = vacancy.AnonymousAboutTheEmployer,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
-                EmployerDescription = vacancy.EmployerDescription,
+                EmployerDescription = string.IsNullOrWhiteSpace(vacancy.AnonymousAboutTheEmployer) ? vacancy.EmployerDescription : vacancy.AnonymousAboutTheEmployer,
                 EmployerWebsite = vacancy.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
@@ -83,7 +83,7 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
-                VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = vacancy.VacancyLocationType == Domain.Entities.Raa.Vacancies.VacancyLocationType.Nationwide ? VacancyLocationType.National : VacancyLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
                 TrainingType = vacancy.TrainingType.GetTrainingType(),

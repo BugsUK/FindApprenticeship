@@ -4,14 +4,14 @@
     ViewBag.Title = "Recruit an Apprentice - Manage your Sites";
 }
 
-<div class="grid-wrapper" id="pageManageSites">
+<div class="grid-row" id="pageManageSites">
     <div class="hgroup text para-btm-margin">
         <h1 class="heading-xlarge">
             Provider details
         </h1>
     </div>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageProviderSites, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageProviderSites, FormMethod.Post, new { id = "manage-provider-sites-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -26,8 +26,8 @@
 
     <div id="providerSitesList">
         <h2 class="heading-medium">Manage your training sites</h2>
-        <section class="grid-wrapper">
-            <div class="grid grid-2-3 scrolling-panel max-height-15">
+        <section class="grid-row">
+            <div class="column-two-thirds scrolling-panel max-height-15">
                 <table>
                     <colgroup>
                         <col class="t70">
@@ -52,7 +52,7 @@
     <div class="toggle-content" id="newProviderContinue">
         <a href="@Url.RouteUrl(RecruitmentRouteNames.Settings)" class="button" id="newProviderContinueBtn">Continue</a>
     </div>
-    <div class="" id="providerDetailsSave">
+    <div  id="providerDetailsSave">
         <button class="button">Continue</button>
     </div>
 }

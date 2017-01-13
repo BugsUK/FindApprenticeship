@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/_ErrorLayout.cshtml")]
@@ -59,7 +60,43 @@ WriteLiteral(" lang=\"en-GB\"");
 
 WriteLiteral(" class=\"not-ie8\"");
 
-WriteLiteral(">\r\n<!--<![endif]-->\r\n<head>\r\n    <meta");
+WriteLiteral(">\r\n<!--<![endif]-->\r\n<head>\r\n");
+
+            
+            #line 9 "..\..\Views\Shared\_ErrorLayout.cshtml"
+ if (ViewBag.EnableGoogleTagManager)
+{
+
+            
+            #line default
+            #line hidden
+WriteLiteral("<!-- Google Tag Manager -->\r\n");
+
+WriteLiteral(@"<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','");
+
+            
+            #line 16 "..\..\Views\Shared\_ErrorLayout.cshtml"
+                                    Write(ViewBag.GoogleContainerId);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\');</script>\r\n");
+
+WriteLiteral("<!-- End Google Tag Manager -->\r\n");
+
+            
+            #line 18 "..\..\Views\Shared\_ErrorLayout.cshtml"
+}
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <meta");
 
 WriteLiteral(" charset=\"utf-8\"");
 
@@ -72,7 +109,7 @@ WriteLiteral(" content=\"IE=edge\"");
 WriteLiteral(">\r\n    <title>");
 
             
-            #line 11 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 21 "..\..\Views\Shared\_ErrorLayout.cshtml"
       Write(ViewBag.Title);
 
             
@@ -93,7 +130,7 @@ WriteLiteral(" content=\"NOINDEX, NOFOLLOW\"");
 WriteLiteral(">\r\n    <!--[if gt IE 8]><!-->");
 
             
-            #line 14 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 24 "..\..\Views\Shared\_ErrorLayout.cshtml"
                      Write(Styles.Render("~/bundles/not-ie8"));
 
             
@@ -102,7 +139,7 @@ WriteLiteral(">\r\n    <!--[if gt IE 8]><!-->");
 WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
-            #line 15 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 25 "..\..\Views\Shared\_ErrorLayout.cshtml"
                  Write(Styles.Render("~/bundles/ie8"));
 
             
@@ -112,14 +149,14 @@ WriteLiteral("<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 718), Tuple.Create("\"", 753)
+WriteAttribute("href", Tuple.Create(" href=\"", 1203), Tuple.Create("\"", 1238)
             
-            #line 16 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 725), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("favicon.ico")
+            #line 26 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 1210), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("favicon.ico")
             
             #line default
             #line hidden
-, 725), false)
+, 1210), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -129,7 +166,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 17 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 27 "..\..\Views\Shared\_ErrorLayout.cshtml"
 Write(Styles.Render("~/bundles/font-awesome"));
 
             
@@ -137,16 +174,92 @@ Write(Styles.Render("~/bundles/font-awesome"));
             #line hidden
 WriteLiteral("\r\n");
 
+            
+            #line 28 "..\..\Views\Shared\_ErrorLayout.cshtml"
+ if (ViewBag.EnableAppInsights)
+{
+
+            
+            #line default
+            #line hidden
+WriteLiteral("<script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(@">
+  var appInsights=window.appInsights||function(config){
+    function i(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o=""script"",s=""AuthenticatedUserContext"",h=""start"",c=""stop"",l=""Track"",a=l+""Event"",v=l+""Page"",y=u.createElement(o),r,f;y.src=config.url||""https://az416426.vo.msecnd.net/scripts/a/ai.0.js"";u.getElementsByTagName(o)[0].parentNode.appendChild(y);try{t.cookie=u.cookie}catch(p){}for(t.queue=[],t.version=""1.0"",r=[""Event"",""Exception"",""Metric"",""PageView"",""Trace"",""Dependency""];r.length;)i(""track""+r.pop());return i(""set""+s),i(""clear""+s),i(h+a),i(c+a),i(h+v),i(c+v),i(""flush""),config.disableExceptionTracking||(r=""onerror"",i(""_""+r),f=e[r],e[r]=function(config,i,u,e,o){var s=f&&f(config,i,u,e,o);return s!==!0&&t[""_""+r](config,i,u,e,o),s}),t
+    }({
+        instrumentationKey:""");
+
+            
+            #line 34 "..\..\Views\Shared\_ErrorLayout.cshtml"
+                       Write(ViewBag.AppInsightsInstrumentationKey);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"\r\n    });\r\n       \r\n    window.appInsights=appInsights;\r\n    appInsights.trackPa" +
+"geView();\r\n</script>\r\n");
+
+            
+            #line 40 "..\..\Views\Shared\_ErrorLayout.cshtml"
+}
+
+            
+            #line default
+            #line hidden
 WriteLiteral("    ");
 
             
-            #line 18 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 41 "..\..\Views\Shared\_ErrorLayout.cshtml"
 Write(Html.Partial("_Scripts"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</head>\r\n<body>\r\n    <div");
+WriteLiteral("\r\n</head>\r\n<body>\r\n");
+
+            
+            #line 44 "..\..\Views\Shared\_ErrorLayout.cshtml"
+ if (ViewBag.EnableGoogleTagManager)
+{
+
+            
+            #line default
+            #line hidden
+WriteLiteral("<!-- Google Tag Manager (noscript) -->\r\n");
+
+WriteLiteral("<noscript><iframe");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 2545), Tuple.Create("\"", 2628)
+            
+            #line 47 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 2551), Tuple.Create<System.Object, System.Int32>("https://www.googletagmanager.com/ns.html?id=" + ViewBag.GoogleContainerId
+            
+            #line default
+            #line hidden
+, 2551), false)
+);
+
+WriteLiteral("\r\nheight=\"0\"");
+
+WriteLiteral(" width=\"0\"");
+
+WriteLiteral(" style=\"display:none;visibility:hidden\"");
+
+WriteLiteral("></iframe></noscript>\r\n");
+
+WriteLiteral("<!-- End Google Tag Manager (noscript) -->\r\n");
+
+            
+            #line 50 "..\..\Views\Shared\_ErrorLayout.cshtml"
+}
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"skiplink-container\"");
 
@@ -180,14 +293,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1285), Tuple.Create("\"", 1333)
+WriteAttribute("src", Tuple.Create(" src=\"", 3174), Tuple.Create("\"", 3222)
             
-            #line 30 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 1291), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("gov.uk_logotype_crown.png")
+            #line 60 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 3180), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("gov.uk_logotype_crown.png")
             
             #line default
             #line hidden
-, 1291), false)
+, 3180), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -204,7 +317,7 @@ WriteLiteral(" class=\"global-header__title beta\"");
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 65 "..\..\Views\Shared\_ErrorLayout.cshtml"
                                                  Write(ViewBag.UserJourneyMainCaption);
 
             
@@ -231,22 +344,18 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">");
 
             
-            #line 44 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 74 "..\..\Views\Shared\_ErrorLayout.cshtml"
                                   Write(ViewBag.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</h1>\r\n            <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral("</h1>\r\n            <div>\r\n");
 
 WriteLiteral("                ");
 
             
-            #line 46 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 76 "..\..\Views\Shared\_ErrorLayout.cshtml"
            Write(RenderBody());
 
             
@@ -332,14 +441,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3070), Tuple.Create("\"", 3111)
+WriteAttribute("src", Tuple.Create(" src=\"", 4946), Tuple.Create("\"", 4987)
             
-            #line 62 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 3076), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("govuk-crest-2x.png")
+            #line 92 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 4952), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("govuk-crest-2x.png")
             
             #line default
             #line hidden
-, 3076), false)
+, 4952), false)
 );
 
 WriteLiteral(" width=\"125\"");

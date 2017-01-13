@@ -1,0 +1,86 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@using SFA.Apprenticeships.Web.Recruit.Constants
+
+@model FurtherVacancyDetailsViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Close Vacancy";
+}
+
+@if (Model.VacancyType == VacancyType.Traineeship)
+{
+    <h1 class="heading-xlarge">
+        Close this opportunity
+    </h1>
+}
+else
+{
+    <h1 class="heading-xlarge">
+        Close this vacancy
+    </h1>
+}
+
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.CloseVacancy, FormMethod.Post, new { id = "close-vacancy-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+    @Html.HiddenFor(m => m.WarningsHash)
+    @Html.HiddenFor(m => m.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.Wage.Type)
+    @Html.HiddenFor(m => m.Wage.Classification)
+    @Html.HiddenFor(m => m.Wage.CustomType)
+    @Html.HiddenFor(m => m.Wage.PresetText)
+    @Html.HiddenFor(m => m.Wage.Amount)
+    @Html.HiddenFor(m => m.Wage.AmountLowerBound)
+    @Html.HiddenFor(m => m.Wage.AmountUpperBound)
+    @Html.HiddenFor(m => m.Wage.Unit)
+    @Html.HiddenFor(m => m.Wage.RangeUnit)
+    @Html.HiddenFor(m => m.Wage.WageTypeReason)
+    @Html.HiddenFor(m => m.Wage.HoursPerWeek)
+    @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
+    @Html.HiddenFor(m => m.VacancyType)
+
+    if (Model.VacancyType == VacancyType.Traineeship)
+    {
+        <div>
+            Your opportunity will be closed immediately and will no longer be listed on Find<br />
+            an traineeship
+        </div>
+    }
+    else
+    {
+        <div>
+            Your vacancy will be closed immediately and will no longer be listed on Find<br />
+            an apprenticeship
+        </div>
+    }
+
+    <br/>
+    <div class="grid grid-1-2">
+        @if (Model.VacancyType == VacancyType.Apprenticeship)
+        {
+            <button class="button" type="submit">Close vacancy</button>
+        }
+        else
+        {
+            <button class="button" type="submit">Close opportunity</button>
+        }
+
+
+        @{
+            var viewModel = new
+            {
+                vacancyReferenceNumber = Model.VacancyReferenceNumber
+            };
+
+            var routeName = Model.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                RecruitmentRouteNames.VacancyApplications :
+                RecruitmentRouteNames.PreviewVacancy;
+
+            @Html.RouteLink("Cancel", routeName, viewModel)
+        }
+    </div>
+}
+

@@ -1,0 +1,115 @@
+﻿// ==========================================================================
+// This is an adaption of _form-errors.scss in the govuk_elements package.
+// Cloning the styles from .error-summary and changing the border colour
+// based on the type of notification.
+//
+// The error notifications use the form error styles found in the GDS 
+// _form-errors.scss and the warning notifications use the form warning styles
+// found in the _sfa-form-warnings partial.
+//
+// Other notification colour variables and styles can be found below.
+// ==========================================================================
+
+$info-colour:$light-blue;
+$success-colour:$turquoise;
+
+// Container for notifications, to reduce space between them wehen there are multiple
+.notifications { 
+    .error-summary,.warning-summary,.success-summary,.info-summary{
+        margin-bottom:0px !important;
+        &:last-child {
+           margin-bottom:100px; 
+        }
+    }
+}
+
+// Share notification styles
+.info-summary, .success-summary {
+    border-width: 4px;
+    border-style: solid;
+
+    margin-top: $gutter-half;
+    margin-bottom: $gutter-half;
+    padding: $gutter-half 10px;
+
+    @include media(tablet) {
+        border-width: 5px;
+        border-style: solid;
+
+        margin-top: $gutter;
+        margin-bottom: $gutter;
+
+        padding: $gutter-two-thirds $gutter-half $gutter-half;
+    }
+
+    @include ie-lte(6) {
+        zoom: 1;
+    }
+
+    // Use the GOV.UK outline focus style
+    &:focus {
+        outline: 3px solid $focus-colour;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    &-heading {
+        margin-top: 0;
+    }
+
+    &-list {
+    padding-left: 0;
+        li {
+            @include media(tablet) {
+            margin-bottom: 5px;
+            }
+        }
+        a {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    }  
+}
+
+.info-dismiss, .success-dismiss {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+// Info notification styles
+.info-summary {
+  border-color:$info-colour;
+
+  @include media(tablet) {
+    border-color:$info-colour;
+  }
+
+  .info-summary-list {
+    a {
+      color: $info-colour;
+    }
+  }
+  .info-dismiss {
+    color: $info-colour;
+  }
+}
+
+// Success notification styles
+.info-summary {
+  border-color:$success-colour;
+
+  @include media(tablet) {
+    border-color:$success-colour;
+  }
+
+  .info-summary-list {
+    a {
+      color: $success-colour;
+    }
+  }
+  .info-dismiss {
+    color: $success-colour;
+  }
+}

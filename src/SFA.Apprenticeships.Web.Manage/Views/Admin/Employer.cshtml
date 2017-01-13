@@ -9,7 +9,7 @@
 
 <p>@Html.RouteLink("Manage Employers", ManagementRouteNames.AdminEmployers)</p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditEmployer))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditEmployer, FormMethod.Post, new { id = "admin-edit-employer-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -36,8 +36,8 @@
         @Html.FormTextFor(m => m.Address.Town, controlHtmlAttributes: new {type = "text"})
         @Html.FormTextFor(m => m.Address.Postcode, controlHtmlAttributes: new {type = "text"})
 
-        @Html.LabelFor(m => m.Status, new {@class = "form-label"})
-        @Html.DropDownListFor(m => m.Status, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.Status))
+        @Html.LabelFor(m => m.Status, new {@class = "form-label-bold"})
+        @Html.DropDownListFor(m => m.Status, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.Status), new { @class = "form-control" })
 
     </div>
 

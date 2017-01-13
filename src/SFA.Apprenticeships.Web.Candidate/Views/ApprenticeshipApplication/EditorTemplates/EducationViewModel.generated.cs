@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Edit
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipApplication/EditorTemplates/EducationViewModel.cshtml")]
@@ -55,7 +56,7 @@ WriteLiteral("<fieldset");
 
 WriteLiteral(" id=\"applyEducation\"");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <legend");
 
@@ -72,37 +73,33 @@ Write(Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttribut
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <fieldset");
+WriteLiteral("\r\n\r\n    <label");
 
-WriteLiteral(" class=\"form-group inline-fixed\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(">\r\n        <legend");
+WriteLiteral(">Years attended</label>\r\n");
 
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Years attended</legend>\r\n");
-
-WriteLiteral("        ");
+WriteLiteral("    ");
 
             
             #line 8 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-   Write(Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
+Write(Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("    ");
 
             
             #line 9 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-   Write(Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
+Write(Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </fieldset>\r\n</fieldset>");
+WriteLiteral("\r\n</fieldset>");
 
         }
     }

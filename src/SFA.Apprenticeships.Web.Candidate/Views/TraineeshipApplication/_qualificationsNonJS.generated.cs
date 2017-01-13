@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/_qualificationsNonJS.cshtml")]
@@ -53,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
         {
 WriteLiteral("<noscript>\r\n    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyQualifications\"");
 
@@ -180,7 +181,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </td>\r\n                                <td>\r\n  " +
 "                                  <div");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n");
 
@@ -207,7 +208,7 @@ WriteLiteral("                                        ");
 WriteLiteral(" \r\n                                    </div>\r\n                                </" +
 "td>\r\n                                <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 
@@ -301,7 +302,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </td>\r\n                                <td>\r\n  " +
 "                                  <div");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n");
 
@@ -329,7 +330,7 @@ WriteLiteral("\r\n                                        \r\n                  
 "/div>\r\n                                </td>\r\n                                <t" +
 "d");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n");
 

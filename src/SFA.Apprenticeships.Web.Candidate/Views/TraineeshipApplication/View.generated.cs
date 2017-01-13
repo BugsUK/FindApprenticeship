@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/View.cshtml")]
@@ -62,11 +63,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -74,13 +75,17 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Your application</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-3\"");
+WriteLiteral(" class=\"column-one-third sfa-xlarge-top-margin sfa-align-right-tablet\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n        <ul");
 
-WriteLiteral(" class=\"page-link hide-nojs\"");
+WriteLiteral(" class=\"list\"");
 
-WriteLiteral(">\r\n            <p>\r\n                <a");
+WriteLiteral(">\r\n            <li");
+
+WriteLiteral(" class=\"hide-nojs\"");
+
+WriteLiteral(">\r\n                <a");
 
 WriteLiteral(" class=\"print-trigger\"");
 
@@ -90,14 +95,14 @@ WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-print\"");
 
-WriteLiteral("></i>Print this page</a>\r\n            </p>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r" +
+WriteLiteral("></i>Print this page</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n\r" +
 "\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -120,7 +125,7 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</h2>\r\n            <p");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(" id=\"vacancy-employer\"");
 
@@ -128,37 +133,35 @@ WriteLiteral(">");
 
             
             #line 25 "..\..\Views\TraineeshipApplication\View.cshtml"
-                                                 Write(Model.VacancyDetail.EmployerName);
+                                                           Write(Model.VacancyDetail.EmployerName);
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n        </div>\r\n        <p");
 
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(" id=\"vacancy-summary\"");
+WriteLiteral("  id=\"vacancy-summary\"");
 
 WriteLiteral(">");
 
             
             #line 27 "..\..\Views\TraineeshipApplication\View.cshtml"
-                                        Write(Model.VacancyDetail.Description);
+                            Write(Model.VacancyDetail.Description);
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-3 para-btm-margin\"");
+WriteLiteral(" class=\"column-one-third para-btm-margin\"");
 
 WriteLiteral(">\r\n        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">This is your submitted application.</p>\r\n        <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n            You applied on ");
 
@@ -177,14 +180,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1322), Tuple.Create("\"", 1378)
+WriteAttribute("href", Tuple.Create(" href=\"", 1388), Tuple.Create("\"", 1444)
             
             #line 35 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1329), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 1395), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1329), false)
+, 1395), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
@@ -225,7 +228,7 @@ Write(Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCou
             #line hidden
 WriteLiteral("\r\n\r\n<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <h2");
 
@@ -261,14 +264,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2101), Tuple.Create("\"", 2157)
+WriteAttribute("href", Tuple.Create(" href=\"", 2173), Tuple.Create("\"", 2229)
             
             #line 55 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2108), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2180), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2108), false)
+, 2180), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");

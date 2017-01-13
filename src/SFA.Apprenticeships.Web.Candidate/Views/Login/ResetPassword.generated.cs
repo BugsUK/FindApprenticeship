@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Login/ResetPassword.cshtml")]
@@ -106,7 +107,7 @@ WriteLiteral(" title=\"Hidden username\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" />\r\n");
 
@@ -116,7 +117,7 @@ WriteLiteral(" title=\"Hidden password\"");
 
 WriteLiteral(" type=\"password\"");
 
-WriteLiteral(" class=\"alwayshidden\"");
+WriteLiteral(" class=\"sfa-hide\"");
 
 WriteLiteral(" />\r\n");
 
@@ -127,25 +128,18 @@ WriteLiteral(" />\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    <fieldset");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n        <legend");
+WriteLiteral("    <fieldset>\r\n        <legend");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Password reset</legend>\r\n\r\n        <p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">Enter your 6-character code to reset your password</p>\r\n        <div");
+WriteLiteral(">Password reset</legend>\r\n\r\n        <p >Enter your 6-character code to reset your" +
+" password</p>\r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n            <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Email address</p>\r\n            <span");
 
@@ -207,9 +201,7 @@ WriteLiteral(">Password strength: <span");
 
 WriteLiteral(" id=\"pass_meter\"");
 
-WriteLiteral(" class=\"\"");
-
-WriteLiteral("></span></p>\r\n        </div>\r\n\r\n        <div");
+WriteLiteral(" ></span></p>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 

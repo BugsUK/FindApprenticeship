@@ -6,19 +6,20 @@
 @model FurtherVacancyDetailsViewModel
 
 @{
-    ViewBag.Title = "Recruit an Apprentice - Close or extend vacancy";
+    ViewBag.Title = "Recruit an Apprentice - Change vacancy dates";
 }
 
 <h1 class="heading-xlarge">
-    Close or extend vacancy
+    Change vacancy dates
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates,
+                            new RouteValueDictionary { { "vacancyReferenceNumber", Model.VacancyReferenceNumber }},
+                            FormMethod.Post, new Dictionary<string, object> { { "id", "manage-vacancy-dates-form" }}))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.HiddenFor(m => m.WarningsHash)
-    @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.Wage.Type)
     @Html.HiddenFor(m => m.Wage.Classification)
     @Html.HiddenFor(m => m.Wage.CustomType)
@@ -32,12 +33,6 @@
     @Html.HiddenFor(m => m.Wage.HoursPerWeek)
     @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
 
-    <div>
-        To close a vacancy, add today's date. The vacancy will close at midnight. This <br />
-        is to allow candidates time to complete their applications.
-    </div>
-    <br/>
-    <br/>
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
         <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
         <h3 class="heading-small">@Model.GetMetadata(m => m.VacancyDatesViewModel.ClosingDate).DisplayName</h3>
@@ -45,7 +40,11 @@
         @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.ClosingDate, Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
 
     </fieldset>
-
+    <div>
+        We advise using a date more than two weeks from now <br/>
+        Vacancies will close at midnight on your chosen date
+    </div>
+    <br/>
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))">
         <a name="@Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
         <h3 class="heading-small">@Model.GetMetadata(m => m.VacancyDatesViewModel.PossibleStartDate).DisplayName</h3>

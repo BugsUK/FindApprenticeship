@@ -2,11 +2,11 @@
 {
     using Common.ViewModels;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
 
     public class ApprenticeshipVacancySummaryViewModel : VacancySummaryViewModel
     {
-        public ApprenticeshipLocationType VacancyLocationType { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
         
         public ApplicationStatuses? CandidateApplicationStatus { get; set; }
 

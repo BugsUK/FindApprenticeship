@@ -202,7 +202,7 @@ USING (VALUES
 (201,	20,	'480',	'480',	'Health - Pharmacy Services',	1,	NULL,	NULL, 	NULL),
 (202,	14,	'432',	'432',	'Cabin Crew (Go Skills)',	1,	NULL,	NULL, 	NULL),
 (203,	14,	'456',	'456',	'Playwork',	1,	NULL,	NULL, 	NULL),
-(204,	14,	'457',	'457',	'Advanced Playwork',	1,	'2013-03-14 00:00:00.000',	NULL, 	NULL),
+(204,	14,	'457',	'457',	'Advanced Playwork',	2,	'2013-03-14 00:00:00.000',	NULL, 	NULL),
 (205,	14,	'458',	'458',	'Spectator Safety',	1,	NULL,	NULL, 	NULL),
 (206,	14,	'459',	'459',	'Advanced Spectator Safety',	1,	NULL,	NULL, 	NULL),
 (207,	14,	'460',	'460',	'Activity Leadership',	1,	NULL,	NULL, 	NULL),

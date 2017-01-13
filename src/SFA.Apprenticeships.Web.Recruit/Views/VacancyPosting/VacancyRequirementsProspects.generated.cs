@@ -70,7 +70,7 @@ WriteLiteral("\r\n");
 
             
             #line 7 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post))
+ using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post, new { id = "vacancy-requirements-and-prospects-form" }))
 {
     
             
@@ -109,7 +109,7 @@ Write(Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <button");
 
@@ -138,7 +138,7 @@ WriteLiteral(" id=\"VacancyRequirementsProspectsAndExit\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link no-autosave\"");
+WriteLiteral(" class=\"button sfa-button-secondary no-autosave\"");
 
 WriteLiteral(" name=\"VacancyRequirementsProspects\"");
 

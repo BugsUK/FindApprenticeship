@@ -74,6 +74,9 @@
                                                            && NewVacancyViewModel.LocationAddresses != null
                                                            && NewVacancyViewModel.LocationAddresses.Count() == 1;
 
+        public bool IsEmployerAnonymous => NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer != null &&
+                                           NewVacancyViewModel.VacancyOwnerRelationship.IsAnonymousEmployer.Value;
+
         public int NumberOfPositions { get; set; }
 
         public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
@@ -82,7 +85,9 @@
 
         public VacancyType VacancyType { get; set; }
 
-        public bool IsSingleLocation => NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true;
+        public bool IsSingleLocation => NewVacancyViewModel.VacancyLocationType == VacancyLocationType.SpecificLocation;
+
+        public bool IsNationwideLocation => NewVacancyViewModel.VacancyLocationType == VacancyLocationType.Nationwide;
 
         public bool IsCandidateView { get; set; }
 
@@ -91,5 +96,6 @@
         public VacancySource VacancySource { get; set; }
 
         public string Mode { get; set; }
+        public string Contact { get; set; }
     }
 }

@@ -9,7 +9,7 @@
     using Candidate.Views.ApprenticeshipSearch;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -40,8 +40,6 @@
 
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
 
             //Shares parent with loc-within here.
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
@@ -80,8 +78,6 @@
 
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
 
             //Shares parent with loc-within here.
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
@@ -118,15 +114,10 @@
 
             view.GetElementbyId("Location").Should().NotBeNull();
             view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
 
             view.GetElementbyId("loc-within").Should().NotBeNull();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
 
             //Shares parent with loc-within here.
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();

@@ -6,7 +6,7 @@
     ViewBag.Title = "Recruit an Apprentice - Send successful decision";
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post, new { id = "confirm-successful-apprenticeship-application-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)
@@ -15,7 +15,7 @@
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
     <div>
         <div class="hgroup">
-            <h1 class="heading-xlarge med-btm-margin">Select @Model.ApplicantDetails.Name for this role</h1>
+            <h1 class="heading-xlarge sfa-medium-bottom-margin">Select @Model.ApplicantDetails.Name for this role</h1>
         </div>
         <p> An automated message will now be sent to the candidate to inform them that their @Model.Vacancy.Title application has been successful.</p>        
         <section>

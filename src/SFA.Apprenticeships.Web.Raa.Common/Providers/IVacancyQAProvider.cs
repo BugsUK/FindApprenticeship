@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
@@ -19,7 +20,7 @@
         VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
         VacancyViewModel ReviewVacancy(int vacancyReferenceNumber);
-        
+
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
@@ -50,7 +51,7 @@
 
         NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid, bool isAnonymousEmployer = false);
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 
@@ -58,7 +59,7 @@
 
         VacancyViewModel GetVacancy(Guid vacancyGuid);
 
-        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
+        Task<VacancyViewModel> GetVacancy(int vacancyReferenceNumber);
 
         List<VacancyLocationAddressViewModel> GetLocationsAddressViewModelsByReferenceNumber(int vacancyReferenceNumber);
 

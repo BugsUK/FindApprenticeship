@@ -5,11 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">Contact us</h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">Contact us</h1>
+    </div>
 </div>
 
-@using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post))
+@using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post, new { id = "helpdesk-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.FormTextFor(
@@ -24,22 +26,22 @@
             hintHtmlAttributes: new { @class = "text" })
 
     <div class="form-group">
-        <label for="contact-subject" class="form-label">Briefly describe your question</label>
-        @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs small-btm-margin select-inject" })
+        <label for="contact-subject" class="form-label-bold">Briefly describe your question</label>
+        @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs sfa-small-bottom-margin select-inject form-control" })
 
-        <div id="changeEmailAddress" class="selfServe panel-indent toggle-content hide-nojs text">
+        <div id="changeEmailAddress" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
             <p>If you'd like to change your email address visit the <a href="@Url.RouteUrl(RouteNames.UpdateEmail)">update email</a> page. If you're still having problems contact us using this form.</p>
         </div>
 
-        <div id="forgottenEmailAddress" class="selfServe panel-indent toggle-content hide-nojs text">
+        <div id="forgottenEmailAddress" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
             <p>If you've forgotten your email address visit the <a href="@Url.RouteUrl(RouteNames.ForgottenCredentials)">forgotten email</a> page. If you're still having problems contact us using this form.</p>
         </div>
 
-        <div id="cantSignIn" class="selfServe panel-indent toggle-content hide-nojs text">
+        <div id="cantSignIn" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
             <p>If you're having trouble signing in to your account visit the <a href="@Url.RouteUrl(RouteNames.ForgottenCredentials)">forgotten password</a> page. If you're still having problems contact us using this form.</p>
         </div>
 
-        <div id="cantActivate" class="selfServe panel-indent toggle-content hide-nojs text">
+        <div id="cantActivate" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
             <p><a href="@Url.RouteUrl(RouteNames.SignIn)">Activate your account</a> by signing in. You'll need the email address and password you used to create your account.</p>
             <p>If you haven't received your activation code, you can re-send it from the activation page. Make sure you've checked your junk email folder.</p>
             <p>If you're still having problems contact us using this form.</p>
@@ -51,13 +53,13 @@
           controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty)
     </div>
     @Html.FormTextAreaFor(m => m.Details,
-                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "sfa-small-bottom-margin" },
                 hintHtmlAttributes: new { @class = "text" })
     <div class="form-group">
         <button id="send-contact-form-button" class="button">Send</button>
     </div>
 }
-<section class="text">
+<section >
     <h2 class="heading-medium">Apprenticeship helpline</h2>
     <p>
         Contact the helpline if you’d prefer to speak to somebody, or if

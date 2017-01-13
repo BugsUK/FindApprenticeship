@@ -1,6 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
 <noscript>
-    <fieldset class="fieldset-with-border" id="applyQualifications">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered" id="applyQualifications">
         <legend class="heading-large">Qualifications</legend>
         <div class="clearfix"></div>
         <div>
@@ -46,12 +46,12 @@
                                     @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
                                 </td>
                                 <td>
-                                    <div class="small-btm-margin">
+                                    <div class="sfa-small-bottom-margin">
                                         @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Grade, new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 15})
                                         @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade") 
                                     </div>
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     @Html.CheckBoxFor(m => Model.Candidate.Qualifications.ToList()[i].IsPredicted, new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
                                 </td>
                             </tr>
@@ -74,13 +74,13 @@
                                     @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
                                 </td>
                                 <td>
-                                    <div class="small-btm-margin">
+                                    <div class="sfa-small-bottom-margin">
                                         @Html.TextBox("Candidate.Qualifications[" + i + "].Grade", "", new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11})
                                         @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade")
                                         
                                     </div>
                                 </td>
-                                <td class="ta-center">
+                                <td class="sfa-align-center">
                                     @Html.CheckBox("Candidate.Qualifications[" + i + "].IsPredicted", new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
                                 </td>
                             </tr>

@@ -12,21 +12,21 @@
 }
 else
 {
-    <strong>Context:</strong> @Model.Context
+    <span class="bold-small">Context:</span> @Model.Context
     <br />
-    <strong>HttpReturnCode:</strong> @Model.HttpReturnCode
+    <span class="bold-small">HttpReturnCode:</span> @Model.HttpReturnCode
     <br />
-    <strong>IdentityProvider:</strong> @Model.IdentityProvider
+    <span class="bold-small">IdentityProvider:</span> @Model.IdentityProvider
     <br />
-    <strong>TimeStamp:</strong> @Model.TimeStamp
+    <span class="bold-small">TimeStamp:</span> @Model.TimeStamp
     <br />
-    <strong>TraceId:</strong> @Model.TraceId
+    <span class="bold-small">TraceId:</span> @Model.TraceId
     <br />
     <hr />
 
     foreach (var errorDetail in Model.Errors)
     {
-        <strong>@errorDetail.ErrorCode</strong> @errorDetail.ErrorMessage
+        <span class="bold-small">@errorDetail.ErrorCode</span> @errorDetail.ErrorMessage
         <br />
     }
 }

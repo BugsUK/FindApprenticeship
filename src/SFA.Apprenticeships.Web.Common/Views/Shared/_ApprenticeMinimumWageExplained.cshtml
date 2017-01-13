@@ -1,23 +1,23 @@
-﻿@using SFA.Apprenticeships.Infrastructure.Presentation.Constants
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.Constants
 @model DateTime
 
 <details>
-    <summary>Wages explained</summary>
-    <div class="detail-content">
+    <summary><span class="summary">Wages explained</span></summary>
+    <div class="panel panel-border-narrow">
         @if (Model < Wages.Ranges[0].ValidTo) //Special case for the run up to the change
         {
-            <text>
+            <p>
                 The current National Minimum Wage (NMW) for apprentices is £@Wages.Ranges[0].ApprenticeMinimumWage per hour. This will increase to £@Wages.Ranges[1].ApprenticeMinimumWage on the 1 Oct 2016. This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year. Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year
-            </text>
+            </p>
         }
         else
         {
-            <text>
+            <p>
                 The current National Minimum Wage for an apprentice is £@Wages.GetWageRangeFor(Model).ApprenticeMinimumWage an hour. This rate applies to apprentices under 19 and those aged 19 or over who are in their first year.<br />
                 Apprentices must be paid at least the minimum wage rate for their age if they are aged 19 or over and have completed their first year.<br />
                 The minimum wage rates are £@Wages.GetWageRangeFor(Model).Between18And20NationalMinimumWage an hour for 18-20 year olds and £@Wages.GetWageRangeFor(Model).Over21NationalMinimumWage for anyone aged 21 and over.<br />
                 Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
-            </text>
+            </p>
         }
     </div>
 </details>

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     // Validation messages
     var validationMessageNumberOfPositionsRequired = "You must enter at least 1 position";
 
@@ -103,7 +103,7 @@
                         $(item.Value).each(function (valueIndex, valueItem) {
                             var name = item.Key.replace("[", "\\[").replace("]", "\\]").replace(".", "\\.") + "_Error";
                             $("#" + name).text(valueItem);
-                            $("#" + name).removeClass("field-validation-valid").addClass("field-validation-error").show();
+                            $("#" + name).removeClass("field-validation-valid").addClass("error-message").show();
                         });
                     }
                 });
@@ -118,7 +118,7 @@
 
             var span = document.createElement('span');
 
-            span.className = "field-validation-error";
+            span.className = "error-message";
             $(span).attr('aria-live', 'polite');
 
             var inputFormControlParent = $(element).closest(".validation-message-parent").find('.validation-message-container');
@@ -139,11 +139,11 @@
             messagesOnModified: true,
             insertMessages: true,
             parseInputAttributes: true,
-            errorClass: 'input-validation-error',
+            errorClass: 'error',
             grouping: {
                 deep: true
             },
-            errorElementClass: 'input-validation-error'
+            errorElementClass: 'error'
         });
 
         var locationsViewModel = new locationAddressesViewModel();

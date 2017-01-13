@@ -4,7 +4,7 @@
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Interfaces.Locations;
     using Interfaces.ReferenceData;
     using Interfaces.Search;

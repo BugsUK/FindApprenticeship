@@ -58,47 +58,52 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
             #line hidden
 WriteLiteral("    <section");
 
-WriteLiteral(" class=\"section-border grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(" id=\"about-traineeships\"");
 
-WriteLiteral(">\r\n        <h2");
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"column-full\"");
+
+WriteLiteral(">\r\n            <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">About traineeships</h2>\r\n        <div");
+WriteLiteral(">About traineeships</h2>\r\n        </div>\r\n        <div");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(@">
-                <p>
-                    A traineeship is a course with work experience that gets you ready for work or an apprenticeship. It can last up to 6 months.<br />
-                    You can apply if you’re:
-                    <ul>
-                        <li>eligible to work in England</li>
-                        <li>unemployed and have little or no work experience</li>
-                        <li>aged 16 to 24 and qualified below Level 3</li>
-                    </ul>
-                </p>
-                <p>
-                    You’ll get:
-                    <ul>
-                        <li>a work experience placement</li>
-                        <li>help with English and maths (if you need it)</li>
-                    </ul>
-                </p>
-                <p>You won’t be paid, but you may be given expenses for things like travel and meals.</p>
-            </div>
+            <p>
+                A traineeship is a course with work experience that gets you ready for work or an apprenticeship. It can last up to 6 months.<br/>
+                You can apply if you’re:
+                <ul>
+                    <li>eligible to work in England</li>
+                    <li>unemployed and have little or no work experience</li>
+                    <li>aged 16 to 24 and qualified below Level 3</li>
+                </ul>
+            </p>
+            <p>
+                You’ll get:
+                <ul>
+                    <li>a work experience placement</li>
+                    <li>help with English and maths (if you need it)</li>
+                </ul>
+            </p>
+            <p>You won’t be paid, but you may be given expenses for things like travel and meals.</p>
         </div>
     </section>
 ");
 
+WriteLiteral("    <hr");
+
+WriteLiteral(" class=\"sfa-no-bottom-margin\"");
+
+WriteLiteral(" />\r\n");
+
             
-            #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml"
+            #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml"
 }
             
             #line default

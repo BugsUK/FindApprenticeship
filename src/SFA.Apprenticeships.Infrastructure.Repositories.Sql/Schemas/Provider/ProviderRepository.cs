@@ -13,6 +13,9 @@
 
     public class ProviderRepository : IProviderReadRepository, IProviderWriteRepository
     {
+        public const string SelectByIdSql = "SELECT * FROM dbo.Provider WHERE ProviderId = @providerId";
+        public const string SelectByUkprnSql = "SELECT * FROM dbo.Provider WHERE UKPRN = @ukprn AND ProviderStatusTypeId = @providerStatusTypeId";
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -28,14 +31,12 @@
         {
             _logger.Debug("Getting provider with ProviderId={0}", providerId);
 
-            const string sql = "SELECT * FROM dbo.Provider WHERE ProviderId = @providerId";
-
             var sqlParams = new
             {
                 providerId
             };
 
-            var dbProvider = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams).SingleOrDefault();
+            var dbProvider = _getOpenConnection.Query<Entities.Provider>(SelectByIdSql, sqlParams).SingleOrDefault();
 
             _logger.Debug(dbProvider == null
                 ? "Did not find provider with ProviderId={0}"
@@ -49,16 +50,13 @@
         {
             _logger.Debug("Getting activated provider with Ukprn={0}", ukprn);
 
-            const string sql =
-                "SELECT * FROM dbo.Provider WHERE UKPRN = @ukprn AND ProviderStatusTypeId = @providerStatusTypeId";
-
             var sqlParams = new
             {
                 ukprn,
                 providerStatusTypeID = ProviderStatuses.Activated
             };
 
-            var dbVacancy = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams).SingleOrDefault();
+            var dbVacancy = _getOpenConnection.Query<Entities.Provider>(SelectByUkprnSql, sqlParams).SingleOrDefault();
 
             if (dbVacancy == null && !errorIfNotFound)
             {

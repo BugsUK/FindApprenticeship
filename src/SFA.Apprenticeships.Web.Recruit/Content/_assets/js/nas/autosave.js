@@ -1,4 +1,4 @@
-﻿var autoSave = (function() {
+var autoSave = (function() {
     // settings is composed by:
     //  - formSelector: selector pointing to the form we want 
     //    to serialize and compare

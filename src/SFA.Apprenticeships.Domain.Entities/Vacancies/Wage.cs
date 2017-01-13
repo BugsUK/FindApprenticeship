@@ -5,34 +5,39 @@
 
     public class Wage
     {
+        public Wage()
+        {
+            
+        }
+
         [JsonConstructor]
-        public Wage(WageType type, decimal? amount, decimal? lowerBound, decimal? upperBound, string text, WageUnit unit, decimal? hoursPerWeek, string reasonForType)
+        public Wage(WageType type, decimal? amount, decimal? amountLowerBound, decimal? amountUpperBound, string text, WageUnit unit, decimal? hoursPerWeek, string reasonForType)
         {
             Type = type;
             Amount = amount;
-            AmountLowerBound = lowerBound;
-            AmountUpperBound = upperBound;
+            AmountLowerBound = amountLowerBound;
+            AmountUpperBound = amountUpperBound;
             ReasonForType = reasonForType;
             Text = text;
             HoursPerWeek = hoursPerWeek;
             Unit = CorrectWageUnit(type, unit);
         }
 
-        public WageType Type { get; private set; }
+        public WageType Type { get; set; }
 
-        public string ReasonForType { get; private set; }
+        public string ReasonForType { get; set; }
 
-        public decimal? Amount { get; private set; }
+        public decimal? Amount { get; set; }
 
-        public decimal? AmountLowerBound { get; private set; }
+        public decimal? AmountLowerBound { get; set; }
 
-        public decimal? AmountUpperBound { get; private set; }
+        public decimal? AmountUpperBound { get; set; }
 
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
-        public WageUnit Unit { get; private set; }
+        public WageUnit Unit { get; set; }
 
-        public decimal? HoursPerWeek { get; private set; }
+        public decimal? HoursPerWeek { get; set; }
 
         private static WageUnit CorrectWageUnit(WageType type, WageUnit unit)
         {
@@ -59,7 +64,7 @@
                             return unit;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(Unit), $"Invalid Wage Unit: {unit}");
+                            throw new ArgumentOutOfRangeException(nameof(WageUnit), $"Invalid Wage Unit: {unit}");
                     }
 
                 case WageType.LegacyWeekly:

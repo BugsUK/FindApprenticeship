@@ -8,7 +8,7 @@
 
 @if (@Model.ApplyViaEmployerWebsite)
 {
-    <p class="no-btm-margin">This traineeship requires you to apply through the employer's website.</p>
+    <p class="sfa-no-bottom-margin">This traineeship requires you to apply through the employer's website.</p>
 
     if (Model.IsWellFormedVacancyUrl)
     {
@@ -23,7 +23,7 @@ else if (Request.IsAuthenticated)
 {
     if (Model.DateApplied.HasValue)
     {
-        <p id="date-applied" class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+        <p id="date-applied" class="sfa-no-bottom-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
         <p>@Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = Model.Id }, new { @id = "view-application-link" })</p>
     }
     else if (Model.VacancyStatus == VacancyStatuses.Live)
@@ -43,5 +43,5 @@ else if (Model.VacancyStatus == VacancyStatuses.Live)
 
 @if (Model.VacancyStatus == VacancyStatuses.Live)
 {
-    <p id="vacancy-closing-date" class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
+    <p id="vacancy-closing-date" class="font-xsmall">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
 }

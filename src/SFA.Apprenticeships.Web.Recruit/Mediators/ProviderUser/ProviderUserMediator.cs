@@ -7,6 +7,7 @@
     using System.Security.Claims;
     using System.Web.Mvc;
     using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Providers;
     using Common.Constants;
     using Common.Mediators;
     using Common.Models.Azure.AccessControlService;
@@ -16,7 +17,9 @@
     using Raa.Common.Validators.ProviderUser;
     using Apprenticeships.Application.Interfaces.Users;
     using Common.Extensions;
+    using Constants.ViewModels;
     using Domain.Entities.Communication;
+    using Domain.Entities.Exceptions;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Candidate;
@@ -154,14 +157,32 @@
         public MediatorResponse<SettingsViewModel> GetSettingsViewModel(string username, string ukprn)
         {
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
-            var providerSites = GetProviderSites(ukprn);
             var viewModel = new SettingsViewModel
             {
                 ProviderUserViewModel = providerUserViewModel,
-                ProviderSites = providerSites
             };
 
-            return GetMediatorResponse(ProviderUserMediatorCodes.GetSettingsViewModel.Ok, viewModel);
+            try
+            {
+                var providerSites = GetProviderSites(ukprn);
+                viewModel.ProviderSites = providerSites;
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetSettingsViewModel.Ok, viewModel);
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code == ProviderServiceCodes.ProviderNotFound)
+                {
+                    _logService.Info(ex.Message);
+                    return GetMediatorResponse(ProviderUserMediatorCodes.GetSettingsViewModel.ProviderNotFound, viewModel);
+                }
+                _logService.Error(ex);
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetSettingsViewModel.Error, viewModel, string.Format(SettingsViewModelMessages.ProviderNotFound, ukprn), UserMessageLevel.Warning);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error(ex);
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetSettingsViewModel.Error, viewModel, string.Format(SettingsViewModelMessages.Error, ukprn), UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<SettingsViewModel> UpdateUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
@@ -247,28 +268,48 @@
 
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
             _logService.Info($"Retrieved provider user {stopwatch.ElapsedMilliseconds}ms elapsed");
-            var provider = _providerProvider.GetProviderViewModel(ukprn);
-            _logService.Info($"Retrieved provider {stopwatch.ElapsedMilliseconds}ms elapsed");
-            var providerSites = GetProviderSites(ukprn);
-            _logService.Info($"Retrieved provider sites {stopwatch.ElapsedMilliseconds}ms elapsed");
-            var providerSiteId = providerUserViewModel.DefaultProviderSiteId;
-            if (providerSites.All(ps => ps.Value != Convert.ToString(providerUserViewModel.DefaultProviderSiteId)))
-            {
-                providerSiteId = Convert.ToInt32(providerSites.First().Value);
-            }
-            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
-            _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
 
             var viewModel = new HomeViewModel
             {
                 ProviderUserViewModel = providerUserViewModel,
-                ProviderViewModel = provider,
-                ProviderSites = providerSites,
-                CandidateSearch = new CandidateSearchViewModel(),
-                VacanciesSummary = vacanciesSummary
+                CandidateSearch = new CandidateSearchViewModel()
             };
 
-            return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
+            try
+            {
+                var provider = _providerProvider.GetProviderViewModel(ukprn);
+                _logService.Info($"Retrieved provider {stopwatch.ElapsedMilliseconds}ms elapsed");
+                var providerSites = GetProviderSites(ukprn);
+                _logService.Info($"Retrieved provider sites {stopwatch.ElapsedMilliseconds}ms elapsed");
+                var providerSiteId = providerUserViewModel.DefaultProviderSiteId;
+                if (providerSites.All(ps => ps.Value != Convert.ToString(providerUserViewModel.DefaultProviderSiteId)))
+                {
+                    providerSiteId = Convert.ToInt32(providerSites.First().Value);
+                }
+                var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerSiteId, vacanciesSummarySearch);
+                _logService.Info($"Retrieved vacancy summaries {stopwatch.ElapsedMilliseconds}ms elapsed");
+
+                viewModel.ProviderViewModel = provider;
+                viewModel.ProviderSites = providerSites;
+                viewModel.VacanciesSummary = vacanciesSummary;
+
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code == ProviderServiceCodes.ProviderNotFound)
+                {
+                    _logService.Info(ex.Message);
+                    return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.ProviderNotFound, viewModel);
+                }
+                _logService.Error(ex);
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Error, viewModel, string.Format(HomeViewModelMessages.ProviderNotFound, ukprn), UserMessageLevel.Warning);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error(ex);
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Error, viewModel, string.Format(HomeViewModelMessages.Error, ukprn), UserMessageLevel.Error);
+            }
         }
 
         public MediatorResponse<HomeViewModel> ChangeProviderSite(string username, string ukprn, HomeViewModel viewModel)

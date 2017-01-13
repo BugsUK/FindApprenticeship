@@ -4,27 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-2">
+<div class="grid-row">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">Verify your email address</h1>
     </div>
-    <div class="grid grid-1-2">
-        <p>
-            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
-        </p>
+    <div class="column-one-third">
+        <ul class="list sfa-align-right-tablet sfa-xlarge-top-margin">
+            <li>
+                @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "" })
+            </li>
+        </ul>
     </div>
 </div>
-<p class="text">
+<p >
     You've been sent a code to your new email address, enter your code to verify
     your address.
 </p>
 
-@using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {autocomplete = "off"}))
+@using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {id = "verify-updated-email-form", autocomplete = "off"}))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-    <input type="password" title="Hidden password field to stop autocomplete" value="" class="alwayshidden" />
-    <input type="password" title="Hidden password field to stop autocomplete" value="" class="alwayshidden" />
+    <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
+    <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
 
     @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code", containerHtmlAttributes: new { @class = "form-group-withlink" })
     

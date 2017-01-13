@@ -3,8 +3,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Application.Interfaces;
 
     public class CurrentUserService : ICurrentUserService
     {
@@ -15,6 +14,11 @@
         public string GetClaimValue(string type)
         {
             return ((ClaimsPrincipal)Thread.CurrentPrincipal).Claims.LastOrDefault(c => c.Type == type)?.Value;
+        }
+
+        public void AddClaim(Claim claim)
+        {
+            ((ClaimsIdentity)Thread.CurrentPrincipal.Identity).AddClaim(claim);
         }
     }
 }

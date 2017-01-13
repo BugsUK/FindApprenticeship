@@ -104,7 +104,7 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 14 "..\..\Views\Vacancy\Review.cshtml"
-     using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
+     using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post, new { id = "approve-vacancy-form" }))
     {
         
             
@@ -125,7 +125,11 @@ WriteLiteral("\r\n\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        <section>\r\n            <div");
+WriteLiteral("        <section");
+
+WriteLiteral(" class=\"sfa-xlarge-top-margin\"");
+
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -147,7 +151,7 @@ WriteLiteral(" id=\"btnReject\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" name=\"VacancyQAAction\"");
 
@@ -159,7 +163,7 @@ WriteLiteral(" id=\"btnUnReserve\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"button-link\"");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
 
 WriteLiteral(" name=\"VacancyQAAction\"");
 

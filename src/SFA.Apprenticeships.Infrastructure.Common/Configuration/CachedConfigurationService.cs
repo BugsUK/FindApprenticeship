@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
+    using System;
+    using Application.Interfaces;
+    using Application.Interfaces.Caching;
 
     public class CachedConfigurationService : IConfigurationService
     {
@@ -18,6 +19,11 @@
         public TSettings Get<TSettings>() where TSettings : class
         {
             return _cacheService.Get(ConfigurationCacheKey, GetFromBase<TSettings>, typeof(TSettings).Name);
+        }
+
+        public object Get(Type settingsType)
+        {
+            return _cacheService.Get(ConfigurationCacheKey, () => _configurationService.Get(settingsType), settingsType);
         }
 
         private TSettings GetFromBase<TSettings>(string configurationSectionName) where TSettings : class

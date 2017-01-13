@@ -50,6 +50,7 @@
         public const string ReportUnsuccessfulCandidates = "ReportUnsuccessfulCandidates";
         public const string ReportVacancyExtensions = "ReportVacancyExtensions";
         public const string ReportRegisteredCandidates = "ReportRegisteredCandidates";
+        public static string VacancyTracker = "VacancyTracker";
 
         //Admin
         public const string AdminList = "AdminList";
@@ -66,7 +67,7 @@
         public const string AdminViewApiUser = "AdminViewApiUser";
         public const string AdminCreateApiUser = "AdminCreateApiUser";
         public const string AdminEditApiUser = "AdminEditApiUser";
-		public const string AdminResetApiUserPassword = "AdminResetApiUserPassword";
+        public const string AdminResetApiUserPassword = "AdminResetApiUserPassword";
         public const string AdminExportApiUsers = "AdminExportApiUsers";
         public const string AdminEmployers = "AdminEmployers";
         public const string AdminViewEmployer = "AdminViewEmployer";

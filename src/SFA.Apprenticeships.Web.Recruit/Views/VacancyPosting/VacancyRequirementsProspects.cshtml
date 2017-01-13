@@ -4,16 +4,16 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post, new { id = "vacancy-requirements-and-prospects-form" }))
 {
     @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
     @Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
 
-    <div class="grid grid-1-2">
+    <div class="column-one-half">
         <button id="VacancyRequirementsProspectsButton" type="submit" class="button no-autosave" name="VacancyRequirementsProspects" value="VacancyRequirementsProspects">@saveButtonText</button>
-        <button id="VacancyRequirementsProspectsAndExit" type="submit" class="button-link no-autosave" name="VacancyRequirementsProspects" value="VacancyRequirementsProspectsAndExit">Save and exit</button>
+        <button id="VacancyRequirementsProspectsAndExit" type="submit" class="button sfa-button-secondary no-autosave" name="VacancyRequirementsProspects" value="VacancyRequirementsProspectsAndExit">Save and exit</button>
         @if (Model.ComeFromPreview)
         {
             @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" })

@@ -1,7 +1,7 @@
 ﻿@model  SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.TraineeshipApplicationViewModel
 
 <noscript>
-    <fieldset class="fieldset-with-border" id="applyTrainingCourses">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered" id="applyTrainingCourses">
         <legend class="heading-large">Training courses</legend>
         <div class="clearfix">
             <div>
@@ -9,8 +9,8 @@
                 {
                     if (i < Model.Candidate.TrainingCourses.Count())
                     {
-                        <div id="training-history-item" class="grid-wrapper training-history-item">
-                            <div class="grid grid-1-2">
+                        <div id="training-history-item" class="grid-row training-history-item">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <thead>
                                         <tr>
@@ -37,7 +37,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="grid grid-1-2">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <colgroup>
                                         <col class="t30">
@@ -63,7 +63,7 @@
                                             <td>
                                                 <span class="cell-span">From</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" })
+                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth", @class = "form-control" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
@@ -75,7 +75,7 @@
                                             <td>
                                                 <span class="cell-span">To</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" })
+                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth", @class = "form-control" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
@@ -94,8 +94,8 @@
                     }
                     else
                     {
-                        <div id="training-history-item" class="grid-wrapper training-history-item">
-                            <div class="grid grid-1-2">
+                        <div id="training-history-item" class="grid-row training-history-item">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <thead>
                                         <tr>
@@ -122,7 +122,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="grid grid-1-2">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <colgroup>
                                         <col class="t30">

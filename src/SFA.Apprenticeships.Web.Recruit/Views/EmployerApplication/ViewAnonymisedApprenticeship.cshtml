@@ -12,14 +12,14 @@
 
 <div>
     <div class="hgroup">
-        <h1 class="heading-xlarge med-btm-margin">Vacancy application</h1>
-        <p class="subtitle">@Model.Vacancy.Title</p>
+        <h1 class="heading-xlarge sfa-medium-bottom-margin">Vacancy application</h1>
+        <p class="heading-secondary ">@Model.Vacancy.Title</p>
     </div>
-    <div class="grid-wrapper">
-        <div class="grid grid-2-3">
+    <div class="grid-row">
+        <div class="column-two-thirds">
             @Html.DisplayFor(m => m.AnonymousApplicantDetails, AnonymisedApplicantDetailsViewModel.PartialView)
         </div>
-        <div class="grid grid-1-3">
+        <div class="column-one-third">
         </div>
     </div>
     @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)
@@ -28,7 +28,7 @@
     @Html.DisplayFor(m => m.WorkExperience, WorkExperienceViewModel.PartialView)
     @Html.DisplayFor(m => m.TrainingCourses, TrainingCourseViewModel.PartialView)
 
-    <section class="section-border">
+    <section class="sfa-section-bordered">
         <h2 class="heading-large">
             Answers to employer questions
         </h2>

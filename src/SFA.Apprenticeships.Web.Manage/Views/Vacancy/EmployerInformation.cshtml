@@ -1,28 +1,27 @@
 ﻿@model VacancyOwnerRelationshipViewModel
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save" : "Save and continue";
+    var saveButtonText = Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save" : "Save and continue";
 }
 
-<div class="grid-wrapper">
-    <div class="hgroup">
+<div class="grid-row">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">
             Check employer information
         </h1>
     </div>
 </div>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post, new { id = "employer-information-form" }))
 {   
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
 
-    <div class="grid grid-1-1">
+    <div class="column-full">
         <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
         @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
     </div>
@@ -32,6 +31,12 @@
     <script type="text/javascript">
 
         $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+        $("#NumberOfPositionsNWJS").attr("id", "NumberOfPositionsNationwide").attr("Name", "NumberOfPositionsNationwide");
+
+        $("#NonAnonymousEmployerJS").attr("id", "NonAnonymousEmployer").attr("Name", "NonAnonymousEmployer");
+        $("#AnonymousEmployerJS").attr("id", "AnonymousEmployer").attr("Name", "AnonymousEmployer");
+        
+
         $("#location-type-main-location").on('click', function () {
                 $("#confirmEmployer").text("Save");
         });

@@ -248,6 +248,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.VacancyTracker,
+               url: "reports/vacancytracker",
+               defaults: new { controller = "Report", action = "VacancyTrackerCsv" }
+               );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.WebTrendsOptOut,
                 url: "webtrendsoptout",
                 defaults: new { controller = "Home", action = "WebTrendsOptOut" }
@@ -394,7 +400,7 @@
             routes.MapRoute(
                 name: ManagementRouteNames.AdminFrameworks,
                 url: "admin/frameworks",
-                defaults: new {controller = "Admin", action = "Frameworks"}
+                defaults: new { controller = "Admin", action = "Frameworks" }
                 );
 
             routes.MapRoute(

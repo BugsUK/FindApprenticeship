@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
     using System.Collections.Generic;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Raa.Interfaces.Repositories;
@@ -57,7 +58,37 @@
             return _referenceDataProvider.GetReleaseNotes(dasApplication);
         }
 
-        public Standard CreateStandard(Standard standard)
+        public IEnumerable<County> GetCounties()
+        {
+            return _referenceDataProvider.GetCounties();
+        }
+
+        public County GetCounty(int countyId)
+        {
+            return _referenceDataProvider.GetCounty(countyId);
+        }
+
+        public County GetCounty(string countyName)
+        {
+            return _referenceDataProvider.GetCounty(countyName);
+        }
+
+        public IEnumerable<LocalAuthority> GetLocalAuthorities()
+        {
+            return _referenceDataProvider.GetLocalAuthorities();
+        }
+
+        public LocalAuthority GetLocalAuthority(int localAuthorityId)
+        {
+            return _referenceDataProvider.GetLocalAuthority(localAuthorityId);
+        }
+
+        public LocalAuthority GetLocalAuthority(string localAuthorityCodeName)
+        {
+            return _referenceDataProvider.GetLocalAuthority(localAuthorityCodeName);
+        }
+		
+		public Standard CreateStandard(Standard standard)
         {
             return _referenceRepository.CreateStandard(standard);
         }

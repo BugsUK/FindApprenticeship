@@ -187,9 +187,14 @@ BEGIN TRY
 		inner join VacancyOwnerRelationship VPR on VPR.VacancyOwnerRelationshipId = V.VacancyOwnerRelationshipId
 		join ProviderSite TP on TP.ProviderSiteId = VPR.ProviderSiteId -- and vpr.ManagerIsEmployer = 0
 		join Employer E on E.EmployerId = VPR.EmployerId  --and vpr.ManagerIsEmployer = 1
-		inner join ApprenticeshipFramework AF on AF.ApprenticeshipFrameworkId = V.ApprenticeshipFrameworkId
-		inner join ApprenticeshipOccupation AO on AO.ApprenticeshipOccupationId = AF.ApprenticeshipOccupationId
-		inner join ApprenticeshipFrameworkStatusType AFST on AF.ApprenticeshipFrameworkStatusTypeId = AFST.ApprenticeshipFrameworkStatusTypeId
+		left join ApprenticeshipFramework AF 
+		on AF.ApprenticeshipFrameworkId = V.ApprenticeshipFrameworkId
+		LEFT join ApprenticeshipOccupation AO 
+		on AO.ApprenticeshipOccupationId = AF.ApprenticeshipOccupationId
+		LEFT join ApprenticeshipFrameworkStatusType AFST 
+		on AF.ApprenticeshipFrameworkStatusTypeId = AFST.ApprenticeshipFrameworkStatusTypeId
+		LEFT JOIN Reference.Standard std 
+		ON V.StandardId = std.StandardId
 		inner join LocalAuthority LA on LA.LocalAuthorityId = V.LocalAuthorityId
 		INNER JOIN vwRegionsAndLocalAuthority RLA
 			ON LA.LocalAuthorityID = RLA.LocalAuthorityID

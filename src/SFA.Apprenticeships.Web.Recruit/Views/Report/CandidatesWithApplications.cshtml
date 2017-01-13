@@ -14,30 +14,26 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <div>
-        <fieldset class="form-group inline-fixed date-input">
+        <fieldset>
             <a name="@Html.NameFor(m => m.FromDate).ToString().Replace(".", "_").ToLower()"></a>
-            <legend class="form-label">@Model.GetMetadata(m => m.FromDate).DisplayName</legend>
             @Html.EditorFor(m => m.FromDate)
-            @Html.ValidationMessageFor(m => m.FromDate)
         </fieldset>
 
-        <fieldset class="form-group inline-fixed date-input">
+        <fieldset>
             <a name="@Html.NameFor(m => m.ToDate).ToString().Replace(".", "_").ToLower()"></a>
-            <legend class="form-label">@Model.GetMetadata(m => m.ToDate).DisplayName</legend>
             @Html.EditorFor(m => m.ToDate)
-            @Html.ValidationMessageFor(m => m.ToDate)
         </fieldset>
 
-        <div class="grid grid-1-2">
+        <div class="column-one-half">
             <button id="ValidateReportParameters" type="submit" class="button" name="CandidatesWithApplications" value="ValidateCandidatesWithApplications">Export CSV</button>
             @if (Model.IsValid)
             {
-                <button id="DownloadReport" type="submit" class="button-link hidden" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
+                <button id="DownloadReport" type="submit" class="button sfa-button-secondary hidden" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
                 <noscript>
-                    <button id="DownloadReportNoJs" type="submit" class="button-link" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
+                    <button id="DownloadReportNoJs" type="submit" class="button sfa-button-secondary" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
                 </noscript>
             }
-            <p class="med-btm-margin">
+            <p class="sfa-medium-bottom-margin">
                 @Html.RouteLink("Back to List", RecruitmentRouteNames.ReportList)
             </p>
         </div>

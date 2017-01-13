@@ -23,6 +23,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
     using Application.Interfaces;
+    using Application.Location.IoC;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
@@ -137,6 +138,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<MonitorRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
+                x.AddRegistry<LocationServiceRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

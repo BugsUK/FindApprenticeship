@@ -1,6 +1,5 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies
-@using SFA.Apprenticeships.Infrastructure.Presentation.Constants
 @using SFA.Apprenticeships.Web.Common.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -11,35 +10,39 @@
     var editableItemClass = ViewData["editableItemClass"];
 }
 
-<div class="@editableItemClass">
-    <h3 class="bold-small">
+<li class="@editableItemClass sfa-if-first">
+    <h3 class="heading-small">
         @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
         {
-            <span>Weekly hours</span>
+            <text>Weekly hours</text>
         }
         else
         {
-            <span>Working week</span>
+            <text>Working week</text>
             @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WorkingWeekComment))
         }
     </h3>
-    <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.WorkingWeek))</p>
-    @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek.HasValue)
-    {
-        <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
-        <p id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek</p>
-        if (Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek > 40)
+    <ul class="list">
+        <li id="vacancy-working-week" itemprop="workHours" class=" @Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">
+            @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.FurtherVacancyDetailsViewModel.WorkingWeek))
+        </li>  
+        @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship && Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek.HasValue)
         {
-            <p>(the hours are based on the candidate being over 18)</p>
+            <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
+            <li id="total-hours-per-week">Total hours per week: @Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek</li>
         }
-    }
+        @if (Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek > 40)
+            {
+            <li>(the hours are based on the candidate being over 18)</li>
+        }
+    </ul>
     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WorkingWeek, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WorkingWeekComment))
-</div>
+</li>
 
 @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Apprenticeship)
 {
-    <div class="@editableItemClass">
-        <h3 class="bold-small">
+    <li class="@editableItemClass">
+        <h3 class="heading-small">
             @if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.Custom)
             {
                 <span id="furthervacancydetailsviewmodel_wage_amount">
@@ -55,24 +58,27 @@
                 </span>
             }
         </h3>
-        <p id="vacancy-wage">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, Model.FurtherVacancyDetailsViewModel.Wage.AmountUpperBound, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)</p>
-        @if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.PresetText
-            && Model.IsManageReviewerView)
-        {
-            <div class="wage-reason-display">@Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason</div>
-        }
-        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
-    </div>
+        <div class="sfa-p-margin-bottom">
+            <p id="vacancy-wage" class="sfa-no-bottom-margin">@WagePresenter.GetDisplayAmount(Model.FurtherVacancyDetailsViewModel.Wage.Type, Model.FurtherVacancyDetailsViewModel.Wage.Amount, Model.FurtherVacancyDetailsViewModel.Wage.AmountLowerBound, Model.FurtherVacancyDetailsViewModel.Wage.AmountUpperBound, Model.FurtherVacancyDetailsViewModel.Wage.Text, Model.FurtherVacancyDetailsViewModel.Wage.HoursPerWeek, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)</p>
+            @if (Model.FurtherVacancyDetailsViewModel.Wage.Classification == WageClassification.PresetText
+                        && Model.IsManageReviewerView)
+            {
+                <div class="wage-reason-display">@Model.FurtherVacancyDetailsViewModel.Wage.WageTypeReason</div>
+            }
+            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Wage.Type, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
 
-    var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
+            @{
+                var possibleStartDate = Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date;
+            }
+            @if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
+            {
+                @Html.Partial("_ApprenticeMinimumWageExplained", possibleStartDate)
+            }
 
-    if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.ApprenticeshipMinimum)
-    {
-        @Html.Partial("_ApprenticeMinimumWageExplained", possibleStartDate)
-    }
-
-    if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
-    {
-        @Html.Partial("_NationalMinimumWageExplained", possibleStartDate)
-    }
+            @if (Model.FurtherVacancyDetailsViewModel.Wage.Type == WageType.NationalMinimum)
+            {
+                @Html.Partial("_NationalMinimumWageExplained", possibleStartDate)
+            }
+        </div>
+    </li>
 }

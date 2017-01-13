@@ -8,7 +8,7 @@
 
 <p>@Html.RouteLink("Manage Providers", ManagementRouteNames.AdminProviders)</p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProvider))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminCreateProvider, FormMethod.Post, new { id = "admin-create-provider-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

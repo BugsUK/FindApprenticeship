@@ -42,13 +42,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
         }
         public override void Execute()
         {
-WriteLiteral("<section");
+WriteLiteral("<section>\r\n    <div");
 
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n        <ul");
 
@@ -127,14 +123,14 @@ WriteLiteral(">\r\n            <li>");
             #line hidden
 WriteLiteral("</li>\r\n            <li>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 645), Tuple.Create("\"", 671)
+WriteAttribute("href", Tuple.Create(" href=\"", 633), Tuple.Create("\"", 659)
             
             #line 18 "..\..\Views\Shared\DisplayTemplates\Application\ApplicantDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 652), Tuple.Create<System.Object, System.Int32>(Model.EmailAddress
+, Tuple.Create(Tuple.Create("", 640), Tuple.Create<System.Object, System.Int32>(Model.EmailAddress
             
             #line default
             #line hidden
-, 652), false)
+, 640), false)
 );
 
 WriteLiteral(">");

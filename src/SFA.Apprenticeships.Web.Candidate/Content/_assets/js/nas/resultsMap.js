@@ -1,4 +1,4 @@
-﻿window.googleMapsScriptLoaded = function () {
+window.googleMapsScriptLoaded = function () {
     $(window).trigger('googleMapsScriptLoaded');
 };
 
@@ -60,7 +60,7 @@ $(function () {
     }
 
     function getResultMap(element) {
-        var vacancyId = element.closest(".search-results__item").find(".vacancy-link").attr('data-vacancy-id');
+        var vacancyId = element.closest(".search-result").find(".vacancy-link").attr('data-vacancy-id');
         return _.find(resultMaps, function(resultMap) {
             return resultMap.vacancyId == vacancyId;
         });
@@ -111,7 +111,7 @@ $(function () {
         theLatLon = apprLatitude + ',' + apprLongitude;
 
         resultMaps = [];
-        $(".search-results__item").each(function() {
+        $(".search-result").each(function() {
              resultMaps.push(new ResultMap($(this)));
         });
 
@@ -182,7 +182,9 @@ $(function () {
 
     function lazyLoadMaps() {
         //If desktop - load script and set lazy load on all result maps.
-        if ($('.content-container').css('font-size') !== '16px' && apiScriptLoaded) {
+        if (
+            //$('#content').css('font-size') !== '16px' && 
+            apiScriptLoaded) {
             _.each(resultMaps, function(resultMap) {
                 resultMap.map.lazyLoadGoogleMaps(
                 {

@@ -1,16 +1,16 @@
 namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
     using Provider;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using VacancyPosting;
     using Validators.Vacancy;
 
-    [Validator(typeof (NewVacancyViewModelClientValidator))]
+    [Validator(typeof(NewVacancyViewModelClientValidator))]
     public class NewVacancyViewModel : IPartialVacancyViewModel
     {
         public const string PartialView = "Vacancy/BasicVacancyDetails";
@@ -54,30 +54,28 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public VacancyStatus Status { get; set; }
 
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         public int? NumberOfPositions { get; set; }
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
-
         public string AdditionalLocationInformation { get; set; }
-
         public bool ComeFromPreview { get; set; }
-
+        public string EmployerDescription { get; set; }
         public string EmployerDescriptionComment { get; set; }
-
         public string EmployerWebsiteUrlComment { get; set; }
-
         public string LocationAddressesComment { get; set; }
-
         public string NumberOfPositionsComment { get; set; }
-
         public string AdditionalLocationInformationComment { get; set; }
-
         public VacancyType VacancyType { get; set; }
-
         public int AutoSaveTimeoutInSeconds { get; set; }
-
         public VacancySource VacancySource { get; set; }
+        public string AnonymousEmployerDescription { get; set; }
+        public string AnonymousEmployerDescriptionComment { get; set; }
+        public string AnonymousEmployerReason { get; set; }
+        public string AnonymousEmployerReasonComment { get; set; }
+        public string AnonymousAboutTheEmployer { get; set; }
+        public string AnonymousAboutTheEmployerComment { get; set; }
+        public bool? IsAnonymousEmployer { get; set; }
     }
 }

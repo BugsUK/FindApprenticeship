@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
+    using Application.Location.IoC;
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
@@ -24,11 +25,11 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Infrastructure.Postcode.IoC;
     using Infrastructure.Repositories.Mongo.Applications.IoC;
     using Infrastructure.Repositories.Mongo.Candidates.IoC;
-    using Infrastructure.Repositories.Mongo.Employers.IoC;
-    using Infrastructure.Repositories.Mongo.Providers.IoC;
     using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.Repositories.Sql.IoC;
+    using Infrastructure.Repositories.Sql.Schemas.Employer.IoC;
+    using Infrastructure.Repositories.Sql.Schemas.Provider.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
 
     using SFA.Apprenticeships.Application.Interfaces;
@@ -73,8 +74,10 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<ApplicationServicesRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry<AzureRedisCacheRegistry>();
                 x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry<VacancyPostingServiceRegistry>();
+                x.AddRegistry<LocationServiceRegistry>();
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

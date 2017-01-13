@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/_qualificationsJS.cshtml")]
@@ -62,7 +63,7 @@ WriteLiteral(" data-bind=\"visible: selectedSection() === \'applyQualifications\
 
 WriteLiteral(">\r\n\r\n    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyQualifications\"");
 
@@ -72,7 +73,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Qualifications</legend>\r\n        <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"qualificationQuestion\"");
 
@@ -91,7 +92,7 @@ WriteLiteral(" data-target=\"qualifications-panel\"");
 
 WriteLiteral(" for=\"qualifications-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected:showQualifications() }\"");
 
@@ -110,7 +111,7 @@ WriteLiteral("\r\n                Yes\r\n\r\n            </label>\r\n           
 
 WriteLiteral(" for=\"qualifications-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(" data-bind=\"css: {selected: !showQualifications() }\"");
 
@@ -145,7 +146,7 @@ WriteLiteral(" class=\"inline-fixed validation-message-parent\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"form-group vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:selectedQualification\"");
 
@@ -153,9 +154,11 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"qual-type\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Type of qualification</label>\r\n                        <select");
+
+WriteLiteral(" class=\"form-control\"");
 
 WriteLiteral(" id=\"qual-type\"");
 
@@ -165,7 +168,7 @@ WriteLiteral(" data-bind=\"options: qualificationTypes, optionsCaption: \'Select
 
 WriteLiteral("></select>\r\n\r\n                    </div>\r\n                    <div");
 
-WriteLiteral(" class=\"form-group vert-align-top no-btm-margin\"");
+WriteLiteral(" class=\"form-group vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:year\"");
 
@@ -173,7 +176,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"subject-year\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Year</label>\r\n                        <input");
 
@@ -203,7 +206,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"other-qual\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Name of other qualification</label>\r\n                    <input");
 
@@ -227,7 +230,7 @@ WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" for=\"subject-name\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Subject</label>\r\n                    <input");
 
@@ -255,7 +258,7 @@ WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"subject-grade\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Grade</label>\r\n                        <input");
 
@@ -392,7 +395,7 @@ WriteLiteral(" maxlength=\"50\"");
 WriteLiteral(" />\r\n                                </td>\r\n                                <td>\r" +
 "\n                                    <div");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n                                        <input");
 
@@ -461,7 +464,7 @@ WriteLiteral(" data-bind=\"value: qualificationYear, attr:{\'name\':\'Candidate.
 
 WriteLiteral(">\r\n                                </td>\r\n                                <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n                                    <span");
 
@@ -486,7 +489,7 @@ WriteLiteral(" class=\"fake-link cell-span save-qualification-link\"");
 WriteLiteral(">Save</a></span>\r\n                                </td>\r\n                        " +
 "        <td");
 
-WriteLiteral(" class=\"ta-center\"");
+WriteLiteral(" class=\"sfa-align-center\"");
 
 WriteLiteral(">\r\n                                    <i");
 
@@ -496,8 +499,8 @@ WriteLiteral("><a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black remove-qualification-link no-underl" +
-"ine\"");
+WriteLiteral(" class=\"font-xsmall fa fa-times-circle icon-black remove-qualification-link no-un" +
+"derline\"");
 
 WriteLiteral(" data-bind=\"click: $root.removeQualification\"");
 

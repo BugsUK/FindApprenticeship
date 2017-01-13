@@ -1,4 +1,4 @@
-﻿// TODO: get 'postcode' messages from C#
+// TODO: get 'postcode' messages from C#
 
 $(document).ready(function () {
 
@@ -21,13 +21,13 @@ $(document).ready(function () {
         e.preventDefault();
         $('#addressManualWrapper').unbind('click');
 
-        $('#address-details').removeClass('disabled');
+        $('#address-details').removeClass('sfa-disabled');
         $('#Address_AddressLine1').focus();
     });
 
     $('#addressManualWrapper').bind('click', function () {
         $(this).unbind('click');
-        $('#address-details').removeClass('disabled');
+        $('#address-details').removeClass('sfa-disabled');
         $('#Address_AddressLine1').focus();
     });
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
                 error: function () {
                     $('#postcodeServiceUnavailable').show();
                     $('#enterAddressManually').hide();
-                    $('#address-details').removeClass('disabled');
+                    $('#address-details').removeClass('sfa-disabled');
                 }
             });
         },
@@ -122,7 +122,7 @@ $(document).ready(function () {
         $('#addressLoading').show();
         $('#enterAddressManually').hide();
         $('#postcodeServiceUnavailable').hide();
-        $('#address-details').addClass('disabled');
+        $('#address-details').addClass('sfa-disabled');
 
         $.ajax({
             url: "//services.postcodeanywhere.co.uk/CapturePlus/Interactive/Retrieve/v2.10/json3.ws",
@@ -134,7 +134,7 @@ $(document).ready(function () {
             timeout: 5000,
             success: function (data) {
                 if (data.Items.length) {
-                    $('#address-details').removeClass('disabled');
+                    $('#address-details').removeClass('sfa-disabled');
                     $('#addressLoading').hide();
                     $('#enterAddressManually').show();
                     $('#addressManualWrapper').unbind('click');
@@ -147,7 +147,7 @@ $(document).ready(function () {
                 $('#postcodeServiceUnavailable').show();
                 $('#enterAddressManually').hide();
                 $('#addressLoading').hide();
-                $('#address-details').removeClass('disabled');
+                $('#address-details').removeClass('sfa-disabled');
             }
         });
     }
@@ -215,7 +215,7 @@ $(document).ready(function () {
         var $emailAvailableMessage = $('#email-available-message');
 
         var setErrorMessage = function () {
-            $emailAvailableMessage.html('<p class="text">Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
+            $emailAvailableMessage.html('<p >Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
         };
 
         var cleanErrorMessage = function () {

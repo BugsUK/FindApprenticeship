@@ -3,7 +3,7 @@
 
 <noscript>
 
-    <fieldset class="fieldset-with-border" id="applyWorkExperience">
+    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered" id="applyWorkExperience">
         <legend class="heading-large">Work experience</legend>       
 
         <div class="clearfix">
@@ -12,8 +12,8 @@
                 {
                     if (i < Model.Candidate.WorkExperience.Count())
                     {
-                        <div id="work-history-item" class="grid-wrapper work-history-item">
-                            <div class="grid grid-1-2">
+                        <div id="work-history-item" class="grid-row work-history-item">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <thead>
                                         <tr>
@@ -49,7 +49,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="grid grid-1-2">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <colgroup>
                                         <col class="t30">
@@ -75,7 +75,7 @@
                                             <td>
                                                 <span class="cell-span">Started</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth" })
+                                                    @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth", @class = "form-control" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
@@ -87,7 +87,7 @@
                                             <td>
                                                 <span class="cell-span">Finished</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth" })
+                                                    @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth", @class = "form-control" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
@@ -106,8 +106,8 @@
                     }
                     else
                     {
-                        <div id="work-history-item" class="grid-wrapper work-history-item">
-                            <div class="grid grid-1-2">
+                        <div id="work-history-item" class="grid-row work-history-item">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <thead>
                                         <tr>
@@ -141,7 +141,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="grid grid-1-2">
+                            <div class="column-one-half">
                                 <table class="table-no-btm-border table-compound">
                                     <colgroup>
                                         <col class="t30">

@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/Feedback.cshtml")]
@@ -70,26 +71,26 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Give feedback</h1>\r\n    <p");
 
-WriteLiteral(" class=\"no-btm-margin\"");
+WriteLiteral(" class=\"sfa-no-bottom-margin\"");
 
 WriteLiteral(">Please leave your suggestions or comments about our service.</p>\r\n    <p>If you\'" +
 "re looking for help then <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 406), Tuple.Create("\"", 456)
+WriteAttribute("href", Tuple.Create(" href=\"", 413), Tuple.Create("\"", 463)
             
             #line 11 "..\..\Views\Home\Feedback.cshtml"
-, Tuple.Create(Tuple.Create("", 413), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 420), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 413), false)
+, 420), false)
 );
 
 WriteLiteral(">contact us</a> instead.</p>\r\n</div>\r\n\r\n");
 
             
             #line 14 "..\..\Views\Home\Feedback.cshtml"
- using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post))
+ using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post, new { id = "feedback-form" }))
 {
     
             

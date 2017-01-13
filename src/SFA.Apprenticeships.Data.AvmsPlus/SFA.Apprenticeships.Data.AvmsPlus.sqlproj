@@ -129,6 +129,10 @@
     <Folder Include="WebProxy" />
     <Folder Include="MI_Views" />
     <Folder Include="MI_Views\Views" />
+    <Folder Include="dba" />
+    <Folder Include="dba\Tables" />
+    <Folder Include="dba\Stored Procedures" />
+    <Folder Include="RaaApi" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -1279,6 +1283,17 @@
     <Build Include="dbo\Functions\fnGetCreatedByProviderUsername.function.sql" />
     <Build Include="dbo\Functions\fnGetCommentFieldId.function.sql" />
     <Build Include="dbo\Functions\fnGetTextFieldId.function.sql" />
+    <Build Include="Schemas\dba.sql" />
+    <Build Include="dba\Tables\CommandLog.sql" />
+    <Build Include="dba\Stored Procedures\ExecuteMaintenance.sql" />
+    <Build Include="dba\Stored Procedures\CommandExecute.sql" />
+    <Build Include="dba\Stored Procedures\IndexOptimize.sql" />
+    <Build Include="Schemas\RaaApi.sql" />
+    <Build Include="RaaApi\RaaApi.User.sql" />
+    <Build Include="RaaApi\RaaApi.UserType.sql" />
+    <None Include="Scripts\Data\RaaApi.UserType.Upsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetVacancyTracker.sql" />
+    <Build Include="dbo\Functions\fnGetVacancyLocationCount.function.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

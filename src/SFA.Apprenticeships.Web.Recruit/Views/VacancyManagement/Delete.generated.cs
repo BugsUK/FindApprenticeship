@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyManagement
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyManagement/Delete.cshtml")]
-    public partial class Delete : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.DeleteVacancyViewModel>
+    public partial class Delete : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyManagement.DeleteVacancyViewModel>
     {
         public Delete()
         {
@@ -88,7 +88,7 @@ WriteLiteral(" vacancy\r\n</h1>\r\n\r\n");
 
             
             #line 15 "..\..\Views\VacancyManagement\Delete.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post))
+ using (Html.BeginRouteForm(RecruitmentRouteNames.DeleteVacancy, FormMethod.Post, new { id = "delete-vacancy-form" }))
 {
 
             
@@ -97,7 +97,7 @@ WriteLiteral(" vacancy\r\n</h1>\r\n\r\n");
 WriteLiteral("    <div>\r\n        <p>You will not be able to retreive this vacancy once it has b" +
 "een deleted</p>\r\n        <div");
 
-WriteLiteral(" class=\"grid grid-1-1\"");
+WriteLiteral(" class=\"column-full\"");
 
 WriteLiteral(">\r\n");
 

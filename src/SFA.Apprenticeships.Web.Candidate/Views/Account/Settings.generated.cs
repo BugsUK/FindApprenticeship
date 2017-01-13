@@ -71,11 +71,11 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -83,7 +83,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Settings</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n");
 
@@ -91,7 +91,7 @@ WriteLiteral("        ");
 
             
             #line 14 "..\..\Views\Account\Settings.cshtml"
-   Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link small-btm-margin" }));
+   Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link sfa-small-bottom-margin" }));
 
             
             #line default
@@ -114,14 +114,14 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 18 "..\..\Views\Account\Settings.cshtml"
-       Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link small-btm-margin" }));
+       Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link sfa-small-bottom-margin" }));
 
             
             #line default
             #line hidden
             
             #line 18 "..\..\Views\Account\Settings.cshtml"
-                                                                                                                                                                           
+                                                                                                                                                                                  
         }
 
             
@@ -131,7 +131,7 @@ WriteLiteral("    </div>\r\n</div>\r\n\r\n");
 
             
             #line 23 "..\..\Views\Account\Settings.cshtml"
- using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))
+ using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post, new { id = "settings-form" }))
 {
     
             
@@ -251,7 +251,7 @@ WriteLiteral(" class=\"heading-large\"");
 
 WriteLiteral(">Personal details</legend>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p");
 
@@ -330,7 +330,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Email</p>\r\n                <span");
 
@@ -385,7 +385,7 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Pending email address</p>\r\n                    <span");
 
@@ -493,7 +493,7 @@ WriteLiteral(" class=\"text para-btm-margin\"");
 
 WriteLiteral(">\r\n                    <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">\r\n                        Choose to be notified by <i");
 
@@ -715,7 +715,7 @@ WriteLiteral(" class=\"form-group form-group-compound\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Receive notifications?</p>\r\n                <span");
 
@@ -727,7 +727,7 @@ WriteLiteral("                ");
 
             
             #line 153 "..\..\Views\Account\Settings.cshtml"
-           Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" }));
+           Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox allowSavedComms" }));
 
             
             #line default
@@ -750,14 +750,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 156 "..\..\Views\Account\Settings.cshtml"
-               Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" }));
+               Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox allowSavedComms" }));
 
             
             #line default
             #line hidden
             
             #line 156 "..\..\Views\Account\Settings.cshtml"
-                                                                                                                                                                
+                                                                                                                                                                                          
                 }
 
             
@@ -1111,7 +1111,7 @@ WriteLiteral(" id=\"deleteAccountHeading\"");
 
 WriteLiteral(">Delete your account</h2>\r\n            <div");
 
-WriteLiteral(" class=\"panel-indent\"");
+WriteLiteral(" class=\"panel panel-border-narrow\"");
 
 WriteLiteral(">\r\n                <p");
 
@@ -1146,7 +1146,7 @@ WriteLiteral("                ");
 
             
             #line 226 "..\..\Views\Account\Settings.cshtml"
-           Write(Html.LabelFor(m => m.Password, new { @class = "form-label" }));
+           Write(Html.LabelFor(m => m.Password, new { @class = "form-label-bold" }));
 
             
             #line default

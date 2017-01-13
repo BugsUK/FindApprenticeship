@@ -25,13 +25,14 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Mongo.Authentication.IoC;
     using Repositories.Mongo.Candidates.IoC;
     using Repositories.Mongo.Communication.IoC;
-    using Repositories.Mongo.Employers.IoC;
-    using Repositories.Mongo.Providers.IoC;
     using Repositories.Mongo.Users.IoC;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
     using Application.Interfaces;
+    using Application.Location.IoC;
+    using Repositories.Sql.Schemas.Employer.IoC;
+    using Repositories.Sql.Schemas.Provider.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -131,6 +132,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
+                x.AddRegistry<LocationServiceRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

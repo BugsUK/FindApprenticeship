@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Traineeships
 {
-    using System;
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
+    using System;
     using Vacancy;
 
     public class CreateTraineeshipApplicationStrategy : ICreateTraineeshipApplicationStrategy
@@ -52,7 +52,7 @@
                         vacancyDetails.AnonymousEmployerName : vacancyDetails.EmployerName,
                     StartDate = vacancyDetails.StartDate,
                     ClosingDate = vacancyDetails.ClosingDate,
-                    Description = vacancyDetails.Description,
+                    Description = vacancyDetails.IsEmployerAnonymous ? vacancyDetails.AnonymousAboutTheEmployer : vacancyDetails.EmployerDescription,
                     NumberOfPositions = vacancyDetails.NumberOfPositions,
                     Location = null // NOTE: no equivalent in legacy vacancy details.
                 },

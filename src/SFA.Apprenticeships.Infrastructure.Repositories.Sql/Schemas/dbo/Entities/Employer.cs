@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo.Entities
 {
     using System;
+    using Dapper.Contrib.Extensions;
 
     public class Employer
     {
@@ -15,8 +16,14 @@
 	    public string AddressLine5 { get; set; }
         public string Town { get; set; }
         public int CountyId { get; set; }
+        [Write(false)]
+        public string County { get; set; }
         public string PostCode { get; set; }
         public int? LocalAuthorityId { get; set; }
+        [Write(false)]
+        public string LocalAuthorityCodeName { get; set; }
+        [Write(false)]
+        public string LocalAuthority { get; set; }
         public decimal? Longitude { get; set; }
         public decimal? Latitude { get; set; }
         public int? GeocodeEasting { get; set; }

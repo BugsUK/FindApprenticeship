@@ -12,7 +12,6 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Application.Interfaces;
     using ViewModels.VacancySearch;
 
@@ -105,7 +104,7 @@
 
                 nonNationalResponse.VacancySearch = search;
 
-                if (search.LocationType == ApprenticeshipLocationType.NonNational)
+                if (search.LocationType == VacancyLocationType.NonNational)
                 {
                     nonNationalResponse.TotalLocalHits = nonNationalResults.Total;
                     nonNationalResponse.TotalNationalHits = nationalResults.Total;
@@ -122,7 +121,7 @@
                             vacancySearch.SortType = string.IsNullOrWhiteSpace(vacancySearch.Keywords) ? VacancySearchSortType.ClosingDate : VacancySearchSortType.Relevancy;
                         }
 
-                        vacancySearch.LocationType = ApprenticeshipLocationType.National;
+                        vacancySearch.LocationType = VacancyLocationType.National;
                         SetAggregationResults(nonNationalResponse, nationalResults.AggregationResults, unfilteredResults.AggregationResults);
                     }
                     else
@@ -245,7 +244,7 @@
             VacancySearchSortType nationalSortType, nonNationalSortType;
             int nationalPageNumber, nonNationalPageNumber;
 
-            if (search.LocationType == ApprenticeshipLocationType.National)
+            if (search.LocationType == VacancyLocationType.National)
             {
                 nationalSortType = search.SortType;
                 nonNationalSortType = VacancySearchSortType.Distance;
@@ -275,7 +274,7 @@
                         PageSize = search.ResultsPerPage,
                         SearchRadius = search.WithinDistance,
                         SortType = nationalSortType,
-                        VacancyLocationType = ApprenticeshipLocationType.National,
+                        VacancyLocationType = VacancyLocationType.National,
                         ApprenticeshipLevel = search.ApprenticeshipLevel,
                         CategoryCode = search.Category,
                         SubCategoryCodes = search.SubCategories
@@ -292,7 +291,7 @@
                         PageSize = search.ResultsPerPage,
                         SearchRadius = search.WithinDistance,
                         SortType = nonNationalSortType,
-                        VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                        VacancyLocationType = VacancyLocationType.NonNational,
                         ApprenticeshipLevel = search.ApprenticeshipLevel,
                         CategoryCode = search.Category,
                         SubCategoryCodes = search.SubCategories

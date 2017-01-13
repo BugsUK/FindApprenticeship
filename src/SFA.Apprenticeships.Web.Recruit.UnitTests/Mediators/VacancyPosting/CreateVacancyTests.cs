@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
-    using System;
     using Apprenticeships.Application.Interfaces.Locations;
     using Common.Constants;
     using Common.Mediators;
@@ -8,18 +7,20 @@
     using Common.ViewModels.Locations;
     using Constants.Messages;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Raa.Vacancies;
-    using Moq;
-    using NUnit.Framework;
-    using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Raa.Common.ViewModels.Employer;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
+    using System;
+    using System.Threading.Tasks;
 
     [TestFixture]
     [Parallelizable]
@@ -31,12 +32,12 @@
         private const int AnInt = 1234;
 
         [Test]
-        public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
+        public async Task ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionOneFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AVacancyWithQuestionOneFilled()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -57,12 +58,12 @@
         }
 
         [Test]
-        public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionTwo()
+        public async Task ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionTwo()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionTwoFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AVacancyWithQuestionTwoFilled()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -83,12 +84,12 @@
         }
 
         [Test]
-        public void ShouldntWarnUserIfSwitchingFromOnlineToOfflineVacancyWithoutHavingAnyQuestionFilled()
+        public async Task ShouldntWarnUserIfSwitchingFromOnlineToOfflineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithNoQuestionsFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AVacancyWithNoQuestionsFilled()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -107,12 +108,12 @@
         }
 
         [Test]
-        public void ShouldntWarnUserIfTheVacancyWasAlreadyOffline()
+        public async Task ShouldntWarnUserIfTheVacancyWasAlreadyOffline()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AnOfflineVacancy()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -131,12 +132,12 @@
         }
 
         [Test]
-        public void ShouldntWarnUserIfSwitchingFromOfflineToOnlineVacancyWithoutHavingAnyQuestionFilled()
+        public async Task ShouldntWarnUserIfSwitchingFromOfflineToOnlineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(Task.FromResult(AnOfflineVacancy()));
             var mediator = GetMediator();
 
-            var result = mediator.CreateVacancy(new NewVacancyViewModel
+            var result = await mediator.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyOwnerRelationship = new VacancyOwnerRelationshipViewModel
                 {
@@ -155,18 +156,18 @@
         }
 
         [Test]
-        public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError()
+        public async Task ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError()
         {
             var numberOfPositions = 5;
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = true,
+                VacancyLocationType = VacancyLocationType.SpecificLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
                 {
                     EmployerId = 7,
-                }                
+                }
             };
 
             ProviderProvider.Setup(p => p.GetVacancyOwnerRelationshipViewModel(It.IsAny<int>(), It.IsAny<string>()))
@@ -180,29 +181,63 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.ConfirmEmployer(viewModel, Ukprn);
-            result.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Should()
-                .Be(true);
+            var result = await mediator.ConfirmEmployer(viewModel, Ukprn);
+            result.ViewModel.VacancyLocationType.Should()
+                .Be(VacancyLocationType.SpecificLocation);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
+        }
+
+        [Test]
+        public async Task ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError_NationwideVacancy()
+        {
+            var numberOfPositions = 5;
+            var numberOfPositionsNw = 1;
+            var viewModel = new VacancyOwnerRelationshipViewModel
+            {
+                VacancyLocationType = VacancyLocationType.Nationwide,
+                NumberOfPositions = numberOfPositions,
+                NumberOfPositionsNationwide = numberOfPositionsNw,
+                ProviderSiteId = 42,
+                Employer = new EmployerViewModel
+                {
+                    EmployerId = 7,
+                }
+            };
+
+            ProviderProvider.Setup(p => p.GetVacancyOwnerRelationshipViewModel(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyOwnerRelationshipViewModel
+                {
+                    Employer = new EmployerViewModel
+                    {
+                        Address = new AddressViewModel()
+                    }
+                });
+
+            var mediator = GetMediator();
+
+            var result = await mediator.ConfirmEmployer(viewModel, Ukprn);
+            result.ViewModel.VacancyLocationType.Should()
+                .Be(VacancyLocationType.Nationwide);
+            result.ViewModel.NumberOfPositions.Should().Be(numberOfPositionsNw);
         }
 
         [Test]
         public void EmptyVacancyIfPreviousStateEmployerLocationIsDifferentFromCurrentStateEmployerLocation()
         {
-            var numberOfPositions = 5;                        
+            var numberOfPositions = 5;
             const string initialVacancyTitle = "title";
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = false,
+                VacancyLocationType = VacancyLocationType.MultipleLocations,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
                 {
                     EmployerId = 7
-                },                
+                },
                 EmployerDescription = "Text about Employer Description",
                 VacancyReferenceNumber = AnInt
-            };        
+            };
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(AnInt))
                .Returns(GetLiveVacancyWithComments(AnInt, initialVacancyTitle));
@@ -215,24 +250,24 @@
                  s =>
                      s.UpdateVacancy(It.Is<Vacancy>(v => v.Address == null &&
                          v.NumberOfPositions == null &&
-                         v.NumberOfPositionsComment == null)));            
+                         v.NumberOfPositionsComment == null)));
         }
 
         [Test]
-        public void ShouldCreateTheVacancyIfItDoesnExist()
+        public async Task ShouldCreateTheVacancyIfItDoesnExist()
         {
             // Arrange
             const string ukprn = "1234";
             var vacancyGuid = Guid.NewGuid();
             const int vacanyPartyId = 1;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             const string employerWebsiteUrl = "www.google.com";
             const string employerDescription = "description";
 
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -242,22 +277,23 @@
                 EmployerDescription = employerDescription,
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 VacancyOwnerRelationshipId = vacanyPartyId,
-                VacancyGuid = vacancyGuid
+                VacancyGuid = vacancyGuid,
+                IsAnonymousEmployer = false
             };
 
-            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(viewModel);
+            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(Task.FromResult(viewModel));
 
             // Act.
             var mediator = GetMediator();
-            mediator.ConfirmEmployer(viewModel, ukprn);
-            
+            await mediator.ConfirmEmployer(viewModel, ukprn);
+
             // Assert.
             VacancyPostingProvider.Verify(p => p.CreateVacancy(new VacancyMinimumData
             {
                 Ukprn = ukprn,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacanyPartyId,
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 EmployerDescription = employerDescription
@@ -265,20 +301,20 @@
         }
 
         [Test]
-        public void ShouldReturnErrorIfFailsGeocodingTheVacancy()
+        public async Task ShouldReturnErrorIfFailsGeocodingTheVacancy()
         {
             // Arrange
             const string ukprn = "1234";
             var vacancyGuid = Guid.NewGuid();
             const int vacanyPartyId = 1;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             const string employerWebsiteUrl = "www.google.com";
             const string employerDescription = "description";
 
             var viewModel = new VacancyOwnerRelationshipViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -288,10 +324,11 @@
                 EmployerDescription = employerDescription,
                 EmployerWebsiteUrl = employerWebsiteUrl,
                 VacancyOwnerRelationshipId = vacanyPartyId,
-                VacancyGuid = vacancyGuid
+                VacancyGuid = vacancyGuid,
+                IsAnonymousEmployer = false
             };
 
-            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(viewModel);
+            ProviderProvider.Setup(p => p.ConfirmVacancyOwnerRelationship(viewModel)).Returns(Task.FromResult(viewModel));
 
             VacancyPostingProvider
                 .Setup(p => p.CreateVacancy(It.IsAny<VacancyMinimumData>()))
@@ -299,7 +336,7 @@
 
             // Act.
             var mediator = GetMediator();
-            var result = mediator.ConfirmEmployer(viewModel, ukprn);
+            var result = await mediator.ConfirmEmployer(viewModel, ukprn);
 
             // Assert.
             result.AssertMessage(VacancyPostingMediatorCodes.ConfirmEmployer.FailedGeoCodeLookup, ApplicationPageMessages.PostcodeLookupFailed, UserMessageLevel.Error);
@@ -314,7 +351,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
             const int providerId = 4;
@@ -345,7 +382,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,
@@ -360,21 +397,21 @@
             MockEmployerService.Verify(s => s.GetEmployer(employerId, It.IsAny<bool>()));
             MockProviderService.Verify(s => s.GetProvider(ukprn, true));
             MockLocalAuthorityService.Verify(s => s.GetLocalAuthorityCode(employersPostcode));
-            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => 
-                v.VacancyGuid == vacancyGuid 
-                && v.VacancyReferenceNumber == vacancyReferenceNumber 
-                && v.Title == null 
-                && v.ShortDescription == null 
-                && v.VacancyOwnerRelationshipId == vacancyOwnerRelationshipId 
-                && v.Status == VacancyStatus.Draft 
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v =>
+                v.VacancyGuid == vacancyGuid
+                && v.VacancyReferenceNumber == vacancyReferenceNumber
+                && v.Title == null
+                && v.ShortDescription == null
+                && v.VacancyOwnerRelationshipId == vacancyOwnerRelationshipId
+                && v.Status == VacancyStatus.Draft
                 && v.OfflineVacancy.HasValue == false
-                && v.OfflineApplicationUrl == null 
-                && v.OfflineApplicationInstructions == null 
-                && v.IsEmployerLocationMainApprenticeshipLocation == isEmployerLocationMainApprenticeshipLocation 
-                && v.NumberOfPositions == numberOfPositions 
-                && v.VacancyType == VacancyType.Unknown 
-                && v.Address == address 
-                && v.ContractOwnerId == providerId 
+                && v.OfflineApplicationUrl == null
+                && v.OfflineApplicationInstructions == null
+                && v.VacancyLocationType == employerApprenticeshipLocation
+                && v.NumberOfPositions == numberOfPositions
+                && v.VacancyType == VacancyType.Unknown
+                && v.Address == address
+                && v.ContractOwnerId == providerId
                 && v.LocalAuthorityCode == localAuthorityCode
                 && v.EmployerWebsiteUrl == employerWebsiteUrl
                 && v.EmployerDescription == employerDescription
@@ -390,7 +427,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const bool isEmployerLocationMainApprenticeshipLocation = false;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.MultipleLocations;
             int? numberOfPositions = null;
             var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
             const int providerId = 4;
@@ -419,7 +456,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,
@@ -441,7 +478,7 @@
             const string employersPostcode = "cv1 9SX";
             var vacancyGuid = Guid.NewGuid();
             const int vacancyReferenceNumber = 123456;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             int? numberOfPositions = 2;
             var address =
                 new Fixture().Build<PostalAddress>()
@@ -474,7 +511,7 @@
             var provider = GetVacancyPostingProvider();
             provider.CreateVacancy(new VacancyMinimumData
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 VacancyGuid = vacancyGuid,
                 VacancyOwnerRelationshipId = vacancyOwnerRelationshipId,
                 Ukprn = ukprn,

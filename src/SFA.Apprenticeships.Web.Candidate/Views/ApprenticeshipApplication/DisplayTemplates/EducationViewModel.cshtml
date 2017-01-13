@@ -1,6 +1,6 @@
 ﻿@model EducationViewModel
 
-<section id="applyEducation" class="section-border nobreak-print">
+<section id="applyEducation" class="sfa-section-bordered nobreak-print">
     <h2 class="heading-large">
         Education
         @if (ViewBag.VacancyId != null)
@@ -11,12 +11,12 @@
 
         }
     </h2>
-    <div class="form-group">
-        <p class="form-label">Name of most recent school/college</p>
+    <div>
+        <p class="form-label-bold">Name of most recent school/college</p>
         <span id="@Html.IdFor(m => m.NameOfMostRecentSchoolCollege)" class="form-prepopped">@Html.DisplayTextFor(m => m.NameOfMostRecentSchoolCollege)</span>
     </div>
     <div class="inline-fixed">
-        <p class="form-label">Years attended</p>
+        <p class="form-label-bold">Years attended</p>
         <div class="form-group">
             <span class="form-hint">Started</span>
             <span id="@Html.IdFor(m => m.FromYear)" class="form-prepopped">@Html.DisplayTextFor(m => m.FromYear)</span>

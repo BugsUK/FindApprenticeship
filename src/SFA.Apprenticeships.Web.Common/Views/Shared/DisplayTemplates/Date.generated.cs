@@ -22,6 +22,7 @@ namespace SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates
     using System.Web.Mvc;
     using System.Web.Mvc.Ajax;
     using System.Web.Mvc.Html;
+    using System.Web.Optimization;
     using System.Web.Routing;
     using System.Web.Security;
     using System.Web.UI;
@@ -32,6 +33,10 @@ namespace SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Web.Common;
+    using SFA.Apprenticeships.Web.Common.Constants;
+    using SFA.Apprenticeships.Web.Common.Framework;
+    using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Date.cshtml")]

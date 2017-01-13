@@ -36,5 +36,8 @@
 
         [Display(Name = ShareApplicationsViewModelMessages.EmailAddressMessages.LabelText)]
         public string RecipientEmailAddress { get; set; }
+
+        [Display(Name = ShareApplicationsViewModelMessages.OptionalMessage.LabelText)]
+        public string OptionalMessage { get; set; }
     }
 }

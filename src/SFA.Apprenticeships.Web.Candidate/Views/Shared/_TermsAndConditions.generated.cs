@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/_TermsAndConditions.cshtml")]
@@ -51,12 +52,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
         }
         public override void Execute()
         {
-WriteLiteral("<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <p>By using this service you agree to these terms and conditions.</p>\r\n\r\n " +
-"   <h3");
+WriteLiteral("<section>\r\n    <p>By using this service you agree to these terms and conditions.<" +
+"/p>\r\n\r\n    <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -79,11 +76,8 @@ WriteLiteral(@">
     </ul>
 </section>
 
-<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <h3");
+<section>
+    <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 

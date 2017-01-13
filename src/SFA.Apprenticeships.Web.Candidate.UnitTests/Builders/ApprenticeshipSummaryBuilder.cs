@@ -1,6 +1,6 @@
 ﻿﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
  {
-     using Domain.Entities.Vacancies.Apprenticeships;
+     using Domain.Entities.Vacancies;
 
      public class ApprenticeshipSummaryBuilder
      {

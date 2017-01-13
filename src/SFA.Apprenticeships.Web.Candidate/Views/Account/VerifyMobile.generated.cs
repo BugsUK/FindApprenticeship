@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/VerifyMobile.cshtml")]
@@ -62,11 +63,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -74,108 +75,123 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Verify your mobile number</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-third\"");
 
-WriteLiteral(">\r\n        <p>\r\n");
+WriteLiteral(">\r\n        <ul");
 
-WriteLiteral("            ");
+WriteLiteral(" class=\"list sfa-align-right-tablet sfa-xlarge-top-margin\"");
+
+WriteLiteral(">\r\n            <li>\r\n");
+
+WriteLiteral("                ");
 
             
-            #line 13 "..\..\Views\Account\VerifyMobile.cshtml"
-       Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" }));
+            #line 14 "..\..\Views\Account\VerifyMobile.cshtml"
+           Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </p>\r\n");
+WriteLiteral("\r\n            </li>\r\n");
 
             
-            #line 15 "..\..\Views\Account\VerifyMobile.cshtml"
+            #line 16 "..\..\Views\Account\VerifyMobile.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 16 "..\..\Views\Account\VerifyMobile.cshtml"
+             if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <li>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 19 "..\..\Views\Account\VerifyMobile.cshtml"
+               Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </li>\r\n");
+
+            
+            #line 21 "..\..\Views\Account\VerifyMobile.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </ul>\r\n    </div>\r\n</div>\r\n\r\n<div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <p>To receive notifications via text message, you\'ll need to verify yo" +
+"ur mobile number by entering the code that was sent to your mobile phone.</p>\r\n\r" +
+"\n\r\n");
+
+            
+            #line 31 "..\..\Views\Account\VerifyMobile.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Account\VerifyMobile.cshtml"
-         if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+            #line 31 "..\..\Views\Account\VerifyMobile.cshtml"
+         using (Html.BeginRouteForm(CandidateRouteNames.VerifyMobile, FormMethod.Post, new { @id = "verify-mobile-form" }))
         {
-
             
-            #line default
-            #line hidden
-WriteLiteral("            <p>\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 18 "..\..\Views\Account\VerifyMobile.cshtml"
-           Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            </p>\r\n");
-
-            
-            #line 20 "..\..\Views\Account\VerifyMobile.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    </div>\r\n</div>\r\n\r\n\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">To receive notifications via text message, you\'ll need to verify your mobile num" +
-"ber by entering the code that was sent to your mobile phone.</p>\r\n\r\n\r\n");
-
-            
-            #line 28 "..\..\Views\Account\VerifyMobile.cshtml"
- using (Html.BeginRouteForm(CandidateRouteNames.VerifyMobile, FormMethod.Post, new { @id = "verify-mobile-form" }))
-{
-    
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\Account\VerifyMobile.cshtml"
-Write(Html.AntiForgeryToken());
+            #line 33 "..\..\Views\Account\VerifyMobile.cshtml"
+       Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\Account\VerifyMobile.cshtml"
-                            
-    
+            #line 33 "..\..\Views\Account\VerifyMobile.cshtml"
+                                    
+            
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Account\VerifyMobile.cshtml"
-Write(Html.Partial("ValidationSummary", ViewData.ModelState));
+            #line 34 "..\..\Views\Account\VerifyMobile.cshtml"
+       Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 31 "..\..\Views\Account\VerifyMobile.cshtml"
-                                                           
+            #line 34 "..\..\Views\Account\VerifyMobile.cshtml"
+                                                                   
 
 
             
             #line default
             #line hidden
-WriteLiteral("    <fieldset>\r\n\r\n        <div");
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n            <p");
+WriteLiteral(">\r\n                    <label");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(">Mobile number</p>\r\n            <span");
+WriteLiteral(">Mobile number</label>\r\n                    <span");
 
 WriteLiteral(" class=\"form-prepopped\"");
 
@@ -184,41 +200,47 @@ WriteLiteral(" id=\"phoneNumber\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Account\VerifyMobile.cshtml"
-                                                     Write(Model.PhoneNumber);
+            #line 38 "..\..\Views\Account\VerifyMobile.cshtml"
+                                                             Write(Model.PhoneNumber);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n");
+WriteLiteral("</span>\r\n                    \r\n");
 
-WriteLiteral("            ");
+WriteLiteral("                    ");
 
             
-            #line 38 "..\..\Views\Account\VerifyMobile.cshtml"
-       Write(Html.HiddenFor(m => m.PhoneNumber));
+            #line 40 "..\..\Views\Account\VerifyMobile.cshtml"
+               Write(Html.HiddenFor(m => m.PhoneNumber));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("                    ");
 
             
-            #line 39 "..\..\Views\Account\VerifyMobile.cshtml"
-       Write(Html.HiddenFor(m => m.ReturnUrl));
+            #line 41 "..\..\Views\Account\VerifyMobile.cshtml"
+               Write(Html.HiddenFor(m => m.ReturnUrl));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n\r\n\r\n");
-
-WriteLiteral("        ");
+WriteLiteral("\r\n                </div>\r\n");
 
             
             #line 43 "..\..\Views\Account\VerifyMobile.cshtml"
-   Write(Html.FormTextFor(
+
+
+                
+            
+            #line default
+            #line hidden
+            
+            #line 45 "..\..\Views\Account\VerifyMobile.cshtml"
+           Write(Html.FormTextFor(
         m => m.VerifyMobileCode,
         controlHtmlAttributes: new { @maxlength = "4", autofocus = "autofocus" },
         containerHtmlAttributes: new { @class = "form-group-withlink" }));
@@ -226,37 +248,18 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </fieldset>\r\n");
+            
+            #line 48 "..\..\Views\Account\VerifyMobile.cshtml"
+                                                                        
 
-WriteLiteral("    <div");
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <button");
-
-WriteLiteral(" class=\"button hide-button\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(" name=\"VerifyMobileAction\"");
-
-WriteLiteral(" value=\"VerifyMobile\"");
-
-WriteLiteral(" tabindex=\"-1\"");
-
-WriteLiteral(">Verify number</button>\r\n        <button");
-
-WriteLiteral(" id=\"ResendMobileVerificationCodeLink\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(" name=\"VerifyMobileAction\"");
-
-WriteLiteral(" class=\"button-link\"");
-
-WriteLiteral(" value=\"Resend\"");
-
-WriteLiteral(" formnovalidate>Resend code</button>\r\n        <p>\r\n            <button");
+WriteLiteral(">\r\n                <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -268,16 +271,40 @@ WriteLiteral(" name=\"VerifyMobileAction\"");
 
 WriteLiteral(" value=\"VerifyMobile\"");
 
-WriteLiteral(">Verify number</button>\r\n        </p>\r\n    </div>\r\n");
+WriteLiteral(">Verify number</button>\r\n                <button");
+
+WriteLiteral(" class=\"button sfa-hide-button\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" name=\"VerifyMobileAction\"");
+
+WriteLiteral(" value=\"VerifyMobile\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">Verify number</button>\r\n                <button");
+
+WriteLiteral(" id=\"ResendMobileVerificationCodeLink\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" name=\"VerifyMobileAction\"");
+
+WriteLiteral(" class=\"button sfa-button-secondary\"");
+
+WriteLiteral(" value=\"Resend\"");
+
+WriteLiteral(" formnovalidate>Resend code</button>\r\n            </div>\r\n");
 
             
-            #line 55 "..\..\Views\Account\VerifyMobile.cshtml"
-}
+            #line 54 "..\..\Views\Account\VerifyMobile.cshtml"
+        }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("    </div>\r\n</div>\r\n\r\n");
 
         }
     }

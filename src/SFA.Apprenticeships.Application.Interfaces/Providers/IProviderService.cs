@@ -37,15 +37,11 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         VacancyOwnerRelationship GetVacancyOwnerRelationship(int vacancyOwnerRelationshipId, bool currentOnly);
 
-        VacancyOwnerRelationship GetVacancyOwnerRelationship(int employerId, int providerSiteId);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int employerId, int providerSiteId, bool liveOnly);
 
         IReadOnlyDictionary<int, VacancyOwnerRelationship> GetVacancyOwnerRelationships(IEnumerable<int> vacancyOwnerRelationshipIds, bool currentOnly);
 
-        VacancyOwnerRelationship GetVacancyOwnerRelationship(int providerSiteId, string edsUrn);
-
-        bool IsADeletedVacancyOwnerRelationship(int providerSiteId, string edsUrn);
-
-        void ResurrectVacancyOwnerRelationship(int providerSiteId, string edsUrn);
+        VacancyOwnerRelationship GetVacancyOwnerRelationship(int providerSiteId, string edsUrn, bool liveOnly);
 
         VacancyOwnerRelationship SaveVacancyOwnerRelationship(VacancyOwnerRelationship vacancyOwnerRelationship);
 

@@ -2,8 +2,10 @@
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System.Threading.Tasks;
+
     public interface IProviderQAProvider
     {
-        VacancyOwnerRelationshipViewModel ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel);
+        Task<VacancyOwnerRelationshipViewModel> ConfirmVacancyOwnerRelationship(VacancyOwnerRelationshipViewModel viewModel);
     }
 }

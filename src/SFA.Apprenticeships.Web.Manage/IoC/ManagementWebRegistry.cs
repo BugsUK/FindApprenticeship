@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.IoC
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
     using Application.Candidate;
@@ -38,6 +39,7 @@
     using Raa.Common.Providers;
     using Application.Interfaces;
     using Application.Interfaces.Security;
+    using Application.Provider.Strategies;
     using Application.Vacancy;
     using Infrastructure.Security;
     using Raa.Common.Mediators.Admin;
@@ -73,13 +75,12 @@
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
-            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
             For<IEncryptionProvider>().Use<AES256Provider>();
             For<IProviderProvider>().Use<ProviderProvider>();
             For<IApiUserProvider>().Use<ApiUserProvider>();
             For<IProviderUserProvider>().Use<ProviderUserProvider>();
             For<IEmployerProvider>().Use<EmployerProvider>();
-            For<IStandardsAndFrameworksProvider>().Use<StandardsAndFrameworksProvider>();
+            For<IApiClientProvider>().Use<ApiClientProvider>();
         }
 
         private void RegisterServices()
@@ -130,6 +131,9 @@
             For<ISearchCandidatesStrategy>().Use<SearchCandidatesStrategy>().Ctor<ICandidateReadRepository>().Is<CandidateRepository>();
 
             For<Application.UserAccount.Strategies.ProviderUserAccount.ISubmitContactMessageStrategy>().Use<Application.UserAccount.Strategies.ProviderUserAccount.SubmitContactMessageStrategy>();
+
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
         }
 
         private void RegisterMediators()

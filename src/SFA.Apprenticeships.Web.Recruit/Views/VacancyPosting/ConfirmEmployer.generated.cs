@@ -74,19 +74,27 @@ WriteLiteral("\r\n");
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
+            Model.VacancyLocationType == VacancyLocationType.SpecificLocation ? "Save and return to Preview" : "Save and continue";
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
+
+            
+            #line 14 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -95,31 +103,31 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 23 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmEmployer, FormMethod.Post))
+            #line 24 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+ using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmEmployer, FormMethod.Post, new { id = "confirm-employer-form" }))
 {
     
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 26 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
 Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                               
-
+            #line 26 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                           
+    
 
             
             #line default
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"grid grid-1-1\"");
+WriteLiteral(" class=\"column-full\"");
 
 WriteLiteral(">\r\n        <button");
 
@@ -134,7 +142,7 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 28 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                                                                                               Write(saveButtonText);
 
             
@@ -145,8 +153,8 @@ WriteLiteral("</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
+            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default
@@ -154,13 +162,13 @@ WriteLiteral("        ");
 WriteLiteral("\r\n");
 
             
-            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 31 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 31 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
          if (Model.ComeFromPreview)
         {
             
@@ -168,14 +176,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 33 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
        Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 33 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                                                                                                                                           
         }
 
@@ -185,7 +193,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 35 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 36 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
 }
 
             
@@ -202,7 +210,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n        var comeFromPreview = \"");
 
             
-            #line 39 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 40 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                           Write(Model.ComeFromPreview.ToString());
 
             
@@ -211,6 +219,11 @@ WriteLiteral(">\r\n        var comeFromPreview = \"");
 WriteLiteral(@""";
 
         $(""#NumberOfPositionsJS"").attr(""id"", ""NumberOfPositions"").attr(""Name"", ""NumberOfPositions"");
+        $(""#NumberOfPositionsNWJS"").attr(""id"", ""NumberOfPositionsNationwide"").attr(""Name"", ""NumberOfPositionsNationwide"");
+
+        $(""#NonAnonymousEmployerJS"").attr(""id"", ""NonAnonymousEmployer"").attr(""Name"", ""NonAnonymousEmployer"");
+        $(""#AnonymousEmployerJS"").attr(""id"", ""AnonymousEmployer"").attr(""Name"", ""AnonymousEmployer"");
+
         $(""#location-type-main-location"").on('click', function () {
             if (comeFromPreview === ""True"") {
                 $(""#confirmEmployer"").text(""Save and return to Preview"");

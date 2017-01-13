@@ -1,13 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.EndToEndTests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Common.ViewModels.Locations;
     using Controllers;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
@@ -15,9 +9,15 @@
     using NUnit.Framework;
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using ApprenticeshipLevel = Domain.Entities.Raa.Vacancies.ApprenticeshipLevel;
     using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
+    using VacancyLocationType = Domain.Entities.Raa.Vacancies.VacancyLocationType;
 
     [TestFixture, Category("Acceptance")]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase
@@ -25,7 +25,7 @@
         //TODO: Alter these acceptance tests to use SQL repo
 
         [Test]
-        public void CloneAVacancyShouldCreateANewOneWithSomeFieldsReset()
+        public async Task CloneAVacancyShouldCreateANewOneWithSomeFieldsReset()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -38,7 +38,7 @@
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
             // Act
-            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+            var result = await vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
 
 
             // Assert
@@ -46,7 +46,7 @@
             var redirection = result as RedirectToRouteResult;
             redirection.RouteName.Should().Be("ConfirmEmployer");
 
-            var newVacancyGuid = (Guid) redirection.RouteValues.Values.Last();
+            var newVacancyGuid = (Guid)redirection.RouteValues.Values.Last();
 
             newVacancyGuid.Should().NotBe(vacancy.VacancyGuid);
             var clonedVacancy = Collection.FindOneById(newVacancyGuid);
@@ -76,7 +76,7 @@
             var view = result as ViewResult;
             view.Model.Should().BeOfType<VacancyOwnerRelationshipViewModel>();
             var viewModel = view.Model as VacancyOwnerRelationshipViewModel;
-            viewModel.IsEmployerLocationMainApprenticeshipLocation.Should().NotHaveValue();
+            viewModel.VacancyLocationType.Should().Be(VacancyLocationType.SpecificLocation);
             viewModel.NumberOfPositions.Should().NotHaveValue();
         }
 
@@ -86,9 +86,9 @@
             const int providerSiteId = 101282923;
             const int employerId = 100608868;
             const int numberOfPositions = 5;
-            const bool isEmployerLocationMainApprenticeshipLocation = true;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.SpecificLocation;
             var vacancyGuid = Guid.NewGuid();
-            var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, isEmployerLocationMainApprenticeshipLocation, numberOfPositions, providerSiteId, vacancyGuid);
+            var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, employerApprenticeshipLocation, numberOfPositions, providerSiteId, vacancyGuid);
 
             var savedVacancy = new MongoVacancy
             {
@@ -98,22 +98,22 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            vacancyPostingController.ConfirmEmployer(viewModel);
+            vacancyPostingController.ConfirmEmployer(viewModel).Wait();
 
             var vacancy = Collection.FindOneById(vacancyGuid);
-            vacancy.IsEmployerLocationMainApprenticeshipLocation.Should().BeTrue();
+            vacancy.VacancyLocationType.Should().Be(VacancyLocationType.SpecificLocation);
             vacancy.NumberOfPositions.Should().Be(numberOfPositions);
         }
 
         [Test]
-        public void ConfirmEmployerWithLocationTypeAsDifferentFromEmployerLocationShouldRedirectToLocationView()
+        public async Task ConfirmEmployerWithLocationTypeAsDifferentFromEmployerLocationShouldRedirectToLocationView()
         {
             const int providerSiteId = 101282923;
             const int employerId = 100608868;
             // const string ukprn = 
-            const bool isEmployerLocationMainApprenticeshipLocation = false;
+            const VacancyLocationType employerApprenticeshipLocation = VacancyLocationType.MultipleLocations;
             var vacancyGuid = Guid.NewGuid();
-            var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, isEmployerLocationMainApprenticeshipLocation, null, providerSiteId, vacancyGuid);
+            var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, employerApprenticeshipLocation, null, providerSiteId, vacancyGuid);
 
             var savedVacancy = new MongoVacancy
             {
@@ -123,7 +123,7 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            var result = vacancyPostingController.ConfirmEmployer(viewModel);
+            var result = await vacancyPostingController.ConfirmEmployer(viewModel);
             result.Should().BeOfType<RedirectToRouteResult>();
             var redirection = result as RedirectToRouteResult;
             redirection.RouteName.Should().Be("AddLocations");
@@ -153,7 +153,7 @@
                 ProviderSiteEdsUrn = providerSiteErn,
                 EmployerEdsUrn = edsUrn,
                 AdditionalLocationInformation = additionalLocationInformation,
-                Addresses = new List<VacancyLocationAddressViewModel> {address1},
+                Addresses = new List<VacancyLocationAddressViewModel> { address1 },
                 VacancyGuid = vacancyGuid
             };
 
@@ -181,7 +181,7 @@
         }
 
         private static VacancyOwnerRelationshipViewModel GetProviderSiteEmployerLinkViewModel(int employerId,
-            bool isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, int providerSiteId,
+            VacancyLocationType employerApprenticeshipLocation, int? numberOfPositions, int providerSiteId,
             Guid vacancyGuid)
         {
             return new VacancyOwnerRelationshipViewModel
@@ -202,7 +202,7 @@
                     FullName = "some employer",
                     EmployerId = employerId
                 },
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyLocationType = employerApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = providerSiteId,
                 VacancyGuid = vacancyGuid
@@ -259,7 +259,7 @@
         }
 
         [Test]
-        public void CloneAVacancyInDeferredStateShouldNotCreateNewVacancyAndReturnToDashboard()
+        public async Task CloneAVacancyInDeferredStateShouldNotCreateNewVacancyAndReturnToDashboard()
         {
             // Arrange
             const int vacancyReferenceNumber = 1;
@@ -272,7 +272,7 @@
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
             // Act
-            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+            var result = await vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
 
 
             // Assert

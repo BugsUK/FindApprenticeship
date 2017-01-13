@@ -78,8 +78,8 @@ _TeamCity*
 *.dotCover
 
 # NCrunch
-*.ncrunch*
-.*crunch*.local.xml
+# *.ncrunch*
+# .*crunch*.local.xml
 
 # Installshield output folder
 [Ee]xpress/
@@ -188,3 +188,10 @@ $RECYCLE.BIN/
 
 *.dgml
 tools/ContactForms/SFA.Apprenticeships.Infrastructure/Communication/Email/SendGridEmailDispatcher_.cs
+
+# =========================
+# SASS & Node process junk
+# =========================
+src/SFA.Apprenticeships.Web.Common/node_modules/
+src/SFA.Apprenticeships.Web.Common/build/
+nCrunchTemp*

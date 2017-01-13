@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipApplication/_trainingCoursesNonJS.cshtml")]
@@ -53,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
         {
 WriteLiteral("<noscript>\r\n    <fieldset");
 
-WriteLiteral(" class=\"fieldset-with-border\"");
+WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
 
 WriteLiteral(" id=\"applyTrainingCourses\"");
 
@@ -87,11 +88,11 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" id=\"training-history-item\"");
 
-WriteLiteral(" class=\"grid-wrapper training-history-item\"");
+WriteLiteral(" class=\"grid-row training-history-item\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -181,7 +182,7 @@ WriteLiteral(@"
                             </div>
                             <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -243,7 +244,7 @@ WriteLiteral("                                                    ");
 
             
             #line 66 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth", @class = "form-control" }));
 
             
             #line default
@@ -291,7 +292,7 @@ WriteLiteral("                                                    ");
 
             
             #line 78 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth", @class = "form-control" }));
 
             
             #line default
@@ -348,11 +349,11 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" id=\"training-history-item\"");
 
-WriteLiteral(" class=\"grid-wrapper training-history-item\"");
+WriteLiteral(" class=\"grid-row training-history-item\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 
@@ -442,7 +443,7 @@ WriteLiteral(@"
                             </div>
                             <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-half\"");
 
 WriteLiteral(">\r\n                                <table");
 

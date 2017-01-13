@@ -15,19 +15,21 @@
 
     @if (Model.Status.IsStateReadOnly())
     {
-        if (Model.Mode == VacancyViewModel.BulkUploadMode)
-        {
-            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Continue responding to candidates</a>
-        }
-        else
-        {
-            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
-        }
+        <section class="sfa-xlarge-top-margin inline">
+            @if (Model.Mode == VacancyViewModel.BulkUploadMode)
+            {
+                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyReferenceNumber}})" class="button">Continue responding to candidates</a>
+            }
+            else
+            {
+                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button sfa-button-secondary">Return to recruitment home</a>
+            }
+        </section>
     }
 
     else
     {
-        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
+        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post, new { id = "submit-vacancy-form" }))
         {
             @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
@@ -35,7 +37,7 @@
             if (Model.Status == VacancyStatus.Referred)
             {
                 Model.ResubmitOption = false;
-                @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
+                @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label selection-button-checkbox para-btm-margin" })
             }
             else
             {
@@ -43,18 +45,16 @@
                 @Html.HiddenFor(model => model.ResubmitOption)
             }
 
-            <section>
-                <div class="form-group">
-                    @if (Model.Status == VacancyStatus.Referred)
-                    {
-                        <button type="submit" class="button">Resubmit vacancy</button>
-                    }
-                    else
-                    {
-                        <button type="submit" class="button">Submit for approval</button>
-                    }
-                    <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
-                </div>
+            <section class="sfa-xlarge-top-margin">
+                @if (Model.Status == VacancyStatus.Referred)
+                {
+                    <button type="submit" class="button">Resubmit vacancy</button>
+                }
+                else
+                {
+                    <button type="submit" class="button">Submit for approval</button>
+                }
+                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
             </section>
         }
     }

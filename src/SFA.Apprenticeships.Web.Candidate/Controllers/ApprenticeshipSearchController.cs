@@ -2,24 +2,21 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Common.Providers;
     using Constants;
+    using Constants.ViewModels;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Infrastructure.Interfaces;
     using Extensions;
     using FluentValidation.Mvc;
     using Mediators.Search;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
     using ViewModels.VacancySearch;
 
     [UserJourneyContext(UserJourney.Apprenticeship, Order = 2)]
@@ -52,10 +49,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                 switch (response.Code)
                 {
                     case ApprenticeshipSearchMediatorCodes.Index.Ok:
-                    {
-                        ViewBag.ShowSearchTour = _helpCookieProvider.ShowSearchTour(HttpContext, candidateId);
-                        return View(response.ViewModel);
-                    }
+                        {
+                            ViewBag.ShowSearchTour = _helpCookieProvider.ShowSearchTour(HttpContext, candidateId);
+                            return View(response.ViewModel);
+                        }
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
@@ -85,23 +82,23 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.Ok:
                         return RedirectToRoute(CandidateRouteNames.ApprenticeshipResults, model.RouteValues);
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch:
-                    {
-                        // ReSharper disable once PossibleInvalidOperationException
-                        var savedSearchResponse = _apprenticeshipSearchMediator.RunSavedSearch(candidateId.Value, model);
-
-                        switch (savedSearchResponse.Code)
                         {
-                            case ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound:
-                            case ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed:
-                                SetUserMessage(savedSearchResponse.Message.Text, savedSearchResponse.Message.Level);
-                                return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
-                            case ApprenticeshipSearchMediatorCodes.SavedSearch.Ok:
-                                ModelState.Clear();
-                                return Redirect(savedSearchResponse.ViewModel.SearchUrl.Value);
-                        }
+                            // ReSharper disable once PossibleInvalidOperationException
+                            var savedSearchResponse = _apprenticeshipSearchMediator.RunSavedSearch(candidateId.Value, model);
 
-                        throw new InvalidMediatorCodeException(savedSearchResponse.Code);
-                    }
+                            switch (savedSearchResponse.Code)
+                            {
+                                case ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound:
+                                case ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed:
+                                    SetUserMessage(savedSearchResponse.Message.Text, savedSearchResponse.Message.Level);
+                                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
+                                case ApprenticeshipSearchMediatorCodes.SavedSearch.Ok:
+                                    ModelState.Clear();
+                                    return Redirect(savedSearchResponse.ViewModel.SearchUrl.Value);
+                            }
+
+                            throw new InvalidMediatorCodeException(savedSearchResponse.Code);
+                        }
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
@@ -171,7 +168,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         }
 
         [HttpGet]
-        [ClearSearchReturnUrl(false)]        
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
             return await Task.Run<ActionResult>(() =>
@@ -225,6 +222,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                     ModelState.Clear();
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View("Details", response.ViewModel);
+                case ApprenticeshipSearchMediatorCodes.Details.VacancyExpired:
+                    SetUserMessage(ApprenticeshipSearchViewModelMessages.DetailsMessages.ExpiredVacancy, UserMessageLevel.Warning);
+                    return View("Details", response.ViewModel);
                 case ApprenticeshipSearchMediatorCodes.Details.Ok:
                     return View("Details", response.ViewModel);
             }
@@ -244,7 +244,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                     case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new {id});
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
                     case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok:
                         return new RedirectResult(response.ViewModel.VacancyUrl);
                 }

@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipSearch/Results.cshtml")]
@@ -86,23 +87,27 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("\r\n<div");
 
-WriteLiteral(" class=\"search-results-wrapper grid-wrapper\"");
+WriteLiteral(" class=\"search-results-wrapper\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"grid-row sfa-xxlarge-bottom-margin\"");
 
-WriteLiteral(">\r\n        <h1");
+WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"heading-xlarge\"");
+WriteLiteral(" class=\"column-full\"");
 
-WriteLiteral(">Search results</h1>\r\n        <div");
+WriteLiteral(">\r\n            <h1");
+
+WriteLiteral(" class=\"heading-xlarge sfa-no-bottom-margin\"");
+
+WriteLiteral(">Search results</h1>\r\n            <div");
 
 WriteLiteral(" id=\"vacancy-result-summary\"");
 
-WriteLiteral(">\r\n            <p");
+WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"small-btm-margin\"");
+WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
 WriteLiteral(">We\'ve found <b");
 
@@ -113,23 +118,28 @@ WriteLiteral(" class=\"bold-medium\"");
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\TraineeshipSearch\Results.cshtml"
-                                                                                            Write(Model.TotalHits);
+            #line 19 "..\..\Views\TraineeshipSearch\Results.cshtml"
+                                                                                                       Write(Model.TotalHits);
 
             
             #line default
             #line hidden
-WriteLiteral("</b> traineeships in your selected area.</p>\r\n        </div>\r\n    </div>\r\n\r\n");
+WriteLiteral("</b> traineeships in your selected area.\r\n                </p>\r\n            </div" +
+">\r\n        </div>\r\n    </div>\r\n    \r\n    <div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 22 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 26 "..\..\Views\TraineeshipSearch\Results.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\TraineeshipSearch\Results.cshtml"
-     using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get))
+            #line 26 "..\..\Views\TraineeshipSearch\Results.cshtml"
+     using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new {id = "traineeship-results-form"}))
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
@@ -139,7 +149,7 @@ WriteLiteral("</b> traineeships in your selected area.</p>\r\n        </div>\r\n
             #line hidden
 WriteLiteral("        <section");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -148,13 +158,13 @@ WriteLiteral(" id=\"pagedList\"");
 WriteLiteral(">\r\n");
 
             
-            #line 28 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 32 "..\..\Views\TraineeshipSearch\Results.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 32 "..\..\Views\TraineeshipSearch\Results.cshtml"
                    Html.RenderPartial("_searchResults", Model); 
             
             #line default
@@ -162,15 +172,15 @@ WriteLiteral(">\r\n");
 WriteLiteral("\r\n            </div>\r\n        </section>\r\n");
 
             
-            #line 31 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 35 "..\..\Views\TraineeshipSearch\Results.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n<div");
+WriteLiteral("    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"saving-prompt toggle-content hide-nojs\"");
+WriteLiteral(" class=\"sfa-saving-prompt toggle-content hide-nojs\"");
 
 WriteLiteral(" id=\"ajaxLoading\"");
 
@@ -183,7 +193,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 41 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 46 "..\..\Views\TraineeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -194,7 +204,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 42 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 47 "..\..\Views\TraineeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             
@@ -203,7 +213,7 @@ Write(Scripts.Render("~/bundles/nas/geoLocater"));
 WriteLiteral("\r\n\r\n\r\n    <script>\r\n        var searchUrl = \'");
 
             
-            #line 46 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 51 "..\..\Views\TraineeshipSearch\Results.cshtml"
                     Write(Url.RouteUrl(CandidateRouteNames.TraineeshipResults));
 
             
@@ -212,7 +222,7 @@ WriteLiteral("\r\n\r\n\r\n    <script>\r\n        var searchUrl = \'");
 WriteLiteral("\';\r\n        var locationUrl = \'");
 
             
-            #line 47 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 52 "..\..\Views\TraineeshipSearch\Results.cshtml"
                       Write(Url.RouteUrl(CandidateRouteNames.LocationSearch));
 
             
@@ -223,7 +233,7 @@ WriteLiteral("\';\r\n    </script>\r\n");
 WriteLiteral("    ");
 
             
-            #line 49 "..\..\Views\TraineeshipSearch\Results.cshtml"
+            #line 54 "..\..\Views\TraineeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/results"));
 
             

@@ -9,7 +9,7 @@
 
 <p>@Html.RouteLink("Manage Provider Sites", ManagementRouteNames.AdminProviderSites)</p>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditProviderSite))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminEditProviderSite, FormMethod.Post, new { id = "admin-edit-provider-site-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -25,31 +25,31 @@
             </ul>
         </p>
         <h3 class="bold-small">Address</h3>
-        <p class="small-btm-margin">@Model.Address.AddressLine1</p>
-        <p class="small-btm-margin">@Model.Address.AddressLine2</p>
-        <p class="small-btm-margin">@Model.Address.AddressLine3</p>
-        <p class="small-btm-margin">@Model.Address.Town</p>
-        <p class="small-btm-margin">@Model.Address.County</p>
-        <p class="small-btm-margin">@Model.Address.Postcode</p>
+        <p class="sfa-small-bottom-margin">@Model.Address.AddressLine1</p>
+        <p class="sfa-small-bottom-margin">@Model.Address.AddressLine2</p>
+        <p class="sfa-small-bottom-margin">@Model.Address.AddressLine3</p>
+        <p class="sfa-small-bottom-margin">@Model.Address.Town</p>
+        <p class="sfa-small-bottom-margin">@Model.Address.County</p>
+        <p class="sfa-small-bottom-margin">@Model.Address.Postcode</p>
     </div>
 
     <div class="form-group">
 
         @Html.FormTextFor(m => m.FullName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus" })
         @Html.FormTextFor(m => m.TradingName, controlHtmlAttributes: new { type = "text" })
-        @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.CandidateDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.ContactDetailsForCandidate, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-        @Html.FormTextAreaFor(m => m.ContactDetailsForEmployer, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-        @Html.LabelFor(m => m.TrainingProviderStatus, new { @class = "form-label" })
-        @Html.DropDownListFor(m => m.TrainingProviderStatus, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.TrainingProviderStatus))
+        @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.CandidateDescription, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.ContactDetailsForCandidate, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.ContactDetailsForEmployer, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.LabelFor(m => m.TrainingProviderStatus, new { @class = "form-label-bold" })
+        @Html.DropDownListFor(m => m.TrainingProviderStatus, EnumHelper.GetSelectList(typeof(EmployerTrainingProviderStatuses), Model.TrainingProviderStatus), new { @class = "form-control" })
 
     </div>
 
     <h2 class="heading-medium">Provider Site Relationships</h2>
 
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
+    <div class="grid-row">
+        <div class="column-full">
             <table>
                 <colgroup>
                     <col>
@@ -99,8 +99,8 @@
 
         @Html.FormTextFor(m => m.ProviderUkprn, controlHtmlAttributes: new { type = "tel", size = 8 })
         <div class="form-group">
-            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label"})
-            @Html.DropDownListFor(m => m.ProviderSiteRelationshipType, EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes)))
+            @Html.LabelFor(m => m.ProviderSiteRelationshipType, new {@class = "form-label-bold"})
+            @Html.DropDownListFor(m => m.ProviderSiteRelationshipType, EnumHelper.GetSelectList(typeof(ProviderSiteRelationshipTypes)), new { @class = "form-control" })
         </div>
 
         <div class="form-group">

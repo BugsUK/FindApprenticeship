@@ -23,6 +23,7 @@
 @if (!Model.IsCandidateView)
 {
     @Html.Partial("DisplayTemplates/Vacancy/_QuestionsForCandidates", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+
 }
 
 @if (Model.VacancyType == VacancyType.Apprenticeship)

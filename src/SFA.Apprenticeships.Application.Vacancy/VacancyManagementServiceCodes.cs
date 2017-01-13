@@ -14,5 +14,11 @@ namespace SFA.Apprenticeships.Application.Vacancy
             public const string Ok = "VacancyManagement.FindSummary.Ok";
             public const string NotFound = "VacancyManagement.FindSummary.NotFound";
         }
+
+        public class EditWage
+        {
+            public const string Ok = "VacancyManagement.EditWage.Ok";
+            public const string Error = "VacancyManagement.EditWage.Error";
+        }
     }
 }

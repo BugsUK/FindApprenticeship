@@ -1,0 +1,54 @@
+﻿.tabbed-nav {
+    border-bottom: 1px solid #bfc1c3
+}
+
+.tabbed-tab {
+    border: 1px solid transparent;
+    display: inline-block;
+    margin-bottom: -1px;
+    margin-right: 1px;
+    padding: 15px 10px
+}
+
+.tabbed-tab.active {
+    background: #fff;
+    border-color: #bfc1c3;
+    border-bottom-color: #fff;
+    color: #0b0c0c;
+    text-decoration: none
+}
+
+.tabbed-tab.active:hover {
+    color: inherit;
+    cursor: default;
+    text-decoration: none
+}
+
+.tabbed-tab:hover {
+    text-decoration: underline
+}
+
+.tabbed-tab:focus {
+    outline: none
+}
+
+.tabbed-content {
+    border: 1px solid #bfc1c3;
+    border-top: 0;
+    display: none;
+    margin-bottom: 15px;
+    padding: 30px 10px 0;
+    overflow:hidden;
+}
+
+.tabbed-content.active {
+    display: block
+}
+
+.tabbed-element {
+    display: none
+}
+
+.tabbed-element.active {
+    display: inline-block
+}

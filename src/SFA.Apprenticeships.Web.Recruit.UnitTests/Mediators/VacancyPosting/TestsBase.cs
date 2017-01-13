@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using System.Threading.Tasks;
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Applications;
     using Apprenticeships.Application.Interfaces.Employers;
@@ -21,6 +22,7 @@
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Validators.VacancyPosting;
+    using Raa.Common.ViewModels.Provider;
     using Recruit.Mediators.VacancyPosting;
 
     public class TestsBase
@@ -28,7 +30,6 @@
         protected Mock<IVacancyPostingProvider> VacancyPostingProvider;
         protected Mock<IProviderProvider> ProviderProvider;
         protected Mock<IEmployerProvider> EmployerProvider;
-        protected Mock<IGeoCodingProvider> GeoCodingProvider;
 
         private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<ILogService> _mockLogService;
@@ -53,7 +54,6 @@
             VacancyPostingProvider = new Mock<IVacancyPostingProvider>();
             ProviderProvider = new Mock<IProviderProvider>();
             EmployerProvider = new Mock<IEmployerProvider>();
-            GeoCodingProvider = new Mock<IGeoCodingProvider>();
 
             _mockLogService = new Mock<ILogService>();
             MockMapper = new Mock<IMapper>();
@@ -67,7 +67,7 @@
                 .Returns(new Fixture().Build<ProviderSite>().Create());
             MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>(), It.IsAny<bool>()))
                 .Returns(new Fixture().Build<Employer>().Create());
-            _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
+            _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration {Features = new Features()});
             _mockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())
                 .Returns(new RecruitWebConfiguration { AutoSaveTimeoutInSeconds = 60 });
 
@@ -99,7 +99,8 @@
                 _mockUserProfileService.Object,
                 MockGeoCodingService.Object,
                 MockLocalAuthorityService.Object,
-                _mockVacancySummaryService.Object);
+                _mockVacancySummaryService.Object,
+                new Mock<IApiClientProvider>().Object);
         }
 
         protected IVacancyPostingMediator GetMediator()
@@ -108,7 +109,6 @@
                 VacancyPostingProvider.Object,
                 ProviderProvider.Object,
                 EmployerProvider.Object,
-                GeoCodingProvider.Object,
                 new NewVacancyViewModelServerValidator(),
                 new NewVacancyViewModelClientValidator(),
                 new VacancySummaryViewModelServerValidator(),

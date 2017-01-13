@@ -11,7 +11,7 @@
     using Domain.Entities.Communication;
     using Domain.Entities.Locations;
     using Domain.Entities.UnitTests.Builder;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Locations;

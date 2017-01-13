@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_disability.cshtml")]
@@ -53,167 +54,174 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"form-group inline clearfix\"");
+WriteLiteral(" class=\"form-group form-group-compound\"");
 
-WriteLiteral(">\r\n    <p");
+WriteLiteral(">\r\n    <fieldset");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"inline\"");
+
+WriteLiteral(">\r\n        <legend");
+
+WriteLiteral(" class=\"form-label-bold sfa-small-bottom-margin\"");
 
 WriteLiteral(" id=\"disability-label\"");
 
-WriteLiteral(">Do you have a learning difficulty, disability or health problem?</p>\r\n    <label" +
-"");
+WriteLiteral(">Do you have a learning difficulty, disability or health problem?</legend>\r\n\r\n   " +
+"     <label");
 
 WriteLiteral(" for=\"disability-yes\"");
 
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 6 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
-   Write(Html.RadioButtonFor(m => m.DisabilityStatus, 1, new { id = "disability-yes", aria_labelledby = "disability-label" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" Yes\r\n    </label>\r\n    <label");
-
-WriteLiteral(" for=\"disability-no\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
-   Write(Html.RadioButtonFor(m => m.DisabilityStatus, 2, new { id = "disability-no", aria_labelledby = "disability-label" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" No\r\n    </label>\r\n    <label");
-
-WriteLiteral(" for=\"disability-prefer-not-to-say\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 12 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
-   Write(Html.RadioButtonFor(m => m.DisabilityStatus, 3, new { id = "disability-prefer-not-to-say", aria_labelledby = "disability-label" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" Prefer not to say\r\n    </label>\r\n    <div");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n        <details");
-
-WriteLiteral(" class=\"med-btm-margin\"");
-
-WriteLiteral(">\r\n            <summary>Why we collect this info</summary>\r\n            <div");
-
-WriteLiteral(" class=\"detail-content panel-indent\"");
-
-WriteLiteral(@">
-                <p>
-                    Employers who are part of the ‘Positive about disabled
-                    people’ scheme will guarantee candidates an interview
-                    who meet the apprenticeship criteria if they have a disability.
-                </p>
-                <p>
-                    For this reason we ask you to provide this information
-                    so we can inform the employer and provider.
-                </p>
-            </div>
-        </details>
-    </div>
-</div>
-
-<div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n    <label");
-
-WriteLiteral(" for=\"question4\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Is there anything we can do to support your interview?</label>\r\n    <span");
-
-WriteLiteral(" class=\"form-hint\"");
-
-WriteLiteral(">For example, do you need a signer or information in braille</span>\r\n    <div");
-
-WriteLiteral(" class=\"form-group form-group-compound inline hide-nojs\"");
-
-WriteLiteral(">\r\n        <label");
-
-WriteLiteral(" data-target=\"support-panel\"");
-
-WriteLiteral(" for=\"disability-support-yes\"");
-
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 37 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
-       Write(Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, new { id = "disability-support-yes", aria_controls = "support-panel", aria_expanded = "false" }));
+            #line 8 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+       Write(Html.RadioButtonFor(m => m.DisabilityStatus, 1, new { id = "disability-yes", aria_labelledby = "disability-label" }));
 
             
             #line default
             #line hidden
 WriteLiteral(" Yes\r\n        </label>\r\n        <label");
 
-WriteLiteral(" for=\"disability-support-no\"");
+WriteLiteral(" for=\"disability-no\"");
 
-WriteLiteral(" class=\"block-label hide-nojs\"");
+WriteLiteral(" class=\"block-label selection-button-radio\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 40 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
-       Write(Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, new { id = "disability-support-no" }));
+            #line 11 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+       Write(Html.RadioButtonFor(m => m.DisabilityStatus, 2, new { id = "disability-no", aria_labelledby = "disability-label" }));
 
             
             #line default
             #line hidden
-WriteLiteral(" No\r\n        </label>\r\n    </div>\r\n    <div");
+WriteLiteral(" No\r\n        </label>\r\n        <label");
+
+WriteLiteral(" for=\"disability-prefer-not-to-say\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 14 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+       Write(Html.RadioButtonFor(m => m.DisabilityStatus, 3, new { id = "disability-prefer-not-to-say", aria_labelledby = "disability-label" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" Prefer not to say\r\n        </label>\r\n    </fieldset>\r\n</div>\r\n\r\n<div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n    <details>\r\n        <summary><span");
+
+WriteLiteral(" class=\"summary\"");
+
+WriteLiteral(">Why we collect this info</span></summary>\r\n        <div");
+
+WriteLiteral(" class=\"panel panel-border-narrow\"");
+
+WriteLiteral(@">
+            <p>
+                Employers who are part of the ‘Positive about disabled people’ scheme
+                will guarantee candidates an interview who meet the apprenticeship
+                criteria if they have a disability.
+            </p>
+            <p>
+                For this reason we ask you to provide this information so we can
+                inform the employer and provider.
+            </p>
+        </div>
+    </details>
+</div>
+
+<div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n    <fieldset");
+
+WriteLiteral(" class=\"inline\"");
+
+WriteLiteral(">\r\n        <legend");
+
+WriteLiteral(" class=\"form-label-bold sfa-small-bottom-margin\"");
+
+WriteLiteral(">\r\n            Is there anything we can do to support your interview?\r\n          " +
+"  <span");
+
+WriteLiteral(" class=\"form-hint\"");
+
+WriteLiteral(">For example, do you need a signer or information in braille</span>\r\n        </le" +
+"gend>\r\n        <div");
+
+WriteLiteral(" class=\"form-group form-group-compound inline hide-nojs\"");
+
+WriteLiteral(">\r\n            <label");
+
+WriteLiteral(" data-target=\"support-panel\"");
+
+WriteLiteral(" for=\"disability-support-yes\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 44 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+           Write(Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, new { id = "disability-support-yes", aria_controls = "support-panel", aria_expanded = "false" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" Yes\r\n            </label>\r\n            <label");
+
+WriteLiteral(" for=\"disability-support-no\"");
+
+WriteLiteral(" class=\"block-label selection-button-radio hide-nojs\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 47 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+           Write(Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, new { id = "disability-support-no" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" No\r\n            </label>\r\n        </div>\r\n        <div");
 
 WriteLiteral(" id=\"support-panel\"");
 
-WriteLiteral(" class=\"panel-indent toggle-content\"");
+WriteLiteral(" class=\"panel panel-border-narrow toggle-content\"");
 
 WriteLiteral(" aria-hidden=\"true\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 44 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
-   Write(Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" }, labelHtmlAttributes: new { @class = "form-hint text" }));
+            #line 51 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+       Write(Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>\r\n");
+WriteLiteral("\r\n        </div>\r\n    </fieldset>\r\n</div>\r\n");
 
         }
     }

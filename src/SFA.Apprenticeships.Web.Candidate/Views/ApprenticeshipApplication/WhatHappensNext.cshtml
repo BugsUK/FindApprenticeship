@@ -7,16 +7,16 @@
 }
 <div class="progress-indicator progress-indicator-horizontal">
     <ul>
-        <li><span class="hide-tablet">Step </span>1<span class="hide-tablet"> of 3</span>. Application form</li>
-        <li><span class="hide-tablet">Step </span>2<span class="hide-tablet"> of 3</span>. Check your application</li>
-        <li class="active"><span class="hide-tablet">Step </span>3<span class="hide-tablet"> of 3</span>. Submitted</li>
+        <li><span class="sfa-hide-tablet">Step </span>1<span class="sfa-hide-tablet"> of 3</span>. Application form</li>
+        <li><span class="sfa-hide-tablet">Step </span>2<span class="sfa-hide-tablet"> of 3</span>. Check your application</li>
+        <li class="active"><span class="sfa-hide-tablet">Step </span>3<span class="sfa-hide-tablet"> of 3</span>. Submitted</li>
     </ul>
 </div>
 <div class="success-banner" role="alert" aria-live="assertive">
-    <h1 class="heading-large no-btm-margin"><i class="fa fa-check"></i>Apprenticeship application submitted</h1>
+    <h1 class="heading-large sfa-no-bottom-margin"><i class="fa fa-check"></i>Apprenticeship application submitted</h1>
 </div>
-<section class="section-border">
-    <div class="text">
+<section class="sfa-section-bordered">
+    <div>
         <p>
             <i class="fa fa-envelope-o"></i>
             We've sent you an email confirming your <b>@Html.DisplayFor(m => m.VacancyTitle)</b> application.
@@ -29,7 +29,7 @@
         </details>
     </div>
 </section>
-<section class="section-border">
+<section class="sfa-section-bordered">
     
     @if ((Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any()) && (Model.SavedAndDraftApplications == null || !Model.SavedAndDraftApplications.Any()))
     {
@@ -44,11 +44,10 @@
             <div class="hgroup-medium text">
                 <h2 class="heading-medium">Saved apprenticeships</h2>
             </div>
-            <div class="grid-wrapper">
+            <div class="grid-row">
                 @for (int i = 0; i < Math.Min(3, Model.SavedAndDraftApplications.Count); i++)
                 {
-                    <div class="grid grid-1-3" id="saved-vacancy-@Model.SavedAndDraftApplications[i].VacancyId">
-                        <div class="inner-block-padr">
+                    <div class="column-one-third" id="saved-vacancy-@Model.SavedAndDraftApplications[i].VacancyId">
                             
                             @if (Model.SavedAndDraftApplications[i].IsPositiveAboutDisability)
                             {
@@ -67,7 +66,6 @@
                             {
                                 <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResume, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })">Resume</a></p>
                             }
-                        </div>
                     </div>
                 }
             </div>
@@ -76,13 +74,12 @@
         {
             <div class="hgroup-medium text">
                 <h2 class="heading-medium">Similar apprenticeships</h2>
-                <span class="subtitle">Also in the @Model.SuggestedVacanciesCategory sub-category and within @Model.SuggestedVacanciesSearchDistance miles of @Model.SuggestedVacanciesSearchLocation</span>
+                <span class="heading-secondary ">Also in the @Model.SuggestedVacanciesCategory sub-category and within @Model.SuggestedVacanciesSearchDistance miles of @Model.SuggestedVacanciesSearchLocation</span>
             </div>
-            <div class="grid-wrapper">
+            <div class="grid-row">
                 @for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++)
                 {
-                    <div class="grid grid-1-3" id="suggested-vacancy-@Model.SuggestedVacancies[i].VacancyId">
-                        <div class="inner-block-padr">
+                    <div class="column-one-third" id="suggested-vacancy-@Model.SuggestedVacancies[i].VacancyId">
                             
                             @if (Model.SuggestedVacancies[i].IsPositiveAboutDisability)
                             {
@@ -93,7 +90,6 @@
                             
                             <h3 class="heading-small"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = Model.SuggestedVacancies[i].VacancyId.ToString()})">@Model.SuggestedVacancies[i].VacancyTitle</a></h3>
                             <p><b>Distance:</b> @Model.SuggestedVacancies[i].Distance miles</p>
-                        </div>
                     </div>
                 }
             </div>

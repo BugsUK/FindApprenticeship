@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
+﻿#pragma warning disable 612
+namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
     using Application.Application.Strategies;
     using Application.Applications;
@@ -33,7 +34,7 @@
     using Application.Vacancy;
     using Application.Vacancy.SiteMap;
     using Common.Configuration;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
@@ -49,6 +50,7 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using System.Web;
+    using Application.Provider.Strategies;
 
     public class CandidateWebRegistry : Registry
     {
@@ -194,6 +196,9 @@
             For<ISendEmployerLinksStrategy>().Use<SendEmployerLinksStrategy>();
             For<ISendEmployerCommunicationStrategy>().Use<QueueEmployerCommunicationStrategy>();
             For<ISetUserStatusPendingDeletionStrategy>().Use<SetUserStatusPendingDeletionStrategy>();
+
+            For<IGetOwnedProviderSitesStrategy>().Use<GetOwnedProviderSitesStrategy>();
+            For<IGetVacancyOwnerRelationshipStrategy>().Use<GetVacancyOwnerRelationshipStrategy>();
         }
 
         private void RegisterMediators()

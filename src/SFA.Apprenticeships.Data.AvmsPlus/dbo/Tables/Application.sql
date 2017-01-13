@@ -39,6 +39,13 @@ CREATE NONCLUSTERED INDEX [idx_Application_VacancyID]
     ON [dbo].[Application]([VacancyId] ASC)
     INCLUDE([ApplicationStatusTypeId], [CandidateId], [WithdrawalAcknowledged], [ApplicationId]);
 
+
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [idx_Application_ApplicationGuid]
 	ON [dbo].[Application]([ApplicationGuid])
+
+
+GO
+CREATE NONCLUSTERED INDEX [nci_wi_Application_737A809EDD78B55D96A2D4F14E5761D4] 
+    ON [dbo].[Application]([ApplicationStatusTypeId] ASC)
+    INCLUDE([CandidateId], [VacancyId])

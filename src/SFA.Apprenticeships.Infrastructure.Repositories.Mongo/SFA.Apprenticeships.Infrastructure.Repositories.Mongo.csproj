@@ -156,11 +156,9 @@
     <Compile Include="Communication\SavedSearchAlertRepository.cs" />
     <Compile Include="Employers\EmployerRepository.cs" />
     <Compile Include="Employers\Entities\MongoEmployer.cs" />
-    <Compile Include="Employers\IoC\EmployerRepositoryRegistry.cs" />
     <Compile Include="Employers\Mappers\EmployerMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Entities\MongoVacancyOwnerRelationship.cs" />
-    <Compile Include="Providers\IoC\ProviderRepositoryRegistry.cs" />
     <Compile Include="Providers\Mappers\ProviderMappers.cs" />
     <Compile Include="Providers\VacancyOwnerRelationshipRepository.cs" />
     <Compile Include="UserProfiles\AgencyUserRepository.cs" />

@@ -7,7 +7,7 @@
 
 <h1 id="heading" class="heading-xlarge">Transfer Vacancies</h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.TransferVacancies))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.TransferVacancies, FormMethod.Post, new { id = "admin-confirm-transfer-vacancies-form" }))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     <div class="form-group">

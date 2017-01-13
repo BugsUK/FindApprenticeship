@@ -76,7 +76,7 @@ WriteLiteral(" class=\"success-banner\"");
 
 WriteLiteral(">\r\n    <h1");
 
-WriteLiteral(" class=\"heading-large no-btm-margin\"");
+WriteLiteral(" class=\"heading-large sfa-no-bottom-margin\"");
 
 WriteLiteral(">\r\n        <i");
 
@@ -226,7 +226,7 @@ WriteLiteral("            You’ll be notified via your recruitment home page if
             #line hidden
 WriteLiteral("</section>\r\n<section");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"sfa-section-bordered\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -239,7 +239,7 @@ WriteLiteral(" class=\"heading-medium\"");
 WriteLiteral(">Create another apprenticeship vacancy or traineeship opportunity</h2>\r\n        <" +
 "span");
 
-WriteLiteral(" class=\"subtitle\"");
+WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">Use a fresh template or continue with a draft</span>\r\n    </div>\r\n    <div");
 
@@ -247,28 +247,28 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2108), Tuple.Create("\"", 2221)
+WriteAttribute("href", Tuple.Create(" href=\"", 2131), Tuple.Create("\"", 2244)
             
             #line 59 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2115), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
+, Tuple.Create(Tuple.Create("", 2138), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
             
             #line default
             #line hidden
-, 2115), false)
+, 2138), false)
 );
 
 WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Start new opportunity or vacancy</a>\r\n    </div>\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2307), Tuple.Create("\"", 2366)
+WriteAttribute("href", Tuple.Create(" href=\"", 2330), Tuple.Create("\"", 2389)
             
             #line 62 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2314), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 2337), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2314), false)
+, 2337), false)
 );
 
 WriteLiteral(">Return to recruitment home</a>\r\n    </p>\r\n</section>\r\n");

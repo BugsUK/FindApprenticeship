@@ -4,14 +4,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">Find a traineeship</h1>
-    <p class="subtitle">Search and apply for a traineeship in England</p>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Find a traineeship
+            <span class="heading-secondary ">Search and apply for a traineeship in England</span>
+        </h1>
+        
+    </div>
 </div>
-<div class="grid-wrapper">
-
-    <div class="grid-wrapper controls-3-4">
-        <section class="grid grid-2-3">
+    <div class="grid-row">
+        <section class="column-two-thirds">
             @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -33,26 +36,25 @@
                 @Html.HiddenFor(m=> m.ResultsPerPage);
             }
         </section>
-        <aside class="grid grid-1-3">
-            <div class="inner-block">
-                <div class="gov-border">
+        <aside class="column-one-third">
+                <div class="govuk-related-items">
                     <h2 class="heading-medium">Help</h2>
-                    <ul class="list-text">
-                        <li>0800 015 0400</li>
-                        <li><a href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Contact us</a></li>
-                    </ul>
-                    <ul class="list-text">
+                    <ul class="list">
+                        <li>
+                            0800 015 0400
+                        </li>
+                        <li>
+                            <a href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Contact us</a>
+                        </li>
                         <li>
                             <a href="https://www.gov.uk/find-traineeship">About traineeships</a>
                         </li>
                         <li>
-                            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link" })
+                            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {id = "find-apprenticeship-link"})
                         </li>
                     </ul>
                 </div>
-            </div>
         </aside>
-    </div>
 </div>
 
 @section scripts

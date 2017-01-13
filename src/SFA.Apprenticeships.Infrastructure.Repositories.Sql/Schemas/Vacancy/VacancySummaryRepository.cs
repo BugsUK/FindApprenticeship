@@ -17,6 +17,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
     {
         private readonly IGetOpenConnection _getOpenConnection;
         private static readonly VacancyMappers Mapper = new VacancyMappers();
+        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         private const string CoreQuery = @"SELECT COUNT(*) OVER () AS TotalResultCount,
 		                    v.VacancyId,
@@ -75,6 +76,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.WageType,
                             v.WageUnitId,
                             v.WeeklyWage,
+                            v.WageLowerBound,
+                            v.WageUpperBound,
                             v.WageText,
                             v.HoursPerWeek,
                             v.ShortDescription,
@@ -93,7 +96,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                             v.GeocodeEasting,
                             v.GeocodeNorthing,
                             v.EmployerAnonymousName,
-                            v.UpdatedDateTime
+                            v.UpdatedDateTime,
+                            CAST(CASE WHEN dbo.GetVacancyLocationCount(v.VacancyId) > 1 THEN 1 ELSE 0 END AS bit) AS IsMultiLocation
                     FROM	Vacancy v
                     JOIN	VacancyOwnerRelationship o
                     ON		o.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
@@ -396,6 +400,17 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             return summary.Any() ? summary.Single() : null;
         }
 
+        public VacancySummary GetByReferenceNumber(int vacancyReferenceNumber)
+        {
+            var vacancyId = _getOpenConnection.QueryCached<int?>(_cacheDuration, VacancyRepository.SelectVacancyIdFromReferenceNumberSql,
+                    new
+                    {
+                        vacancyReferenceNumber
+                    }).SingleOrDefault();
+
+            return vacancyId == null ? null : GetById(vacancyId.Value);
+        }
+
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             var sqlParams = new
@@ -404,11 +419,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
             };
 
             var sql = $@"{CoreQuery}
-                    JOIN	ProviderSiteRelationship r
-                    ON		r.ProviderSiteId = o.ProviderSiteId
-
                     WHERE	v.VacancyID IN @vacancyIds
-                    AND     r.ProviderSiteRelationshipTypeId = 1
 ";
 
             var vacancies = _getOpenConnection.Query<DbVacancySummary>(sql, sqlParams);
@@ -432,11 +443,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 
             var sql = $@"{CoreQuery}
 
-                    JOIN	ProviderSiteRelationship r
-                    ON		r.ProviderSiteId = o.ProviderSiteId
-
-                    WHERE	r.ProviderSiteRelationshipTypeId = 1
-                    AND     v.VacancyStatusId IN @VacancyStatuses
+                    WHERE	v.VacancyStatusId IN @VacancyStatuses
                     {(!string.IsNullOrEmpty(query.FrameworkCodeName) ? "AND     af.CodeName = @FrameworkCodeName" : "")}
                     {(query.EditedInRaa ? "AND     v.EditedInRaa = 1" : "")}
                     {(query.LiveDate.HasValue ? "AND     dbo.GetLiveDate(v.VacancyId) >= @LiveDate" : "")}
@@ -473,7 +480,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     filterSql.Append($"{sqlFilterKeyword} v.VacancyStatusId = {(int)VacancyStatus.Referred}");
                     break;
                 case VacanciesSummaryFilterTypes.ClosingSoon:
-                    filterSql.Append($"{sqlFilterKeyword} (v.VacancyStatusId = {(int)VacancyStatus.Live} AND v.ApplicationClosingDate >= GETDATE() AND v.ApplicationClosingDate < (GETDATE() + 5))");
+                    filterSql.Append($"{sqlFilterKeyword} (v.VacancyStatusId = {(int)VacancyStatus.Live} AND v.ApplicationClosingDate >= CONVERT(DATE, GETDATE()) AND v.ApplicationClosingDate < (DATEADD(day,5,CONVERT(DATE, GETDATE()))))");
                     break;
                 case VacanciesSummaryFilterTypes.Closed:
                     filterSql.Append($"{sqlFilterKeyword} v.VacancyStatusId = {(int)VacancyStatus.Closed}");

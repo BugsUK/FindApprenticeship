@@ -1,4 +1,4 @@
-﻿var blackHeaderHeight = $('.global-header').outerHeight(),
+var blackHeaderHeight = $('.global-header').outerHeight(),
     fixedContainerHeight = $('.fixed-container').outerHeight(),
     heightOfHeader = blackHeaderHeight + fixedContainerHeight,
     lastScrollTop = 0,

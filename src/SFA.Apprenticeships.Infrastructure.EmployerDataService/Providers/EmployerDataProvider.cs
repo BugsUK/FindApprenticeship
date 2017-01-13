@@ -24,7 +24,7 @@
 
         private readonly ILogService _logger;
         private readonly IConfigurationService _configurationService;
-        private readonly IPostalAddressSearchService _postalAddressSearchService;
+        private readonly IPostalAddressService _postalAddressService;
         private readonly IWcfService<EmployerLookupSoap> _service;
 
         private string _credentials;
@@ -34,12 +34,12 @@
             ILogService logger,
             IConfigurationService configurationService,
             IWcfService<EmployerLookupSoap> service,
-            IPostalAddressSearchService postalAddressSearchService)
+            IPostalAddressService postalAddressService)
         {
             _logger = logger;
             _configurationService = configurationService;
             _service = service;
-            _postalAddressSearchService = postalAddressSearchService;
+            _postalAddressService = postalAddressService;
             _employerMapper = new EmployerMapper();
         }
 
@@ -130,7 +130,7 @@
 
         public VerifiedOrganisationSummary GetVerifiedOrganisationSummary(DetailedEmployerStructure employer)
         {
-            var validatedAddress = GetValidatedAddress(employer.Address);
+            var validatedAddress = GetValidatedAddress(employer.Name, employer.Address);
 
             var organisationSummary = _employerMapper.ToVerifiedOrganisationSummary(employer);
 
@@ -141,7 +141,7 @@
 
         public VerifiedOrganisationSummary GetVerifiedOrganisationSummary(ConciseEmployerStructure employer)
         {
-            var validatedAddress = GetValidatedAddress(employer.Address);
+            var validatedAddress = GetValidatedAddress(employer.Name, employer.Address);
 
             var organisationSummary = _employerMapper.ToVerifiedOrganisationSummary(employer);
 
@@ -156,42 +156,18 @@
         /// as part of the interface methods.
         /// *This is a nasty piece of code to test, but there are some units around it.
         /// </summary>
+        /// <param name="companyName"></param>
         /// <param name="address"></param>
         /// <returns></returns>
-        private PostalAddress GetValidatedAddress(BSaddressStructure address)
+        private PostalAddress GetValidatedAddress(string companyName, BSaddressStructure address)
         {
-            //OO 20/01/16: Employer Address validation
-            //Here, we are replicating what AVMS does for address verification
-            //get address by postcode and line 1
-            //if address not found, get address by postcode alone
-            //if address not found, just use the retrieved address
-            var postCodeToSearch = address.PostCode;
-            var addressLine1 = address.PAON?.Items.FirstOrDefault()?.ToString();
-            PostalAddress verifiedAddress = null;
+            var street = address.StreetDescription;
+            var primaryAddressableObject = address.PAON == null ? null : string.Join(", ", address.PAON.Items);
+            var secondaryAddressableObject = address.SAON == null ? null : string.Join(", ", address.SAON.Items);
+            var town = address.PostTown;
+            var postcode = address.PostCode;
 
-            if (!string.IsNullOrWhiteSpace(addressLine1))
-            {
-                var addresses = _postalAddressSearchService.GetValidatedAddress(postCodeToSearch, addressLine1)?.ToList();
-                if (addresses != null && addresses.Count() == 1)
-                {
-                    verifiedAddress = addresses.Single();
-                }
-            }
-
-            if (verifiedAddress == null)
-            {
-                var validatedAddresses = _postalAddressSearchService.GetValidatedAddresses(postCodeToSearch);
-                if (!string.IsNullOrEmpty(addressLine1))
-                {
-                    verifiedAddress = validatedAddresses?.FirstOrDefault(a => a.AddressLine1.IndexOf(addressLine1, StringComparison.CurrentCultureIgnoreCase) != -1);
-                }
-                if (verifiedAddress == null)
-                {
-                    verifiedAddress = validatedAddresses?.FirstOrDefault();
-                }
-            }
-
-            return verifiedAddress;
+            return _postalAddressService.GetPostalAddresses(companyName, primaryAddressableObject, secondaryAddressableObject, street, town, postcode);
         }
 
         #region Helpers

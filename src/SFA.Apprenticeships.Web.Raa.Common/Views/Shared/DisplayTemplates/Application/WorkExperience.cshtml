@@ -1,7 +1,7 @@
 ﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 @model IEnumerable<WorkExperienceViewModel>
 
-<section class="section-border">
+<section class="sfa-section-bordered">
     <h2 class="heading-large">
         Work experience
     </h2>
@@ -14,9 +14,9 @@
     @foreach (WorkExperienceViewModel experience in Model)
     {
         <div class="grid-3-4 nobreak-print">
-            <div class="grid-wrapper work-history-item">
+            <div class="grid-row work-history-item">
 
-                <div class="grid grid-1-2">
+                <div class="column-one-half">
                     <table class="table-no-btm-border table-compound">
                         <colgroup>
                             <col>
@@ -42,7 +42,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="grid grid-1-2">
+                <div class="column-one-half">
                     <table class="table-no-btm-border table-compound">
                         <colgroup>
                             <col class="t30">

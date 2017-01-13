@@ -7,105 +7,106 @@
     var editableItemClass = ViewData["editableItemClass"];
 }
 
-<section class="section-border" id="course-info">
-    <h2 class="heading-large">Requirements and prospects</h2>
-    <div class="grid-wrapper">
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <div class="@editableItemClass">
-                    <div class="text">
-                        <h3 class="heading-small">
-                            Desired skills
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, Model.RequirementsProspectsLink))
-                        </h3>
-                        @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredSkills) )
-                        {
-                            <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                        }
-                        else
-                        {
-                            <p id="vacancy-skills-required" itemprop="skills" class="@Model.VacancyRequirementsProspectsViewModel.DesiredSkills.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredSkills))</p>
-                        }
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
+<section class="grid-row" id="course-info">
+    <div class="column-full">
+        <h2 class="heading-large">Requirements and prospects</h2>
+    </div>
+    <div class="column-one-half">
+        <div class="@editableItemClass sfa-if-first">
+                <h3 class="heading-small">
+                    Desired skills
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, Model.RequirementsProspectsLink))
+                </h3>
+                @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
+                {
+                    <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                }
+                else
+                {
+                    <div id="vacancy-skills-required" itemprop="skills" class="sfa-text-editor-generated @Model.VacancyRequirementsProspectsViewModel.DesiredSkills.GetPreserveFormattingCssClass()">
+                        @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
                     </div>
-                </div>
-                <div class="@editableItemClass">
-                    <div class="text">
-                        <h3 class="heading-small">
-                            Personal qualities
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, Model.RequirementsProspectsLink))
-                        </h3>
-                        @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
-                        {
-                            <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                        }
-                        else
-                        {
-                            <p id="vacancy-qualities-required" itemprop="qualities" class="@Model.VacancyRequirementsProspectsViewModel.PersonalQualities.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.PersonalQualities))</p>
-                        }
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
-                    </div>
-                </div>
-                <div class="@editableItemClass">
-                    <div class="text">
-                        <h3 class="heading-small">
-                            Qualifications required
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, Model.RequirementsProspectsLink))
-                        </h3>
-                        @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
-                        {
-                            <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                        }
-                        else
-                        {
-                            <p id="vacancy-qualifications-required" itemprop="qualifications" class="@Model.VacancyRequirementsProspectsViewModel.DesiredQualifications.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))</p>
-                        }
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
-                    </div>
-                </div>
-               </div>
+                }
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
         </div>
-        <div class="grid grid-1-2">
-            @if (Model.VacancyType == VacancyType.Apprenticeship && (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects) || Model.Status.IsStateReviewable()))
-            {
-                <div class="@editableItemClass">
-                    <div class="text">
-                        <h3 class="heading-small">
-                            Future prospects
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
-                        </h3>
-                        @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
-                        {
-                            <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                        }
-                        else
-                        {
-                            <p id="vacancy-future-prospects" itemprop="incentives" class="@Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()">@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.FutureProspects))</p>
-                        }
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
+        <div class="@editableItemClass sfa-if-first">
+                <h3 class="heading-small">
+                    Personal qualities
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, Model.RequirementsProspectsLink))
+                </h3>
+                @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
+                {
+                    <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                }
+                else
+                {
+                    <div id="vacancy-qualities-required" itemprop="qualities" class="sfa-text-editor-generated @Model.VacancyRequirementsProspectsViewModel.PersonalQualities.GetPreserveFormattingCssClass()">
+                        @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
                     </div>
-                </div>
-            }
-            @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider) || Model.Status.IsStateReviewable())
-            {
-                <div class="@editableItemClass">
-                    <div class="text">
-                        <h3 class="heading-small">
-                            Things to consider
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, Model.RequirementsProspectsLink))
-                        </h3>
-                        @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
-                        {
-                            <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                        }
-                        else
-                        {
-                            <p id="vacancy-reality-check" itemprop="incentives" class="@Model.VacancyRequirementsProspectsViewModel.ThingsToConsider.GetPreserveFormattingCssClass()">@SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
-                        }
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
+                }
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
+        </div>
+        <div class="@editableItemClass">
+            <div>
+                <h3 class="heading-small">
+                    Qualifications required
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, Model.RequirementsProspectsLink))
+                </h3>
+                @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
+                {
+                    <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                }
+                else
+                {
+                    <div id="vacancy-qualifications-required" itemprop="qualifications" class="sfa-text-editor-generated @Model.VacancyRequirementsProspectsViewModel.DesiredQualifications.GetPreserveFormattingCssClass()">
+                        @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
                     </div>
-                </div>
-            }
+                }
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
+            </div>
         </div>
     </div>
+    <div class="column-one-half">
+        @if (Model.VacancyType == VacancyType.Apprenticeship && (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects) || Model.Status.IsStateReviewable()))
+        {
+            <div class="@editableItemClass sfa-if-first">
+                    <h3 class="heading-small">
+                        Future prospects
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
+                    </h3>
+                    @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
+                    {
+                        <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                    }
+                    else
+                    {
+                        <div id="vacancy-future-prospects" itemprop="incentives" class="sfa-text-editor-generated @Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()">
+                            @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.FutureProspects))
+                        </div>
+                    }
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider) || Model.Status.IsStateReviewable())
+        {
+            <div class="@editableItemClass sfa-if-first">
+                    <h3 class="heading-small">
+                        Things to consider
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, Model.RequirementsProspectsLink))
+                    </h3>
+                    @if (string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
+                    {
+                        <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                    }
+                    else
+                    {
+                        <div id="vacancy-reality-check" itemprop="incentives" class="sfa-text-editor-generated @Model.VacancyRequirementsProspectsViewModel.ThingsToConsider.GetPreserveFormattingCssClass()">
+                            @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)
+                        </div>
+                    }
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
+            </div>
+        }
+    </div>
 </section>
+<hr class="sfa-no-bottom-margin" />

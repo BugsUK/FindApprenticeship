@@ -6,7 +6,7 @@
     ViewBag.Title = "Recruit an Apprentice - Send Bulk Unsuccessful decision";
 }
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.BulkDeclineCandidates, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.BulkDeclineCandidates, FormMethod.Post, new { id = "confirm-bulk-decline-candidates-form" }))
 {
 
     @Html.HiddenFor(m => m.VacancyApplicationsSearch.VacancyReferenceNumber)
@@ -15,7 +15,7 @@
     @Html.HiddenFor(m => m.VacancyApplicationsSearch.Order)
 
     <div>
-        <h1 class="heading-xlarge med-btm-margin">Inform the selected candidates their applications have been unsuccessful</h1>
+        <h1 class="heading-xlarge sfa-medium-bottom-margin">Inform the selected candidates their applications have been unsuccessful</h1>
         <div class="inner-block hgroup grey-background">
             <br/>
             <div class="three-column">
@@ -31,7 +31,7 @@
                 </ul>
             </div>
             <br/>
-            <button type="submit" class="button-link" name="EditBulkDeclineCandidatesAction" value="EditBulkDeclineCandidates">
+            <button type="submit" class="button sfa-button-secondary" name="EditBulkDeclineCandidatesAction" value="EditBulkDeclineCandidates">
                 Edit list
             </button>
         </div>

@@ -5,21 +5,21 @@
     var controller = ViewContext.Controller as CandidateControllerBase;
     var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
 
-    <div class="account-info" id="bannerSignedIn">
-        <div class="small-btm-margin">
+    <div id="bannerSignedIn">
+        <div class="sfa-user-navigation">
             <span class="your-name" id="bannerUserName">@fullName</span>
             <a id="signout-link" href="@Url.RouteUrl(RouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
-        <div>
-            <a class="account-link" id="savedapplications-link" href="@(Url.RouteUrl(CandidateRouteNames.MyApplications))#dashDrafts"></a>
-            <a class="account-link" id="myapplications-link" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">My applications<span id="dashUpdatesNumber"></span></a>
-            <a class="account-link last-link" id="mysettings-link" href="@Url.RouteUrl(CandidateRouteNames.Settings)">Settings</a>
+        <div class="sfa-navigation-items">
+            <a id="savedapplications-link" href="@(Url.RouteUrl(CandidateRouteNames.MyApplications))#dashDrafts"></a>
+            <a id="myapplications-link" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">My applications<span id="dashUpdatesNumber"></span></a>
+            <a id="mysettings-link" href="@Url.RouteUrl(CandidateRouteNames.Settings)">Settings</a>
         </div>
     </div>
 }
 else
 {
-    <div class="account-info" id="bannerSignedOut">
+    <div id="bannerSignedOut">
         @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
         {
             <a href="@Url.RouteUrl(RouteNames.SignIn, new { ReturnUrl = Request.Url.PathAndQuery })" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>

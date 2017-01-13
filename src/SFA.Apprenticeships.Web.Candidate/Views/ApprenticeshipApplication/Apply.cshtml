@@ -6,9 +6,9 @@
 }
 <div class="progress-indicator progress-indicator-horizontal">
     <ul>
-        <li class="active"><span class="hide-tablet">Step </span>1<span class="hide-tablet"> of 3</span>. Application form</li>
-        <li><span class="hide-tablet">Step </span>2<span class="hide-tablet"> of 3</span>. Check your application</li>
-        <li><span class="hide-tablet">Step </span>3<span class="hide-tablet"> of 3</span>. Submitted</li>
+        <li class="active"><span class="sfa-hide-tablet">Step </span>1<span class="sfa-hide-tablet"> of 3</span>. Application form</li>
+        <li><span class="sfa-hide-tablet">Step </span>2<span class="sfa-hide-tablet"> of 3</span>. Check your application</li>
+        <li><span class="sfa-hide-tablet">Step </span>3<span class="sfa-hide-tablet"> of 3</span>. Submitted</li>
     </ul>
 </div>
 @if (Model.DateUpdated.HasValue)
@@ -20,7 +20,7 @@
 
 <noscript>
     <div class="panel-warning">
-        <div class="text">
+        <div>
             <h2 class="heading-large"><i class="fa fa-info-circle"></i>Save your application regularly</h2>
             <p>For security reasons you'll be signed out after 60 minutes.</p>
             <p>Save your application after you complete each section to ensure you don't lose any of your application.</p>
@@ -32,24 +32,24 @@
 {
     <button class="button hide-button" type="submit" name="ApplicationAction" value="Apply" tabindex="-1">Apply</button>
     @Html.AntiForgeryToken()
-    <div class="grid-wrapper">
-        <div class="grid grid-2-3">
+    <div class="grid-row">
+        <div class="column-two-thirds">
             <h1 class="heading-xlarge" id="appTourStart">Application form</h1>
         </div>
-        <div class="grid grid-1-3">
-            <div class="page-link hide-nojs">
+        <div class="column-one-third">
+            <div class="hide-nojs">
                 <a href="#" id="runApplyTour"><i class="fa fa-question-circle"></i>How to apply for an apprenticeship</a>
                 <p>(interactive walkthrough)</p>
             </div>
         </div>
     </div>
-    <section class="section-border">
-        <div class="text">
+    <section class="sfa-section-bordered">
+        <div>
             <div class="hgroup-medium">
                 @Html.HiddenFor(m => m.VacancyDetail.Title)
                 <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
                 @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
-                <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
+                <p class="heading-secondary " id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
             </div>
             @Html.HiddenFor(m => m.VacancyDetail.Description)
             <p id="vacancy-summary" class="@Model.VacancyDetail.Description.GetPreserveFormattingCssClass()">@Model.VacancyDetail.Description</p>
@@ -96,7 +96,7 @@
             </div>
         </div>
         <p id="saveApplication">
-            <button id="save-button" type="submit" name="ApplicationAction" class="button-link no-check-for-dirty-form cancel" value="Save" onclick='Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/savedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Save Draft Form"] });'>Save</button>
+            <button id="save-button" type="submit" name="ApplicationAction" class="button sfa-button-secondary no-check-for-dirty-form cancel" value="Save" onclick='Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/savedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Save Draft Form"] });'>Save</button>
         </p>
         @if (Model.DateUpdated.HasValue)
         {
@@ -106,11 +106,11 @@
 
 }
 
-<div class="saving-prompt toggle-content hide-nojs" id="savedNotification">
+<div class="sfa-saving-prompt toggle-content hide-nojs" id="savedNotification">
     Saved
 </div>
 
-<ol id="appFormTour" class="alwayshidden">
+<ol id="appFormTour" class="sfa-hide">
     <li data-id="appTourStart" data-next-button="Start tour">
         <div aria-live="polite">
             <p>
@@ -121,11 +121,11 @@
     </li>
     <li data-id="appTourStart">
         <div aria-live="polite">
-            <p class="small-btm-margin">
+            <p class="sfa-small-bottom-margin">
                 Before you start your application, print off a copy of anything that
                 might help you, such as:
             </p>
-            <ul class="list-bullet">
+            <ul class="list list-bullet">
                 <li>your curriculum vitae (CV)</li>
                 <li>any practice application forms you have completed</li>
                 <li>personal statement</li>

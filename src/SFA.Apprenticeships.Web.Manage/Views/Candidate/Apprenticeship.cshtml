@@ -8,37 +8,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="grid-wrapper">
-    <div class="grid grid-2-3">
+<div class="grid-row">
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">Your application<br />(@Model.ApplicantDetails.Name)</h1>
     </div>
-    <div class="grid grid-1-3">
-        <div class="page-link hide-nojs">
-            <p>
+    <div class="column-one-third">
+        <ul class="list sfa-align-right-tablet sfa-xlarge-top-margin">
+            <li class="hide-nojs">
                 <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
-            </p>
-        </div>
+            </li>
+        </ul>
     </div>
 </div>
 
-<div class="grid-wrapper">
-    <div class="grid grid-2-3">
+<div class="grid-row">
+    <div class="column-two-thirds">
         <div class="hgroup-medium">
             <h2 class="heading-medium" id="vacancy-title">@Model.Vacancy.Title</h2>
-            <p class="subtitle" id="vacancy-employer">@Model.Vacancy.EmployerName</p>
+            <p class="heading-secondary " id="vacancy-employer">@Model.Vacancy.EmployerName</p>
         </div>
-        <p class="text" id="vacancy-summary">@Model.Vacancy.ShortDescription</p>
+        <p  id="vacancy-summary">@Model.Vacancy.ShortDescription</p>
     </div>
-    <div class="grid grid-1-3 para-btm-margin">
+    <div class="column-one-third para-btm-margin">
         @if (Model.Status == ApplicationStatuses.Draft)
         {
-            <p class="small-btm-margin">This is a draft application.</p>
+            <p class="sfa-small-bottom-margin">This is a draft application.</p>
         }
         else
         {
-            <p class="small-btm-margin">This is a submitted application.</p>
+            <p class="sfa-small-bottom-margin">This is a submitted application.</p>
         }
-        <p class="small-btm-margin">
+        <p class="sfa-small-bottom-margin">
             @if (Model.Status == ApplicationStatuses.Draft)
             {
                 <span>Draft created on @Html.DisplayFor(m => m.DateCreated, "Date").</span>
@@ -74,7 +74,7 @@
 @Html.DisplayFor(m => m.TrainingCourses, TrainingCourseViewModel.PartialView)
 @Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)
 
-<section class="section-border">
+<section class="sfa-section-bordered">
     <h2 class="heading-large">
         Additional questions
     </h2>

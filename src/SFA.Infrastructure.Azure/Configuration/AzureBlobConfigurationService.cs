@@ -9,9 +9,8 @@
     using Microsoft.WindowsAzure.Storage;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Apprenticeships.Application.Interfaces.Caching;
+    using Apprenticeships.Application.Interfaces;
+    using Apprenticeships.Application.Interfaces.Caching;
 
     public class AzureBlobConfigurationService : IConfigurationService
     {
@@ -32,9 +31,24 @@
 
         public TSettings Get<TSettings>() where TSettings : class
         {
+            var settingsName = typeof(TSettings).Name;
+            var elementJson = Get(settingsName);
+            var tsetting = JsonConvert.DeserializeObject<TSettings>(elementJson);
+            return tsetting;
+        }
+
+        public object Get(Type settingsType)
+        {
+            var settingsName = settingsType.Name;
+            var elementJson = Get(settingsName);
+            var tsetting = JsonConvert.DeserializeObject(elementJson, settingsType);
+            return tsetting;
+        }
+
+        private string Get(string settingsName)
+        {
             var json = GetJson();
 
-            var settingName = typeof(TSettings).Name;
             string elementJson;
 
             try
@@ -42,10 +56,10 @@
                 using (TextReader sr = new StringReader(json))
                 {
                     var settingsObject = (JObject)JToken.ReadFrom(new JsonTextReader(sr));
-                    var settingsElement = settingsObject.GetValue(settingName);
+                    var settingsElement = settingsObject.GetValue(settingsName);
                     if (settingsElement == null)
                     {
-                        var message = $"Could not find configuration for {settingName} in Azure Blob Storage. Have you loaded the correct configuration?";
+                        var message = $"Could not find configuration for {settingsName} in Azure Blob Storage. Have you loaded the correct configuration?";
                         _loggerService.Error(message);
                         throw new MissingConfigurationException(message);
                     }
@@ -58,12 +72,11 @@
             }
             catch (Exception ex)
             {
-                _loggerService.Error($"Error getting {settingName}", ex);
-                throw new Exception($"Error getting {settingName}", ex);
+                _loggerService.Error($"Error getting {settingsName}", ex);
+                throw new Exception($"Error getting {settingsName}", ex);
             }
 
-            var tsetting = JsonConvert.DeserializeObject<TSettings>(elementJson);
-            return tsetting;
+            return elementJson;
         }
 
         private string GetJson()

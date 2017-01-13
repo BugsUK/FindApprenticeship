@@ -98,8 +98,8 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
@@ -173,11 +173,13 @@
     <Compile Include="Schemas\dbo\ApplicationStatsRepository.cs" />
     <Compile Include="Schemas\dbo\VacancyOwnerRelationshipMappers.cs" />
     <Compile Include="Schemas\dbo\VacancyOwnerRelationshipRepository.cs" />
+    <Compile Include="Schemas\Employer\IoC\EmployerRepositoryRegistry.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderSite.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderSiteRelationship.cs" />
+    <Compile Include="Schemas\Provider\IoC\ProviderRepositoryRegistry.cs" />
     <Compile Include="Schemas\Provider\ProviderSiteMappers.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Schemas\Provider\ProviderRepository.cs" />
     <Compile Include="Schemas\Provider\ProviderUserMappers.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepository.cs" />
+    <Compile Include="Schemas\RaaApi\RaaApiUserRepository.cs" />
     <Compile Include="Schemas\Reference\Entities\LocalAuthority.cs" />
     <Compile Include="Schemas\Reference\Entities\Region.cs" />
     <Compile Include="Schemas\Reference\Entities\County.cs" />

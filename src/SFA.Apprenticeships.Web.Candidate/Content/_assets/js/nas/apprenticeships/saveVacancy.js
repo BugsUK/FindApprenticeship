@@ -1,4 +1,4 @@
-﻿function initSavedVacancies (options) {
+function initSavedVacancies (options) {
     var applicationStatuses = {
         Indeterminate: { },
         Unsaved: { unsaved: true, },

@@ -40,6 +40,7 @@
         ProviderUserUsername = 35,
         EmployerApplicationLinks = 36,
         ProviderName = 37,
-        EmployerApplicationLinksExpiry = 38
+        EmployerApplicationLinksExpiry = 38,
+        OptionalMessage = 39
     }
 }

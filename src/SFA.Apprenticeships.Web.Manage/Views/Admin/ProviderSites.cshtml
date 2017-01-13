@@ -6,7 +6,7 @@
 
 <h1 id="heading" class="heading-xlarge">Provider Sites</h1>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.AdminProviderSites))
+@using (Html.BeginRouteForm(ManagementRouteNames.AdminProviderSites, FormMethod.Post, new { id = "admin-provider-sites-form" }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -24,8 +24,8 @@
 
     if (Model.ProviderSites != null && Model.ProviderSites.Count > 0)
     {
-        <div class="grid-wrapper">
-            <div class="grid grid-1-1">
+        <div class="grid-row">
+            <div class="column-full">
                 <table>
                     <colgroup>
                         <col>

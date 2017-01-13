@@ -85,7 +85,8 @@ BEGIN
 		H.HistoryDate AS PublishDate,
 		V.VacancyLocationTypeId,		
 		V.VacancyReferenceNumber, 
-		V.WeeklyWage
+		V.WeeklyWage,
+		V.WageText
 
 	  FROM dbo.Vacancy V
 		  INNER JOIN dbo.[VacancyOwnerRelationship] VPR
@@ -143,7 +144,8 @@ BEGIN
 					H.HistoryDate AS PublishDate,
 					V.VacancyLocationTypeId	AS VacancyLocationTypeId,
 					V.VacancyReferenceNumber,
-					V.WeeklyWage		
+					V.WeeklyWage,
+					V.WageText		
 				FROM dbo.Vacancy V
 					  INNER JOIN dbo.[VacancyOwnerRelationship] VPR
 					  on V.[VacancyOwnerRelationshipId] = VPR.[VacancyOwnerRelationshipId]
@@ -194,7 +196,8 @@ BEGIN
 						H.HistoryDate,
 						VacancyLocationTypeId,
 						V.VacancyReferenceNumber,
-						V.WeeklyWage
+						V.WeeklyWage,
+						V.WageText
 			) vacanies
 			WHERE 
 				NoOfOfflineApplicants + ApplicantCount <= @LowApplicantAmount

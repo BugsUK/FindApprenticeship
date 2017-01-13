@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/UpdateEmailAddress.cshtml")]
@@ -62,11 +63,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"grid-wrapper\"");
+WriteLiteral(" class=\"grid-row\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
 WriteLiteral(">\r\n        <h1");
 
@@ -74,71 +75,71 @@ WriteLiteral(" class=\"heading-xlarge\"");
 
 WriteLiteral(">Change your email address</h1>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"grid grid-1-2\"");
+WriteLiteral(" class=\"column-one-third\"");
 
-WriteLiteral(">\r\n        <p>\r\n");
+WriteLiteral(">\r\n        <ul");
+
+WriteLiteral(" class=\"list sfa-align-right-tablet sfa-xlarge-top-margin\"");
+
+WriteLiteral(">\r\n            <li>\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 13 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-       Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" }));
+            #line 14 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+       Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {id = "find-apprenticeship-link"}));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </p>\r\n    </div>\r\n</div>\r\n<p");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    To change your email address we\'ll need to send you a code to verify it\'s\r" +
-"\n    yours.\r\n</p>\r\n");
+WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p >\r\n    To change your " +
+"email address we\'ll need to send you a code to verify it\'s\r\n    yours.\r\n</p>\r\n");
 
             
-            #line 21 "..\..\Views\Account\UpdateEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { autocomplete = "off" }))
+            #line 23 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+ using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
 {
     
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
                                                            
     
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 27 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 Write(Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { autocomplete = "off", type = "email", spellcheck = "false" }));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 27 "..\..\Views\Account\UpdateEmailAddress.cshtml"
                                                                                                                                      
     
 
@@ -158,7 +159,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Send code</button>\r\n    </div>\r\n");
 
             
-            #line 30 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 32 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 }
             
             #line default

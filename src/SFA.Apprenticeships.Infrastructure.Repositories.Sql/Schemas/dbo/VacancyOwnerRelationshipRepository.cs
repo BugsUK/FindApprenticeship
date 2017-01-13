@@ -5,16 +5,11 @@
     using Domain.Raa.Interfaces.Repositories;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Entities.Raa.Parties;
     using VacancyOwnerRelationship = Domain.Entities.Raa.Parties.VacancyOwnerRelationship;
 
     public class VacancyOwnerRelationshipRepository : IVacancyOwnerRelationshipReadRepository, IVacancyOwnerRelationshipWriteRepository
     {
-        private enum VacancyOwnerRelationshipStatusTypes
-        {
-            Deleted = 3,
-            Live = 4
-        };
-
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -26,13 +21,17 @@
             _logger = logger;
         }
 
-        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
+        public VacancyOwnerRelationship GetByProviderSiteAndEmployerId(int providerSiteId, int employerId, bool liveOnly = true)
         {
-            const string sql = @"
+            var sql = @"
                 SELECT * FROM dbo.VacancyOwnerRelationship
                 WHERE ProviderSiteID = @ProviderSiteId
-                AND EmployerId = @EmployerId
-                AND StatusTypeId = @StatusTypeId";
+                AND EmployerId = @EmployerId";
+
+            if (liveOnly)
+            {
+                sql += " AND StatusTypeId = @StatusTypeId";
+            }
 
             var sqlParams = new
             {
@@ -128,40 +127,6 @@
             }
 
             return GetByIds(new[] { dbVacancyOwnerRelationship.VacancyOwnerRelationshipId }).Single();
-        }
-
-        public bool IsADeletedVacancyOwnerRelationship(int providerSiteId, int employerId)
-        {
-            const string sql = @"
-                SELECT StatusTypeId FROM dbo.VacancyOwnerRelationship
-                WHERE ProviderSiteID = @ProviderSiteId
-                AND EmployerId = @EmployerId";
-
-            var sqlParams = new
-            {
-                ProviderSiteId = providerSiteId,
-                EmployerId = employerId
-            };
-
-            return _getOpenConnection.Query<Entities.VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault()?.StatusTypeId == (int)VacancyOwnerRelationshipStatusTypes.Deleted;
-        }
-
-        public void ResurrectVacancyOwnerRelationship(int providerSiteId, int employerId)
-        {
-            const string sql = @"
-                UPDATE dbo.VacancyOwnerRelationship SET StatusTypeId = @StatusTypeId
-                WHERE ProviderSiteID = @ProviderSiteId
-                AND EmployerId = @EmployerId";
-
-            var sqlParams = new
-            {
-                ProviderSiteId = providerSiteId,
-                EmployerId = employerId,
-                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
-            };
-
-            _getOpenConnection.MutatingQuery<object>(sql, sqlParams);
-
         }
     }
 }

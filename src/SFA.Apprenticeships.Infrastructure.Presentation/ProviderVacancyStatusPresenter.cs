@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.Vacancies;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public static class ProviderVacancyStatusPresenter
     {
@@ -50,6 +52,11 @@
             return status == VacancyStatus.Live || status == VacancyStatus.Closed;
         }
 
+        public static bool CanCloseVacancy(this VacancyStatus status)
+        {
+            return status == VacancyStatus.Live;
+        }
+
         public static bool CanWithdrawVacancy(this VacancyStatus status)
         {
             return status == VacancyStatus.Live;
@@ -68,6 +75,11 @@
         public static bool CanBulkDecline(this VacancyStatus status, int totalNumberOfApplications)
         {
             return totalNumberOfApplications > 0 && (status == VacancyStatus.Live || status == VacancyStatus.Closed || status == VacancyStatus.Completed);
+        }
+
+        public static bool CanEditWage(this VacancyStatus status, VacancyType vacancyType, WageType wageType, decimal? hoursPerWeek)
+        {
+            return vacancyType == VacancyType.Apprenticeship && (status == VacancyStatus.Live || status == VacancyStatus.Closed) && hoursPerWeek.HasValue && (wageType == WageType.Unwaged || wageType == WageType.ApprenticeshipMinimum || wageType == WageType.NationalMinimum || wageType == WageType.Custom || wageType == WageType.CustomRange);
         }
     }
 }

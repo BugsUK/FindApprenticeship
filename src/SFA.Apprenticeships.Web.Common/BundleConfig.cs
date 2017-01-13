@@ -6,9 +6,10 @@
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery",
-                "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
-                    "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery"
+                , "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+                ).Include(
+                    "~/Content/_assets/js/vendor/jquery-1.11.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/fastclick",
                 "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js").Include(
@@ -41,7 +42,9 @@
                 "~/Content/_assets/js/nas/refineSearch.js"));
             
             bundles.Add(new StyleBundle("~/Content/_assets/styles/not-ie8")
-                .Include("~/Content/_assets/css/main.css")
+                //.Include("~/Content/_assets/css/main.css")
+                .Include("~/Content/_assets/css/govuk-template.css", new CssRewriteUrlTransform())
+                .Include("~/Content/_assets/css/styles.css")
                 .Include("~/Content/_assets/css/fonts.css"));
 
             bundles.Add(new StyleBundle("~/Content/_assets/styles/ie8")
@@ -51,7 +54,7 @@
             // Developers are must unlikely to be interested in the un-mimified version of this
             // TODO: Find and add approved CDN
             bundles.Add(new StyleBundle("~/bundles/font-awesome")
-                .Include("~/Content/_assets/css/font-awesome/css/font-awesome.min.css"));
+                .Include("~/Content/_assets/css/font-awesome.css", new CssRewriteUrlTransform()));
         }
     }
 }

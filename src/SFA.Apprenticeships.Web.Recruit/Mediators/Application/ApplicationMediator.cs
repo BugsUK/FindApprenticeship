@@ -2,9 +2,11 @@
 {
     using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Security;
+    using Common.Constants;
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa.Vacancies;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
     using Raa.Common.Validators.ProviderUser;
     using Raa.Common.Validators.VacancyStatus;
@@ -35,8 +37,13 @@
 
         public MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
+            var messages = new List<string>();
             var viewModel = _applicationProvider.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
-
+            if (viewModel.Status == VacancyStatus.Closed)
+            {
+                messages.Add(VacancyViewModelMessages.Closed);
+                return GetMediatorResponse(ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok, viewModel, messages, UserMessageLevel.Info);
+            }
             return GetMediatorResponse(ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok, viewModel);
         }
 
@@ -73,7 +80,8 @@
                 applicationLinks[application.ApplicantID] = link;
             }
 
-            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks, _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress);
+            _applicationProvider.ShareApplications(viewModel.VacancyReferenceNumber, newViewModel.ProviderName, applicationLinks,
+                _dateTimeService.TwoWeeksFromUtcNow, viewModel.RecipientEmailAddress, viewModel.OptionalMessage);
 
             return GetMediatorResponse(ApplicationMediatorCodes.ShareApplications.Ok, newViewModel);
         }
