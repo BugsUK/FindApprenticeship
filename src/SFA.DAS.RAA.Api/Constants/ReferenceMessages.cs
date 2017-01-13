@@ -4,5 +4,8 @@
     {
         public const string MissingCountyIdentifier = "Please specify either a countyId or a countyCode.";
         public const string CountyNotFound = "The requested county has not been found.";
+
+        public const string MissingLocalAuthorityIdentifier = "Please specify either a localAuthorityId or a localAuthorityCode.";
+        public const string LocalAuthorityNotFound = "The requested localAuthority has not been found.";
     }
 }

@@ -26,7 +26,7 @@
 
         [Route("reference/county")]
         [ResponseType(typeof(County))]
-        public IHttpActionResult GetCounty(int? countyId, string countyCode)
+        public IHttpActionResult GetCounty(int? countyId = null, string countyCode = null)
         {
             if (!countyId.HasValue && string.IsNullOrEmpty(countyCode))
             {
@@ -48,6 +48,25 @@
         public IHttpActionResult GetLocalAuthorities()
         {
             return Ok(_referenceDataProvider.GetLocalAuthorities());
+        }
+
+        [Route("reference/localauthority")]
+        [ResponseType(typeof(LocalAuthority))]
+        public IHttpActionResult GetLocalAuthority(int? localAuthorityId = null, string localAuthorityCode = null)
+        {
+            if (!localAuthorityId.HasValue && string.IsNullOrEmpty(localAuthorityCode))
+            {
+                throw new ArgumentException(ReferenceMessages.MissingLocalAuthorityIdentifier);
+            }
+
+            var localAuthority = localAuthorityId.HasValue ? _referenceDataProvider.GetLocalAuthorityById(localAuthorityId.Value) : _referenceDataProvider.GetLocalAuthorityByCode(localAuthorityCode);
+
+            if (localAuthority == null)
+            {
+                throw new KeyNotFoundException(ReferenceMessages.LocalAuthorityNotFound);
+            }
+
+            return Ok(localAuthority);
         }
     }
 }
