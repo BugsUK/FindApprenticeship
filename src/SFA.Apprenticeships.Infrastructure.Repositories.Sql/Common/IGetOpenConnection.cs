@@ -55,6 +55,28 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
         IList<TReturn> Query<TFirst, TSecond, TReturn>(string sql, Func<TFirst, TSecond, TReturn> map, object param = null, string splitOn = "Id", int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?));
 
         /// <summary>
+        /// Execute a query. Very similar to Dapper's IDbConnection.Query except:
+        /// <list type="bullet">
+        ///     <item><description>It manages (obtains, opens, closes and returns) the database connection itself</description></item> 
+        ///     <item><description>The result is always entirely loaded and returned as an IList ("buffered" cannot be set to false)</description></item>
+        ///     <item><description>Transient errors are automatically retried</description></item> 
+        ///     <item><description>Transactions are not supported (in order to support retries)</description></item> 
+        /// </list>
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TReturn"></typeparam>
+        /// <typeparam name="TThird"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitOn"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        IList<TReturn> Query<TFirst, TSecond, TThird, TReturn>(string sql, Func<TFirst, TSecond, TThird, TReturn> map, object param = null, string splitOn = "Id", int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?));
+
+        /// <summary>
         /// Execute a query and progressively load the data. Very similar to Dapper's IDbConnection.Query except:
         /// <list type="bullet">
         ///     <item><description>It manages (obtains, opens, closes and returns) the database connection itself</description></item> 
@@ -314,6 +336,30 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
                         return
                             (IList<TReturn>)
                                 conn.Query<TFirst, TSecond, TReturn>(sql, map, param, transaction: null, buffered: true,
+                                    commandTimeout: commandTimeout, commandType: commandType, splitOn: splitOn);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            );
+        }
+
+        public IList<TReturn> Query<TFirst, TSecond, TThird, TReturn>(string sql, Func<TFirst, TSecond, TThird, TReturn> map, object param = null, string splitOn = "Id", int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
+        {
+            // TODO: Log that user did this query
+
+            return RetryPolicy.ExecuteAction<IList<TReturn>>(() =>
+            {
+                using (var conn = GetOpenConnection())
+                {
+                    try
+                    {
+                        return
+                            (IList<TReturn>)
+                                conn.Query<TFirst, TSecond, TThird, TReturn>(sql, map, param, transaction: null, buffered: true,
                                     commandTimeout: commandTimeout, commandType: commandType, splitOn: splitOn);
                     }
                     catch (Exception ex)

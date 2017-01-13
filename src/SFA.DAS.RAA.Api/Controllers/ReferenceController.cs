@@ -68,5 +68,31 @@
 
             return Ok(localAuthority);
         }
+
+        [Route("reference/regions")]
+        [ResponseType(typeof(IEnumerable<Region>))]
+        public IHttpActionResult GetRegions()
+        {
+            return Ok(_referenceDataProvider.GetRegions());
+        }
+
+        [Route("reference/region")]
+        [ResponseType(typeof(Region))]
+        public IHttpActionResult GetRegion(int? regionId = null, string regionCode = null)
+        {
+            if (!regionId.HasValue && string.IsNullOrEmpty(regionCode))
+            {
+                throw new ArgumentException(ReferenceMessages.MissingRegionIdentifier);
+            }
+
+            var region = regionId.HasValue ? _referenceDataProvider.GetRegionById(regionId.Value) : _referenceDataProvider.GetRegionByCode(regionCode);
+
+            if (region == null)
+            {
+                throw new KeyNotFoundException(ReferenceMessages.RegionNotFound);
+            }
+
+            return Ok(region);
+        }
     }
 }

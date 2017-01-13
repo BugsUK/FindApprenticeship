@@ -32,5 +32,11 @@
         LocalAuthority GetLocalAuthorityById(int localAuthorityId);
 
         LocalAuthority GetLocalAuthorityByCode(string localAuthorityCode);
+
+        IEnumerable<Region> GetRegions();
+
+        Region GetRegionById(int regionId);
+
+        Region GetRegionByCode(string regionCode);
     }
 }

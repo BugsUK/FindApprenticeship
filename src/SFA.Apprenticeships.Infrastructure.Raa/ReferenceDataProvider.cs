@@ -185,5 +185,20 @@
         {
             return _referenceRepository.GetLocalAuthorityByCode(localAuthorityCode);
         }
+
+        public IEnumerable<Region> GetRegions()
+        {
+            return _referenceRepository.GetRegions();
+        }
+
+        public Region GetRegionById(int regionId)
+        {
+            return _referenceRepository.GetRegionById(regionId);
+        }
+
+        public Region GetRegionByCode(string regionCode)
+        {
+            return _referenceRepository.GetRegionByCode(regionCode);
+        }
     }
 }

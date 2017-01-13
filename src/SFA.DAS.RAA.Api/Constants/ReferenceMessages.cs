@@ -7,5 +7,8 @@
 
         public const string MissingLocalAuthorityIdentifier = "Please specify either a localAuthorityId or a localAuthorityCode.";
         public const string LocalAuthorityNotFound = "The requested localAuthority has not been found.";
+
+        public const string MissingRegionIdentifier = "Please specify either a regionId or a regionCode.";
+        public const string RegionNotFound = "The requested region has not been found.";
     }
 }
