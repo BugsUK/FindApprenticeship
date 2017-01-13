@@ -642,7 +642,8 @@ a[rel="external"]:after {
   text-align: left; }
 
 .page-navigation__btn.next {
-  text-align: right; }
+  text-align: right;
+  float: right; }
 
 .page-navigation__btn.next .arrow-button {
   float: right;
