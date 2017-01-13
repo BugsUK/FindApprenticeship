@@ -8,9 +8,9 @@
 
     @Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView)
 
-    <div class="column-one-half">
+    <div class="column-one-half inline">
         <button type="submit" class="button">Save</button>
-        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
     </div>
 }
 

@@ -662,7 +662,7 @@ WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n\r\n                    <button");
+WriteLiteral(">\r\n                    <button");
 
 WriteLiteral(" id=\"add-workexperience-rows-button\"");
 
@@ -674,8 +674,8 @@ WriteLiteral(" name=\"ApplicationAction\"");
 
 WriteLiteral(" value=\"AddEmptyWorkExperienceRows\"");
 
-WriteLiteral(">Add 1 more work experience</button>\r\n\r\n                </div>\r\n            </div" +
-">\r\n        </div>\r\n\r\n    </fieldset>\r\n</noscript>");
+WriteLiteral(">Add 1 more work experience</button>\r\n                </div>\r\n            </div>\r" +
+"\n        </div>\r\n\r\n    </fieldset>\r\n</noscript>");
 
         }
     }

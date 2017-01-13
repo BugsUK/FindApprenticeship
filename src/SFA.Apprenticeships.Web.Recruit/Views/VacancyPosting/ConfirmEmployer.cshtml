@@ -23,12 +23,12 @@
 {
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
     
-    <div class="column-full">
+    <div class="column-full inline">
         <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
         @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button sfa-button-secondary" })
         @if (Model.ComeFromPreview)
         {
-            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
         }
     </div>
 }

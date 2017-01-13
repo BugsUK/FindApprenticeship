@@ -93,10 +93,10 @@ WriteLiteral("            ");
             #line default
             #line hidden
 WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p >\r\n    To change your " +
-"email address we\'ll need to send you a code to verify it\'s\r\n    yours.\r\n</p>\r\n");
+"email address we\'ll need to send you a code to verify it\'s yours.\r\n</p>\r\n");
 
             
-            #line 23 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 22 "..\..\Views\Account\UpdateEmailAddress.cshtml"
  using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
 {
     
@@ -104,42 +104,42 @@ WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 24 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 24 "..\..\Views\Account\UpdateEmailAddress.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
                                                            
     
             
             #line default
             #line hidden
             
-            #line 27 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 Write(Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { autocomplete = "off", type = "email", spellcheck = "false" }));
 
             
             #line default
             #line hidden
             
-            #line 27 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
                                                                                                                                      
     
 
@@ -159,7 +159,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Send code</button>\r\n    </div>\r\n");
 
             
-            #line 32 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+            #line 31 "..\..\Views\Account\UpdateEmailAddress.cshtml"
 }
             
             #line default

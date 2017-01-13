@@ -14,13 +14,17 @@
     </div>
 </div>
 
-<div class="hgroup">
-    <div>
-        <h1 class="heading-xlarge">Terms and conditions
-            <span class="heading-secondary ">Please read and accept our updated terms and conditions​</span>
-        </h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">Terms and conditions</h1>
+        <p>Please read and accept our updated terms and conditions​</p>
+    </div>
+    @Html.Partial("_TermsAndConditions")
+</div>
+
+<div class="grid-row">
+    <div class="column-two-thirds inline">
+        @Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" })
+        @Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { @class = "button sfa-button-secondary" })
     </div>
 </div>
-@Html.Partial("_TermsAndConditions")
-@Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" })
-@Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { })

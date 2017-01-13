@@ -21,7 +21,7 @@
         saveButtonValue = "VacancySummaryAndPreview";
     }
 
-    <div class="column-one-half">
+    <div class="column-one-half inline">
         @if (Model.Status.CanManageVacancyDates())
         {
             <button class="button" type="submit">Save and return</button>
@@ -33,7 +33,7 @@
         }
         @if (Model.ComeFromPreview)
         {
-            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "no-autosave"})
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "no-autosave button sfa-button-secondary"})
         }
     </div>
 }

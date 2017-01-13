@@ -97,19 +97,19 @@ $success-colour:$turquoise;
 }
 
 // Success notification styles
-.info-summary {
+.success-summary {
   border-color:$success-colour;
 
   @include media(tablet) {
     border-color:$success-colour;
   }
 
-  .info-summary-list {
+  .success-summary-list {
     a {
       color: $success-colour;
     }
   }
-  .info-dismiss {
+  .success-dismiss {
     color: $success-colour;
   }
 }

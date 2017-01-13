@@ -257,7 +257,7 @@ WriteLiteral("\r\n                </div>\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group inline\"");
 
 WriteLiteral(">\r\n                <button");
 

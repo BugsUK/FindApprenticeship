@@ -97,7 +97,7 @@ WriteLiteral(" vacancy\r\n</h1>\r\n\r\n");
 WriteLiteral("    <div>\r\n        <p>You will not be able to retreive this vacancy once it has b" +
 "een deleted</p>\r\n        <div");
 
-WriteLiteral(" class=\"column-full\"");
+WriteLiteral(" class=\"column-full inline\"");
 
 WriteLiteral(">\r\n");
 
@@ -148,7 +148,7 @@ WriteLiteral("            ");
 
             
             #line 27 "..\..\Views\VacancyManagement\Delete.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel));
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel, new { @class = "button sfa-button-secondary" }));
 
             
             #line default

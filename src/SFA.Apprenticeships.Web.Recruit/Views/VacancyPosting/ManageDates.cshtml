@@ -52,7 +52,7 @@
         @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
     </fieldset>
 
-    <div class="grid grid-1-2">
+    <div class="grid grid-1-2 inline">
         <button class="button" type="submit">Save and return</button>
 
         @{
@@ -65,7 +65,7 @@
                 RecruitmentRouteNames.VacancyApplications :
                 RecruitmentRouteNames.PreviewVacancy;
 
-            @Html.RouteLink("Cancel", routeName, viewModel);
+            @Html.RouteLink("Cancel", routeName, viewModel, new { @class = "button sfa-button-secondary" });
         }
     </div>
             }

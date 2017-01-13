@@ -109,7 +109,7 @@ Write(Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"column-one-half inline\"");
 
 WriteLiteral(">\r\n        <button");
 
@@ -162,14 +162,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line hidden
             
             #line 19 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" }));
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave button sfa-button-secondary" }));
 
             
             #line default
             #line hidden
             
             #line 19 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-                                                                                                                                                                         
+                                                                                                                                                                                                     
         }
 
             

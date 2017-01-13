@@ -27,12 +27,11 @@
             controlHtmlAttributes: new { @class = "form-control form-textarea-medium", type = "text", autofocus = "autofocus", spellcheck = "true" })
 
         <section>
-            <div class="form-group">
-                <br />
+            <div class="form-group inline">
                 <button type="submit" class="button" name="SendUnsuccessfulDecision" value="SendUnsuccessfulDecision">
                     Confirm and send
                 </button>
-                @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection.RouteValues)
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection.RouteValues, new { @class = "button sfa-button-secondary" })
             </div>
         </section>
     </div>

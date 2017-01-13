@@ -243,35 +243,37 @@ WriteLiteral(" class=\"heading-secondary \"");
 
 WriteLiteral(">Use a fresh template or continue with a draft</span>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group inline\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2131), Tuple.Create("\"", 2244)
+WriteAttribute("href", Tuple.Create(" href=\"", 2138), Tuple.Create("\"", 2251)
             
             #line 59 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2138), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
+, Tuple.Create(Tuple.Create("", 2145), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
             
             #line default
             #line hidden
-, 2138), false)
+, 2145), false)
 );
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Start new opportunity or vacancy</a>\r\n    </div>\r\n    <p>\r\n        <a");
+WriteLiteral(">Start new opportunity or vacancy</a>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2330), Tuple.Create("\"", 2389)
+WriteAttribute("href", Tuple.Create(" href=\"", 2316), Tuple.Create("\"", 2375)
             
-            #line 62 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 2337), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            #line 60 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+, Tuple.Create(Tuple.Create("", 2323), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2337), false)
+, 2323), false)
 );
 
-WriteLiteral(">Return to recruitment home</a>\r\n    </p>\r\n</section>\r\n");
+WriteLiteral(" class=\"button sfa-button-secondary\"");
+
+WriteLiteral(">Return to recruitment home</a>\r\n    </div>\r\n</section>\r\n");
 
         }
     }

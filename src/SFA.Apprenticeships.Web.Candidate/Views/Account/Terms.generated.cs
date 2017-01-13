@@ -86,44 +86,60 @@ WriteLiteral(" id=\"InfoMessageText\"");
 WriteLiteral(">To use this service you must accept our updated terms and conditions</p>\r\n\r\n    " +
 "    </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n    <div>\r\n        <h1");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Terms and conditions\r\n            <span");
+WriteLiteral(">Terms and conditions</h1>\r\n        <p>Please read and accept our updated terms a" +
+"nd conditions​</p>\r\n    </div>\r\n");
 
-WriteLiteral(" class=\"heading-secondary \"");
-
-WriteLiteral(">Please read and accept our updated terms and conditions​</span>\r\n        </h1>\r\n" +
-"    </div>\r\n</div>\r\n");
+WriteLiteral("    ");
 
             
-            #line 24 "..\..\Views\Account\Terms.cshtml"
+            #line 22 "..\..\Views\Account\Terms.cshtml"
 Write(Html.Partial("_TermsAndConditions"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n</div>\r\n\r\n<div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds inline\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 25 "..\..\Views\Account\Terms.cshtml"
-Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" }));
+            #line 27 "..\..\Views\Account\Terms.cshtml"
+   Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
+WriteLiteral("        ");
+
             
-            #line 26 "..\..\Views\Account\Terms.cshtml"
-Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { }));
+            #line 28 "..\..\Views\Account\Terms.cshtml"
+   Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { @class = "button sfa-button-secondary" }));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n    </div>\r\n</div>");
+
         }
     }
 }

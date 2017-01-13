@@ -11,12 +11,12 @@
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
 
-    <div class="column-one-half">
+    <div class="column-one-half inline">
         <button id="VacancyRequirementsProspectsButton" type="submit" class="button no-autosave" name="VacancyRequirementsProspects" value="VacancyRequirementsProspects">@saveButtonText</button>
         <button id="VacancyRequirementsProspectsAndExit" type="submit" class="button sfa-button-secondary no-autosave" name="VacancyRequirementsProspects" value="VacancyRequirementsProspectsAndExit">Save and exit</button>
         @if (Model.ComeFromPreview)
         {
-            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave" })
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new {@class = "no-autosave button sfa-button-secondary" })
         }
     </div>
 }
