@@ -620,7 +620,7 @@ a[rel="external"]:after {
   .page-navigation .hide-mob {
     display: none; } }
 
-.page-navigation__btn {
+.page-navigation__btn, .page-navigation__results {
   display: inline-block;
   font-size: 1em;
   margin-right: -4px;

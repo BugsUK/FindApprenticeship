@@ -8,10 +8,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="heading-xlarge">
-    Search for a candidate
-</h1>
-
 @using (Html.BeginForm(null, "Candidate", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -19,144 +15,168 @@
 
     if (Model.Candidates != null && Model.Candidates.ResultsCount == 0)
     {
-        <div class="form-group">
-            <p>
-                There are currently no candidates that match your search.
-            </p>
-            <p>
-                Try editing your search:
-                <ul>
-                    <li>check the spelling of first and last names</li>
-                    <li>check any postcode used is correct</li>
-                    <li>check the applicant id has been fully entered</li>
-                </ul>
-            </p>
+        <div class="grid-row">
+            <div class="column-two-thirds">
+                <div class="info-summary" role="group" aria-labelledby="InfoMessageText" tabindex="-1">
+                    <p>
+                        There are currently no candidates that match your search.
+                    </p>
+                    <p>
+                        Try editing your search:
+                    </p>
+                    <ul class="list list-bullet">
+                        <li>check the spelling of first and last names</li>
+                        <li>check any postcode used is correct</li>
+                        <li>check the applicant id has been fully entered</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     }
 
-    <div class="form-group">
-        @Html.FormTextFor(
-            m => m.SearchViewModel.FirstName,
-            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
-
-        @Html.FormTextFor(
-            m => m.SearchViewModel.LastName,
-            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
-
-        @Html.FormTextFor(
-            m => m.SearchViewModel.Postcode,
-            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
-
-        @Html.FormTextFor(
-            m => m.SearchViewModel.ApplicantId,
-            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 class="heading-xlarge">
+                Search for a candidate
+            </h1>
+        </div>
     </div>
 
-    <div class="form-group inline">
-        <button id="search-candidates-button" type="submit" class="button" name="SearchCandidatesAction" value="SearchCandidates">Search</button>
-        @Html.RouteLink("Reset search", RecruitmentRouteNames.CandidateSearch, new { @class = "button sfa-button secondary" })
-    </div>
+    <div class="grid-row">
+        <div class="column-two-thirds">
 
-    if (Model.Candidates != null && Model.Candidates.ResultsCount > 0)
-    {
-        <div class="grid-row">
-            <div class="column-full">
-                <p class="candidate-results-count">
-                    @if (Model.Candidates.ResultsCount == 1)
-                    {
-                        <span>Found 1 candidate</span>
-                    }
-                    else
-                    {
-                        <span>Found @Model.Candidates.ResultsCount candidates</span>
-                    }
-                </p>
-                <table>
-                    <colgroup>
-                        <col class="t30">
-                        <col class="t30">
-                        <col class="t30">
-                        <col class="t10">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Applicant ID</th>
-                            <th>Address</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var candidate in Model.Candidates.Page)
-                        {
-                            <tr>
-                                <td class="candidate-name">@candidate.Name</td>
-                                <td>@candidate.ApplicantId</td>
-                                <td>
-                                    <ul class="candidate-address">
-                                        <li>@candidate.Address.AddressLine1</li>
-                                        <li>@candidate.Address.AddressLine2</li>
-                                        <li>@candidate.Address.AddressLine3</li>
-                                        <li>@candidate.Address.AddressLine4</li>
-                                        <li>@candidate.Address.Postcode</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    @Html.RouteLink("Select candidate", RecruitmentRouteNames.ViewCandidate, new CandidateApplicationsSearchViewModel(candidate.Id).RouteValues)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                @Html.FormTextFor(
+                    m => m.SearchViewModel.FirstName, 
+                    controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" }
+                )
+
+                @Html.FormTextFor(
+                    m => m.SearchViewModel.LastName,
+                    controlHtmlAttributes: new { type = "text", spellcheck = "false" }
+                )
+
+                @Html.FormTextFor(
+                    m => m.SearchViewModel.Postcode,
+                    controlHtmlAttributes: new { type = "text", spellcheck = "false" }
+                )
+
+                @Html.FormTextFor(
+                    m => m.SearchViewModel.ApplicantId,
+                    controlHtmlAttributes: new { type = "text", spellcheck = "false" }
+                )
+
+            <div class="form-group inline">
+                <button id="search-candidates-button" type="submit" class="button" name="SearchCandidatesAction" value="SearchCandidates">Search</button>
+                @Html.RouteLink("Reset search", RecruitmentRouteNames.CandidateSearch,null, new { @class = "button sfa-button-secondary" })
             </div>
 
-            <div class="page-navigation">
+</div>
+    </div>
 
-                @{
-                    var currentPage = Model.Candidates.CurrentPage;
-                    var totalNumberOfPages = Model.Candidates.TotalNumberOfPages;
-                    var prevLink = Url.RouteUrl(RecruitmentRouteNames.SearchCandidates, new CandidateSearchViewModel(Model.SearchViewModel, currentPage - 1));
-                    var nextLink = Url.RouteUrl(RecruitmentRouteNames.SearchCandidates, new CandidateSearchViewModel(Model.SearchViewModel, currentPage + 1));
-                }
-
-                <a href="@prevLink"
-                   style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
-                   class="page-navigation__btn previous grid column-one-third">
-                    <i class="arrow-button fa fa-angle-left"></i>
-                    <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
-                    <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
-                </a>
-
-                <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
-                    <label for="page-size" class="heading-small inline">Display results</label>
-                    @Html.DropDownListFor(m => m.SearchViewModel.PageSize, Model.SearchViewModel.PageSizes, new { id = "page-size", @class = "form-control" })
-                    <noscript>
-                        <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
-                    </noscript>
+            if (Model.Candidates != null && Model.Candidates.ResultsCount > 0)
+            {
+            <div class="grid-row">
+                <div class="column-two-thirds">
+                    <h2 class="heading-large">
+                        @if (Model.Candidates.ResultsCount == 1)
+                        {
+                            <span>Found 1 candidate</span>
+                        }
+                        else
+                        {
+                            <span>Found @Model.Candidates.ResultsCount candidates</span>
+                        }
+                    </h2>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="column-full">
+                    <table>
+                        <colgroup>
+                            <col class="t30">
+                            <col class="t30">
+                            <col class="t30">
+                            <col class="t10">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Applicant ID</th>
+                                <th>Address</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var candidate in Model.Candidates.Page)
+                            {
+                                <tr>
+                                    <td class="candidate-name">@candidate.Name</td>
+                                    <td>@candidate.ApplicantId</td>
+                                    <td>
+                                        <ul class="candidate-address">
+                                            <li>@candidate.Address.AddressLine1</li>
+                                            <li>@candidate.Address.AddressLine2</li>
+                                            <li>@candidate.Address.AddressLine3</li>
+                                            <li>@candidate.Address.AddressLine4</li>
+                                            <li>@candidate.Address.Postcode</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        @Html.RouteLink("Select candidate", RecruitmentRouteNames.ViewCandidate, new CandidateApplicationsSearchViewModel(candidate.Id).RouteValues)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
 
-                <a href="@nextLink"
-                   style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
-                   class="page-navigation__btn next grid column-one-third">
-                    <i class="arrow-button fa fa-angle-right"></i>
-                    <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
-                    <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
-                </a>
+                <div class="page-navigation">
+
+                    @{
+                        var currentPage = Model.Candidates.CurrentPage;
+                        var totalNumberOfPages = Model.Candidates.TotalNumberOfPages;
+                        var prevLink = Url.RouteUrl(RecruitmentRouteNames.SearchCandidates, new CandidateSearchViewModel(Model.SearchViewModel, currentPage - 1));
+                        var nextLink = Url.RouteUrl(RecruitmentRouteNames.SearchCandidates, new CandidateSearchViewModel(Model.SearchViewModel, currentPage + 1));
+                    }
+
+                    <a href="@prevLink"
+                       style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 33.333333333%"
+                       class="page-navigation__btn previous grid column-one-third">
+                        <i class="arrow-button fa fa-angle-left"></i>
+                        <span class="description">Previous <span class="sfa-hide-mobile">page</span></span>
+                        <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
+                    </a>
+
+                    <div id="page-size-container" class="column-one-third page-navigation__results" style="width: 33.333333333%; text-align: center">
+                        <label for="page-size" class="heading-small inline">Display results</label>
+                        @Html.DropDownListFor(m => m.SearchViewModel.PageSize, Model.SearchViewModel.PageSizes, new { id = "page-size", @class = "form-control" })
+                        <noscript>
+                            <button class="button" name="SearchVacanciesAction" value="SearchVacancies">View</button>
+                        </noscript>
+                    </div>
+
+                    <a href="@nextLink"
+                       style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 33.333333333%"
+                       class="page-navigation__btn next grid column-one-third">
+                        <i class="arrow-button fa fa-angle-right"></i>
+                        <span class="description">Next <span class="sfa-hide-mobile">page</span></span>
+                        <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
+                    </a>
+
+                </div>
 
             </div>
+            }
+            }
 
-        </div>
-    }
-}
+            <div class="sfa-saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+                Loading
+            </div>
 
-<div class="sfa-saving-prompt toggle-content hide-nojs" id="ajaxLoading">
-    Loading
-</div>
-
-@section scripts
+            @section scripts
 {
-    @Scripts.Render("~/bundles/candidates")
-    <script>
-        var searchUrl = '@Url.RouteUrl(RecruitmentRouteNames.SearchCandidates)';
-    </script>
-}
+                @Scripts.Render("~/bundles/candidates")
+                <script>
+                    var searchUrl = '@Url.RouteUrl(RecruitmentRouteNames.SearchCandidates)';
+                </script>
+            }
