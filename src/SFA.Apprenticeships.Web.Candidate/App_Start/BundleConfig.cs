@@ -31,6 +31,7 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Content/_assets/js/vendor/knockout-3.1.0.js",
+                "~/Content/_assets/js/vendor/knockout.mapping-latest.js",
                 "~/Content/_assets/js/vendor/knockout.validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/passwordstrength").Include(

@@ -1,7 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
-@model List<SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne>
+@model List<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditStandardViewModel>
 @{
     ViewBag.Title = "Standards";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,36 +11,107 @@
 
 @Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv)
 
+<div>
+    <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" />
+</div>
+
 <table>
+    <thead>
     <tr>
         <th>ID</th>
         <th>SSAT1</th>
         <th>Standard Sector</th>
         <th>Standard</th>
+        <th></th>
     </tr>
+    </thead>
 
-    @foreach (var standardSector in Model.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
-    {
-        var ssat1 = Model.Single(s => s.Id == standardSector.ApprenticeshipOccupationId);
-
-        foreach (var standard in standardSector.Standards.OrderBy(s => s.Name))
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => standard.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => ssat1.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => standardSector.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => standard.Name)
-                </td>
-            </tr>
+    <tbody data-bind="template: { name: 'standard', foreach: standards, as: 'standard' }">
+        @foreach (var standard in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.StandardSectorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.StandardName)
+                    </td>
+                    <td></td>
+                </tr>
         }
-    }
+    </tbody>
 </table>
 
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
 
+    <script type="text/html" id="standard">
+        <tr>
+            <td data-bind="text: standard.Id"></td>
+            <td data-bind="text: standard.Name"></td>
+            <td data-bind="text: standard.StandardSectorName"></td>
+            <td data-bind="text: standard.StandardName"></td>
+            <td>
+                <select>
+                    <option>Active</option>
+                    <option>Deprecated</option>
+                </select>
+            </td>
+        </tr>
+    </script>
+
+    <script>
+        var mappings = {
+            create: function(options) {
+                var mapped = ko.mapping.fromJS(options.data);
+                mapped.Selected = ko.observable(false);
+                return mapped;
+            }
+        };
+
+        function ViewModel() {
+            var self = this;
+
+            self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)), mappings);
+
+            self.searchText = ko.observable();
+
+            self.standards = ko.computed(function() {
+                if (self.searchText() != null) {
+                    var filter = self.searchText().toLowerCase();
+
+                    return ko.utils.arrayFilter(self.data(),
+                        function(item) {
+                            var match = false;
+
+                            var id = item.Id();
+                            if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
+
+                            var name = item.Name();
+                            if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
+
+                            var standardName = item.StandardName();
+                            if (standardName != null) match = match || standardName.toLowerCase().indexOf(filter) > -1;
+
+                            var standardSectorName = item.StandardSectorName();
+                            if (standardSectorName != null) match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
+
+                            return match;
+                        });
+                } else {
+                    return self.data();
+                }
+            });
+
+            return self;
+        };
+
+        ko.applyBindings(new ViewModel());
+    </script>
+}
