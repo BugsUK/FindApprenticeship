@@ -121,7 +121,7 @@
                 postalAddress.LocalAuthorityCodeName = postzon.DistrictCode;
 
                 //TODO: Cache in service
-                var localAuthority = _referenceDataService.GetLocalAuthority(postzon.DistrictCode);
+                var localAuthority = _referenceDataService.GetLocalAuthorityByCode(postzon.DistrictCode);
                 if (localAuthority != null)
                 {
                     postalAddress.CountyId = localAuthority.County.CountyId;

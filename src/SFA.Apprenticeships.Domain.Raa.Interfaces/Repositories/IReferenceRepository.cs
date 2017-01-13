@@ -21,14 +21,16 @@
 
         IEnumerable<County> GetCounties();
 
-        County GetCounty(int countyId);
+        County GetCountyById(int countyId);
 
-        County GetCounty(string countyName);
+        County GetCountyByCode(string countyCode);
+
+        County GetCountyByName(string countyName);
 
         IEnumerable<LocalAuthority> GetLocalAuthorities();
 
-        LocalAuthority GetLocalAuthority(int localAuthorityId);
+        LocalAuthority GetLocalAuthorityById(int localAuthorityId);
 
-        LocalAuthority GetLocalAuthority(string localAuthorityCodeName);
+        LocalAuthority GetLocalAuthorityByCode(string localAuthorityCode);
     }
 }

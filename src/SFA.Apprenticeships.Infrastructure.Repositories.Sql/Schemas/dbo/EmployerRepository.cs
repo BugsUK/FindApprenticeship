@@ -154,7 +154,7 @@ LEFT JOIN dbo.LocalAuthority la ON e.LocalAuthorityId = la.LocalAuthorityId ";
         private void PopulateCountyId(DomainEmployer entity, Employer dbEmployer)
         {
             if (dbEmployer.CountyId != 0) return;
-            var county = _referenceRepository.GetCounty(entity.Address.County);
+            var county = _referenceRepository.GetCountyByName(entity.Address.County);
             if(county != null)
                 dbEmployer.CountyId = county.CountyId;
         }

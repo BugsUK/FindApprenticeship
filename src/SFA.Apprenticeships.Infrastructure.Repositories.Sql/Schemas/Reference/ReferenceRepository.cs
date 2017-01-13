@@ -180,7 +180,7 @@
             return counties;
         }
 
-        public County GetCounty(int countyId)
+        public County GetCountyById(int countyId)
         {
             _logger.Debug($"Getting county with id {countyId}");
 
@@ -198,7 +198,25 @@
             return county;
         }
 
-        public County GetCounty(string countyName)
+        public County GetCountyByCode(string countyCode)
+        {
+            _logger.Debug($"Getting county with code {countyCode}");
+
+            const string sectorSql = "SELECT * FROM dbo.County WHERE CodeName = @CountyCode";
+
+            var sqlParams = new
+            {
+                countyCode
+            };
+
+            var county = _getOpenConnection.Query<County>(sectorSql, sqlParams).FirstOrDefault();
+
+            _logger.Debug($"Found {county}");
+
+            return county;
+        }
+
+        public County GetCountyByName(string countyName)
         {
             _logger.Debug($"Getting county with name {countyName}");
 
@@ -233,7 +251,7 @@
             return localAuthorities;
         }
 
-        public LocalAuthority GetLocalAuthority(int localAuthorityId)
+        public LocalAuthority GetLocalAuthorityById(int localAuthorityId)
         {
             _logger.Debug($"Getting local authority with id {localAuthorityId}");
 
@@ -255,15 +273,15 @@
             return localAuthority;
         }
 
-        public LocalAuthority GetLocalAuthority(string localAuthorityCodeName)
+        public LocalAuthority GetLocalAuthorityByCode(string localAuthorityCode)
         {
-            _logger.Debug($"Getting local authority with code name {localAuthorityCodeName}");
+            _logger.Debug($"Getting local authority with code name {localAuthorityCode}");
 
-            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE la.CodeName = @LocalAuthorityCodeName";
+            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE la.CodeName = @LocalAuthorityCode";
 
             var sqlParams = new
             {
-                localAuthorityCodeName
+                localAuthorityCode
             };
 
             var localAuthority = _getOpenConnection.Query<LocalAuthority, County, LocalAuthority>(sectorSql, (la, c) =>

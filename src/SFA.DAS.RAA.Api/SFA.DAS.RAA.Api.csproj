@@ -243,6 +243,7 @@
     <Compile Include="Attributes\ValidateModelStateFilter.cs" />
     <Compile Include="Attributes\ExceptionToErrorResponseFilterAttribute.cs" />
     <Compile Include="Constants\EmployerProviderSiteLinkMessages.cs" />
+    <Compile Include="Constants\ReferenceMessages.cs" />
     <Compile Include="Controllers\EmployerController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\VacancyManagementController.cs" />
