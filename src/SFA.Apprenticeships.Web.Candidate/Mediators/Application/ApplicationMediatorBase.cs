@@ -1,13 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
+    using Apprenticeships.Application.Interfaces;
+    using Common.Providers;
+    using Search;
     using System.Collections.Generic;
     using System.Linq;
-    using Common.Providers;
-    using SFA.Infrastructure.Interfaces;
-    using Search;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using ViewModels.Candidate;
 
     public abstract class ApplicationMediatorBase : SearchMediatorBase

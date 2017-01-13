@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
+    using Application.Interfaces;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Users;
@@ -15,7 +16,6 @@
     using Domain.Entities.Users;
     using Infrastructure.Presentation;
     using Mappers;
-    using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Collections.Generic;
     using System.Globalization;

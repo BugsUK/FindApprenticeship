@@ -2,25 +2,21 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
-    using SFA.Infrastructure.Interfaces;
+    using Apprenticeships.Application.Interfaces;
     using Common.Configuration;
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
     using Common.Services;
-    using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
     using Extensions;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Globalization;
+    using System.Linq;
     using Validators;
     using ViewModels.Login;
     using ViewModels.Register;
@@ -39,10 +35,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
         private readonly ForgottenEmailViewModelServerValidator _forgottenEmailViewModelServerValidator;
         private readonly ILogService _logService;
 
-        public LoginMediator(IUserDataProvider userDataProvider, 
+        public LoginMediator(IUserDataProvider userDataProvider,
             ICandidateServiceProvider candidateServiceProvider,
             IConfigurationService configurationService,
-            LoginViewModelServerValidator loginViewModelServerValidator, 
+            LoginViewModelServerValidator loginViewModelServerValidator,
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
             ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator,
             IAuthenticationTicketService authenticationTicketService,
@@ -122,23 +118,23 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
                         switch (lastViewedVacancy.Type)
                         {
                             case VacancyType.Apprenticeship:
-                            {
-                                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, lastViewedVacancy.Id);
-
-                                if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
                                 {
-                                    return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipApply, result, parameters: lastViewedVacancy.Id);
-                                }
+                                    var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, lastViewedVacancy.Id);
 
-                                return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipDetails, result, parameters: lastViewedVacancy.Id);
-                            }
+                                    if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
+                                    {
+                                        return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipApply, result, parameters: lastViewedVacancy.Id);
+                                    }
+
+                                    return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipDetails, result, parameters: lastViewedVacancy.Id);
+                                }
                             case VacancyType.Traineeship:
                                 return GetMediatorResponse(LoginMediatorCodes.Index.TraineeshipDetails, result, parameters: lastViewedVacancy.Id);
                         }
                     }
 
                     return GetMediatorResponse(LoginMediatorCodes.Index.Ok, result);
-                }                
+                }
             }
 
             return GetMediatorResponse(LoginMediatorCodes.Index.LoginFailed, result, parameters: result.ViewModelMessage);

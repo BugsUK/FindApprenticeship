@@ -2,19 +2,16 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
-    using System;
-    using System.Linq;
-    using System.Web.Security;
+    using Apprenticeships.Application.Interfaces;
     using Common.Constants;
     using Common.Models.Application;
     using Common.Providers;
     using Constants.Pages;
     using Domain.Entities.Applications;
-    using SFA.Infrastructure.Interfaces;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Linq;
+    using System.Web.Security;
     using Validators;
     using ViewModels.Applications;
 
@@ -24,8 +21,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
         private readonly TraineeshipApplicationViewModelServerValidator _traineeshipApplicationViewModelServer;
 
         public TraineeshipApplicationMediator(
-            ITraineeshipApplicationProvider traineeshipApplicationProvider, 
-            IConfigurationService configService, 
+            ITraineeshipApplicationProvider traineeshipApplicationProvider,
+            IConfigurationService configService,
             IUserDataProvider userDataProvider,
             TraineeshipApplicationViewModelServerValidator traineeshipApplicationViewModelServer)
             : base(configService, userDataProvider)
