@@ -440,11 +440,11 @@ iframe, object, embed {
   display: block;
   clear: both; }
 
-.inline .button.sfa-button-secondary {
+.inline .button:first-child.sfa-button-secondary {
   padding-left: 0px; }
 
-.inline .button:nth-child(2).sfa-button-secondary {
-  padding-left: .789473em; }
+.inline .button.sfa-button-secondary {
+  padding-right: 0px; }
 
 .button.sfa-button-secondary {
   background: transparent;
@@ -3185,12 +3185,12 @@ input[type=number] {
   .info-summary .info-dismiss {
     color: #2b8cc4; }
 
-.info-summary {
+.success-summary {
   border-color: #28a197; }
   @media (min-width: 641px) {
-    .info-summary {
+    .success-summary {
       border-color: #28a197; } }
-  .info-summary .info-summary-list a {
+  .success-summary .success-summary-list a {
     color: #28a197; }
-  .info-summary .info-dismiss {
+  .success-summary .success-dismiss {
     color: #28a197; }
