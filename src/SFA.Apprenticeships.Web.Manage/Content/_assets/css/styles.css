@@ -219,6 +219,25 @@ Custom Typography
     border-bottom: none;
     padding: 0 0.75em 0.75em 0; }
 
+.heading-medium .heading-secondary {
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 18px;
+  line-height: 1.2;
+  display: block;
+  padding-top: 5px;
+  padding-bottom: 2px;
+  display: block;
+  color: #6f777b; }
+
+@media (min-width: 641px) {
+  .heading-medium {
+    font-size: 24px;
+    line-height: 1.25;
+    padding-top: 6px;
+    padding-bottom: 4px; } }
+
 /* -------------------------------------------------------------------
 Custom list
 ------------------------------------------------------------------- */
@@ -305,6 +324,16 @@ Custom expand content
 
 .sfa-collpanel.panel-open {
   display: block; }
+
+/* -------------------------------------------------------------------
+Inset boxes
+------------------------------------------------------------------- */
+.sfa-inset {
+  padding: 15px; }
+  .sfa-inset-yellow {
+    background-color: #fff2d3; }
+  .sfa-inset-light-grey {
+    background-color: #f8f8f8; }
 
 /* -------------------------------------------------------------------
 Misc - TO BE ORGANISED
