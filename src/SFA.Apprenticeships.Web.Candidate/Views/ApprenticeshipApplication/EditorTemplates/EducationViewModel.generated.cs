@@ -52,54 +52,66 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Edit
         }
         public override void Execute()
         {
-WriteLiteral("<fieldset");
+WriteLiteral("<div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" id=\"applyEducation\"");
 
-WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
+WriteLiteral(" class=\"column-two-thirds\"");
 
-WriteLiteral(">\r\n    <legend");
+WriteLiteral(">\r\n        <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Education</legend>\r\n");
+WriteLiteral(">Education</h3>\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 5 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-Write(Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttributes: new { @class = "school-name" }));
+            #line 6 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttributes: new { @class = "school-name" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n    <label");
+WriteLiteral("\r\n\r\n        <label");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(">Years attended</label>\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 8 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-Write(Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
+            #line 9 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new {maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 9 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-Write(Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
+            #line 10 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new {maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</fieldset>");
+WriteLiteral("\r\n    </div>\r\n</div>\r\n<div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <hr />\r\n    </div>\r\n</div>\r\n");
 
         }
     }
