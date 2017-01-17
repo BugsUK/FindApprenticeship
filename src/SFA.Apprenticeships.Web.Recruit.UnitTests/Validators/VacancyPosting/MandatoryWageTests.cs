@@ -165,10 +165,10 @@
 
                 var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Wage.Amount");
                 error.Should().NotBeNull();
-                error?.ErrorMessage.Should().Be("The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Oct 2016");
+                error?.ErrorMessage.Should().Be("The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Apr 2017");
                 var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.Wage.Amount");
                 aggregateError.Should().NotBeNull();
-                aggregateError?.ErrorMessage.Should().Be("The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Oct 2016");
+                aggregateError?.ErrorMessage.Should().Be("The wage should not be less then the new National Minimum Wage for apprentices effective from 1 Apr 2017");
             }
         }
 
