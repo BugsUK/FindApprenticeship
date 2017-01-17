@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using Application.Interfaces;
+    using Providers;
     using System;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using SFA.Infrastructure.Interfaces;
-    using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class StatusController : CandidateControllerBase
     {

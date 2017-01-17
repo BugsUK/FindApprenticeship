@@ -21,9 +21,11 @@
 {   
     @Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView)
 
-    <div class="column-full">
-        <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
-        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+    <div class="grid-row">
+        <div class="column-full inline">
+            <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
+            @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
+        </div>
     </div>
 }
 

@@ -1,15 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
-    using System.Collections.Generic;
+    using Application.Interfaces;
     using Application.Interfaces.Locations;
-    using SFA.Infrastructure.Interfaces;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Collections.Generic;
     using ViewModels.VacancySearch;
     using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
 

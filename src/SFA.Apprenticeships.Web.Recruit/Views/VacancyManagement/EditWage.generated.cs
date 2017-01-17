@@ -1298,7 +1298,7 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group inline\"");
 
 WriteLiteral(">\r\n            <button");
 
@@ -1333,14 +1333,14 @@ WriteLiteral(">Save and return</button>\r\n\r\n");
             #line hidden
             
             #line 215 "..\..\Views\VacancyManagement\EditWage.cshtml"
-           Write(Html.RouteLink("Cancel", routeName, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+           Write(Html.RouteLink("Cancel", routeName, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default
             #line hidden
             
             #line 215 "..\..\Views\VacancyManagement\EditWage.cshtml"
-                                                                                                                   
+                                                                                                                                                                   
             
             
             #line default

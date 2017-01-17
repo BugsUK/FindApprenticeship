@@ -1,17 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
-    using SFA.Infrastructure.Interfaces;
-    using Domain.Entities.Vacancies;
+    using Application.Interfaces;
     using Application.Interfaces.Candidates;
+    using Common.Models.Application;
+    using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Constants.Pages;
+    using Domain.Entities.Vacancies;
+    using System;
     using ViewModels.Applications;
-    using Common.Models.Application;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     //TODO: DFSW/AG This whole class needs refactoring or possibly reimplementing plus unit tests.

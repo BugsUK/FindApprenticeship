@@ -120,16 +120,20 @@ Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
             
             #line 26 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                                                                            
-    
+
 
             
             #line default
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"column-full\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n        <button");
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"column-full inline\"");
+
+WriteLiteral(">\r\n            <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -142,19 +146,19 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                                                              Write(saveButtonText);
+            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                                                  Write(saveButtonText);
 
             
             #line default
             #line hidden
 WriteLiteral("</button>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button sfa-button-secondary" }));
+            #line 31 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+       Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default
@@ -162,38 +166,38 @@ WriteLiteral("        ");
 WriteLiteral("\r\n");
 
             
-            #line 31 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 31 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-         if (Model.ComeFromPreview)
-        {
+            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 33 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+             if (Model.ComeFromPreview)
+            {
+                
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+           Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default
             #line hidden
             
-            #line 33 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                                                                                                          
-        }
+            #line 34 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                                                                                                                                              
+            }
 
             
             #line default
             #line hidden
-WriteLiteral("    </div>\r\n");
+WriteLiteral("        </div>\r\n    </div>\r\n");
 
             
-            #line 36 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 38 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
 }
 
             
@@ -210,7 +214,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n        var comeFromPreview = \"");
 
             
-            #line 40 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 42 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                           Write(Model.ComeFromPreview.ToString());
 
             

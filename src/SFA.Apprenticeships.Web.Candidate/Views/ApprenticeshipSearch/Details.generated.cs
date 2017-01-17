@@ -2202,7 +2202,7 @@ WriteLiteral("/>\r\n");
             #line hidden
 WriteLiteral("        <section");
 
-WriteLiteral(" class=\"sfa-xlarge-top-padding\"");
+WriteLiteral(" class=\"inline sfa-xlarge-top-padding\"");
 
 WriteLiteral(">\r\n");
 

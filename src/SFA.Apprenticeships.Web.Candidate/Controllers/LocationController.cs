@@ -1,19 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using Application.Interfaces;
+    using Common.Attributes;
+    using Common.Configuration;
+    using Common.Constants;
+    using Providers;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Common.Configuration;
-    using SFA.Infrastructure.Interfaces;
-    using Constants;
-    using Providers;
     using ViewModels.VacancySearch;
-    using Common.Attributes;
-    using Common.Constants;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class LocationController : Controller
     {

@@ -1676,7 +1676,7 @@ WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"button save-work-btn\"");
+WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" id=\"addWorkBtn\"");
 
@@ -2775,7 +2775,7 @@ WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral("></span>\r\n        </div>\r\n</fieldset>\r\n<div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group inline\"");
 
 WriteLiteral(">\r\n    <a");
 

@@ -112,9 +112,13 @@ Write(Html.DisplayFor(m => m, VacancyOwnerRelationshipViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"column-full\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n        <button");
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"column-full inline\"");
+
+WriteLiteral(">\r\n            <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -127,27 +131,27 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 25 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                                                                              Write(saveButtonText);
+            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+                                                                                                  Write(saveButtonText);
 
             
             #line default
             #line hidden
 WriteLiteral("</button>\r\n");
 
-WriteLiteral("        ");
+WriteLiteral("            ");
 
             
-            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+            #line 27 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+       Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n");
 
             
-            #line 28 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 30 "..\..\Views\Vacancy\EmployerInformation.cshtml"
 }
 
             

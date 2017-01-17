@@ -17,7 +17,7 @@
     }
 }
 
-.page-navigation__btn {
+.page-navigation__btn, .page-navigation__results {
     display: inline-block;
     font-size: 1em;
     margin-right: -4px;
@@ -38,11 +38,12 @@
 }
 
 .page-navigation__btn.previous {
-    text-align: left
+    text-align: left;
 }
 
 .page-navigation__btn.next {
-    text-align: right
+    text-align: right;
+    float:right;
 }
 
 .page-navigation__btn.next .arrow-button {

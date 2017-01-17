@@ -93,11 +93,9 @@
                 @if (User.IsInRole(SFA.Apprenticeships.Domain.Entities.Raa.Roles.Admin))
                 {
                     <div class="form-group">
-                        <p class="sfa-medium-bottom-margin">
-                            <button type="submit" class="button sfa-button-secondary" name="Review" value="ReviewRevertToInProgress">
+                            <button type="submit" class="button sfa-button-secondary sfa-medium-bottom-margin" name="Review" value="ReviewRevertToInProgress">
                                 Revert this candidate's application back to In progress
                             </button>
-                        </p>
                     </div>
                 }
             </section>
@@ -140,10 +138,10 @@
                                 Successful
                             </label>
                         </p>
-                        <p>
+                        <div class="form-group inline">
                             <button type="submit" class="button" name="Review" value="ReviewSaveAndContinue">Save and Continue</button>
-                            @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
-                        </p>
+                            @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" })
+                        </div>
                     </div>
                 </div>
             </section>

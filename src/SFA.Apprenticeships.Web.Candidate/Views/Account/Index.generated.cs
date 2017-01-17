@@ -205,12 +205,8 @@ WriteLiteral("\r\n                       onclick=\"Webtrends.multiTrack({ elemen
 "DCS.dcsuri\', \'/traineeships/promptdecline\', \'WT.dl\', \'99\', \'WT.ti\', \'Traineeship" +
 " Prompt Declined\'] })\"");
 
-WriteLiteral("><i");
-
-WriteLiteral(" class=\"font-xsmall fa fa-times-circle\"");
-
-WriteLiteral("></i>Don\'t show me this again</a>\r\n                </p>\r\n            </div>\r\n    " +
-"    </div>\r\n    </div>\r\n");
+WriteLiteral(">Don\'t show me this again</a>\r\n                </p>\r\n            </div>\r\n        " +
+"</div>\r\n    </div>\r\n");
 
             
             #line 51 "..\..\Views\Account\Index.cshtml"
@@ -302,14 +298,14 @@ WriteLiteral(".\r\n");
             #line hidden
 WriteLiteral("                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3216), Tuple.Create("\"", 3332)
+WriteAttribute("href", Tuple.Create(" href=\"", 3170), Tuple.Create("\"", 3286)
             
             #line 65 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3223), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new {id = applicationNotification.VacancyId})
+, Tuple.Create(Tuple.Create("", 3177), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.CandidateApplicationFeedback, new {id = applicationNotification.VacancyId})
             
             #line default
             #line hidden
-, 3223), false)
+, 3177), false)
 );
 
 WriteLiteral(">Read feedback</a>\r\n");
@@ -332,27 +328,23 @@ WriteLiteral("                    </p>\r\n");
             #line hidden
 WriteLiteral("                <p>\r\n                                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3484), Tuple.Create("\"", 3646)
+WriteAttribute("href", Tuple.Create(" href=\"", 3438), Tuple.Create("\"", 3600)
             
             #line 70 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3491), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications,
+, Tuple.Create(Tuple.Create("", 3445), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications,
     new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
-, 3491), false)
+, 3445), false)
 );
 
 WriteLiteral(" class=\"notInterested link-unimp icon-black\"");
 
 WriteLiteral(" id=\"\"");
 
-WriteLiteral("><fa");
-
-WriteLiteral(" class=\"fa fa-times-circle\"");
-
-WriteLiteral("></fa>Dismiss this message</a>\r\n                                </p>\r\n\r\n         " +
-"   </div>\r\n        </div>\r\n    </div>\r\n");
+WriteLiteral(">Dismiss this message</a>\r\n                                </p>\r\n\r\n            </" +
+"div>\r\n        </div>\r\n    </div>\r\n");
 
             
             #line 77 "..\..\Views\Account\Index.cshtml"

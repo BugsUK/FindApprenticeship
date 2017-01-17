@@ -16,29 +16,28 @@
         </ul>
     </div>
 </div>
-<p >
-    You've been sent a code to your new email address, enter your code to verify
-    your address.
-</p>
-
-@using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {id = "verify-updated-email-form", autocomplete = "off"}))
-{
-    @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-    <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
-    <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
-
-    @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code", containerHtmlAttributes: new { @class = "form-group-withlink" })
-    
-    <div class="form-group">
+<div class="grid-row">
+    <div class="column-two-thirds">
         <p>
-            <a href="@Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)" title="Resend code">Resend code</a>
+            You've been sent a code to your new email address, enter your code to verify
+            your address.
         </p>
+
+        @using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new { id = "verify-updated-email-form", autocomplete = "off" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("ValidationSummary", ViewData.ModelState)
+            <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
+            <input type="password" title="Hidden password field to stop autocomplete" value="" class="sfa-hide" />
+
+            @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code", containerHtmlAttributes: new { @class = "form-group-withlink" })
+            @Html.FormPasswordFor(m => m.VerifyPassword, controlHtmlAttributes: new { autocomplete = "off" })
+
+            <div class="form-group">
+                <button class="button" id="verify-email-button">Verify email</button>
+                <a class="button sfa-button-secondary" href="@Url.RouteUrl(CandidateRouteNames.ResendUpdateEmailAddressCode)" title="Resend code">Resend code</a>
+            </div>
+        }
+
     </div>
-    
-    @Html.FormPasswordFor(m => m.VerifyPassword, controlHtmlAttributes: new { autocomplete = "off" })
-    
-    <div class="form-group">
-        <button class="button" id="verify-email-button">Verify email</button>
-    </div>
-}
+</div>

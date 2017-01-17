@@ -3,19 +3,18 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa;
-    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
     using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
+    using System.Web.Mvc;
     using Raa.Common.ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Raa)]
@@ -194,7 +193,7 @@
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateProviderSite.Ok:
-                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new {viewModel.ProviderId});
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new { viewModel.ProviderId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -507,7 +506,7 @@
 
             foreach(var standardSector in response.ViewModel.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
             {
-                var ssat1 = response.ViewModel.Single(s => s.Id == standardSector.ApprenticeshipOccupationId);
+                var ssat1 = response.ViewModel.Single(s =>  s.Id == standardSector.ApprenticeshipOccupationId);
 
                 standards.AddRange(standardSector.Standards.OrderBy(s => s.Name).Select(s => new EditStandardViewModel()
                 {

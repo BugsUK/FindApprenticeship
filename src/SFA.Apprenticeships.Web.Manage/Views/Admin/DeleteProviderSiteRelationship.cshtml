@@ -16,8 +16,8 @@
 
     @Html.HiddenFor(m => m.ProviderSiteRelationshipId)
 
-    <div class="form-group">
+    <div class="form-group inline">
         <button id="delete-provider-site-relationship-button" type="submit" class="button" name="ConfirmDeleteProviderSiteRelationshipAction" value="ConfirmDeleteProviderSiteRelationship">Delete</button>
-        @Html.RouteLink("Cancel", ManagementRouteNames.AdminViewProviderSite, new { providerSiteId = Model.ProviderSiteId })
+        @Html.RouteLink("Cancel", ManagementRouteNames.AdminViewProviderSite, new { providerSiteId = Model.ProviderSiteId }, new { @class = "button sfa-button-secondary" })
     </div>
 }

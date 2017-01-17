@@ -1,15 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
+    using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Common.Constants;
     using Constants;
-    using SFA.Infrastructure.Interfaces;
     using Mediators.Unsubscribe;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using System;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
 
     public class UnsubscribeController : CandidateControllerBase
     {

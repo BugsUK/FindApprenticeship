@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
@@ -10,7 +8,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Application.Vacancy;
     using Common.Attributes;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Raa.Common.Configuration;
@@ -45,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 {
                     RequestedPage = 1,
                     PageSize = 1,
-                    DesiredStatuses = new List<VacancyStatus>() {VacancyStatus.Live}
+                    DesiredStatuses = new List<VacancyStatus>() { VacancyStatus.Live }
                 }, out total);
 
                 if (result != null && result.Count >= 1)

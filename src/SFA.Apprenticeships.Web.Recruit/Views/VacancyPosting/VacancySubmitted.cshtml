@@ -55,10 +55,8 @@
         <h2 class="heading-medium">Create another apprenticeship vacancy or traineeship opportunity</h2>
         <span class="heading-secondary ">Use a fresh template or continue with a draft</span>
     </div>
-    <div class="form-group">
+    <div class="form-group inline">
         <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })" class="button">Start new opportunity or vacancy</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button sfa-button-secondary">Return to recruitment home</a>
     </div>
-    <p>
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
-    </p>
 </section>

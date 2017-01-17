@@ -24,7 +24,7 @@
             @Html.EditorFor(m => m.ToDate)
         </fieldset>
 
-        <div class="column-one-half">
+        <div class="form-group">
             <button id="ValidateReportParameters" type="submit" class="button" name="CandidatesWithApplications" value="ValidateCandidatesWithApplications">Export CSV</button>
             @if (Model.IsValid)
             {
@@ -33,9 +33,7 @@
                     <button id="DownloadReportNoJs" type="submit" class="button sfa-button-secondary" name="CandidatesWithApplications" value="DownloadCandidatesWithApplications">Download CSV</button>
                 </noscript>
             }
-            <p class="sfa-medium-bottom-margin">
-                @Html.RouteLink("Back to List", RecruitmentRouteNames.ReportList)
-            </p>
+            @Html.RouteLink("Back to List", RecruitmentRouteNames.ReportList, null, new {@class="button sfa-button-secondary" })
         </div>
     </div>
 }

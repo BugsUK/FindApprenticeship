@@ -216,9 +216,9 @@
             }
             </tbody>
         </table>
-        <div class="form-group">
+        <div class="form-group inline">
             <button type="submit" class="button" name="ConfirmBulkDeclineCandidatesAction" value="ConfirmBulkDeclineCandidates">Confirm and continue</button>
-            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})">Cancel</a>
+            <a id="dashboardLink" class="button sfa-button-secondary" href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})">Cancel</a>
         </div>
     </div>
 }

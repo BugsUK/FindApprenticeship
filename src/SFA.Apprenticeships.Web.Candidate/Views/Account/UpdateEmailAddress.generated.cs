@@ -92,78 +92,95 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<p >\r\n    To change your " +
-"email address we\'ll need to send you a code to verify it\'s\r\n    yours.\r\n</p>\r\n");
+WriteLiteral("\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</div>\r\n<div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <p>\r\n            To change your email address we\'ll need to send you a" +
+" code to verify it\'s yours.\r\n        </p>\r\n");
 
             
-            #line 23 "..\..\Views\Account\UpdateEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
-{
-    
+            #line 24 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+        
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-Write(Html.AntiForgeryToken());
-
+            #line 24 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+         using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
+        {
             
-            #line default
-            #line hidden
-            
-            #line 25 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-                            
-    
             
             #line default
             #line hidden
             
             #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-Write(Html.Partial("ValidationSummary", ViewData.ModelState));
+       Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
             #line 26 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-                                                           
-    
+                                    
+            
             
             #line default
             #line hidden
             
             #line 27 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-Write(Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { autocomplete = "off", type = "email", spellcheck = "false" }));
+       Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
             #line 27 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-                                                                                                                                     
-    
+                                                                   
+            
+            
+            #line default
+            #line hidden
+            
+            #line 28 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+       Write(Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { autocomplete = "off", type = "email", spellcheck = "false" }));
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+            
+            #line 28 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+                                                                                                                                             
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <button");
+WriteLiteral(">\r\n                <button");
 
 WriteLiteral(" id=\"btn-sendcode\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Send code</button>\r\n    </div>\r\n");
+WriteLiteral(">Send code</button>\r\n            </div>\r\n");
 
             
-            #line 32 "..\..\Views\Account\UpdateEmailAddress.cshtml"
-}
+            #line 33 "..\..\Views\Account\UpdateEmailAddress.cshtml"
+        }
+
             
             #line default
             #line hidden
+WriteLiteral("    </div>\r\n</div>");
+
         }
     }
 }

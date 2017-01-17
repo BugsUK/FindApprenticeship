@@ -219,7 +219,7 @@
                         <button id="search-candidates-button" type="submit" class="button">Search</button>
                         @if (Model.VacancyApplicationsSearch.IsCandidateSearch())
                         {
-                            @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, true).RouteValues, new { @class = "vacancy-filter" })
+                            @Html.RouteLink("Reset search", RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, true).RouteValues, new { @class = "vacancy-filter button sfa-button-secondary" })
                         }
                     </div>
                 </div>
