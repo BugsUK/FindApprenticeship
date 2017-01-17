@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
+    using Application.Interfaces;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -8,7 +9,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
-    using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using ViewModels.VacancySearch;
 

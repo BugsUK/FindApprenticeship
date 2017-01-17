@@ -131,7 +131,7 @@ WriteLiteral(" class=\"sfa-xlarge-top-margin\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group inline\"");
 
 WriteLiteral(">\r\n                <button");
 

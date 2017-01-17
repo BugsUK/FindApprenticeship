@@ -9,13 +9,17 @@
     ViewBag.Title = "Recruit an Apprentice - Change vacancy dates";
 }
 
-<h1 class="heading-xlarge">
-    Change vacancy dates
-</h1>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Change vacancy dates
+        </h1>
+    </div>
+</div>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates,
-                            new RouteValueDictionary { { "vacancyReferenceNumber", Model.VacancyReferenceNumber }},
-                            FormMethod.Post, new Dictionary<string, object> { { "id", "manage-vacancy-dates-form" }}))
+                                        new RouteValueDictionary { { "vacancyReferenceNumber", Model.VacancyReferenceNumber } },
+                                        FormMethod.Post, new Dictionary<string, object> { { "id", "manage-vacancy-dates-form" } }))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -33,39 +37,41 @@
     @Html.HiddenFor(m => m.Wage.HoursPerWeek)
     @Html.HiddenFor(m => m.VacancyDatesViewModel.VacancyStatus)
 
-    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
-        <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
-        <h3 class="heading-small">@Model.GetMetadata(m => m.VacancyDatesViewModel.ClosingDate).DisplayName</h3>
-        @Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDate)
-        @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.ClosingDate, Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <p>
+                We advise using a date more than two weeks from now. Vacancies will close at midnight on your chosen date
+            </p>
 
-    </fieldset>
-    <div>
-        We advise using a date more than two weeks from now <br/>
-        Vacancies will close at midnight on your chosen date
+            <fieldset class="@HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
+                <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
+                @Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDate)
+                @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.ClosingDate, Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
+
+            </fieldset>
+
+            <fieldset class="@HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))">
+                <a name="@Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
+                @Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate)
+                @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
+            </fieldset>
+
+            <div class="inline">
+                <button class="button" type="submit">Save and return</button>
+
+                @{
+                    var viewModel = new
+                    {
+                        vacancyReferenceNumber = Model.VacancyReferenceNumber
+                    };
+
+                    var routeName = Model.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
+                        RecruitmentRouteNames.VacancyApplications :
+                        RecruitmentRouteNames.PreviewVacancy;
+
+                    @Html.RouteLink("Cancel", routeName, viewModel, new { @class = "button sfa-button-secondary" });
+                }
+            </div>
+        </div>
     </div>
-    <br/>
-    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))">
-        <a name="@Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
-        <h3 class="heading-small">@Model.GetMetadata(m => m.VacancyDatesViewModel.PossibleStartDate).DisplayName</h3>
-        @Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate)
-        @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
-    </fieldset>
-
-    <div class="grid grid-1-2">
-        <button class="button" type="submit">Save and return</button>
-
-        @{
-            var viewModel = new
-            {
-                vacancyReferenceNumber = Model.VacancyReferenceNumber
-            };
-
-            var routeName = Model.VacancyApplicationsState == VacancyApplicationsState.HasApplications ?
-                RecruitmentRouteNames.VacancyApplications :
-                RecruitmentRouteNames.PreviewVacancy;
-
-            @Html.RouteLink("Cancel", routeName, viewModel);
-        }
-    </div>
-            }
+                    }

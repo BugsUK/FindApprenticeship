@@ -15,16 +15,20 @@
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
 <section>
-    <div class="hgroup text">
-        <h1 class="heading-xlarge" itemprop="title">
-            Applications for @Model.ApplicantDetails.Name
-        </h1>
-        <p class="heading-secondary " itemprop="ApplicantId">Applicant ID - @Model.ApplicantDetails.ApplicantId</p>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 class="heading-xlarge" itemprop="title">
+                Applications for @Model.ApplicantDetails.Name
+                <span class="heading-secondary " itemprop="ApplicantId">Applicant ID - @Model.ApplicantDetails.ApplicantId</span>
+            </h1>
+        </div>
+        <div class="column-one-third">
+            <details class="sfa-xlarge-top-margin">
+                <summary><span class="summary">Contact details for @Model.ApplicantDetails.Name</span></summary>
+                @Html.DisplayFor(m => m.ApplicantDetails, ApplicantDetailsViewModel.PartialView)
+            </details>
+        </div>
     </div>
-    <details>
-        <summary>Contact details for @Model.ApplicantDetails.Name</summary>
-        @Html.DisplayFor(m => m.ApplicantDetails, ApplicantDetailsViewModel.PartialView)
-    </details>
 </section>
 
 <section class="sfa-no-bottom-margin" id="applicationsSection">
@@ -135,7 +139,7 @@
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.CandidateGuid)
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.OrderByField)
     @Html.HiddenFor(m => m.CandidateApplicationsSearch.Order)
-    <div id="page-size-container" class="column-one-third page-navigation__btn" style="width: 33.333333333%; text-align: center">
+    <div id="page-size-container" class="column-one-third page-navigation__results" style="width: 33.333333333%; text-align: center">
         <label for="page-size" class="heading-small inline">Display results</label>
         @Html.DropDownListFor(m => m.CandidateApplicationsSearch.PageSize, Model.CandidateApplicationsSearch.PageSizes, new {id = "page-size", @class = "form-control" })
         <noscript>

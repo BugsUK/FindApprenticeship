@@ -45,12 +45,11 @@
             controlHtmlAttributes: new {@class = "width-all-3-4", type = "text", size = 12, style = "height: 200px;"},
             labelHtmlAttributes: new {@class = "bold-small"})
         <section>
-            <div class="form-group">
-                <br/>
+            <div class="form-group inline">
                 <button type="submit" class="button" name="SendBulkUnsuccessfulDecisionAction" value="SendBulkUnsuccessfulDecision">
                     Send feedback
                 </button>
-                @Html.RouteLink("Cancel", RecruitmentRouteNames.BulkDeclineCandidates, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyApplicationsSearch.VacancyReferenceNumber}})
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.BulkDeclineCandidates, new { @class = "button sfa-button-secondary" }, new RouteValueDictionary {{"VacancyApplicationsSearch.VacancyReferenceNumber", Model.VacancyApplicationsSearch.VacancyReferenceNumber}})
             </div>
         </section>
     </div>

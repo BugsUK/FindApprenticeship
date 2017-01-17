@@ -1,9 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Candidate
 {
-    using System;
-    using Application.Interfaces.Candidates;
     using Common.Mediators;
-    using Providers;
     using Raa.Common.Factories;
     using Raa.Common.Providers;
     using Raa.Common.Validators.Candidate;
@@ -11,6 +8,7 @@
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
     using Raa.Common.ViewModels.Candidate;
+    using System;
     using ViewModels;
 
     public class CandidateMediator : MediatorBase, ICandidateMediator

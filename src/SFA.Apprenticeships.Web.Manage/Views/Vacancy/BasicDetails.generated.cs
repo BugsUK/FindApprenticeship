@@ -93,7 +93,7 @@ Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView, new {OfflineUrlBu
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group inline\"");
 
 WriteLiteral(">\r\n        <button");
 
@@ -107,7 +107,7 @@ WriteLiteral("        ");
 
             
             #line 13 "..\..\Views\Vacancy\BasicDetails.cshtml"
-   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default

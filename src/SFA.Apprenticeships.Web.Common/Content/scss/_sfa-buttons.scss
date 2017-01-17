@@ -6,13 +6,13 @@ $secondary-button-bg: transparent;
 
 .inline {
     .button{
-        &.sfa-button-secondary {
-            padding-left:0px;
-        }
-        &:nth-child(2) {
+        &:first-child {
             &.sfa-button-secondary {
-                padding-left:.789473em;
+                padding-left:0px;
             }
+        }
+        &.sfa-button-secondary {
+            padding-right:0px;
         }
     }
 }

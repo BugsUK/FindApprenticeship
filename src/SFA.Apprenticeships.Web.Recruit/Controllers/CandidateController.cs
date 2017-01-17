@@ -1,18 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
-    using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Extensions;
     using Common.Mediators;
-    using Common.ViewModels;
     using Constants;
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.Candidate;
     using Raa.Common.ViewModels.Candidate;
+    using System.Web.Mvc;
 
     [OwinSessionTimeout]
     [AuthorizeUser(Roles = Roles.Faa)]

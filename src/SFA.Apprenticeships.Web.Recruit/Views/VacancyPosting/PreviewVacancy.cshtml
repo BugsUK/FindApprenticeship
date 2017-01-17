@@ -45,7 +45,7 @@
                 @Html.HiddenFor(model => model.ResubmitOption)
             }
 
-            <section class="sfa-xlarge-top-margin">
+            <section class="sfa-xlarge-top-margin inline">
                 @if (Model.Status == VacancyStatus.Referred)
                 {
                     <button type="submit" class="button">Resubmit vacancy</button>
@@ -54,7 +54,7 @@
                 {
                     <button type="submit" class="button">Submit for approval</button>
                 }
-                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
+                <a id="dashboardLink" class="button sfa-button-secondary" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
             </section>
         }
     }

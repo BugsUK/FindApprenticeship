@@ -20,7 +20,7 @@
     @Html.EditorFor(m => m, "MonitoringInformation/_ethnicity")
     @Html.EditorFor(m => m, "MonitoringInformation/_why")
 
-    <div class="form-group">
+    <div class="form-group inline">
         <button class="button" id="save-continue-button">Save and continue</button>
         <p><a href="@Url.RouteUrl(RouteNames.SkipMonitoringInformation)" id="skip-link" class="button sfa-button-secondary" title="Skip telling us more">Skip</a></p>
     </div>

@@ -69,35 +69,49 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n    <div>\r\n        <h1");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Confirm account deletion\r\n            <span");
+WriteLiteral(">Confirm account deletion</h1>\r\n        <div");
 
-WriteLiteral(" class=\"heading-secondary \"");
+WriteLiteral(" class=\"panel panel-border-wide sfa-xlarge-bottom-margin\"");
 
-WriteLiteral(">You will no longer be able to use this service, and your account data will be lo" +
-"st.​</span>\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
+WriteLiteral(">\r\n            <p>You will no longer be able to use this service, and your accoun" +
+"t data will be lost.​</p>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div");
+
+WriteLiteral(" class=\"inline\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("    ");
 
             
-            #line 16 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
-Write(Html.ActionLink("Delete account", "SetDeletionPendingForAccount", "Account", new {@class = "button"}));
+            #line 18 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+Write(Html.ActionLink("Delete account", "SetDeletionPendingForAccount", "Account", new { @class = "button" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
+WriteLiteral("    ");
+
             
-            #line 17 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
-Write(Html.ActionLink("Cancel", "DeleteAccountSettings", "Account"));
+            #line 19 "..\..\Views\Account\ConfirmAccountDeletion.cshtml"
+Write(Html.ActionLink("Cancel", "DeleteAccountSettings", "Account", new { @class = "button sfa-button-secondary" }));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n</div>\r\n");
+
         }
     }
 }

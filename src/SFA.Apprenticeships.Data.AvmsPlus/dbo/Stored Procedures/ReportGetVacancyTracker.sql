@@ -16,17 +16,25 @@ AS
 	set transaction isolation level read uncommitted
 
 	DECLARE @vacancyHistory TABLE( 
-	vacancyId int not null primary key,					
-	historyDate datetime);
+	vacancyId int not null,					
+	historyDate datetime,
+	fullName varchar(25));
 
-	-- date of outcome, whether Live or Referred	
-	INSERT into @vacancyHistory(vacancyId, historyDate)	
-	SELECT vh.VacancyId, MIN(vh.HistoryDate) 
+	-- date of outcome for Live
+	INSERT into @vacancyHistory(vacancyId, historyDate, fullName)	
+	SELECT vh.VacancyId, Min(vh.HistoryDate), vst.FullName
 	FROM  dbo.VacancyHistory vh
 	JOIN dbo.VacancyStatusType vst on vst.VacancyStatusTypeId = vh.VacancyHistoryEventSubTypeId
-	WHERE (vh.VacancyHistoryEventTypeID = 1) AND (vst.CodeName = 'Lve' OR vst.CodeName = 'Ref')
-	GROUP BY vh.VacancyId
+	WHERE (vh.VacancyHistoryEventTypeID = 1) AND (vst.CodeName = 'Lve')-- OR vst.CodeName = 'Ref')
+	GROUP BY vh.VacancyId,vst.FullName
 
+	-- date of outcome for Reffered
+	INSERT into @vacancyHistory(vacancyId, historyDate, fullName)	
+	SELECT vh.VacancyId, vh.HistoryDate, vst.FullName
+	FROM  dbo.VacancyHistory vh
+	JOIN dbo.VacancyStatusType vst on vst.VacancyStatusTypeId = vh.VacancyHistoryEventSubTypeId
+	WHERE (vh.VacancyHistoryEventTypeID = 1) AND vst.CodeName = 'Ref'
+	
 	-- remove vacancies out of range
 	SELECT @dateTo = dbo.fngetendOfDay(@dateTo);
 	DELETE FROM @vacancyHistory WHERE historyDate not between @dateFrom and @dateTo;
@@ -35,13 +43,11 @@ AS
 	V.VacancyReferenceNumber,
 	P.FullName,
 	dbo.GetSubmittedDate(V.VacancyID) AS DateSubmitted,
-	VST.FullName AS Outcome,
+	vh.FullName AS Outcome,
 	vh.HistoryDate AS OutComeDate
 	from @vacancyHistory vh 
-	JOIN Vacancy V ON V.VacancyId = vh.VacancyId
-	JOIN VacancyStatusType VST ON V.VacancyStatusId = VST.VacancyStatusTypeId
-	JOIN Provider P ON P.ProviderID = V.ContractOwnerId
-	WHERE V.VacancyStatusId IN (2,3)
-	ORDER BY V.QAUserName
+	JOIN Vacancy V ON V.VacancyId = vh.VacancyId	
+	JOIN Provider P ON P.ProviderID = V.ContractOwnerId	
+	ORDER BY V.VacancyReferenceNumber
 
 

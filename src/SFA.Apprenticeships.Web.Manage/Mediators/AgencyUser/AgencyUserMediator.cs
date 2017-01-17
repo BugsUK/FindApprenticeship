@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
 {
-    using System.Security.Claims;
+    using Application.Interfaces;
     using Common.Constants;
     using Common.Extensions;
     using Common.Framework;
@@ -13,9 +13,7 @@
     using Raa.Common.Configuration;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System.Security.Claims;
     using ViewModels;
 
     public class AgencyUserMediator : MediatorBase, IAgencyUserMediator

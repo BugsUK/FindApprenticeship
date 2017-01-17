@@ -13,7 +13,7 @@
 
     if (Model.IsWellFormedVacancyUrl)
     {
-        <a  id="external-employer-website" rel="external"  target = "_blank" href="@Url.RouteUrl(CandidateRouteNames.RedirectToExternalWebsite, new {id = Model.Id})" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
+        <a  id="external-employer-website" class="button sfa-button-secondary" rel="external"  target = "_blank" href="@Url.RouteUrl(CandidateRouteNames.RedirectToExternalWebsite, new {id = Model.Id})" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
     }
     else
     {
@@ -29,7 +29,7 @@ else if (Request.IsAuthenticated)
         {
             if (Model.VacancyStatus == VacancyStatuses.Live)
             {
-                <a role="button" id="apply-button" class="button button-with-hint" title="Resume application"
+                <a role="button" id="apply-button" class="button" title="Resume application"
                    href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = Model.Id})" 
                    @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", 
                   ViewData["AnalyticsButtonPosition"]))>Resume application</a>
@@ -45,11 +45,11 @@ else if (Request.IsAuthenticated)
 
             if (Model.VacancyStatus == VacancyStatuses.Live)
             {
-                <a id="track-application-status" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipTrack, new { id = Model.Id })">Track application status</a>
+                <a id="track-application-status" class="button sfa-button-secondary" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipTrack, new { id = Model.Id })">Track application status</a>
             }
             else
             {
-                <a id="return-to-my-applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">Return to my applications</a>
+                <a id="return-to-my-applications" class="button sfa-button-secondary" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">Return to my applications</a>
             }
         }
     }

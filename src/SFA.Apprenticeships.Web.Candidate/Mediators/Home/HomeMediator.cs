@@ -2,15 +2,12 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Home
 {
-    using System;
-    using System.Web.Mvc;
-    using SFA.Infrastructure.Interfaces;
+    using Apprenticeships.Application.Interfaces;
     using Common.Constants;
     using Constants.Pages;
     using Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using System;
+    using System.Web.Mvc;
     using Validators;
     using ViewModels.Home;
 
@@ -81,7 +78,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Home
         public MediatorResponse<ContactMessageViewModel> GetContactMessageViewModel(Guid? candidateId)
         {
             var viewModel = InternalGetContactMessageViewModel(candidateId);
-            
+
             return GetMediatorResponse(HomeMediatorCodes.GetContactMessageViewModel.Successful, viewModel);
         }
 
@@ -132,7 +129,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Home
                     viewModel.Name = string.Format("{0} {1}",
                         candidate.RegistrationDetails.FirstName, candidate.RegistrationDetails.LastName);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _logService.Error("Failed to created view model (ignoring)", ex);
                 }

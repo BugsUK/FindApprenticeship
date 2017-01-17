@@ -19,11 +19,11 @@
         </div>
         <p> An automated message will now be sent to the candidate to inform them that their @Model.Vacancy.Title application has been successful.</p>        
         <section>
-            <div class="form-group">
+            <div class="form-group inline">
                 <button type="submit" class="button" name="SendSuccessfulDecision" value="SendSuccessfulDecision">
                     Confirm and send
                 </button>                
-                @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection.RouteValues)                
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection.RouteValues, new { @class = "button sfa-button-secondary" })                
             </div>
         </section>
     </div>

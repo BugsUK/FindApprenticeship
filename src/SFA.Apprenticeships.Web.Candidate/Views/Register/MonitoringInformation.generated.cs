@@ -164,7 +164,7 @@ Write(Html.EditorFor(m => m, "MonitoringInformation/_why"));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group inline\"");
 
 WriteLiteral(">\r\n        <button");
 
@@ -174,14 +174,14 @@ WriteLiteral(" id=\"save-continue-button\"");
 
 WriteLiteral(">Save and continue</button>\r\n        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 964), Tuple.Create("\"", 1022)
+WriteAttribute("href", Tuple.Create(" href=\"", 971), Tuple.Create("\"", 1029)
             
             #line 25 "..\..\Views\Register\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 971), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
+, Tuple.Create(Tuple.Create("", 978), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SkipMonitoringInformation)
             
             #line default
             #line hidden
-, 971), false)
+, 978), false)
 );
 
 WriteLiteral(" id=\"skip-link\"");

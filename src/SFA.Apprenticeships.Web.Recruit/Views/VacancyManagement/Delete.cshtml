@@ -16,7 +16,7 @@
 {
     <div>
         <p>You will not be able to retreive this vacancy once it has been deleted</p>
-        <div class="column-full">
+        <div class="column-full inline">
             @foreach (var prop in Model.GetType().GetProperties())
             {
                 var getter = prop.GetGetMethod();
@@ -24,7 +24,7 @@
                 ;
             }
             <button class="button" id="confirmDeleteVacancy" name="ConfirmDeleteVacancy" value="ConfirmDeleteVacancy">Confirm and return to recruitment home</button>
-            @Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel)
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.RecruitmentHome, Model as VacanciesSummarySearchViewModel, new { @class = "button sfa-button-secondary" })
         </div>
     </div>
 }

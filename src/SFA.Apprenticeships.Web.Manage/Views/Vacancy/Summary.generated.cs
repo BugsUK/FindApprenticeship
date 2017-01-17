@@ -97,7 +97,7 @@ Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"column-one-half\"");
+WriteLiteral(" class=\"column-one-half inline\"");
 
 WriteLiteral(">\r\n        <button");
 
@@ -111,7 +111,7 @@ WriteLiteral("        ");
 
             
             #line 13 "..\..\Views\Vacancy\Summary.cshtml"
-   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "button sfa-button-secondary" }));
 
             
             #line default

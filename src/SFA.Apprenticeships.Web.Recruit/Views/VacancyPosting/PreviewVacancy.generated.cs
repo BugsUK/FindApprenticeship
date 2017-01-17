@@ -263,7 +263,7 @@ WriteLiteral("        </section>\r\n");
             #line hidden
 WriteLiteral("            <section");
 
-WriteLiteral(" class=\"sfa-xlarge-top-margin\"");
+WriteLiteral(" class=\"sfa-xlarge-top-margin inline\"");
 
 WriteLiteral(">\r\n");
 
@@ -317,14 +317,16 @@ WriteLiteral("                <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2335), Tuple.Create("\"", 2394)
+WriteLiteral(" class=\"button sfa-button-secondary\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 2378), Tuple.Create("\"", 2437)
             
             #line 57 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 2342), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 2385), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 2342), false)
+, 2385), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n            </section>\r\n");

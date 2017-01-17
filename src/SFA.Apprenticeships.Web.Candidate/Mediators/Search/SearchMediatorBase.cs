@@ -2,19 +2,16 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-    using System.Web.Mvc;
+    using Apprenticeships.Application.Interfaces;
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Configuration;
     using Common.Constants;
     using Common.Models.Common;
     using Common.Providers;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
+    using System.Web.Mvc;
     using ViewModels.VacancySearch;
 
     public abstract class SearchMediatorBase : MediatorBase
@@ -74,7 +71,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
                 sortTypeOptions.Add(new { SortType = VacancySearchSortType.Distance, Name = "Distance" });
             }
 
-            sortTypeOptions.Add(new {SortType = VacancySearchSortType.RecentlyAdded, Name = "Recently added"});
+            sortTypeOptions.Add(new { SortType = VacancySearchSortType.RecentlyAdded, Name = "Recently added" });
 
             var sortTypes = new SelectList(
                 sortTypeOptions,
@@ -143,9 +140,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             var match = VacancyIdRegex.Match(vacancyIdString);
 
             if (!match.Success) return false;
-            
+
             vacancyIdString = match.Groups[1].Value;
-            
+
             return int.TryParse(vacancyIdString, out vacancyId);
         }
 

@@ -9,7 +9,7 @@
     @Html.DisplayFor(m => m, LocationSearchViewModel.PartialView)
 
     <button type="submit" class="button" name="AddLocations" value="Locations">Save</button>
-    @Html.RouteLink("Return to previous page", ManagementRouteNames.EmployerInformation, new { vacancyReferenceNumber = Model.VacancyReferenceNumber, useEmployerLocation = true })
+    @Html.RouteLink("Return to previous page", ManagementRouteNames.EmployerInformation, new { vacancyReferenceNumber = Model.VacancyReferenceNumber, useEmployerLocation = true }, new { @class = "button sfa-button-secondary" })
 }
 
 @section scripts {

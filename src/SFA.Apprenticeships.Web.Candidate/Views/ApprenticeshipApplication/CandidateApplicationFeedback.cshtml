@@ -5,68 +5,68 @@
 }
 
 <div class="grid-row">
-    <section class="column-two-thirds">
+    <div class="column-two-thirds">
+
+        <section>
             <h1 class="heading-xlarge">Your feedback</h1>
             @{
                 var reason = string.IsNullOrWhiteSpace(Model.UnsuccessfulReason) ? Model.ApplicationStatusDescription : Model.UnsuccessfulReason;
             }
-            <div class="form-group">
-                <div class="detail-content qa-comment">
-                    <div class="blocklabel-single-container">@reason</div>
-                    <br />
-                    <span class="form-prepopped font-xsmall">
+            <div class="sfa-inset sfa-inset-yellow">
+                <p>@reason</p>
+                <p>
+                    <span class="font-xsmall secondary-text">
                         Sent @Model.UnsuccessfulDateTime.ToString("dd MMM yyyy")
                     </span>
-                </div>
-            </div>
-    </section>
-
-    <section class="column-one-third gov-border grey-background">
-        <br />
-        <div class="inner-block">
-            <div class="hgroup-small">
-                <h2 class="heading-medium">@Model.Title</h2>
-                <p class="heading-secondary ">@Model.EmployerName</p>
-                <br />
-                <p class="font-xsmall">
-                    @Html.RouteLink("View my application", CandidateRouteNames.ApprenticeshipView, new { id = Model.VacancyId }, new { @class = "account-link" })
                 </p>
-                <br />
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="sfa-section-bordered grid-row" id="provider-info">
-        <div class="column-two-thirds">
-            <h2 class="heading-large">Provider details</h2>
-            
-                <div class="grid-row">
-                    <div class="text column-one-half">
-                    <h3 class="bold-small">Training provider</h3>
-                    <p id="vacancy-provider-name">@Model.ProviderName</p>
+    <section id="provider-info">
+
+        <h2 class="heading-large">Provider details</h2>
+
+        <div class="grid-row">
+            <div class="column-half">
+                <h3 class="heading-small">Training provider</h3>
+                <p id="vacancy-provider-name">@Model.ProviderName</p>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Contact))
+            {
+                <div class="column-half">
+                    <h3 class="heading-small">Contact</h3>
+                    <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
                 </div>
-
-                @if (!string.IsNullOrWhiteSpace(Model.Contact))
-                {
-                        <div class="text column-one-half" style="padding-left: 30px;">
-                        <h3 class="bold-small">Contact</h3>
-                        <p id="vacancy-provider-contact" class="@Model.Contact.GetPreserveFormattingCssClass()">@Model.Contact</p>
-                    </div>
-                }
-            </div>
+            }
         </div>
     </section>
+        <hr/>
 
-
-    <section class="column-two-thirds">
+        <section>
             <h2 class="heading-large">Next steps</h2>
             <p>If you require further information please contact the training provider.</p>
             <p>
                 For advice on how to ensure your application has a better chance of being
                 successful @Html.RouteLink("see the next steps page", @CandidateRouteNames.NextSteps).
             </p>
-            <br />
-            <br />
-            @Html.RouteLink("Return to my applications", CandidateRouteNames.MyApplications, null, new { @class = "button" })
-    </section>
+            <div class="sfa-xlarge-top-padding">
+                @Html.RouteLink("Return to my applications", CandidateRouteNames.MyApplications, null, new { @class = "button" })
+            </div>
+        </section>
 </div>
+
+    <div class="column-one-third">
+        <div class="sfa-inset sfa-inset-light-grey sfa-xlarge-top-margin sfa-inset sfa-inset-light-grey govuk-related-items">
+            <h2 class="heading-medium">@Model.Title
+                <span class="heading-secondary ">@Model.EmployerName</span>
+            </h2>
+            
+            <p class="font-xsmall">
+                @Html.RouteLink("View my application", CandidateRouteNames.ApprenticeshipView, new { id = Model.VacancyId }, new { @class = "account-link" })
+            </p>
+        </div>
+    </div> 
+</div>
+
+

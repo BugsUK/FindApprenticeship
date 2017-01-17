@@ -1,17 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
+    using Application.Interfaces;
     using Application.Interfaces.Candidates;
     using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
     using Domain.Entities.Applications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
 

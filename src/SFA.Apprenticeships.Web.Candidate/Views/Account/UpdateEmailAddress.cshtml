@@ -16,17 +16,20 @@
         </ul>
     </div>
 </div>
-<p >
-    To change your email address we'll need to send you a code to verify it's
-    yours.
-</p>
-@using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-    @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { autocomplete = "off", type = "email", spellcheck = "false" })
-    
-    <div class="form-group">
-        <button id="btn-sendcode" class="button">Send code</button>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <p>
+            To change your email address we'll need to send you a code to verify it's yours.
+        </p>
+        @using (Html.BeginRouteForm(RouteNames.UpdateEmail, FormMethod.Post, new { id = "update-email-form", autocomplete = "off" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("ValidationSummary", ViewData.ModelState)
+            @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { autocomplete = "off", type = "email", spellcheck = "false" })
+
+            <div class="form-group">
+                <button id="btn-sendcode" class="button">Send code</button>
+            </div>
+        }
     </div>
-}
+</div>
