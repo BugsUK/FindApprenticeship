@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -14,7 +15,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using FluentValidation.Mvc;
     using Mediators.Login;
     using Providers;
-    using SFA.Apprenticeships.Application.Interfaces;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;

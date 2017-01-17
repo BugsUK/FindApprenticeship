@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
+    using Application.Interfaces;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
@@ -10,7 +11,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
-    using SFA.Apprenticeships.Application.Interfaces;
     using System;
     using System.Globalization;
     using System.Linq;
@@ -558,12 +558,12 @@
         {
             // TODO: why have a patch method like this? should be done in mapper.
             var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
-            
+
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
                 apprenticeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable;
                 apprenticeshipApplicationViewModel.Status = ApplicationStatuses.ExpiredOrWithdrawn;
-                
+
                 return apprenticeshipApplicationViewModel;
             }
 

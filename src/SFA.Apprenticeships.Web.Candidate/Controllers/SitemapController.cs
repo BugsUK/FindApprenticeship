@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
     using Application.Vacancy.SiteMap;
     using Common.Constants;
     using Common.SiteMap;
-    using Constants;
+    using System.Linq;
+    using System.Web.Mvc;
 
     [OutputCache(CacheProfile = CacheProfiles.SiteMap)]
     public class SiteMapController : Controller
@@ -26,7 +25,7 @@
             {
                 return new HttpNotFoundResult();
             }
- 
+
             var siteMapItems = vacancies
                 .Select(vacancy =>
                     new SiteMapItem(vacancy.ToUrl(), vacancy.LastModifiedDate, SiteMapChangeFrequency.Hourly));

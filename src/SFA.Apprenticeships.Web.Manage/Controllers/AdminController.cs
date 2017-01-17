@@ -1,20 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
     using Constants;
     using Domain.Entities.Raa;
-    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
     using Raa.Common.Mediators.Admin;
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
+    using System;
+    using System.Web.Mvc;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [AuthorizeUser(Roles = Roles.Admin)]
@@ -192,7 +190,7 @@
                     return View(response.ViewModel);
 
                 case AdminMediatorCodes.CreateProviderSite.Ok:
-                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new {viewModel.ProviderId});
+                    return RedirectToRoute(ManagementRouteNames.AdminViewProvider, new { viewModel.ProviderId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

@@ -560,10 +560,10 @@
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(ManagementRouteNames.SearchAddresses, new
             {
-                PostcodeSearch = viewModel.PostcodeSearch,
-                VacancyGuid = viewModel.VacancyGuid,
-                AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                VacancyReferenceNumber = viewModel.VacancyReferenceNumber
+                viewModel.PostcodeSearch,
+                viewModel.VacancyGuid,
+                viewModel.AdditionalLocationInformation,
+                viewModel.VacancyReferenceNumber
             });
         }
 
@@ -641,11 +641,11 @@
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(ManagementRouteNames.ShowLocations, new
             {
-                PostcodeSearch = viewModel.PostcodeSearch,
-                VacancyGuid = viewModel.VacancyGuid,
-                AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                CurrentPage = viewModel.CurrentPage,
-                VacancyReferenceNumber = viewModel.VacancyReferenceNumber
+                viewModel.PostcodeSearch,
+                viewModel.VacancyGuid,
+                viewModel.AdditionalLocationInformation,
+                viewModel.CurrentPage,
+                viewModel.VacancyReferenceNumber
             });
         }
     }

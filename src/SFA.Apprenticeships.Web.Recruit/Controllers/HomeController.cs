@@ -1,17 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
-    using System.Web;
-    using System.Web.Mvc;
     using Application.Interfaces;
     using Common.Constants;
     using Common.Framework;
-    using FluentValidation.Mvc;
     using Common.Mediators;
+    using FluentValidation.Mvc;
     using Mediators.Home;
     using Raa.Common.Constants.Pages;
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
     using ViewModels.Home;
-    using SFA.Infrastructure.Interfaces;
 
     public class HomeController : RecruitmentControllerBase
     {
@@ -36,12 +35,12 @@
         {
             return View();
         }
-                
+
         public ActionResult ContactUs()
         {
             var userName = GetProviderUserName();
             var response = _homeMediator.GetContactMessageViewModel(userName);
-            return View(response.ViewModel);            
+            return View(response.ViewModel);
         }
 
         [HttpPost]
@@ -49,7 +48,7 @@
         public ActionResult ContactUs(ContactMessageViewModel viewModel)
         {
             var userName = GetProviderUserName();
-            var response = _homeMediator.SendContactMessage(userName,viewModel);
+            var response = _homeMediator.SendContactMessage(userName, viewModel);
             switch (response.Code)
             {
                 case HomeMediatorCodes.SendContactMessage.ValidationError:

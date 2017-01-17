@@ -83,7 +83,7 @@ WriteLiteral("\r\n\r\n");
 
             
             #line 14 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-Write(Html.Partial("ValidationSummary"));
+Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
