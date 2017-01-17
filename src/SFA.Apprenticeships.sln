@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{22CE73E4-F469-434C-AC5D-D926EBBAC3D5}"
 EndProject
@@ -234,6 +234,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Security", "SFA.Apprenticeships.Infrastructure.Security\SFA.Apprenticeships.Infrastructure.Security.csproj", "{E8841E6E-382A-476B-9AF0-ACDBD4870659}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.Client.V1", "SFA.DAS.RAA.Api.Client.V1\SFA.DAS.RAA.Api.Client.V1.csproj", "{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{C352BC86-6214-4F6D-A267-ABF3F47B7077}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api", "SFA.DAS.RAA.Api\SFA.DAS.RAA.Api.csproj", "{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.AcceptanceTests", "SFA.DAS.RAA.Api.AcceptanceTests\SFA.DAS.RAA.Api.AcceptanceTests.csproj", "{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.IntegrationTests", "SFA.DAS.RAA.Api.IntegrationTests\SFA.DAS.RAA.Api.IntegrationTests.csproj", "{B0698001-39C3-437F-8F70-00CBAA0CF1D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api.UnitTests", "SFA.DAS.RAA.Api.UnitTests\SFA.DAS.RAA.Api.UnitTests.csproj", "{50730AE1-D314-40E7-93B2-450F0C898CAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1417,6 +1427,62 @@ Global
 		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Release|Any CPU.Build.0 = Prod|Any CPU
 		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Local|Any CPU.Build.0 = Local|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Local|Any CPU.Build.0 = Local|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Release|Any CPU.ActiveCfg = Prod|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Release|Any CPU.Build.0 = Prod|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Local|Any CPU.Build.0 = Local|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Release|Any CPU.ActiveCfg = Prod|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Release|Any CPU.Build.0 = Prod|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Local|Any CPU.Build.0 = Local|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Release|Any CPU.ActiveCfg = Prod|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Release|Any CPU.Build.0 = Prod|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{50730AE1-D314-40E7-93B2-450F0C898CAE}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1528,9 +1594,14 @@ Global
 		{8AC673DF-E924-4C09-8A07-46614D29AAC1} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 		{E8841E6E-382A-476B-9AF0-ACDBD4870659} = {CCED2B84-BCDF-4E9B-AE7C-0597B7E7CCB8}
 		{B263F67E-B3EA-410A-BA24-4F3CC2CE0008} = {98B00E10-2746-459E-8669-D8D71C8A05B6}
+		{C352BC86-6214-4F6D-A267-ABF3F47B7077} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
+		{50961A74-0E1B-490D-99DD-E8F1CD20F6C2} = {C352BC86-6214-4F6D-A267-ABF3F47B7077}
+		{1029A059-3EA8-4173-9AD9-4DEAB6FDD3C2} = {C352BC86-6214-4F6D-A267-ABF3F47B7077}
+		{B0698001-39C3-437F-8F70-00CBAA0CF1D2} = {C352BC86-6214-4F6D-A267-ABF3F47B7077}
+		{50730AE1-D314-40E7-93B2-450F0C898CAE} = {C352BC86-6214-4F6D-A267-ABF3F47B7077}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal
