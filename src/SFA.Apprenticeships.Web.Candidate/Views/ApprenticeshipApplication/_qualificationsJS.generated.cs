@@ -61,40 +61,45 @@ WriteLiteral(" data-enter-action=\"#saveQualification\"");
 WriteLiteral(" data-bind=\"visible: selectedSection() === \'applyQualifications\', stopBinding:tru" +
 "e\"");
 
-WriteLiteral(">\r\n\r\n    <fieldset");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"sfa-xlarge-bottom-margin sfa-section-bordered\"");
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" id=\"applyQualifications\"");
 
-WriteLiteral(">\r\n        <legend");
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n            <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Qualifications</legend>\r\n        <p");
+WriteLiteral(">Qualifications</h3>\r\n\r\n            <legend");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
 WriteLiteral(" id=\"qualificationQuestion\"");
 
-WriteLiteral(">Do you have any qualifications?</p>\r\n        <p");
+WriteLiteral(">\r\n                Do you have any qualifications?\r\n                <span");
 
-WriteLiteral(" class=\"form-hint text\"");
+WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(" id=\"appTourQuals\"");
 
-WriteLiteral(">\r\n            If you don\'t know your results yet, enter your predicted grades. T" +
-"hese are grades your teacher expects you to get.\r\n        </p>\r\n        <div");
+WriteLiteral(">\r\n                    If you don\'t know your results yet, enter your predicted g" +
+"rades. These are grades your teacher expects you to get.\r\n                </span" +
+">\r\n            </legend>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"form-group inline clearfix\"");
 
-WriteLiteral(">\r\n            <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" data-target=\"qualifications-panel\"");
 
 WriteLiteral(" for=\"qualifications-yes\"");
 
-WriteLiteral(",");
+WriteLiteral(" ,");
 
 WriteLiteral(" class=\"block-label selection-button-radio\"");
 
@@ -102,16 +107,16 @@ WriteLiteral(" data-bind=\"css: {selected:showQualifications() }\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("                    ");
 
             
-            #line 13 "..\..\Views\ApprenticeshipApplication\_qualificationsJS.cshtml"
-           Write(Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, new { id = "qualifications-yes", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "qualifications-panel", aria_expanded = "false", aria_labelledby = "qualificationQuestion" }));
+            #line 17 "..\..\Views\ApprenticeshipApplication\_qualificationsJS.cshtml"
+               Write(Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, new { id = "qualifications-yes", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "qualifications-panel", aria_expanded = "false", aria_labelledby = "qualificationQuestion" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                Yes\r\n\r\n            </label>\r\n            <label");
+WriteLiteral("\r\n                    Yes\r\n\r\n                </label>\r\n                <label");
 
 WriteLiteral(" for=\"qualifications-no\"");
 
@@ -121,16 +126,17 @@ WriteLiteral(" data-bind=\"css: {selected: !showQualifications() }\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("                    ");
 
             
-            #line 18 "..\..\Views\ApprenticeshipApplication\_qualificationsJS.cshtml"
-           Write(Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "qualificationQuestion" }));
+            #line 22 "..\..\Views\ApprenticeshipApplication\_qualificationsJS.cshtml"
+               Write(Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "qualificationQuestion" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                No\r\n            </label>\r\n        </div>\r\n        <div");
+WriteLiteral("\r\n                    No\r\n                </label>\r\n            </div>\r\n\r\n       " +
+"     <div");
 
 WriteLiteral(" id=\"qualifications-panel\"");
 
@@ -140,29 +146,29 @@ WriteLiteral(" data-bind=\"style: {\'display\':showQualifications() ? \'block\' 
 
 WriteLiteral(" aria-hidden=\"true\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
 WriteLiteral(" id=\"qualEntry\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"inline-fixed form-group validation-message-parent\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"form-group vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:selectedQualification\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"qual-type\"");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(">Type of qualification</label>\r\n                        <select");
+WriteLiteral(">Type of qualification</label>\r\n                            <select");
 
 WriteLiteral(" class=\"form-control\"");
 
@@ -172,19 +178,19 @@ WriteLiteral(" data-bind=\"options: qualificationTypes, optionsCaption: \'Select
 "onsText: \'qualificationTypeName\', optionsValue: \'qualificationTypeName\',value: s" +
 "electedQualification\"");
 
-WriteLiteral("></select>\r\n                    </div>\r\n                    <div");
+WriteLiteral("></select>\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"form-group vert-align-top sfa-no-bottom-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:year\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"subject-year\"");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(">Year</label>\r\n                        <input");
+WriteLiteral(">Year</label>\r\n                            <input");
 
 WriteLiteral(" maxlength=\"4\"");
 
@@ -194,27 +200,27 @@ WriteLiteral(" class=\"form-control form-control-small\"");
 
 WriteLiteral(" pattern=\"[0-9]*\"");
 
-WriteLiteral("\r\n                               id=\"subject-year\"");
+WriteLiteral("\r\n                                   id=\"subject-year\"");
 
 WriteLiteral(" data-bind=\"value: year\"");
 
-WriteLiteral(">\r\n                    </div>\r\n                    <div");
+WriteLiteral(">\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"validation-message-container\"");
 
-WriteLiteral("></div>\r\n                </div>\r\n                <div");
+WriteLiteral("></div>\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(" data-bind=\"visible: showOtherQualification,parentvalElement:otherQualification\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"other-qual\"");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(">Name of other qualification</label>\r\n                    <input");
+WriteLiteral(">Name of other qualification</label>\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -226,19 +232,19 @@ WriteLiteral(" data-bind=\"value: otherQualification\"");
 
 WriteLiteral(" maxlength=\"100\"");
 
-WriteLiteral(">\r\n\r\n                </div>\r\n                <div");
+WriteLiteral(">\r\n\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:subject\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" for=\"subject-name\"");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(">Subject</label>\r\n                    <input");
+WriteLiteral(">Subject</label>\r\n                        <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -250,23 +256,23 @@ WriteLiteral(" data-bind=\"value: subject\"");
 
 WriteLiteral(" maxlength=\"50\"");
 
-WriteLiteral(">\r\n\r\n                </div>\r\n                <div");
+WriteLiteral(">\r\n\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"inline-fixed\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(" data-bind=\"parentvalElement:grade\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"subject-grade\"");
 
 WriteLiteral(" class=\"form-label-bold\"");
 
-WriteLiteral(">Grade</label>\r\n                        <input");
+WriteLiteral(">Grade</label>\r\n                            <input");
 
 WriteLiteral(" type=\"text\"");
 
@@ -278,11 +284,11 @@ WriteLiteral(" data-bind=\"value: grade\"");
 
 WriteLiteral(" maxlength=\"15\"");
 
-WriteLiteral(">\r\n\r\n                    </div>\r\n                    <div");
+WriteLiteral(">\r\n\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                        <input");
+WriteLiteral(">\r\n                            <input");
 
 WriteLiteral(" id=\"qual-predicted\"");
 
@@ -290,16 +296,16 @@ WriteLiteral(" type=\"checkbox\"");
 
 WriteLiteral(" data-bind=\"checked: predicted\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral(">\r\n                            <label");
 
 WriteLiteral(" for=\"qual-predicted\"");
 
-WriteLiteral(">Predicted?</label>\r\n                    </div>\r\n                </div>\r\n        " +
-"        <div");
+WriteLiteral(">Predicted?</label>\r\n                        </div>\r\n                    </div>\r\n" +
+"                    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                    <a");
+WriteLiteral(">\r\n                        <a");
 
 WriteLiteral(" role=\"button\"");
 
@@ -311,7 +317,7 @@ WriteLiteral(" id=\"saveQualification\"");
 
 WriteLiteral(" data-bind=\"click: addQualification\"");
 
-WriteLiteral(">Save this qualification</a>\r\n                    <span");
+WriteLiteral(">Save this qualification</a>\r\n                        <span");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 
@@ -319,74 +325,80 @@ WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral(" id=\"qualAddConfirmText\"");
 
-WriteLiteral("></span>\r\n                </div>\r\n\r\n            </div>\r\n            <div");
+WriteLiteral("></span>\r\n                    </div>\r\n\r\n                </div>\r\n                <" +
+"div");
 
 WriteLiteral(" data-bind=\"foreach: qualifications\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" data-bind=\"visible: groupItems().length > 0 \"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"hgroup-small\"");
 
-WriteLiteral(">\r\n                        <h3");
+WriteLiteral(">\r\n                            <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(" data-bind=\"text: groupKey\"");
 
-WriteLiteral("></h3>\r\n                    </div>\r\n                    <table");
+WriteLiteral("></h3>\r\n                        </div>\r\n                        <table");
 
 WriteLiteral(" class=\"grid-3-4\"");
 
-WriteLiteral(">\r\n                        <colgroup>\r\n                            <col");
+WriteLiteral(">\r\n                            <colgroup>\r\n                                <col");
 
 WriteLiteral(" class=\"t40\"");
 
-WriteLiteral(">\r\n                            <col");
+WriteLiteral(">\r\n                                <col");
 
 WriteLiteral(" class=\"t25\"");
 
-WriteLiteral(">\r\n                            <col");
+WriteLiteral(">\r\n                                <col");
 
 WriteLiteral(" class=\"t20\"");
 
-WriteLiteral(">\r\n                            <col");
+WriteLiteral(">\r\n                                <col");
 
 WriteLiteral(" class=\"t10\"");
 
-WriteLiteral(">\r\n                            <col");
+WriteLiteral(">\r\n                                <col");
 
 WriteLiteral(" class=\"t5\"");
 
-WriteLiteral(">\r\n                            <col>\r\n                        </colgroup>\r\n\r\n    " +
-"                    <thead>\r\n                            <tr>\r\n                 " +
-"               <th>\r\n                                    <span");
+WriteLiteral(">\r\n                                <col>\r\n                            </colgroup>" +
+"\r\n\r\n                            <thead>\r\n                                <tr>\r\n " +
+"                                   <th>\r\n                                       " +
+" <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Subject</span>\r\n                                </th>\r\n                         " +
-"       <th>\r\n                                    <span");
+WriteLiteral(">Subject</span>\r\n                                    </th>\r\n                     " +
+"               <th>\r\n                                        <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Grade</span>\r\n                                </th>\r\n                           " +
-"     <th>\r\n                                    <span");
+WriteLiteral(">Grade</span>\r\n                                    </th>\r\n                       " +
+"             <th>\r\n                                        <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Year</span>\r\n                                </th>\r\n                            " +
-"    <th></th>\r\n                                <th></th>\r\n                      " +
-"      </tr>\r\n                        </thead>\r\n                        <tbody");
+WriteLiteral(@">Year</span>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody");
 
 WriteLiteral(" id=\"qualifications-summary\"");
 
 WriteLiteral(" data-bind=\"foreach: groupItems\"");
 
-WriteLiteral(">\r\n                            <tr>\r\n                                <td>\r\n      " +
-"                              <input");
+WriteLiteral(">\r\n                                <tr>\r\n                                    <td>" +
+"\r\n                                        <input");
 
 WriteLiteral(" class=\"form-control qual-input-edit qual-subject\"");
 
@@ -398,12 +410,12 @@ WriteLiteral(" data-bind=\"value: qualificationSubject, attr:{\'name\':\'Candida
 
 WriteLiteral(" maxlength=\"50\"");
 
-WriteLiteral(" />\r\n                                </td>\r\n                                <td>\r" +
-"\n                                    <div");
+WriteLiteral(" />\r\n                                    </td>\r\n                                 " +
+"   <td>\r\n                                        <div");
 
 WriteLiteral(" class=\"sfa-small-bottom-margin\"");
 
-WriteLiteral(">\r\n                                        <input");
+WriteLiteral(">\r\n                                            <input");
 
 WriteLiteral(" class=\"form-control qual-input-edit qual-grade\"");
 
@@ -414,21 +426,21 @@ WriteLiteral(" data-bind=\"value: showEditButton()? gradeDisplay : qualification
 
 WriteLiteral(" maxlength=\"15\"");
 
-WriteLiteral(" />\r\n                                        <input");
+WriteLiteral(" />\r\n                                            <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"value: qualificationGrade, attr:{\'name\':\'Candidate.Qualifications[\' +" +
 " itemIndex() +\'].Grade\'}\"");
 
-WriteLiteral(" />\r\n                                    </div>\r\n                                " +
-"    <label");
+WriteLiteral(" />\r\n                                        </div>\r\n                            " +
+"            <label");
 
 WriteLiteral(" for=\"item-qual-predicted\"");
 
 WriteLiteral(" data-bind=\"ifnot: showEditButton\"");
 
-WriteLiteral(">\r\n                                        <input");
+WriteLiteral(">\r\n                                            <input");
 
 WriteLiteral(" id=\"item-qual-predicted\"");
 
@@ -438,23 +450,23 @@ WriteLiteral(" class=\"qual-predicted\"");
 
 WriteLiteral(" data-bind=\"checked: qualificationPredicted\"");
 
-WriteLiteral(" /> Predicted\r\n                                    </label>\r\n                    " +
-"            </td>\r\n                                <td>\r\n                       " +
-"             <input");
+WriteLiteral(" /> Predicted\r\n                                        </label>\r\n                " +
+"                    </td>\r\n                                    <td>\r\n           " +
+"                             <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"value: qualificationType, attr:{\'name\':\'Candidate.Qualifications[\' + " +
 "itemIndex() +\'].QualificationType\'}\"");
 
-WriteLiteral(" />\r\n                                    <input");
+WriteLiteral(" />\r\n                                        <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" data-bind=\"value: qualificationPredicted, attr:{\'name\':\'Candidate.Qualifications" +
 "[\' + itemIndex() +\'].IsPredicted\'}\"");
 
-WriteLiteral(" />\r\n                                    <input");
+WriteLiteral(" />\r\n                                        <input");
 
 WriteLiteral(" maxlength=\"4\"");
 
@@ -468,11 +480,12 @@ WriteLiteral(" data-bind=\"value: qualificationYear, attr:{\'name\':\'Candidate.
 "itemIndex() +\'].Year\', \'id\':\'candidate_qualifications_\'+ itemIndex() + \'__year\'," +
 "\'readonly\':readOnly() }\"");
 
-WriteLiteral(">\r\n                                </td>\r\n                                <td");
+WriteLiteral(">\r\n                                    </td>\r\n                                   " +
+" <td");
 
 WriteLiteral(" class=\"sfa-align-center\"");
 
-WriteLiteral(">\r\n                                    <span");
+WriteLiteral(">\r\n                                        <span");
 
 WriteLiteral(" data-bind=\"if: showEditButton, click: $root.editQualification\"");
 
@@ -482,7 +495,7 @@ WriteLiteral(" href=\"#\"");
 
 WriteLiteral(" class=\"fake-link cell-span edit-qualification-link\"");
 
-WriteLiteral(">Edit</a></span>\r\n                                    <span");
+WriteLiteral(">Edit</a></span>\r\n                                        <span");
 
 WriteLiteral(" data-bind=\"ifnot: showEditButton,click: $root.saveQualificationItem\"");
 
@@ -492,12 +505,12 @@ WriteLiteral(" href=\"#\"");
 
 WriteLiteral(" class=\"fake-link cell-span save-qualification-link\"");
 
-WriteLiteral(">Save</a></span>\r\n                                </td>\r\n                        " +
-"        <td");
+WriteLiteral(">Save</a></span>\r\n                                    </td>\r\n                    " +
+"                <td");
 
 WriteLiteral(" class=\"sfa-align-center\"");
 
-WriteLiteral(">\r\n                                    <i");
+WriteLiteral(">\r\n                                        <i");
 
 WriteLiteral(" class=\"cell-span\"");
 
@@ -517,18 +530,24 @@ WriteLiteral("><i");
 WriteLiteral(" class=\"visuallyhidden\"");
 
 WriteLiteral(@">Remove this qualification</i></a></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div");
 
-    </fieldset>
+WriteLiteral(" class=\"grid-row\"");
 
-</div>
-");
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n            <hr/>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

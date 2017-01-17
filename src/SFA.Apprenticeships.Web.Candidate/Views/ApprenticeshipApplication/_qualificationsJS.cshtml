@@ -1,128 +1,137 @@
 ﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
 
 <div class="hide-nojs" data-enter-action="#saveQualification" data-bind="visible: selectedSection() === 'applyQualifications', stopBinding:true">
+    <div class="grid-row">
+        <div id="applyQualifications" class="column-two-thirds">
+            <h3 class="heading-large">Qualifications</h3>
 
-    <fieldset class="sfa-xlarge-bottom-margin sfa-section-bordered" id="applyQualifications">
-        <legend class="heading-large">Qualifications</legend>
-        <p class="form-label-bold" id="qualificationQuestion">Do you have any qualifications?</p>
-        <p class="form-hint text" id="appTourQuals">
-            If you don't know your results yet, enter your predicted grades. These are grades your teacher expects you to get.
-        </p>
-        <div class="form-group inline clearfix">
-            <label data-target="qualifications-panel" for="qualifications-yes", class="block-label selection-button-radio" data-bind="css: {selected:showQualifications() }">
-                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, new { id = "qualifications-yes", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "qualifications-panel", aria_expanded = "false", aria_labelledby = "qualificationQuestion" })
-                Yes
+            <legend class="form-label-bold" id="qualificationQuestion">
+                Do you have any qualifications?
+                <span class="form-hint" id="appTourQuals">
+                    If you don't know your results yet, enter your predicted grades. These are grades your teacher expects you to get.
+                </span>
+            </legend>
 
-            </label>
-            <label for="qualifications-no" class="block-label selection-button-radio" data-bind="css: {selected: !showQualifications() }">
-                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "qualificationQuestion" })
-                No
-            </label>
-        </div>
-        <div id="qualifications-panel" class="toggle-content" data-bind="style: {'display':showQualifications() ? 'block' :'none' }" aria-hidden="true">
-            <div class="clearfix" id="qualEntry">
-                <div class="inline-fixed form-group validation-message-parent">
-                    <div class="form-group vert-align-top sfa-no-bottom-margin" data-bind="parentvalElement:selectedQualification">
-                        <label for="qual-type" class="form-label-bold">Type of qualification</label>
-                        <select class="form-control" id="qual-type" data-bind="options: qualificationTypes, optionsCaption: 'Select from list', optionsText: 'qualificationTypeName', optionsValue: 'qualificationTypeName',value: selectedQualification"></select>
+            <div class="form-group inline clearfix">
+                <label data-target="qualifications-panel" for="qualifications-yes" , class="block-label selection-button-radio" data-bind="css: {selected:showQualifications() }">
+                    @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, new { id = "qualifications-yes", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "qualifications-panel", aria_expanded = "false", aria_labelledby = "qualificationQuestion" })
+                    Yes
+
+                </label>
+                <label for="qualifications-no" class="block-label selection-button-radio" data-bind="css: {selected: !showQualifications() }">
+                    @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "qualificationQuestion" })
+                    No
+                </label>
+            </div>
+
+            <div id="qualifications-panel" class="toggle-content" data-bind="style: {'display':showQualifications() ? 'block' :'none' }" aria-hidden="true">
+                <div class="clearfix" id="qualEntry">
+                    <div class="inline-fixed form-group validation-message-parent">
+                        <div class="form-group vert-align-top sfa-no-bottom-margin" data-bind="parentvalElement:selectedQualification">
+                            <label for="qual-type" class="form-label-bold">Type of qualification</label>
+                            <select class="form-control" id="qual-type" data-bind="options: qualificationTypes, optionsCaption: 'Select from list', optionsText: 'qualificationTypeName', optionsValue: 'qualificationTypeName',value: selectedQualification"></select>
+                        </div>
+                        <div class="form-group vert-align-top sfa-no-bottom-margin" data-bind="parentvalElement:year">
+                            <label for="subject-year" class="form-label-bold">Year</label>
+                            <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*"
+                                   id="subject-year" data-bind="value: year">
+                        </div>
+                        <div class="validation-message-container"></div>
                     </div>
-                    <div class="form-group vert-align-top sfa-no-bottom-margin" data-bind="parentvalElement:year">
-                        <label for="subject-year" class="form-label-bold">Year</label>
-                        <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*"
-                               id="subject-year" data-bind="value: year">
+                    <div class="form-group" data-bind="visible: showOtherQualification,parentvalElement:otherQualification">
+                        <label for="other-qual" class="form-label-bold">Name of other qualification</label>
+                        <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification" maxlength="100">
+
                     </div>
-                    <div class="validation-message-container"></div>
-                </div>
-                <div class="form-group" data-bind="visible: showOtherQualification,parentvalElement:otherQualification">
-                    <label for="other-qual" class="form-label-bold">Name of other qualification</label>
-                    <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification" maxlength="100">
+                    <div class="form-group" data-bind="parentvalElement:subject">
+                        <label for="subject-name" class="form-label-bold">Subject</label>
+                        <input type="text" class="form-control" id="subject-name" data-bind="value: subject" maxlength="50">
 
-                </div>
-                <div class="form-group" data-bind="parentvalElement:subject">
-                    <label for="subject-name" class="form-label-bold">Subject</label>
-                    <input type="text" class="form-control" id="subject-name" data-bind="value: subject" maxlength="50">
+                    </div>
+                    <div class="inline-fixed">
+                        <div class="form-group" data-bind="parentvalElement:grade">
+                            <label for="subject-grade" class="form-label-bold">Grade</label>
+                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade" maxlength="15">
 
-                </div>
-                <div class="inline-fixed">
-                    <div class="form-group" data-bind="parentvalElement:grade">
-                        <label for="subject-grade" class="form-label-bold">Grade</label>
-                        <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade" maxlength="15">
-
+                        </div>
+                        <div class="form-group">
+                            <input id="qual-predicted" type="checkbox" data-bind="checked: predicted">
+                            <label for="qual-predicted">Predicted?</label>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input id="qual-predicted" type="checkbox" data-bind="checked: predicted">
-                        <label for="qual-predicted">Predicted?</label>
+                        <a role="button" href="#" class="button" id="saveQualification" data-bind="click: addQualification">Save this qualification</a>
+                        <span class="visuallyhidden" aria-live="polite" id="qualAddConfirmText"></span>
                     </div>
-                </div>
-                <div class="form-group">
-                    <a role="button" href="#" class="button" id="saveQualification" data-bind="click: addQualification">Save this qualification</a>
-                    <span class="visuallyhidden" aria-live="polite" id="qualAddConfirmText"></span>
-                </div>
 
-            </div>
-            <div data-bind="foreach: qualifications">
-                <div data-bind="visible: groupItems().length > 0 ">
-                    <div class="hgroup-small">
-                        <h3 class="heading-small" data-bind="text: groupKey"></h3>
+                </div>
+                <div data-bind="foreach: qualifications">
+                    <div data-bind="visible: groupItems().length > 0 ">
+                        <div class="hgroup-small">
+                            <h3 class="heading-small" data-bind="text: groupKey"></h3>
+                        </div>
+                        <table class="grid-3-4">
+                            <colgroup>
+                                <col class="t40">
+                                <col class="t25">
+                                <col class="t20">
+                                <col class="t10">
+                                <col class="t5">
+                                <col>
+                            </colgroup>
+
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="heading-span">Subject</span>
+                                    </th>
+                                    <th>
+                                        <span class="heading-span">Grade</span>
+                                    </th>
+                                    <th>
+                                        <span class="heading-span">Year</span>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="qualifications-summary" data-bind="foreach: groupItems">
+                                <tr>
+                                    <td>
+                                        <input class="form-control qual-input-edit qual-subject" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'id':'candidate_qualifications_'+ itemIndex() + '__subject', 'readonly':readOnly() }" maxlength="50" />
+                                    </td>
+                                    <td>
+                                        <div class="sfa-small-bottom-margin">
+                                            <input class="form-control qual-input-edit qual-grade" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
+                                            <input type="hidden" data-bind="value: qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade'}" />
+                                        </div>
+                                        <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
+                                            <input id="item-qual-predicted" type="checkbox" class="qual-predicted" data-bind="checked: qualificationPredicted" /> Predicted
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input type="hidden" data-bind="value: qualificationType, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
+                                        <input type="hidden" data-bind="value: qualificationPredicted, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].IsPredicted'}" />
+                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit qual-year" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year', 'id':'candidate_qualifications_'+ itemIndex() + '__year','readonly':readOnly() }">
+                                    </td>
+                                    <td class="sfa-align-center">
+                                        <span data-bind="if: showEditButton, click: $root.editQualification"><a href="#" class="fake-link cell-span edit-qualification-link">Edit</a></span>
+                                        <span data-bind="ifnot: showEditButton,click: $root.saveQualificationItem"><a href="#" class="fake-link cell-span save-qualification-link">Save</a></span>
+                                    </td>
+                                    <td class="sfa-align-center">
+                                        <i class="cell-span" style="padding-top: 7px;"><a href="#" class="font-xsmall fa fa-times-circle icon-black remove-qualification-link no-underline" data-bind="click: $root.removeQualification"><i class="visuallyhidden">Remove this qualification</i></a></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <table class="grid-3-4">
-                        <colgroup>
-                            <col class="t40">
-                            <col class="t25">
-                            <col class="t20">
-                            <col class="t10">
-                            <col class="t5">
-                            <col>
-                        </colgroup>
-
-                        <thead>
-                            <tr>
-                                <th>
-                                    <span class="heading-span">Subject</span>
-                                </th>
-                                <th>
-                                    <span class="heading-span">Grade</span>
-                                </th>
-                                <th>
-                                    <span class="heading-span">Year</span>
-                                </th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="qualifications-summary" data-bind="foreach: groupItems">
-                            <tr>
-                                <td>
-                                    <input class="form-control qual-input-edit qual-subject" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'id':'candidate_qualifications_'+ itemIndex() + '__subject', 'readonly':readOnly() }" maxlength="50" />
-                                </td>
-                                <td>
-                                    <div class="sfa-small-bottom-margin">
-                                        <input class="form-control qual-input-edit qual-grade" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
-                                        <input type="hidden" data-bind="value: qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade'}" />
-                                    </div>
-                                    <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
-                                        <input id="item-qual-predicted" type="checkbox" class="qual-predicted" data-bind="checked: qualificationPredicted" /> Predicted
-                                    </label>
-                                </td>
-                                <td>
-                                    <input type="hidden" data-bind="value: qualificationType, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
-                                    <input type="hidden" data-bind="value: qualificationPredicted, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].IsPredicted'}" />
-                                    <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit qual-year" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year', 'id':'candidate_qualifications_'+ itemIndex() + '__year','readonly':readOnly() }">
-                                </td>
-                                <td class="sfa-align-center">
-                                    <span data-bind="if: showEditButton, click: $root.editQualification"><a href="#" class="fake-link cell-span edit-qualification-link">Edit</a></span>
-                                    <span data-bind="ifnot: showEditButton,click: $root.saveQualificationItem"><a href="#" class="fake-link cell-span save-qualification-link">Save</a></span>
-                                </td>
-                                <td class="sfa-align-center">
-                                    <i class="cell-span" style="padding-top: 7px;"><a href="#" class="font-xsmall fa fa-times-circle icon-black remove-qualification-link no-underline" data-bind="click: $root.removeQualification"><i class="visuallyhidden">Remove this qualification</i></a></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
-
-    </fieldset>
-
+    </div>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <hr/>
+        </div>
+    </div>
 </div>
