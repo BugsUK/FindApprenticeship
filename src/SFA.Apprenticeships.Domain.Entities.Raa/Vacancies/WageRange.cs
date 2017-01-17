@@ -10,5 +10,7 @@
         public decimal Under18NationalMinimumWage { get; set; }
         public decimal Between18And20NationalMinimumWage { get; set; }
         public decimal Over21NationalMinimumWage { get; set; }
+
+        public string ValidationErrorMessage { get; set; }
     }
 }

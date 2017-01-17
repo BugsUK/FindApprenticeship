@@ -265,6 +265,8 @@
 
         public void DeleteProviderSiteRelationship(int providerSiteRelationshipId)
         {
+            _getOpenConnection.MutatingQuery<object>("DELETE FROM ProviderSiteFramework WHERE ProviderSiteRelationshipID = @providerSiteRelationshipId", new { providerSiteRelationshipId });
+            _getOpenConnection.MutatingQuery<object>("DELETE FROM ProviderSiteLocalAuthority WHERE ProviderSiteRelationshipID = @providerSiteRelationshipId", new { providerSiteRelationshipId });
             _getOpenConnection.MutatingQuery<object>("DELETE FROM ProviderSiteRelationship WHERE ProviderSiteRelationshipID = @providerSiteRelationshipId", new { providerSiteRelationshipId });
         }
 
