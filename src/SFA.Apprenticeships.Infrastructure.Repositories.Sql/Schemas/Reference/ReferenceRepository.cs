@@ -89,7 +89,8 @@
                     ApprenticeshipLevel = (ApprenticeshipLevel)levelAsInt,
                     Id = x.StandardId,
                     Name = x.FullName,
-                    ApprenticeshipSectorId = x.StandardSectorId
+                    ApprenticeshipSectorId = x.StandardSectorId,
+                    Status = (FrameworkStatusType)x.ApprenticeshipFrameworkStatusTypeId
                 };
                 return std;
             }).ToList();

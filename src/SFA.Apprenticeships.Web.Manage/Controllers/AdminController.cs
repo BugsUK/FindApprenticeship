@@ -513,11 +513,18 @@
                     Id = s.Id,
                     Name = ssat1.Name,
                     StandardSectorName = s.Name,
-                    StandardName = standardSector.Name
+                    StandardName = standardSector.Name,
+                    Status = s.Status
                 }));
             }
 
             return View(standards);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateStandard(EditStandardViewModel standard)
+        {
+            return Json(new {status = "Ok"});
         }
 
         [HttpGet]

@@ -28,6 +28,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         [Required]
         public int EducationLevelId { get; set; }
 
+        [Required]
+        public int ApprenticeshipFrameworkStatusTypeId { get; set; }
+
         //public virtual Level Level { get; set; }
 
         //public virtual Sector Sector { get; set; }

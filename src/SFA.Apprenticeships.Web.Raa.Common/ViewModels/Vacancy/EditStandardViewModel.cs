@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
 
     public class EditStandardViewModel
@@ -13,5 +14,7 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
         public string StandardSectorName { get; set; }
         public string StandardName { get; set; }
+
+        public FrameworkStatusType Status { get; set; }
     }
 }

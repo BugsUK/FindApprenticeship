@@ -90,7 +90,7 @@ $(document).ready(function () {
         });
     }
 
-    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn, .vacancy-filter, .vacancy-order, .search-btn').on('click', function () {
+    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn, .vacancy-filter, .vacancy-order, .search-btn, .no-handler').on('click', function () {
         var $this     = $(this),
             $thisText = $this.text();
 

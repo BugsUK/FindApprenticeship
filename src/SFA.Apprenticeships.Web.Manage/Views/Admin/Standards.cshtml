@@ -1,4 +1,5 @@
 ﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Raa.Reference
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
 @model List<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditStandardViewModel>
@@ -13,6 +14,10 @@
 
 <div>
     <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" />
+    <button style="display: none;" class="button no-handler" data-bind="css : { 'disabled' : busy }, visible : changedItems().length > 0, click: saveChanges">
+        <span data-bind="visible: !busy()">Save changes to <span data-bind="text: changedItems().length"></span> item(s)</span>
+        <span data-bind="visible: busy">Saving</span>
+    </button>
 </div>
 
 <table>
@@ -52,66 +57,144 @@
     @Scripts.Render("~/bundles/knockout")
 
     <script type="text/html" id="standard">
-        <tr>
+        <tr data-bind="style : { 'background-color' : standard.Changed() ? '#dee0e2' : 'none' }">
             <td data-bind="text: standard.Id"></td>
             <td data-bind="text: standard.Name"></td>
             <td data-bind="text: standard.StandardSectorName"></td>
             <td data-bind="text: standard.StandardName"></td>
             <td>
-                <select>
-                    <option>Active</option>
-                    <option>Deprecated</option>
-                </select>
+                <select data-bind="options: $root.statuses, optionsText: 'name', value: standard.StatusText"></select>
             </td>
         </tr>
     </script>
 
     <script>
-        var mappings = {
-            create: function(options) {
-                var mapped = ko.mapping.fromJS(options.data);
-                mapped.Selected = ko.observable(false);
-                return mapped;
-            }
-        };
+        var pageInit = function() {
+            var statuses = [
+                { name: 'Active', value: @((int) FrameworkStatusType.Active) },
+                { name: 'Ceased', value: @((int) FrameworkStatusType.Ceased) },
+                { name: 'Pending closure', value: @((int) FrameworkStatusType.PendingClosure) }
+            ];
 
-        function ViewModel() {
-            var self = this;
+            var mappings = {
+                create: function(options) {
+                    var mapped = ko.mapping.fromJS(options.data);
+                    mapped.Selected = ko.observable(false);
 
-            self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)), mappings);
+                    var status = '';
+                    for (var i = 0; i < statuses.length; i++) {
+                        if (statuses[i].value === mapped.Status()) {
+                            status = statuses[i]; //.name;
+                            break;
+                        }
+                    }
 
-            self.searchText = ko.observable();
+                    mapped.StatusText = ko.observable(status);
 
-            self.standards = ko.computed(function() {
-                if (self.searchText() != null) {
-                    var filter = self.searchText().toLowerCase();
+                    mapped.Changed = ko.observable(false);
 
+                    mapped.StatusText.subscribe(function(newValue) {
+                        for (var i = 0; i < statuses.length; i++) {
+                            if (statuses[i].name === newValue) {
+                                mapped.Status(statuses[i].value);
+                                return;
+                            }
+                        }
+                    });
+
+                    return mapped;
+                }
+            };
+
+            function ViewModel() {
+                var self = this;
+
+                self.busy = ko.observable(false);
+                self.statuses = ko.observableArray(statuses);
+
+                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)), mappings);
+
+                self.dataChange = function(item) {
+                    item.Changed(true);
+                }
+
+                self.searchText = ko.observable();
+
+                self.standards = ko.computed(function() {
+                    if (self.searchText() != null) {
+                        var filter = self.searchText().toLowerCase();
+
+                        return ko.utils.arrayFilter(self.data(),
+                            function(item) {
+                                var match = false;
+
+                                var id = item.Id();
+                                if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
+
+                                var name = item.Name();
+                                if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
+
+                                var standardName = item.StandardName();
+                                if (standardName != null)
+                                    match = match || standardName.toLowerCase().indexOf(filter) > -1;
+
+                                var standardSectorName = item.StandardSectorName();
+                                if (standardSectorName != null)
+                                    match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
+
+                                return match;
+                            });
+                    } else {
+                        return self.data();
+                    }
+                });
+
+                self.changedItems = ko.computed(function() {
                     return ko.utils.arrayFilter(self.data(),
                         function(item) {
-                            var match = false;
-
-                            var id = item.Id();
-                            if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
-
-                            var name = item.Name();
-                            if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
-
-                            var standardName = item.StandardName();
-                            if (standardName != null) match = match || standardName.toLowerCase().indexOf(filter) > -1;
-
-                            var standardSectorName = item.StandardSectorName();
-                            if (standardSectorName != null) match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
-
-                            return match;
+                            return item.Changed();
                         });
-                } else {
-                    return self.data();
+                });
+
+                // subscribe to all observables on this object
+                for (var i = 0; i < self.data().length; i++) {
+                    var mapped = self.data()[i];
+
+                    (function(mapped) {
+                        for (var item in mapped) {
+                            if (item !== 'Status' && mapped.hasOwnProperty(item) && item.indexOf('_') === -1) {
+                                mapped[item].subscribe(function(newValue) { self.dataChange(mapped); });
+                            }
+                        }
+                    }(mapped));
+
                 }
-            });
 
-            return self;
-        };
+                // functions
+                self.saveChanges = function() {
+                    self.busy(true);
 
-        ko.applyBindings(new ViewModel());
+                    var df = [];
+                    
+                    var changedItems = self.changedItems();
+
+                    for (var i = 0; i < changedItems.length; i++) {
+                        df.push($.post('@Url.Action("UpdateStandard")', ko.mapping.toJS(changedItems[i])));
+                    }
+
+                    $.when(df).then(function() {
+                        self.busy(false);
+                    });
+                }
+
+                return self;
+            };
+
+            var viewModel = new ViewModel();
+
+            ko.applyBindings(viewModel);
+        }
+
+        pageInit();
     </script>
 }
