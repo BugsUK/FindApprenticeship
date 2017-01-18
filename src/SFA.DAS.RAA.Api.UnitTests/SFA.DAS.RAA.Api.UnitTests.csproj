@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3CA36139-BBDD-4305-B15A-E9500606B672}</ProjectGuid>
+    <ProjectGuid>{50730AE1-D314-40E7-93B2-450F0C898CAE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SFA.DAS.RAA.Api.UnitTests</RootNamespace>

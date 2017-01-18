@@ -15,17 +15,15 @@
     public class AzureBlobConfigurationService : IConfigurationService
     {
         private readonly IConfigurationManager _configurationManager;
-        private readonly ILogService _loggerService;
         private static readonly string FileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(AzureBlobConfigurationService)).Location).FileVersion;
         private static readonly string CacheKey = string.Format("Configuration_{0}", FileVersion);
         private static readonly string BlobPath = string.Format("faa/{0}/settings.json", FileVersion);
         private readonly ObjectCache _cache;
         private readonly object _locker = new object();
 
-        public AzureBlobConfigurationService(IConfigurationManager configurationManager, ILogService loggerService)
+        public AzureBlobConfigurationService(IConfigurationManager configurationManager)
         {
             _configurationManager = configurationManager;
-            _loggerService = loggerService;
             _cache = MemoryCache.Default;
         }
 
@@ -60,7 +58,6 @@
                     if (settingsElement == null)
                     {
                         var message = $"Could not find configuration for {settingsName} in Azure Blob Storage. Have you loaded the correct configuration?";
-                        _loggerService.Error(message);
                         throw new MissingConfigurationException(message);
                     }
                     elementJson = settingsElement.ToString();
@@ -72,7 +69,6 @@
             }
             catch (Exception ex)
             {
-                _loggerService.Error($"Error getting {settingsName}", ex);
                 throw new Exception($"Error getting {settingsName}", ex);
             }
 
@@ -87,13 +83,10 @@
 
                 if (!string.IsNullOrEmpty(json)) return json;
 
-                _loggerService.Debug("Loading configuration from Azure Blob Storage");
-
                 var storageConnectionString = _configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
 
                 if (string.IsNullOrWhiteSpace(storageConnectionString))
                 {
-                    _loggerService.Warn("ConfigurationStorageConnectionString config setting null, can't load config");
                     return null;
                 }
 
@@ -109,7 +102,6 @@
 
                 if (string.IsNullOrWhiteSpace(json))
                 {
-                    _loggerService.Error("Failed to load configuration from Azure Blob Storage");
                     return null;
                 }
 

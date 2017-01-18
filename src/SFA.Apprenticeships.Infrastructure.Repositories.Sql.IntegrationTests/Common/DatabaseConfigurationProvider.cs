@@ -4,18 +4,13 @@
     using System.IO;
     using System.Linq;
     using Configuration;
-    using Moq;
-
-    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
-    using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
     internal class DatabaseConfigurationProvider
     {
         private const string DatabaseProjectName = "SFA.Apprenticeships.Data.AvmsPlus";
-        private readonly Mock<ILogService> _logService = new Mock<ILogService>();
         private static DatabaseConfigurationProvider _instance;
 
         public static DatabaseConfigurationProvider Instance
@@ -41,7 +36,7 @@
         {
             var configurationManager = new ConfigurationManager();
 
-            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
+            var configurationService = new AzureBlobConfigurationService(configurationManager);
 
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
             var connectionString = configurationService.Get<SqlConfiguration>().ConnectionString;

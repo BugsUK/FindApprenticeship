@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using Application.Interfaces;
     using Common.IoC;
     using Common.Binders;
     using Common.Configuration;
@@ -16,6 +17,7 @@
     using Infrastructure.Logging;
     using StructureMap;
     using Controllers;
+    using Raa.Common.Configuration;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -65,6 +67,10 @@
 
             // This header cannot be removed using web.config --> http://www.codeproject.com/Tips/785867/ASP-NET-MVC-Remove-IIS-Header-Bloat
             MvcHandler.DisableMvcResponseHeader = true;
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var webConfiguration = configurationService.Get<ManageWebConfiguration>();
+            Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.InstrumentationKey = webConfiguration.AppInsightsInstrumentationKey;
         }
 
         protected void Application_Error(object sender, EventArgs e)
