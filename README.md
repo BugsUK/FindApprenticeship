@@ -61,3 +61,24 @@ Infrastructure components include:
 ## License
 
 Licensed under the [MIT license](LICENSE)
+
+Node JS
+
+Firstly, install https://nodejs.org/en/ (use the one on the left, recommended for most users).
+
+Once installed do the following:
+
+From a command prompt (with admin) run:
+
+npm install gulp -g
+npm install gulp-cli -g
+
+browse to the src\SFA.Apprenticeships.Web.Common project folder in a command prompt and run
+
+npm install
+
+Then in visual studio open up Tools -> Options -> Projects & Solutions -> External Web Tools
+
+In the box on the right, add the path to your node installation (should be C:\Program Files\nodejs) and bump it up to the top of the list.
+
+That should be it, to verify it's working just open View -> Other Windows -> Task Runner Explorer and you should see a list of tasks from the gulpfile.js. Double click the default task which should run without error.
