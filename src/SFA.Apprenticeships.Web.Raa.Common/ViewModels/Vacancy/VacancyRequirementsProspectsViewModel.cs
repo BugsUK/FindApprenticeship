@@ -49,6 +49,13 @@
         [Display(Name = VacancyViewModelMessages.DesiredQualificationsComment.LabelText)]
         public string DesiredQualificationsComment { get; set; }
 
+        [AllowHtml]
+        [Display(Name = VacancyViewModelMessages.DesiredQualifications.LabelText)]
+        public string OtherInformation { get; set; }
+
+        [Display(Name = VacancyViewModelMessages.DesiredQualificationsComment.LabelText)]
+        public string OtherInformationComment { get; set; }
+
         public VacancyStatus Status { get; set; }
 
         public bool ComeFromPreview { get; set; }

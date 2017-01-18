@@ -73,15 +73,21 @@
     <Compile Include="ApiClient.cs" />
     <Compile Include="ApiClientExtensions.cs" />
     <Compile Include="IApiClient.cs" />
+    <Compile Include="IReference.cs" />
+    <Compile Include="Models\County.cs" />
     <Compile Include="Models\EmployerProviderSiteLink.cs" />
     <Compile Include="Models\EmployerProviderSiteLinkRequest.cs" />
     <Compile Include="Models\GeoPoint.cs" />
+    <Compile Include="Models\LocalAuthority.cs" />
     <Compile Include="Models\PostalAddress.cs" />
+    <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Vacancy.cs" />
     <Compile Include="Models\VacancySummary.cs" />
     <Compile Include="Models\Wage.cs" />
     <Compile Include="Models\WageUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reference.cs" />
+    <Compile Include="ReferenceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

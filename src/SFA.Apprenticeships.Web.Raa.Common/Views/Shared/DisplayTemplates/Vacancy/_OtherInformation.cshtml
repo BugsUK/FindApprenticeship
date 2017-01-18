@@ -1,0 +1,26 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model VacancyViewModel
+
+@{
+    var editableItemClass = ViewData["editableItemClass"];
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.OtherInformation))
+{
+    <section id="other-information" class="grid-row">
+        <div class="column-two-thirds">
+            <div class="@editableItemClass sfa-if-first">
+                <h2 class="heading-large">
+                    Other information
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.OtherInformation, Model.VacancyRequirementsProspectsViewModel.OtherInformationComment, Model.RequirementsProspectsLink))
+                </h2>
+                <div id="vacancy-other-information" itemprop="other" class="sfa-text-editor-generated @Model.VacancyRequirementsProspectsViewModel.OtherInformation.GetPreserveFormattingCssClass()">
+                    @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.EscapeHtmlEncoding(Html, Model.VacancyRequirementsProspectsViewModel.OtherInformation)
+                </div>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.OtherInformation, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.OtherInformationComment))
+            </div>
+        </div>
+    </section>
+    <hr class="sfa-no-bottom-margin" />
+}

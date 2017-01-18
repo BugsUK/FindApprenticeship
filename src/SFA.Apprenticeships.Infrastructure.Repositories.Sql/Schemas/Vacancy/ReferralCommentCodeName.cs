@@ -33,5 +33,6 @@
         public const string WorkingWeekComment = "WWK";
         public const string LocationAddressesComment = "LAD";
         public const string AdditionalLocationInformationComment = "ALI";
+        public const string OtherInformationComment = "OIN";
     }
 }
