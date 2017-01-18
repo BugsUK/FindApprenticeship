@@ -78,7 +78,8 @@
             {"ALI", 36},
             {"AED", 37},
             {"AER", 38},
-            {"AAE", 39}
+            {"AAE", 39},
+            {"OIN", 40}
         };
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
@@ -459,6 +460,7 @@ WHERE  FullName = @CountyFullName",
             SaveTextField(vacancyId, TextFieldCodeName.PersonalQualities, entity.PersonalQualities);
             SaveTextField(vacancyId, TextFieldCodeName.ThingsToConsider, entity.ThingsToConsider);
             SaveTextField(vacancyId, TextFieldCodeName.FutureProspects, entity.FutureProspects);
+            SaveTextField(vacancyId, TextFieldCodeName.OtherInformation, entity.OtherInformation);
         }
 
         private void SaveTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
@@ -556,6 +558,7 @@ when not matched then
             SaveComment(vacancyId, ReferralCommentCodeName.AnonymousEmployerReasonComment, entity.AnonymousEmployerReasonComment);
             SaveComment(vacancyId, ReferralCommentCodeName.AnonymousAboutTheEmployerComment, entity.AnonymousAboutTheEmployerComment);
             SaveComment(vacancyId, ReferralCommentCodeName.AnonymousEmployerDescriptionComment, entity.AnonymousEmployerDescriptionComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.OtherInformationComment, entity.OtherInformationComment);
         }
 
         private void SaveComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)
@@ -781,6 +784,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
         AED.Comments AS AnonymousEmployerDescriptionComment,
         AER.Comments AS AnonymousEmployerReasonComment,
         AAE.Comments AS AnonymousAboutTheEmployerComment,
+        OIN.Comments AS OtherInformationComment,
 		la.CodeName AS LocalAuthorityCode,
 		v.DurationTypeId AS DurationType,
 		v.DurationValue AS Duration,
@@ -852,6 +856,7 @@ LEFT OUTER JOIN VacancyReferralComments ALI ON ALI.VacancyId = v.VacancyId AND A
 LEFT OUTER JOIN VacancyReferralComments AED ON AED.VacancyId = v.VacancyId AND AED.FieldTypeId = dbo.GetCommentFieldId('AED')
 LEFT OUTER JOIN VacancyReferralComments AER ON AER.VacancyId = v.VacancyId AND AER.FieldTypeId = dbo.GetCommentFieldId('AER')
 LEFT OUTER JOIN VacancyReferralComments AAE ON AAE.VacancyId = v.VacancyId AND AAE.FieldTypeId = dbo.GetCommentFieldId('AAE')
+LEFT OUTER JOIN VacancyReferralComments OIN ON OIN.VacancyId = v.VacancyId AND OIN.FieldTypeId = dbo.GetCommentFieldId('OIN')
 WHERE v.VacancyID = @vacancyId";
 
         public static readonly string SelectVacancyIdFromReferenceNumberSql = @"

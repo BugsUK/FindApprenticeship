@@ -44,5 +44,11 @@
         @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "form-control form-control-3-4 form-textarea-medium", type = "text"})
         @Html.EditorFor(m => m.ThingsToConsiderComment, "Comment", Html.GetLabelFor(m => m.ThingsToConsiderComment))
         @Html.ValidationMessageFor(m => m.ThingsToConsiderComment)
+        @if(!string.IsNullOrEmpty(Model.OtherInformation))
+        {
+            @Html.FormTextAreaFor(m => m.OtherInformation, controlHtmlAttributes: new {@class = "form-control form-control-3-4 form-textarea-medium", type = "text"})
+            @Html.EditorFor(m => m.OtherInformationComment, "Comment", Html.GetLabelFor(m => m.OtherInformationComment))
+            @Html.ValidationMessageFor(m => m.OtherInformationComment)
+        }
     </div>
 </section>

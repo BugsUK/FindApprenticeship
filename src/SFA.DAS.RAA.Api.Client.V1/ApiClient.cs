@@ -43,6 +43,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Gets the IReference.
+        /// </summary>
+        public virtual IReference Reference { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ApiClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -243,6 +248,7 @@ namespace SFA.DAS.RAA.Api.Client.V1
         /// </summary>
         private void Initialize()
         {
+            this.Reference = new Reference(this);
             this.BaseUri = new System.Uri("http://local-restapi.findapprenticeship.service.gov.uk");
             SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {

@@ -43,6 +43,11 @@ namespace SFA.DAS.RAA.Api.Client.V1
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
 
+        /// <summary>
+        /// Gets the IReference.
+        /// </summary>
+        IReference Reference { get; }
+
             /// <summary>
         /// Endpoint for linking an employer to a provider site.
         /// </summary>
