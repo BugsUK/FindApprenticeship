@@ -460,6 +460,7 @@ WHERE  FullName = @CountyFullName",
             SaveTextField(vacancyId, TextFieldCodeName.PersonalQualities, entity.PersonalQualities);
             SaveTextField(vacancyId, TextFieldCodeName.ThingsToConsider, entity.ThingsToConsider);
             SaveTextField(vacancyId, TextFieldCodeName.FutureProspects, entity.FutureProspects);
+            SaveTextField(vacancyId, TextFieldCodeName.OtherInformation, entity.OtherInformation);
         }
 
         private void SaveTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
