@@ -63,126 +63,144 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"hgroup\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n    <h1");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Give feedback</h1>\r\n    <p");
+WriteLiteral(">Give feedback</h1>\r\n    </div>\r\n</div>\r\n\r\n<div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <p");
 
 WriteLiteral(" class=\"sfa-no-bottom-margin\"");
 
-WriteLiteral(">Please leave your suggestions or comments about our service.</p>\r\n    <p>If you\'" +
-"re looking for help then <a");
+WriteLiteral(">Please leave your suggestions or comments about our service.</p>\r\n        <p>If " +
+"you\'re looking for help then <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 413), Tuple.Create("\"", 463)
-            
-            #line 11 "..\..\Views\Home\Feedback.cshtml"
-, Tuple.Create(Tuple.Create("", 420), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
-            
-            #line default
-            #line hidden
-, 420), false)
-);
-
-WriteLiteral(">contact us</a> instead.</p>\r\n</div>\r\n\r\n");
-
-            
-            #line 14 "..\..\Views\Home\Feedback.cshtml"
- using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post, new { id = "feedback-form" }))
-{
-    
-            
-            #line default
-            #line hidden
-            
-            #line 16 "..\..\Views\Home\Feedback.cshtml"
-Write(Html.AntiForgeryToken());
-
-            
-            #line default
-            #line hidden
-            
-            #line 16 "..\..\Views\Home\Feedback.cshtml"
-                            
-    
-            
-            #line default
-            #line hidden
+WriteAttribute("href", Tuple.Create(" href=\"", 547), Tuple.Create("\"", 597)
             
             #line 17 "..\..\Views\Home\Feedback.cshtml"
-Write(Html.FormTextFor(
-            m => m.Name,
-            containerHtmlAttributes: new { @class = "form-group-compound" },
-            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" }));
+, Tuple.Create(Tuple.Create("", 554), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+            
+            #line default
+            #line hidden
+, 554), false)
+);
+
+WriteLiteral(">contact us</a> instead.</p>\r\n\r\n");
+
+            
+            #line 19 "..\..\Views\Home\Feedback.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 19 "..\..\Views\Home\Feedback.cshtml"
+         using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post, new { id = "feedback-form" }))
+        {
+            
+            
+            #line default
+            #line hidden
+            
+            #line 21 "..\..\Views\Home\Feedback.cshtml"
+       Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Home\Feedback.cshtml"
-                                                                                                
-
-    
+            #line 21 "..\..\Views\Home\Feedback.cshtml"
+                                    
+            
             
             #line default
             #line hidden
             
             #line 22 "..\..\Views\Home\Feedback.cshtml"
-Write(Html.FormTextFor(
-            m => m.Email,
+       Write(Html.FormTextFor(
+            m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
+            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71", @class = "form-control-2-3" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 25 "..\..\Views\Home\Feedback.cshtml"
+                                                                                                                             
+
+            
+            
+            #line default
+            #line hidden
+            
+            #line 27 "..\..\Views\Home\Feedback.cshtml"
+       Write(Html.FormTextFor(
+            m => m.Email,
+                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100", @class = "form-control-2-3" },
             hintHtmlAttributes: new { @class = "text" }));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Home\Feedback.cshtml"
+            #line 30 "..\..\Views\Home\Feedback.cshtml"
                                                         
 
-    
+            
             
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Home\Feedback.cshtml"
-Write(Html.FormTextAreaFor(m => m.Details,
-                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
-                hintHtmlAttributes: new { @class = "text" }));
+            #line 32 "..\..\Views\Home\Feedback.cshtml"
+       Write(Html.FormTextAreaFor(m => m.Details,
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "7", role = "textbox", aria_multiline = "true", @class = "form-control-4-4" }));
 
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\Home\Feedback.cshtml"
-                                                            
+            #line 33 "..\..\Views\Home\Feedback.cshtml"
+                                                                                                                                                                 
 
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <button");
+WriteLiteral(">\r\n                <button");
 
 WriteLiteral(" id=\"give-feedback-form-button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Give feedback</button>\r\n    </div>\r\n");
+WriteLiteral(">Give feedback</button>\r\n            </div>\r\n");
 
             
-            #line 35 "..\..\Views\Home\Feedback.cshtml"
-}
+            #line 38 "..\..\Views\Home\Feedback.cshtml"
+        }
 
             
             #line default
             #line hidden
+WriteLiteral("    </div>\r\n</div>\r\n");
+
         }
     }
 }
