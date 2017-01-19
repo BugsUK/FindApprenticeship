@@ -22,10 +22,11 @@ $(function () {
         this.resultItem = resultItem[0];
         this.resultItem.resultMap = this;
         this.container = resultItem.find(".map-container");
-        this.map = resultItem.find(".map");
+        this.map = resultItem.find(".map-placeholder");
         if (this.map && this.map.length) {
             this.map[0].resultMap = this;
         }
+        this.staticMap = resultItem.find(".static-map");
         this.link = resultItem.find('.vacancy-link');
         this.title = this.link.html();
         this.vacancyId = this.link.attr('data-vacancy-id');
@@ -86,12 +87,10 @@ $(function () {
 
         apiScriptLoaded = true;
         initialize();
-        lazyLoadMaps();
     });
 
     $window.on('resultsReloaded', function () {
         initialize();
-        lazyLoadMaps();
     });
 
     function initialize() {
@@ -182,34 +181,41 @@ $(function () {
 
     function lazyLoadMaps() {
         //If desktop - load script and set lazy load on all result maps.
-        if (
-            //$('#content').css('font-size') !== '16px' && 
-            apiScriptLoaded) {
+        if (apiScriptLoaded) {
             _.each(resultMaps, function(resultMap) {
-                resultMap.map.lazyLoadGoogleMaps(
-                {
-                    api_key: 'gme-skillsfundingagency',
-                    callback: function(container, lazyMap) {
-                        var lazyOptions = {
-                            zoom: 10,
-                            center: resultMap.latlng,
-                            mapTypeControl: false,
-                            overviewMapControl: false,
-                            panControl: false,
-                            scaleControl: false,
-                            scrollwheel: false,
-                            streetViewControl: false,
-                            zoomControl: true,
-                            zoomControlOptions: {
-                                style: google.maps.ZoomControlStyle.SMALL
-                            }
-                        };
+                lazyLoadMap(resultMap);
+            });
+        }
+    }
 
-                        lazyMap.setOptions(lazyOptions);
-                        new google.maps.Marker({ position: resultMap.latlng, map: lazyMap, icon: markerIcon });
-                        resultMap.directionsDisplay.setMap(lazyMap);
-                    }
-                });
+    function lazyLoadMap(resultMap) {
+        //If desktop - load script and set lazy load on all result maps.
+        if (apiScriptLoaded) {
+            resultMap.staticMap.hide();
+            resultMap.map.addClass("map");
+            resultMap.map.lazyLoadGoogleMaps(
+            {
+                api_key: 'gme-skillsfundingagency',
+                callback: function (container, lazyMap) {
+                    var lazyOptions = {
+                        zoom: 12,
+                        center: resultMap.latlng,
+                        mapTypeControl: false,
+                        overviewMapControl: false,
+                        panControl: false,
+                        scaleControl: false,
+                        scrollwheel: false,
+                        streetViewControl: false,
+                        zoomControl: true,
+                        zoomControlOptions: {
+                            style: google.maps.ZoomControlStyle.SMALL
+                        }
+                    };
+
+                    lazyMap.setOptions(lazyOptions);
+                    new google.maps.Marker({ position: resultMap.latlng, map: lazyMap, icon: markerIcon });
+                    resultMap.directionsDisplay.setMap(lazyMap);
+                }
             });
         }
     }
@@ -229,12 +235,13 @@ $(function () {
 
     function showMobileMap(showMapLink) {
         var resultMap = getResultMap(showMapLink);
+        lazyLoadMap(resultMap);
         var mobLatlng = new google.maps.LatLng(resultMap.lat, resultMap.lon);
         showMapLink.toggleClass('map-closed');
         resultMap.container.toggle();
 
         var mobMapOptions = {
-            zoom: 10,
+            zoom: 12,
             center: mobLatlng,
             mapTypeControl: false,
             overviewMapControl: false,
@@ -260,6 +267,7 @@ $(function () {
 
     function calcRoute(element, updatedMode) {
         var resultMap = getResultMap(element);
+        lazyLoadMap(resultMap);
         var dcsUri = updatedMode ? '/apprenticeships/journeytimechange' : '/apprenticeships/journeytime';
 
         var request = {

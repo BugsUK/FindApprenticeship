@@ -477,13 +477,37 @@ WriteLiteral(" class=\"map-links fake-link font-xxsmall view-googlemaps\"");
 
 WriteLiteral(">Open map</a>\r\n                                <div");
 
-WriteLiteral(" class=\"map\"");
+WriteLiteral(" class=\"map-placeholder\"");
 
-WriteLiteral("></div>\r\n                            </div>\r\n                        </div>\r\n    " +
-"                </li>\r\n");
+WriteLiteral("></div>\r\n                                <img");
+
+WriteLiteral(" class=\"static-map\"");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 5985), Tuple.Create("\"", 6119)
+, Tuple.Create(Tuple.Create("", 5991), Tuple.Create("//maps.googleapis.com/maps/api/staticmap?markers=", 5991), true)
+            
+            #line 87 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                               , Tuple.Create(Tuple.Create("", 6040), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+            
+            #line default
+            #line hidden
+, 6040), false)
+, Tuple.Create(Tuple.Create("", 6068), Tuple.Create(",", 6068), true)
+            
+            #line 87 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                                            , Tuple.Create(Tuple.Create("", 6069), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+            
+            #line default
+            #line hidden
+, 6069), false)
+, Tuple.Create(Tuple.Create("", 6098), Tuple.Create("&size=190x125&zoom=12", 6098), true)
+);
+
+WriteLiteral(" />\r\n                            </div>\r\n                        </div>\r\n        " +
+"            </li>\r\n");
 
             
-            #line 90 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 91 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
                     itemPosition++;
                 }
             }
@@ -494,7 +518,7 @@ WriteLiteral("></div>\r\n                            </div>\r\n                 
 WriteLiteral("        </ul>\r\n");
 
             
-            #line 94 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 95 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
 
     Html.RenderPartial("_pagination", Model);
 
@@ -519,7 +543,7 @@ WriteLiteral(">Display results</label>\r\n");
 WriteLiteral("            ");
 
             
-            #line 101 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 102 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
        Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page", @class = "form-control form-control-auto" }));
 
             
@@ -536,7 +560,7 @@ WriteLiteral(" value=\"ResultsPerPage\"");
 WriteLiteral(">View</button>\r\n            </noscript>\r\n        </div>\r\n");
 
             
-            #line 106 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 107 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
     }
 }
 
