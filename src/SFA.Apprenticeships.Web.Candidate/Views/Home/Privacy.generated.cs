@@ -75,15 +75,7 @@ WriteLiteral(" id=\"h1header\"");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Privacy and cookies</h1>\r\n    </div>\r\n</div>\r\n\r\n<div");
-
-WriteLiteral(" class=\"grid-row\"");
-
-WriteLiteral(">\r\n    <div");
-
-WriteLiteral(" class=\"column-two-thirds\"");
-
-WriteLiteral(">\r\n        <section>\r\n            <h2");
+WriteLiteral(">Privacy and cookies</h1>\r\n\r\n        <section>\r\n            <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
@@ -165,14 +157,14 @@ WriteLiteral(@">
             </ul>
             <p>Webtrends isn’t allowed to use or share our analytics data with anyone, but you can <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3207), Tuple.Create("\"", 3255)
+WriteAttribute("href", Tuple.Create(" href=\"", 3126), Tuple.Create("\"", 3174)
             
-            #line 56 "..\..\Views\Home\Privacy.cshtml"
-                            , Tuple.Create(Tuple.Create("", 3214), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.WebTrendsOptOut)
+            #line 52 "..\..\Views\Home\Privacy.cshtml"
+                            , Tuple.Create(Tuple.Create("", 3133), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.WebTrendsOptOut)
             
             #line default
             #line hidden
-, 3214), false)
+, 3133), false)
 );
 
 WriteLiteral(">opt out</a> if you wish.</p>\r\n            <table>\r\n                <colgroup>\r\n " +
