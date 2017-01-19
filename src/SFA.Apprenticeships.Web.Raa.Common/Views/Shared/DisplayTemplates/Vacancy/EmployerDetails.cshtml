@@ -2,7 +2,7 @@
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
-<div class="grid-row">
+
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.HiddenFor(m => m.ProviderSiteId)
     @Html.HiddenFor(m => m.Employer.EdsUrn)
@@ -10,20 +10,22 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ComeFromPreview)
 
+<div class="grid-row">
     <div class="column-one-half">
-            <h3 class="bold-small">Employer</h3>
-            <p class="sfa-small-bottom-margin">@Model.Employer.FullName</p>
-            <h3 class="bold-small">Address</h3>
-            <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine1</p>
-            <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine2</p>
-            <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine3</p>
-            <p class="sfa-small-bottom-margin">@Model.Employer.Address.Town</p>
-            @if (Model.Employer.Address.County != "Please Select...")
+        <h3 class="heading-small sfa-no-top-margin">Employer</h3>
+        <p>@Model.Employer.FullName</p>
+
+        <h3 class="heading-small">Address</h3>
+        <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine1</p>
+        <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine2</p>
+        <p class="sfa-small-bottom-margin">@Model.Employer.Address.AddressLine3</p>
+        <p class="sfa-small-bottom-margin">@Model.Employer.Address.Town</p>
+        @if (Model.Employer.Address.County != "Please Select...")
             {
-                <p class="sfa-small-bottom-margin">@Model.Employer.Address.County</p>
-            }
-            <p class="sfa-small-bottom-margin">@Model.Employer.Address.Postcode</p>
-    </div>    
+            <p class="sfa-small-bottom-margin">@Model.Employer.Address.County</p>
+        }
+        <p class="sfa-small-bottom-margin">@Model.Employer.Address.Postcode</p>
+    </div>
     <div class="column-one-half hide-print">
         <div class="ad-details__map">
             <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
@@ -50,103 +52,114 @@
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
         </div>
     </div>
-    <br />
-    <br />
-    <div class="column-full">
-        <div class="blocklabel-single-container">
-            <div class="hide-nojs">
-                <div class="form-group">
-                    <a name="@Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()"></a>
-                    <h4 class="bold-small">Vacancy location options</h4>
-                    @if (Model.IsEmployerAddressValid)
-                    {
-                        @Html.ValidationMessageFor(m => m.VacancyLocationType)
+</div>
 
-                        <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
-                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.SpecificLocation, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"})
-                            Use the main employer address
-                        </label>
-                        <br/>
-                        <div id="location-type-main-location-panel" class="toggle-content blocklabel-content location left-grey-border">
-                            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS"}, labelHtmlAttributes: new {@class = "bold-small"})
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <div class="form-group">
+            <fieldset>
+                <a name="@Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()"></a>
+                <h3 class="form-label-bold sfa-small-bottom-margin">Vacancy location options</h3>
+                <legend class="visually-hidden">Vacancy location options</legend>
+                @if (Model.IsEmployerAddressValid)
+                {
+                    @Html.ValidationMessageFor(m => m.VacancyLocationType)
+
+                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label selection-button-radio @Model.VacancyLocationType">
+                        @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.SpecificLocation, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
+                        Use the main employer address
+                    </label>
+
+                        <div id="location-type-main-location-panel" class="panel panel-border-narrow toggle-content">
+                            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "number", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" })
                             @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                         </div>
-                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
-                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.MultipleLocations, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
+
+                        <label for="location-type-different-location" class="block-label selection-button-radio @Model.VacancyLocationType">
+                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.MultipleLocations, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
                             Add different location(s)
                         </label>
-                        <br/>
+
                         <label data-target="location-nation-wide-vacancy-panel" for="location-nation-wide-vacancy" class="block-label selection-button-radio @Model.VacancyLocationType ">
-                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.Nationwide, new {id = "location-nation-wide-vacancy", aria_controls = "location-nation-wide-vacancy-panel"})
+                            @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.Nationwide, new { id = "location-nation-wide-vacancy", aria_controls = "location-nation-wide-vacancy-panel" })
                             Set as a nationwide vacancy
                         </label>
-                        <div id="location-nation-wide-vacancy-panel" class="toggle-content blocklabel-content nationwide left-grey-border">
-                            @Html.FormTextFor(model => model.NumberOfPositionsNationwide, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsNWJS", Name = "NumberOfPositionsNWJS"}, labelHtmlAttributes: new {@class = "bold-small"})
+
+                        <div id="location-nation-wide-vacancy-panel" class="panel panel-border-narrow toggle-content">
+                            @Html.FormTextFor(model => model.NumberOfPositionsNationwide, controlHtmlAttributes: new { type = "number", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsNWJS", Name = "NumberOfPositionsNWJS" })
                             @Html.EditorFor(m => m.NumberOfPositionsNationwideComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                         </div>
-                    }
-                    else
-                    {
-                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
-                            @Html.RadioButtonFor(m => m.VacancyLocationType, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
-                            Yes, but I need to complete the full address
-                        </label>
-                    }
-                </div>
-            </div>
+                }
+                else
+                {
+                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
+                        @Html.RadioButtonFor(m => m.VacancyLocationType, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
+                        Yes, but I need to complete the full address
+                    </label>
+                }
+            </fieldset>
         </div>
 
-        <div class="blocklabel-single-container">
-            <div class="hide-nojs">
-                <div class="form-group inline clearfix blocklabel-single">
-                    <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
-                    <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
-                    @Html.ValidationMessageFor(m => m.IsAnonymousEmployer)
-                    <label data-target="is-non-anonymous-employer-panel" for="is-non-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
-                        @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "is-non-anonymous-employer", aria_controls = "is-non-anonymous-employer-panel" })
-                        Yes
-                    </label>
-                    <label data-target="is-anonymous-employer-panel" for="is-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
-                        @Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "is-anonymous-employer", aria_controls = "is-anonymous-employer-panel" })
-                        No, the employer wants to remain anonymous
-                    </label>
-                </div>
-            </div>
+        <div class="form-group">
+            <fieldset>
+                <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
+                <h3 class="form-label-bold sfa-small-bottom-margin">Will the employer's name and address be shown in this vacancy?</h3>
+                <legend class="visually-hidden">Will the employer's name and address be shown in this vacancy?</legend>
+                @Html.ValidationMessageFor(m => m.IsAnonymousEmployer)
+                <label data-target="is-non-anonymous-employer-panel" for="is-non-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
+                    @Html.RadioButtonFor(m => m.IsAnonymousEmployer, false, new { id = "is-non-anonymous-employer", aria_controls = "is-non-anonymous-employer-panel" })
+                    Yes
+                </label>
+                <label data-target="is-anonymous-employer-panel" for="is-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
+                    @Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "is-anonymous-employer", aria_controls = "is-anonymous-employer-panel" })
+                    No, the employer wants to remain anonymous
+                </label>
+            </fieldset>
         </div>
+
+        <!-- 
+
+        // The no script code below does not cover the whole form. This should be solved by using the GDS interactions.js, and replacing .toggle-content with .js-hidden
 
         <noscript>
-            <div class="blocklabel-single-container">
-                <div class="form-group inline clearfix blocklabel-single">
+            <div class="form-group">
+                <fieldset>
                     <a name="@Html.NameFor(m => m.VacancyLocationType).ToString().ToLower()"></a>
-                    <h4 class="bold-small">Is this address the vacancy location?</h4>
+                    <h3 class="form-label-bold sfa-small-bottom-margin">Is this address the vacancy location?</h3>
+                    <legend class="visually-hidden">Is this address the vacancy location?</legend>
                     @Html.ValidationMessageFor(m => m.VacancyLocationType)
 
                     <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
                         @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.SpecificLocation, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
                         Use the main employer address
                     </label>
-                    <br />
-                    <div id="location-type-main-location-panel" class="toggle-content blocklabel-content location left-grey-border">
-                        @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })
+
+                    <div id="location-type-main-location-panel" class="panel panel-border-narrow">
+                        @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })
                         @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                     </div>
-                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
+
+                    <label for="location-type-different-location" class="block-label selection-button-radio @Model.VacancyLocationType ">
                         @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.MultipleLocations, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
                         Add different location(s)
                     </label>
-                    <br />
+
                     <label data-target="location-nation-wide-vacancy-panel" for="location-nation-wide-vacancy" class="block-label selection-button-radio @Model.VacancyLocationType ">
                         @Html.RadioButtonFor(m => m.VacancyLocationType, VacancyLocationType.Nationwide, new { id = "location-nation-wide-vacancy", aria_controls = "location-nation-wide-vacancy-panel" })
                         Set as a nationwide vacancy
                     </label>
-                    <div id="location-nation-wide-vacancy-panel" class="toggle-content blocklabel-content nationwide left-grey-border">
-                        @Html.FormTextFor(model => model.NumberOfPositionsNationwide, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsNWJS", Name = "NumberOfPositionsNWJS" }, labelHtmlAttributes: new { @class = "bold-small" })
+
+                    <div id="location-nation-wide-vacancy-panel" class="panel panel-border-narrow">
+                        @Html.FormTextFor(model => model.NumberOfPositionsNationwide, controlHtmlAttributes: new { type = "text", @class = "form-control-1-8", @maxlength = "5", size = 12, id = "NumberOfPositionsNWJS", Name = "NumberOfPositionsNWJS" }, labelHtmlAttributes: new { @class = "bold-small" })
                         @Html.EditorFor(m => m.NumberOfPositionsNationwideComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
                     </div>
-                </div>
-                <div class="form-group inline clearfix blocklabel-single">
+                </fieldset>
+            </div>
+            <div class="form-group">
+                <fieldset>
                     <a name="@Html.NameFor(m => m.IsAnonymousEmployer).ToString().ToLower()"></a>
-                    <h4 class="bold-small">Will the employer's name and address be shown in this vacancy?</h4>
+                    <h3 class="form-label-bold sfa-small-bottom-margin">Will the employer's name and address be shown in this vacancy?</h3>
+                    <legend class="visually-hidden">Will the employer's name and address be shown in this vacancy?</legend>
                     @Html.ValidationMessageFor(m => m.IsAnonymousEmployer)
 
                     <label data-target="is-anonymous-employer" for="is-anonymous-employer" class="block-label selection-button-radio @Model.IsAnonymousEmployer ">
@@ -157,45 +170,39 @@
                         @Html.RadioButtonFor(m => m.IsAnonymousEmployer, true, new { id = "non-anonymous-employer", aria_controls = "non-anonymous-employer" })
                         No, the employer wants to remain anonymous
                     </label>
-                </div>
-                <div id="location-type-main-location-panel" class="toggle-content blocklabel-content location">
-                    @{
-                        var className = "form-group";
-                        if (ViewData.ModelState.Keys.Contains("NumberOfPositions"))
-                        {
-                            className += " error";
-                        }
+                </fieldset>
+            </div>
+            <div id="location-type-main-location-panel">
+                @{
+                    var className = "form-group";
+                    if (ViewData.ModelState.Keys.Contains("NumberOfPositions"))
+                    {
+                        className += " error";
                     }
-                    <div class="@className">
-                        <h4 class="bold-small">If this is the vacancy location, how many positions will be available?</h4>
-                        <input name="NumberOfPositions" class="form-control-small form-control" id="NumberOfPositions" maxlength="5" size="12" type="text"> positions
-                        @Html.ValidationMessage("NumberOfPositions")
-                    </div>
-                    @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
+                }
+                <div class="@className">
+                    <h3 class="form-label-bold">If this is the vacancy location, how many positions will be available?</h3>
+                    <input name="NumberOfPositions" class="form-control-1-8 form-control" id="NumberOfPositions" maxlength="5" size="12" type="text"> positions
+                    @Html.ValidationMessage("NumberOfPositions")
                 </div>
+                @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
             </div>
         </noscript>
-    </div>
+            -->
 
-    <div id="is-non-anonymous-employer-panel" class="toggle-content blocklabel-content non-anonymous">
-        <div class="column-full">
-            @Html.FormTextFor(model => model.EmployerWebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
+        <div id="is-non-anonymous-employer-panel" class="toggle-content non-anonymous">
             @Html.EditorFor(m => m.EmployerWebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.EmployerWebsiteUrlComment))
-            @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.EmployerDescriptionComment, "Comment", Html.GetLabelFor(m => m.EmployerDescriptionComment))
         </div>
-    </div>
-    <div id="is-anonymous-employer-panel" class="toggle-content blocklabel-content anonymous">
-        <div class="column-full">
-            <div class="hgroup-medium">
-                <p class="subtitle font-small">A brief description of the employer will be needed to replace their name. For example, car manufacturer or clothing retailer. The employer's address will not be visible to candidates. Only the employer's town or city will be shown.</p>
+
+        <div id="is-anonymous-employer-panel" class="toggle-content anonymous">
+            <div class="panel panel-border-wide">
+                <p>A brief description of the employer will be needed to replace their name. For example, car manufacturer or clothing retailer. The employer's address will not be visible to candidates. Only the employer's town or city will be shown.</p>
             </div>
-            @Html.FormTextAreaFor(model => model.AnonymousEmployerDescription, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1", data_val_length_max = "40", rows = 1 }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.AnonymousEmployerDescriptionComment, "Comment", Html.GetLabelFor(m => m.AnonymousEmployerDescriptionComment))
-            @Html.FormTextAreaFor(m => m.AnonymousEmployerReason, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;", data_val_length_max = "240" }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.AnonymousEmployerReasonComment, "Comment", Html.GetLabelFor(m => m.AnonymousEmployerReasonComment))
-            @Html.FormTextAreaFor(m => m.AnonymousAboutTheEmployer, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.EditorFor(m => m.AnonymousAboutTheEmployerComment, "Comment", Html.GetLabelFor(m => m.AnonymousAboutTheEmployerComment))
         </div>
+
     </div>
 </div>

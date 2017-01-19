@@ -13,41 +13,47 @@
 
     @Html.DisplayFor(m => m, LocationSearchViewModel.PartialView)
 
-    var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
-    <button type="submit" class="button no-autosave" name="AddLocations" value="Locations">@saveButtonText</button>
-    @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = Model.ProviderSiteId, edsUrn = Model.EmployerEdsUrn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true }, new {@class = "no-autosave" })
+        <div class="grid-row">
+            <div class="column-two-thirds sfa-xlarge-top-margin">
+        @{        
+            var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
+        }
+        <button type="submit" class="button no-autosave" name="AddLocations" value="Locations">@saveButtonText</button>
+        @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = Model.ProviderSiteId, edsUrn = Model.EmployerEdsUrn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true }, new { @class = "no-autosave button sfa-button-secondary" })
+        </div>
+        </div>
 }
 
 @section scripts {
     @Scripts.Render("~/bundles/knockout")
 
     <script type="text/javascript">
-    ko.observable.fn.appendError = function (error) {
-        var thisError = this.error();
-        if (thisError) {
-            this.setError(thisError += '. ' + error);
-        }
-        else {
-            this.setError(error);
+        ko.observable.fn.appendError = function (error) {
+            var thisError = this.error();
+            if (thisError) {
+                this.setError(thisError += '. ' + error);
+            }
+            else {
+                this.setError(error);
+            };
         };
-    };
 
-    var addressesData = null;
+        var addressesData = null;
 
-    addressesData = @Html.Raw(Json.Encode(Model.Addresses));
+        addressesData = @Html.Raw(Json.Encode(Model.Addresses));
 
-    if (!addressesData) addressesData = [];
+        if (!addressesData) addressesData = [];
 
-    function getLocationAddressesData() {
-        return addressesData;
-    }
+        function getLocationAddressesData() {
+            return addressesData;
+        }
 
-    var modelState = null;
-    modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
+        var modelState = null;
+        modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
 
-    function getModelState() {
-        return modelState;
-    }
+        function getModelState() {
+            return modelState;
+        }
     </script>
 
     @Scripts.Render("~/bundles/location")

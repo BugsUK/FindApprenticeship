@@ -10,7 +10,7 @@
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and preview " + (Model.VacancyType == VacancyType.Traineeship ? "opportunity" : "vacancy");
 
-    <div class="column-one-half inline">
+    <div class="column-two-thirds sfa-xlarge-top-margin inline">
         <button type="submit" class="button no-autosave" name="VacancyQuestions" value="VacancyQuestions">@saveButtonText</button>
         <button id="VacancyQuestionsAndExit" type="submit" class="button sfa-button-secondary no-autosave" name="VacancyQuestions" value="VacancyQuestionsAndExit">Save and exit</button>
         @if (Model.ComeFromPreview)

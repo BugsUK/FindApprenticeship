@@ -99,7 +99,7 @@ WriteLiteral("        ");
 
             
             #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.cshtml"
-   Write(Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "form-control form-control-4-4 form-textarea-medium", type = "text" }));
 
             
             #line default
@@ -121,7 +121,7 @@ WriteLiteral("        ");
 
             
             #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.cshtml"
-   Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" }));
+   Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "form-control form-control-4-4 form-textarea-medium", type = "text" }));
 
             
             #line default

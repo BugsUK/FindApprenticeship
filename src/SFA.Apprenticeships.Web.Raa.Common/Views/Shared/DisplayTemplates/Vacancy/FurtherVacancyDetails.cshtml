@@ -34,7 +34,7 @@
             var workingWeekDataValLength = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipTooLongErrorText : VacancyViewModelMessages.WorkingWeek.TooLongErrorText;
             var workingWeekDataValRegex = Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipWhiteListErrorText : VacancyViewModelMessages.WorkingWeek.WhiteListErrorText;
         }
-        @Html.FormTextAreaFor(m => m.WorkingWeek, workingWeeklabelText, containerHtmlAttributes: new { @baseClassName = "working-week form-group" }, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop", type = "text", size = 12, data_val_length = workingWeekDataValLength, data_val_regex = workingWeekDataValRegex })
+        @Html.FormTextAreaFor(m => m.WorkingWeek, workingWeeklabelText, containerHtmlAttributes: new { @baseClassName = "working-week form-group" }, controlHtmlAttributes: new { @class = "form-control-4-4", type = "text", size = 12, data_val_length = workingWeekDataValLength, data_val_regex = workingWeekDataValRegex })
     @*</fieldset>*@
     @if (Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship)
     {
@@ -43,7 +43,7 @@
     else
     {
         @*<fieldset class="inline-fixed" @disabledTag>*@
-            @Html.FormTextFor(m => m.Wage.HoursPerWeek, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", size = 12 }, containerHtmlAttributes: new { style = "margin-bottom: 15px" })
+            @Html.FormTextFor(m => m.Wage.HoursPerWeek, controlHtmlAttributes: new { @class = "form-control form-control-1-8", type = "tel", size = 12 })
         @*</fieldset>*@
     }
     <div class="form-group">@Html.EditorFor(m => m.WorkingWeekComment, "Comment", Html.GetLabelFor(m => m.WorkingWeekComment, Model.VacancyType == SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeekComment.TraineeshipLabelText : null))</div>
@@ -141,7 +141,7 @@
                                         containerHtmlAttributes: new { @baseClassName = "form-group-compound" },
                                         controlHtmlAttributes: new
                                         {
-                                            @class = "form-control-3-4 beepboop",
+                                            @class = "form-control-3-4",
                                             type = "text",
                                             size = 12,
                                             data_val_length = WageViewModelMessages.WageTypeReason.TooLongErrorText,
