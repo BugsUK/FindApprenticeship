@@ -95,7 +95,7 @@
 
                     mapped.StatusText.subscribe(function(newValue) {
                         for (var i = 0; i < statuses.length; i++) {
-                            if (statuses[i].name === newValue) {
+                            if (statuses[i].name === newValue.name) {
                                 mapped.Status(statuses[i].value);
                                 return;
                             }

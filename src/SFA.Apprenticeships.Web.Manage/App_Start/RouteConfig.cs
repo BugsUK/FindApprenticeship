@@ -392,6 +392,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.AdminUpdateStandard,
+               url: "admin/standard",
+               defaults: new { controller = "Admin", action = "UpdateStandard" }
+               );
+
+            routes.MapRoute(
                name: ManagementRouteNames.AdminStandardsCsv,
                url: "admin/standards/csv",
                defaults: new { controller = "Admin", action = "DownloadStandardsCsv" }

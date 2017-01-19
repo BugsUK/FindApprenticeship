@@ -15,6 +15,7 @@
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
     using System.Web.Mvc;
+    using Domain.Entities.Raa.Vacancies;
     using Raa.Common.ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Raa)]
@@ -524,6 +525,11 @@
         [HttpPost]
         public JsonResult UpdateStandard(EditStandardViewModel standard)
         {
+            var entity = new Standard() { Id = standard.Id, Status = standard.Status };
+
+            var response = _adminMediator.UpdateStandard(entity);
+
+            //todo change this
             return Json(new {status = "Ok"});
         }
 

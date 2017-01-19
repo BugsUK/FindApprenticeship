@@ -180,5 +180,10 @@
         {
             return _referenceRepository.GetLocalAuthority(localAuthorityCodeName);
         }
+
+        public void UpdateStandard(Standard standard)
+        {
+            _referenceRepository.UpdateStandard(standard);
+        }
     }
 }

@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories.Models;
     using System.Collections.Generic;
+    using Domain.Entities.Raa.Vacancies;
 
     /// <summary>
     /// For maintaining provider profiles, sites, etc.

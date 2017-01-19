@@ -76,5 +76,6 @@
         public const string AdminStandardsCsv = "AdminStandardsCsv";
         public const string AdminFrameworks = "AdminFrameworks";
         public const string AdminFrameworksCsv = "AdminFrameworksCsv";
+        public const string AdminUpdateStandard = "AdminUpdateStandard";
     }
 }

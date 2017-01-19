@@ -37,5 +37,7 @@
         LocalAuthority GetLocalAuthority(int localAuthorityId);
 
         LocalAuthority GetLocalAuthority(string localAuthorityCodeName);
+
+        void UpdateStandard(Standard standard);
     }
 }
