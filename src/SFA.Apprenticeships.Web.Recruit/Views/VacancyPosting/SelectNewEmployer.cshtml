@@ -80,7 +80,7 @@
                 <button id="edsUrn-search-button" type="submit" class="button">
                     Find employer
                 </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {@class = "button sfa-button-secondary"}, new {providerSiteId = Model.ProviderSiteId, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
+                <a class="button sfa-button-secondary" href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
             </div>
         }
 
