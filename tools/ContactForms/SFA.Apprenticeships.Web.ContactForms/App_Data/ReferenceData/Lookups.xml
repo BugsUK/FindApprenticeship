@@ -50,28 +50,17 @@
   </data>
   <data key="EnquirySourceTypes">
     <item id="" value="Please select" />
-    <item id="Santander website" value="Santander website" />
-    <item id="Telephone Call" value="Telephone call" />
-    <item id="Postcard/direct mail/letter" value="Postcard/direct mail/letter" />
-    <item id="Newspaper" value="Newspaper" />
-    <item id="Magazine" value="Magazine" />
-    <item id="Radio" value="Radio" />
+    <item id="Email or letter" value="Email or letter" />
     <item id="Event" value="Event" />
-    <item id="Email/e-newsletter" value="Email/e-newsletter" />
+    <item id="Newspaper / Magazine" value="Newspaper / Magazine" />
     <item id="Online advert" value="Online advert" />
-    <item id="Online Advisor" value="Online advisor" />
-    <item id="Twitter" value="Twitter" />
-    <item id="Facebook" value="Facebook" />
+    <item id="Radio advert" value="Radio advert" />
     <item id="Search engine e.g. google" value="Search engine e.g. Google" />
-    <item id="Website - DirectGov" value="Website - gov.uk" />
-    <item id="Website - Business Link" value="Website - greatbusiness.gov.uk" />
-    <item id="TV" value="Television" />
-    <item id="Mobile App (Apprenticeships)" value="Mobile App (Apprenticeships)" />
-    <item id="Mobile App (NCS)" value="Mobile App (NCS)" />
-    <item id="Jobcentre Plus" value="Job Centre Plus" />
-    <item id="National Careers Service" value="National Careers Service" />
-    <item id="School/College" value="School/college" />
-    <item id="Training Organisation" value="Training organisation" />
+    <item id="Social media e.g. LinkedIn" value="Social media e.g. LinkedIn" />
+    <item id="Telephone Call" value="Telephone call" />
+    <item id="TV advert" value="TV advert" />
+    <item id="Website - GOV.UK" value="Website - gov.uk" />
+    <item id="Website - Get In Go Far" value="Website - Get In Go Far" />
     <item id="Word of mouth" value="Word of mouth" />
     <item id="Other" value="Other" />
   </data>
