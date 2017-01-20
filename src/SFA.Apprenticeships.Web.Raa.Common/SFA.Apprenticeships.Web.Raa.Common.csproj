@@ -360,6 +360,7 @@
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesSearchViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditCategoryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />

@@ -16,6 +16,7 @@
     using Raa.Common.ViewModels.Provider;
     using System.Web.Mvc;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
     using Raa.Common.ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Raa)]
@@ -528,17 +529,38 @@
             var entity = new Standard() { Id = standard.Id, Status = standard.Status };
             
             var response = _adminMediator.UpdateStandard(entity);
-            throw new Exception("Beep boop");
-            //todo change this
-            //return Json(new {status = "Ok"});
+            
+            // always return success here as an exception will return of it's own accord
+            return Json(new {status = "Ok"});
         }
 
         [HttpGet]
         public ActionResult Frameworks()
         {
             var response = _adminMediator.GetFrameworks();
+            var categories = new List<EditCategoryViewModel>();
 
-            return View(response.ViewModel);
+            foreach (var category in response.ViewModel)
+            {
+                categories.AddRange(
+                    category.SubCategories.Select(s => new EditCategoryViewModel()
+                    {
+                        Id = s.Id,
+                        SsatName = category.FullName,
+                        FullName = s.FullName,
+                        Status = s.Status
+                    }));
+            }
+
+            return View(categories);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateFramework(EditCategoryViewModel category)
+        {
+            var response = _adminMediator.UpdateFramework(category);
+
+            return Json(new {Status = "Ok"});
         }
 
         [HttpGet]

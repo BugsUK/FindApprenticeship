@@ -423,5 +423,29 @@
             if (!result)
                 throw new Exception($"Failed to save standard with id={standard.Id}");
         }
+
+        public void UpdateFramework(Category category)
+        {
+            _logger.Debug($"Updating framework with id={category.Id}");
+
+            const string standardSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @Id";
+
+            //TODO: Does this need to be here? If not, test and remove.
+            var sqlParams = new
+            {
+                category.Id
+            };
+
+            var dbStandards = _getOpenConnection.Query<Entities.ApprenticeshipFramework>(standardSql, sqlParams);
+
+            var dbStandard = dbStandards.Single();
+
+            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
+
+            var result = _getOpenConnection.UpdateSingle(dbStandard);
+
+            if (!result)
+                throw new Exception($"Failed to save standard with id={category.Id}");
+        }
     }
 }

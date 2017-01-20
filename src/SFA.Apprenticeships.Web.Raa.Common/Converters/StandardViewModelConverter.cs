@@ -13,7 +13,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 Id = standard.Id,
                 Sector = sector.Name,
                 Name = standard.Name,
-                ApprenticeshipLevel = standard.ApprenticeshipLevel
+                ApprenticeshipLevel = standard.ApprenticeshipLevel,
+                Status = standard.Status
             };
         }
     }

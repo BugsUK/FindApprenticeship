@@ -203,5 +203,10 @@
         {
             public const string Ok = "AdminMediatorCodes.UpdateStandard.Ok";
         }
+
+        public class UpdateFramework
+        {
+            public const string Ok = "AdminMediatorCodes.UpdateFramework";
+        }
     }
 }

@@ -9,6 +9,7 @@
     using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
+    using ViewModels.Vacancy;
     using Web.Common.Mediators;
 
     public interface IAdminMediator
@@ -44,5 +45,6 @@
         MediatorResponse<List<Category>> GetFrameworks();
         MediatorResponse<byte[]> GetFrameworksBytes();
         MediatorResponse<byte[]> GetStandardsBytes();
+        MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel entity);
     }
 }

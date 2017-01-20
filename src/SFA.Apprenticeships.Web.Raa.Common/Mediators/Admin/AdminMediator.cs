@@ -27,6 +27,7 @@
     using ViewModels.Employer;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
+    using ViewModels.Vacancy;
     using Web.Common.Constants;
     using Web.Common.Mediators;
 
@@ -551,6 +552,15 @@
         {
             var viewModel = _referenceDataProvider.GetFrameworks().ToList();
             return GetMediatorResponse(AdminMediatorCodes.GetFrameworks.Ok, viewModel);
+        }
+
+        public MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel category)
+        {
+            var entity  = new Category(category.Id, "", category.FullName, CategoryType.Framework, category.Status);
+
+            _referenceDataProvider.UpdateFramework(entity);
+
+            return GetMediatorResponse(AdminMediatorCodes.UpdateFramework.Ok, category);
         }
 
         public MediatorResponse<byte[]> GetFrameworksBytes()
