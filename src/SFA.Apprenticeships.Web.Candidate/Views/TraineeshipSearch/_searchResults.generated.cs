@@ -483,7 +483,7 @@ WriteLiteral("></div>\r\n                                <img");
 
 WriteLiteral(" class=\"static-map\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5985), Tuple.Create("\"", 6119)
+WriteAttribute("src", Tuple.Create(" src=\"", 5985), Tuple.Create("\"", 6150)
 , Tuple.Create(Tuple.Create("", 5991), Tuple.Create("//maps.googleapis.com/maps/api/staticmap?markers=", 5991), true)
             
             #line 87 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
@@ -500,7 +500,7 @@ WriteAttribute("src", Tuple.Create(" src=\"", 5985), Tuple.Create("\"", 6119)
             #line default
             #line hidden
 , 6069), false)
-, Tuple.Create(Tuple.Create("", 6098), Tuple.Create("&size=190x125&zoom=12", 6098), true)
+, Tuple.Create(Tuple.Create("", 6098), Tuple.Create("&size=190x125&zoom=12&client=gme-skillsfundingagency", 6098), true)
 );
 
 WriteLiteral(" />\r\n                            </div>\r\n                        </div>\r\n        " +
