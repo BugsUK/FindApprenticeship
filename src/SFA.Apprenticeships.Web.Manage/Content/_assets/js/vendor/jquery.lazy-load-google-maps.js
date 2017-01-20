@@ -64,7 +64,7 @@ window.googleMapsScriptLoaded = function()
 
 				if( !apiScriptLoaded && !apiScriptLoading )
 				{
-					$body.append( '<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded' + ( thisOptions.api_key ? ( '&client=' + thisOptions.api_key ) : '' ) + '"></script>' );
+					$body.append( '<script src="https://maps.googleapis.com/maps/api/js?v=3&callback=googleMapsScriptLoaded' + ( thisOptions.api_key ? ( '&client=' + thisOptions.api_key ) : '' ) + '"></script>' );
 					apiScriptLoading = true;
 				}
 
