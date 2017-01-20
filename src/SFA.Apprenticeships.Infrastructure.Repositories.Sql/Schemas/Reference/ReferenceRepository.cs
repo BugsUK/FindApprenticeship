@@ -11,6 +11,7 @@
     using Domain.Entities.ReferenceData;
     using County = Domain.Entities.Raa.Reference.County;
     using LocalAuthority = Domain.Entities.Raa.Reference.LocalAuthority;
+    using Region = Domain.Entities.Raa.Reference.Region;
     using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository
@@ -180,7 +181,7 @@
             return counties;
         }
 
-        public County GetCounty(int countyId)
+        public County GetCountyById(int countyId)
         {
             _logger.Debug($"Getting county with id {countyId}");
 
@@ -198,7 +199,25 @@
             return county;
         }
 
-        public County GetCounty(string countyName)
+        public County GetCountyByCode(string countyCode)
+        {
+            _logger.Debug($"Getting county with code {countyCode}");
+
+            const string sectorSql = "SELECT * FROM dbo.County WHERE CodeName = @CountyCode";
+
+            var sqlParams = new
+            {
+                countyCode
+            };
+
+            var county = _getOpenConnection.Query<County>(sectorSql, sqlParams).FirstOrDefault();
+
+            _logger.Debug($"Found {county}");
+
+            return county;
+        }
+
+        public County GetCountyByName(string countyName)
         {
             _logger.Debug($"Getting county with name {countyName}");
 
@@ -220,24 +239,25 @@
         {
             _logger.Debug("Getting all local authorities");
 
-            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId";
+            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName, lag.LocalAuthorityGroupID AS RegionId, lag.CodeName, lag.ShortName, lag.FullName FROM dbo.LocalAuthority la LEFT JOIN dbo.County c ON la.CountyId = c.CountyId LEFT JOIN dbo.LocalAuthorityGroupMembership lagm ON la.LocalAuthorityId = lagm.LocalAuthorityID JOIN dbo.LocalAuthorityGroup lag ON lagm.LocalAuthorityGroupID = lag.LocalAuthorityGroupID WHERE lag.LocalAuthorityGroupTypeID = 4";
 
-            var localAuthorities = _getOpenConnection.Query<LocalAuthority, County, LocalAuthority>(sectorSql, (la, c) =>
+            var localAuthorities = _getOpenConnection.Query<LocalAuthority, County, Region, LocalAuthority>(sectorSql, (la, c, r) =>
             {
                 la.County = c;
+                la.Region = r;
                 return la;
-            }, splitOn: "CountyId");
+            }, splitOn: "CountyId,RegionId");
 
             _logger.Debug($"Got {localAuthorities.Count} local authorities");
 
             return localAuthorities;
         }
 
-        public LocalAuthority GetLocalAuthority(int localAuthorityId)
+        public LocalAuthority GetLocalAuthorityById(int localAuthorityId)
         {
             _logger.Debug($"Getting local authority with id {localAuthorityId}");
 
-            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE la.LocalAuthorityId = @LocalAuthorityId";
+            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName, lag.LocalAuthorityGroupID AS RegionId, lag.CodeName, lag.ShortName, lag.FullName FROM dbo.LocalAuthority la LEFT JOIN dbo.County c ON la.CountyId = c.CountyId LEFT JOIN dbo.LocalAuthorityGroupMembership lagm ON la.LocalAuthorityId = lagm.LocalAuthorityID JOIN dbo.LocalAuthorityGroup lag ON lagm.LocalAuthorityGroupID = lag.LocalAuthorityGroupID WHERE lag.LocalAuthorityGroupTypeID = 4 AND la.LocalAuthorityId = @LocalAuthorityId";
 
             var sqlParams = new
             {
@@ -255,15 +275,15 @@
             return localAuthority;
         }
 
-        public LocalAuthority GetLocalAuthority(string localAuthorityCodeName)
+        public LocalAuthority GetLocalAuthorityByCode(string localAuthorityCode)
         {
-            _logger.Debug($"Getting local authority with code name {localAuthorityCodeName}");
+            _logger.Debug($"Getting local authority with code name {localAuthorityCode}");
 
-            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE la.CodeName = @LocalAuthorityCodeName";
+            const string sectorSql = "SELECT la.*, c.CodeName, c.ShortName, c.FullName, lag.LocalAuthorityGroupID AS RegionId, lag.CodeName, lag.ShortName, lag.FullName FROM dbo.LocalAuthority la LEFT JOIN dbo.County c ON la.CountyId = c.CountyId LEFT JOIN dbo.LocalAuthorityGroupMembership lagm ON la.LocalAuthorityId = lagm.LocalAuthorityID JOIN dbo.LocalAuthorityGroup lag ON lagm.LocalAuthorityGroupID = lag.LocalAuthorityGroupID WHERE lag.LocalAuthorityGroupTypeID = 4 AND la.CodeName = @LocalAuthorityCode";
 
             var sqlParams = new
             {
-                localAuthorityCodeName
+                localAuthorityCode
             };
 
             var localAuthority = _getOpenConnection.Query<LocalAuthority, County, LocalAuthority>(sectorSql, (la, c) =>
@@ -275,6 +295,55 @@
             _logger.Debug($"Found {localAuthority}");
 
             return localAuthority;
+        }
+
+        public IEnumerable<Region> GetRegions()
+        {
+            _logger.Debug("Getting all local authorities");
+
+            const string sectorSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4";
+
+            var localAuthorities = _getOpenConnection.Query<Region>(sectorSql);
+
+            _logger.Debug($"Got {localAuthorities.Count} local authorities");
+
+            return localAuthorities;
+        }
+
+        public Region GetRegionById(int regionId)
+        {
+            _logger.Debug($"Getting local authority with id {regionId}");
+
+            const string sectorSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND LocalAuthorityGroupID = @RegionId";
+
+            var sqlParams = new
+            {
+                regionId
+            };
+
+            var region = _getOpenConnection.Query<Region>(sectorSql, sqlParams).FirstOrDefault();
+
+            _logger.Debug($"Found {region}");
+
+            return region;
+        }
+
+        public Region GetRegionByCode(string regionCode)
+        {
+            _logger.Debug($"Getting local authority with code name {regionCode}");
+
+            const string sectorSql = "SELECT LocalAuthorityGroupID AS RegionId, CodeName, ShortName, FullName FROM[dbo].[LocalAuthorityGroup] WHERE LocalAuthorityGroupTypeID = 4 AND CodeName = @RegionCode";
+
+            var sqlParams = new
+            {
+                regionCode
+            };
+
+            var region = _getOpenConnection.Query<Region>(sectorSql, sqlParams).FirstOrDefault();
+
+            _logger.Debug($"Found {region}");
+
+            return region;
         }
 
         private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()

@@ -156,14 +156,19 @@
             return _referenceRepository.GetCounties();
         }
 
-        public County GetCounty(int countyId)
+        public County GetCountyById(int countyId)
         {
-            return _referenceRepository.GetCounty(countyId);
+            return _referenceRepository.GetCountyById(countyId);
         }
 
-        public County GetCounty(string countyName)
+        public County GetCountyByCode(string countyCode)
         {
-            return _referenceRepository.GetCounty(countyName);
+            return _referenceRepository.GetCountyByCode(countyCode);
+        }
+
+        public County GetCountyByName(string countyName)
+        {
+            return _referenceRepository.GetCountyByName(countyName);
         }
 
         public IEnumerable<LocalAuthority> GetLocalAuthorities()
@@ -171,14 +176,29 @@
             return _referenceRepository.GetLocalAuthorities();
         }
 
-        public LocalAuthority GetLocalAuthority(int localAuthorityId)
+        public LocalAuthority GetLocalAuthorityById(int localAuthorityId)
         {
-            return _referenceRepository.GetLocalAuthority(localAuthorityId);
+            return _referenceRepository.GetLocalAuthorityById(localAuthorityId);
         }
 
-        public LocalAuthority GetLocalAuthority(string localAuthorityCodeName)
+        public LocalAuthority GetLocalAuthorityByCode(string localAuthorityCode)
         {
-            return _referenceRepository.GetLocalAuthority(localAuthorityCodeName);
+            return _referenceRepository.GetLocalAuthorityByCode(localAuthorityCode);
+        }
+
+        public IEnumerable<Region> GetRegions()
+        {
+            return _referenceRepository.GetRegions();
+        }
+
+        public Region GetRegionById(int regionId)
+        {
+            return _referenceRepository.GetRegionById(regionId);
+        }
+
+        public Region GetRegionByCode(string regionCode)
+        {
+            return _referenceRepository.GetRegionByCode(regionCode);
         }
     }
 }

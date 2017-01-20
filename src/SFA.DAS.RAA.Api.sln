@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.RAA.Api", "SFA.DAS.RAA.Api\SFA.DAS.RAA.Api.csproj", "{50961A74-0E1B-490D-99DD-E8F1CD20F6C2}"
 EndProject
@@ -25,8 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Infrastructure.Azure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Infrastructure", "SFA.Infrastructure\SFA.Infrastructure.csproj", "{1F500137-C8E9-49AA-886E-1922D9D870EB}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SFA.Apprenticeships.Data.AvmsPlus", "SFA.Apprenticeships.Data.AvmsPlus\SFA.Apprenticeships.Data.AvmsPlus.sqlproj", "{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Entities", "SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj", "{4C2BE232-4DBD-44D0-B427-0450E2D857A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Interfaces", "SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj", "{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}"
@@ -44,8 +42,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.VacancyPosting", "SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj", "{CE04B708-FF21-41D4-B796-A36EDCE2960D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Vacancy", "SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj", "{67CDACCD-5217-4110-8432-C6EF164BAA0D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D2BEF561-9CE3-4FE6-A850-48E6F2ABC7D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4FFE0ECC-842A-4C0F-BDB5-F61A7FB347D4}"
 EndProject
@@ -241,12 +237,6 @@ Global
 		{1F500137-C8E9-49AA-886E-1922D9D870EB}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{1F500137-C8E9-49AA-886E-1922D9D870EB}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{1F500137-C8E9-49AA-886E-1922D9D870EB}.Sit|Any CPU.Build.0 = Sit|Any CPU
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Local|Any CPU.ActiveCfg = Local|Any CPU
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5}.Demo|Any CPU.Build.0 = Demo|Any CPU
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
@@ -596,7 +586,6 @@ Global
 		{2C577447-2405-46B3-8065-613A19A58541} = {9BB7D203-46DB-4979-A324-2BBCFD6BE279}
 		{FE5B99F5-66D8-42FC-A8B3-6562837623A4} = {0741AAC4-33B1-418A-B946-EE8ADD91A19B}
 		{1F500137-C8E9-49AA-886E-1922D9D870EB} = {0741AAC4-33B1-418A-B946-EE8ADD91A19B}
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56} = {D2BEF561-9CE3-4FE6-A850-48E6F2ABC7D8}
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5} = {4FFE0ECC-842A-4C0F-BDB5-F61A7FB347D4}
 		{91DB99C3-50A9-4DED-AB90-2FF94D0B130E} = {4FFE0ECC-842A-4C0F-BDB5-F61A7FB347D4}
 		{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2} = {0741AAC4-33B1-418A-B946-EE8ADD91A19B}
