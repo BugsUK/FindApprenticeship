@@ -6,9 +6,15 @@
     ViewBag.Title = "Recruit an Apprentice - Add locations";
 }
 
-<h1 class="heading-xlarge">
-    Vacancy location(s)
-</h1>
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Vacancy location(s)
+        </h1>
+    </div>
+</div>
 
 @Html.HiddenFor(m => m.Ukprn)
 @Html.HiddenFor(m => m.EmployerId)
@@ -23,12 +29,13 @@
 @Html.HiddenFor(m => m.CurrentPage)
 @Html.HiddenFor(m => m.IsAnonymousEmployer)
 
-@Html.Partial("ValidationSummary", ViewData.ModelState)
 
-<noscript>
-    <div>
-        <div class="form-group">
-            @{
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <noscript>
+            <div>
+                <div class="form-group">
+                    @{
                 var className = "form-group";
                 var addAnotherLocationStatus = "";
                 if (ViewData.ModelState.Keys.Contains("PostcodeSearch"))
@@ -36,42 +43,42 @@
                     className += " error";
                     addAnotherLocationStatus = "open";
                 }
-            }
+                    }
 
-            @if (Model.Addresses == null || !Model.Addresses.Any())
+                    @if (Model.Addresses == null || !Model.Addresses.Any())
             {
+            <div class="@className">
+                <a name="postcodesearch"></a>
+                <label class="bold-small form-label-bold" for="PostcodeSearch">Enter the vacancy postcode</label>
+                <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
+                @Html.ValidationMessage("PostcodeSearch")
+            </div>
+            <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
+            }
+            else
+            {
+            <details @addAnotherLocationStatus>
+                <summary>Add another location</summary>
                 <div class="@className">
-                    <a name="postcodesearch"></a>
                     <label class="bold-small form-label-bold" for="PostcodeSearch">Enter the vacancy postcode</label>
                     <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
                     @Html.ValidationMessage("PostcodeSearch")
                 </div>
                 <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
+            </details>
             }
-            else
-            {
-                <details @addAnotherLocationStatus>
-                    <summary>Add another location</summary>
-                    <div class="@className">
-                        <label class="bold-small form-label-bold" for="PostcodeSearch">Enter the vacancy postcode</label>
-                        <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
-                        @Html.ValidationMessage("PostcodeSearch")
-                    </div>
-                    <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
-                </details>
-            }
-        </div>
+                </div>
 
-        @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
+                @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
         {
-            <div class="form-group column-1-2 scrolling-panel max-height-15">
-                <div class="tabbed-element tab1 active form-control-3-4 beepboop">
-                    <table class="sfa-no-bottom-margin">
-                        <colgroup>
-                            <col class="t70">
-                            <col class="t30">
-                        </colgroup>
-                        <tbody>
+        <div class="form-group column-1-2 scrolling-panel max-height-15">
+            <div class="tabbed-element tab1 active form-control-3-4 beepboop">
+                <table class="sfa-no-bottom-margin">
+                    <colgroup>
+                        <col class="t70">
+                        <col class="t30">
+                    </colgroup>
+                    <tbody>
                         @{
                             var index = 0;
                         }
@@ -95,31 +102,31 @@
                             </tr>
                             index = index+1;
                         }
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
+        </div>
         }
 
-        @if (Model.Addresses != null && Model.Addresses.Any())
+                @if (Model.Addresses != null && Model.Addresses.Any())
         {
-            <div class="form-group">
-                <a name="locationaddresses"></a>
-                <div class="tabbed-element tab1 active form-control-3-4 beepboop">
-                    <table class="sfa-no-bottom-margin grid-3-4">
-                        <colgroup>
-                            <col class="t50">
-                            <col class="t30">
-                            <col class="t20">
-                        </colgroup>
-                        <thead>
+        <div class="form-group">
+            <a name="locationaddresses"></a>
+            <div class="tabbed-element tab1 active form-control-3-4 beepboop">
+                <table class="sfa-no-bottom-margin grid-3-4">
+                    <colgroup>
+                        <col class="t50">
+                        <col class="t30">
+                        <col class="t20">
+                    </colgroup>
+                    <thead>
                         <tr>
                             <th>Address</th>
                             <th>Number of positions</th>
                             <th></th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    </thead>
+                    <tbody>
                         @for (var i = 0; i < Model.Addresses.Count; i++)
                         {
                             <tr>
@@ -127,9 +134,9 @@
                                     @Model.Addresses.ToList()[i].Address.AddressLine1
                                     @if (!string.IsNullOrWhiteSpace(@Model.Addresses.ToList()[i].Address.AddressLine2))
                                     {
-                                        <br/>@Model.Addresses.ToList()[i].Address.AddressLine2
+                                    <br />@Model.Addresses.ToList()[i].Address.AddressLine2
                                     }
-                                    <br/>@Model.Addresses.ToList()[i].Address.AddressLine4 @Model.Addresses.ToList()[i].Address.Postcode
+                                    <br />@Model.Addresses.ToList()[i].Address.AddressLine4 @Model.Addresses.ToList()[i].Address.Postcode
 
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].VacancyLocationId, new { @id = "addresses_" + i + "__VacancyLocationId", Name = "Addresses[" + i + "].VacancyLocationId" })
                                     @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new {@id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode"})
@@ -152,97 +159,102 @@
                                 </td>
                             </tr>
                         }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
+
+        <div class="form-group">
+            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
+            @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
+        </div>
+        }
+            </div>
+        </noscript>
+
+        <div class="hide-nojs" id="locationAddressesTable">
+
+            <div id="address-lookup">
+
+                <div class="form-group" id="addressInputWrapper">
+                    <label for="postcode-search" class="form-label-bold">Enter the vacancy location or postcode
+                        @if (Model.IsAnonymousEmployer != null && Model.IsAnonymousEmployer.Value)
+                        {
+                            <span class="form-hint">You have chosen for this employer to be anonymous. Only the town or city for each location will be visible to candidates.</span>
+                        }          
+                    </label>
+                    <input id="postcode-search" type="text" class="form-control" spellcheck="false" autocorrect="off" data-bind="style: {'display': addModeOn() }" />
+                    
+                    <a href="#" id="add-new-location" data-bind="style: {'display': addModeOff() }, click: addNewLocation">Add another location </a>
+                    <span class="visuallyhidden" id="ariaAddressEntered" aria-live="polite"></span>
+
+                </div>
+
+                <div id="address-manual" class="form-group form-group-compound">
+                    <a href="#" class="copy-19" id="enterAddressManually"></a><a href="#" class="copy-19" id="enterAddressManually"></a>
+                    <span class="toggle-content hide-nojs loading-text" id="addressLoading">Loading address...</span>
+                    <span class="toggle-content hide-nojs loading-text" id="noResults">No results match your search. You must enter a valid postcode</span>
+                    <span style="color: red" id="postcodeServiceUnavailable" class="copy-19 toggle-content hide-nojs text">Service is currently unavailable, enter the full postcode</span>
+                </div>
+            </div>
+
+            <div>
+                <div class="sfa-xlarge-bottom-margin" data-bind="style: {'display': locationAddressesStatus() }">
+                    <a name="locationaddresses"></a>
+                    <table>
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">Location</span>
+                                </th>
+                                <th>
+                                    <span class="heading-span">Number of positions</span>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                            <tr>
+                                <td>
+                                    <span data-bind="html: itemFriendlyAddress()" maxlength="50" />
+                                </td>
+                                <td>
+                                    <input class="form-control form-control-1-4" maxlength="5" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions'}">
+                                    <span class="field-validation-valid" aria-live="polite" data-valmsg-replace="true" data-bind="attr:{'id': 'Addresses[' + $index() +'].NumberOfPositions_Error', 'data-valmsg-for': 'Addresses[' + $index() +'].NumberOfPositions'}"></span>
+                                    <input type="hidden" data-bind="value: itemVacancyLocationId, attr:{'name':'Addresses[' + $index() +'].VacancyLocationId', 'id':'addresses_'+ $index() + '__VacancyLocationId' }">
+                                    <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
+                                    <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
+                                    <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
+                                    <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
+                                    <input type="hidden" data-bind="value: itemTown, attr:{'name':'Addresses[' + $index() +'].Address.Town', 'id':'addresses_'+ $index() + 'address__Town' }">
+                                    <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
+                                    <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
+                                    <input type="hidden" data-bind="value: itemProvinceName, attr:{'name':'Addresses[' + $index() +'].Address.County', 'id':'addresses_'+ $index() + 'address__County' }">
+                                </td>
+                                <td class="sfa-align-center">
+                                    <a href="#" data-bind="click: $root.removeLocationAddress">remove location</a>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
+                    @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
+                </div>
+
+                <div data-bind="style: {'display': locationAddressesStatus() }">
+                    @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "form-control-3-4", type = "text", size = 12, style = "height: 150px;" })
+                    @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
                 </div>
             </div>
-
-            @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
-
-            <div class="form-group">
-                @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-                @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
-            </div>
-        }
-    </div>
-</noscript>
-
-<div class="hide-nojs" id="locationAddressesTable">
-    <div id="address-lookup">
-        <div class="form-group form-group-compound" id="addressInputWrapper">
-            <label for="postcode-search" class="form-label bold-small">Enter the vacancy location or postcode</label>
-            @if (Model.IsAnonymousEmployer!=null && Model.IsAnonymousEmployer.Value)
-            {
-                <div class="hgroup-medium">
-                    <p class="subtitle">You have chosen for this employer to be anonymous. Only the town or city for each location will be visible to candidates.</p>
-                </div>
-            }
-            
-            <input id="postcode-search" type="text" class="form-control form-control-1-3" spellcheck="false" autocorrect="off" data-bind="style: {'display': addModeOn() }"/>
-            <a href="#" id="add-new-location" data-bind="style: {'display': addModeOff() }, click: addNewLocation">Add another location </a>
-            <span class="visuallyhidden" id="ariaAddressEntered" aria-live="polite"></span>
-        </div>
-        <div id="address-manual" class="form-group form-group-compound">
-            <a href="#" class="copy-19" id="enterAddressManually"></a><a href="#" class="copy-19" id="enterAddressManually"></a>
-            <span class="toggle-content hide-nojs loading-text" id="addressLoading">Loading address...</span>
-            <span class="toggle-content hide-nojs loading-text" id="noResults">No results match your search. You must enter a valid postcode</span>
-            <span style="color: red" id="postcodeServiceUnavailable" class="copy-19 toggle-content hide-nojs text">Service is currently unavailable, enter the full postcode</span>
-        </div>
-    </div>
-    <div>
-        <div data-bind="style: {'display': locationAddressesStatus() }">
-            <a name="locationaddresses"></a>
-            <table class="grid-3-4">
-                <colgroup>
-                    <col class="t40">
-                    <col class="t25">
-                    <col class="t20">
-                    <col>
-                </colgroup>
-
-                <thead>
-                <tr>
-                    <th>
-                        <span class="heading-span">Location</span>
-                    </th>
-                    <th>
-                        <span class="heading-span">Number of positions</span>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-                </thead>
-                <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                <tr>
-                    <td>
-                        <span data-bind="html: itemFriendlyAddress()" maxlength="50" />
-                    </td>
-                    <td>
-                        <span style="width: 20%; display: inline-block"></span>
-                        <input class="form-control-small qual-input-edit qual-year" maxlength="5" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions'}">
-                        <span class="field-validation-valid" aria-live="polite" data-valmsg-replace="true" data-bind="attr:{'id': 'Addresses[' + $index() +'].NumberOfPositions_Error', 'data-valmsg-for': 'Addresses[' + $index() +'].NumberOfPositions'}"></span>
-                        <input type="hidden" data-bind="value: itemVacancyLocationId, attr:{'name':'Addresses[' + $index() +'].VacancyLocationId', 'id':'addresses_'+ $index() + '__VacancyLocationId' }">
-                        <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
-                        <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
-                        <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
-                        <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
-                        <input type="hidden" data-bind="value: itemTown, attr:{'name':'Addresses[' + $index() +'].Address.Town', 'id':'addresses_'+ $index() + 'address__Town' }">
-                        <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
-                        <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
-                        <input type="hidden" data-bind="value: itemProvinceName, attr:{'name':'Addresses[' + $index() +'].Address.County', 'id':'addresses_'+ $index() + 'address__County' }">
-                    </td>
-                    <td class="sfa-align-center">
-                        <a href="#" data-bind="click: $root.removeLocationAddress">remove location</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
-        </div>
-
-        <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
-            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "form-control-3-4 beepboop", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
-            @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
         </div>
     </div>
 </div>

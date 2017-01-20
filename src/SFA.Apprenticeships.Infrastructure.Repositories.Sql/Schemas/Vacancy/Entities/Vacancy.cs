@@ -179,6 +179,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string OtherInformation { get; set; }
 
         [Write(false)]
+        public string OtherInformationComment { get; set; }
+
+        [Write(false)]
         public string PersonalQualities { get; set; }
 
         [Write(false)]

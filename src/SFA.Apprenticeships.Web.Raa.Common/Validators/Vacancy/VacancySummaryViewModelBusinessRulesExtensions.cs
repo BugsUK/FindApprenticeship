@@ -147,7 +147,7 @@
                         propertyName = parentPropertyName + "." + propertyName;
                     }
 
-                    var validationFailure = new ValidationFailure(propertyName, possibleStartDate < Wages.Ranges[0].ValidTo ? VacancyViewModelMessages.Wage.WageLessThanMinimum : VacancyViewModelMessages.Wage.WageLessThanMinimum1StOct2016, amount);
+                    var validationFailure = new ValidationFailure(propertyName, wageRange.ValidationErrorMessage, amount);
                     return validationFailure;
                 }
             }

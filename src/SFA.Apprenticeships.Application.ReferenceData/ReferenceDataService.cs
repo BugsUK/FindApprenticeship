@@ -60,14 +60,19 @@
             return _referenceDataProvider.GetCounties();
         }
 
-        public County GetCounty(int countyId)
+        public County GetCountyById(int countyId)
         {
-            return _referenceDataProvider.GetCounty(countyId);
+            return _referenceDataProvider.GetCountyById(countyId);
         }
 
-        public County GetCounty(string countyName)
+        public County GetCountyByCode(string countyCode)
         {
-            return _referenceDataProvider.GetCounty(countyName);
+            return _referenceDataProvider.GetCountyByCode(countyCode);
+        }
+
+        public County GetCountyByName(string countyName)
+        {
+            return _referenceDataProvider.GetCountyByName(countyName);
         }
 
         public IEnumerable<LocalAuthority> GetLocalAuthorities()
@@ -75,14 +80,29 @@
             return _referenceDataProvider.GetLocalAuthorities();
         }
 
-        public LocalAuthority GetLocalAuthority(int localAuthorityId)
+        public LocalAuthority GetLocalAuthorityById(int localAuthorityId)
         {
-            return _referenceDataProvider.GetLocalAuthority(localAuthorityId);
+            return _referenceDataProvider.GetLocalAuthorityById(localAuthorityId);
         }
 
-        public LocalAuthority GetLocalAuthority(string localAuthorityCodeName)
+        public LocalAuthority GetLocalAuthorityByCode(string localAuthorityCodeName)
         {
-            return _referenceDataProvider.GetLocalAuthority(localAuthorityCodeName);
+            return _referenceDataProvider.GetLocalAuthorityByCode(localAuthorityCodeName);
+        }
+
+        public IEnumerable<Region> GetRegions()
+        {
+            return _referenceDataProvider.GetRegions();
+        }
+
+        public Region GetRegionById(int regionId)
+        {
+            return _referenceDataProvider.GetRegionById(regionId);
+        }
+
+        public Region GetRegionByCode(string regionCode)
+        {
+            return _referenceDataProvider.GetRegionByCode(regionCode);
         }
     }
 }

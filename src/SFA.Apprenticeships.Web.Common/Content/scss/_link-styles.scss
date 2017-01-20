@@ -1,10 +1,18 @@
-﻿a[rel="external"]:after {
+﻿
+/*
+
+GDS guidelines reckon mean against using an icon to show an external link.
+The content around the link, or the link itself should make the user 
+aware that this is an external link.
+
+a[rel="external"]:after {
     background-image: url(../img/icon-external.svg);
     background-repeat: no-repeat;
     background-position: 3px .4em;
     content: '     ';
     background-size: .7em .6em;
 }
+*/
 
 .summary-style {
     display: inline-block;

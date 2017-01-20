@@ -79,3 +79,35 @@ $secondary-button-bg: transparent;
     overflow: visible!important;
     padding: 0!important;
 }
+
+// -------------------------------------------------------------------
+// Important !!
+// Only use .sfa-mock-link if you using an inline button. If the 
+// button is part of a form try using the .sfa-button-secondary class
+// -------------------------------------------------------------------
+
+.sfa-mock-link {
+    margin: 0;
+    padding: 0;
+    line-height: 1.3;
+    text-decoration:underline;
+    color:$link-colour;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    &:hover {
+        color:$link-hover-colour;
+    }
+    &:focus {
+        background:$focus-colour;
+    }
+}
+
+

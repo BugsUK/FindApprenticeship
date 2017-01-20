@@ -1,10 +1,17 @@
 ﻿@model EducationViewModel
 
-<fieldset id="applyEducation" class="sfa-xlarge-bottom-margin sfa-section-bordered">
-    <legend class="heading-large">Education</legend>
-    @Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttributes: new { @class = "school-name" })
+<div class="grid-row">
+    <div id="applyEducation" class="column-two-thirds">
+        <h3 class="heading-large">Education</h3>
+        @Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttributes: new { @class = "school-name" })
 
-    <label class="form-label-bold">Years attended</label>
-    @Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" })
-    @Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" })
-</fieldset>
+        <label class="form-label-bold">Years attended</label>
+        @Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new {maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" })
+        @Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new {maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "" })
+    </div>
+</div>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <hr />
+    </div>
+</div>

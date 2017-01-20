@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string OfflineApplicationUrlComment { get; set; }
         public OfflineVacancyType? OfflineVacancyType { get; set; }
         public string OtherInformation { get; set; }
+        public string OtherInformationComment { get; set; }
         public string PersonalQualities { get; set; }
         public string PersonalQualitiesComment { get; set; }
         public string PossibleStartDateComment { get; set; }

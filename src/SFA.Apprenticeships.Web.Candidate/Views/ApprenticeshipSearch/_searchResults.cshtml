@@ -212,7 +212,8 @@ else
                         {
                             <div class="column-one-third map-container hide-nojs sfa-small-bottom-margin toggle-content--mob">
                                 <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
-                                <div class="map"></div>
+                                <div class="map-placeholder"></div>
+                                <img class="static-map" src="//maps.googleapis.com/maps/api/staticmap?markers=@(vacancy.Location.Latitude),@(vacancy.Location.Longitude)&size=190x125&zoom=12&client=gme-skillsfundingagency"/>
                             </div>
                         }
                     </div>

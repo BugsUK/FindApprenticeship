@@ -295,7 +295,7 @@ WriteLiteral("        ");
 
             
             #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "form-control form-control-3-4 form-textarea-medium", type = "text"}));
+   Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new {@class = "form-control form-control-3-4", type = "text"}));
 
             
             #line default
@@ -328,7 +328,7 @@ WriteLiteral("        ");
 
             
             #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "form-control form-control-3-4 form-textarea-medium", type = "text"}));
+   Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new {@class = "form-control form-control-3-4", type = "text"}));
 
             
             #line default
@@ -355,7 +355,66 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n</section>\r\n");
+WriteLiteral("\r\n");
+
+            
+            #line 47 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 47 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+         if(!string.IsNullOrEmpty(Model.OtherInformation))
+        {
+            
+            
+            #line default
+            #line hidden
+            
+            #line 49 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+       Write(Html.FormTextAreaFor(m => m.OtherInformation, controlHtmlAttributes: new {@class = "form-control form-control-3-4 form-textarea-medium", type = "text"}));
+
+            
+            #line default
+            #line hidden
+            
+            #line 49 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+                                                                                                                                                                     
+            
+            
+            #line default
+            #line hidden
+            
+            #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+       Write(Html.EditorFor(m => m.OtherInformationComment, "Comment", Html.GetLabelFor(m => m.OtherInformationComment)));
+
+            
+            #line default
+            #line hidden
+            
+            #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+                                                                                                                        
+            
+            
+            #line default
+            #line hidden
+            
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+       Write(Html.ValidationMessageFor(m => m.OtherInformationComment));
+
+            
+            #line default
+            #line hidden
+            
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
+                                                                      
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    </div>\r\n</section>\r\n");
 
         }
     }

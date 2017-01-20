@@ -96,6 +96,8 @@
                 ThingsToConsiderComment = vacancy.ThingsToConsiderComment,
                 DesiredQualifications = vacancy.DesiredQualifications,
                 DesiredQualificationsComment = vacancy.DesiredQualificationsComment,
+                OtherInformation = vacancy.OtherInformation,
+                OtherInformationComment = vacancy.OtherInformationComment,
                 Status = vacancy.Status,
                 VacancyType = vacancy.VacancyType,
                 VacancySource = vacancy.VacancySource

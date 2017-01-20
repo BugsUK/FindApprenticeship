@@ -4,26 +4,28 @@
     ViewBag.Title = "Application form - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="progress-indicator progress-indicator-horizontal">
-    <ul>
-        <li class="active"><span class="sfa-hide-tablet">Step </span>1<span class="sfa-hide-tablet"> of 3</span>. Application form</li>
-        <li><span class="sfa-hide-tablet">Step </span>2<span class="sfa-hide-tablet"> of 3</span>. Check your application</li>
-        <li><span class="sfa-hide-tablet">Step </span>3<span class="sfa-hide-tablet"> of 3</span>. Submitted</li>
-    </ul>
-</div>
+
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 @if (Model.DateUpdated.HasValue)
 {
-    <div class="panel-info">
-        <p class="autosave" id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <div class="info-summary" role="group" aria-labelledby="applicationSavedTopMessage" tabindex="-1">
+                <p id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
+            </div>
+        </div>
     </div>
 }
 
 <noscript>
-    <div class="panel-warning">
-        <div>
-            <h2 class="heading-large"><i class="fa fa-info-circle"></i>Save your application regularly</h2>
-            <p>For security reasons you'll be signed out after 60 minutes.</p>
-            <p>Save your application after you complete each section to ensure you don't lose any of your application.</p>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <div class="warning-summary" role="group" aria-labelledby="warning-header" tabindex="-1">
+                <h2 id="warning-header" class="heading-large">Save your application regularly</h2>
+                <p>For security reasons you'll be signed out after 60 minutes.</p>
+                <p>Save your application after you complete each section to ensure you don't lose any of your application.</p>
+            </div>
         </div>
     </div>
 </noscript>
@@ -32,78 +34,76 @@
 {
     <button class="button hide-button" type="submit" name="ApplicationAction" value="Apply" tabindex="-1">Apply</button>
     @Html.AntiForgeryToken()
+
     <div class="grid-row">
         <div class="column-two-thirds">
             <h1 class="heading-xlarge" id="appTourStart">Application form</h1>
         </div>
-        <div class="column-one-third">
+        <div class="column-one-third sfa-align-right-tablet sfa-xlarge-top-margin ">
             <div class="hide-nojs">
                 <a href="#" id="runApplyTour"><i class="fa fa-question-circle"></i>How to apply for an apprenticeship</a>
                 <p>(interactive walkthrough)</p>
             </div>
         </div>
     </div>
-    <section class="sfa-section-bordered">
-        <div>
-            <div class="hgroup-medium">
-                @Html.HiddenFor(m => m.VacancyDetail.Title)
-                <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
-                @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
-                <p class="heading-secondary " id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
-            </div>
-            @Html.HiddenFor(m => m.VacancyDetail.Description)
-            <p id="vacancy-summary" class="@Model.VacancyDetail.Description.GetPreserveFormattingCssClass()">@Model.VacancyDetail.Description</p>
-            <p id="appTourSummary">
-                <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.VacancyId })">View apprenticeship</a>
-            </p>
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <section>
+                    @Html.HiddenFor(m => m.VacancyDetail.Title)
+                    @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
+                    <h2 class="heading-large" id="vacancy-title">@Model.VacancyDetail.Title
+                        <span class="heading-secondary " id="vacancy-employer">@Model.VacancyDetail.EmployerName</span>
+                    </h2>
+                    @Html.HiddenFor(m => m.VacancyDetail.Description)
+                    <p id="vacancy-summary" class="@Model.VacancyDetail.Description.GetPreserveFormattingCssClass()">@Model.VacancyDetail.Description</p>
+                    <p id="appTourSummary">
+                        <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.VacancyId })">View apprenticeship</a>
+                    </p>
+            </section>
         </div>
-    </section>
-
-
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-
-    @Html.DisplayFor(m => m.Candidate)
-    @Html.EditorFor(m => m.Candidate.Education)
-    @Html.HiddenFor(m => m.VacancyId)
-    @Html.HiddenFor(m => m.IsJavascript, new { @id = "hidden-flag-javascript" })
-
-    Html.RenderPartial("_qualificationsJS", Model);
-    Html.RenderPartial("_qualificationsNonJS", Model);
-
-    Html.RenderPartial("_workExperiencesJS", Model);
-    Html.RenderPartial("_workExperiencesNonJS", Model);
-
-    Html.RenderPartial("_trainingCoursesJS", Model);
-    Html.RenderPartial("_trainingCoursesNonJS", Model);
-
-    @Html.EditorFor(m => m.Candidate.AboutYou)
-    @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
-    @Html.EditorFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
-
-    <div class="form-group">
-        @*The buttons below need the values so the controller knows what action to perform if restyling*@
-        <button id="apply-button" type="submit" name="ApplicationAction" class="button no-check-for-dirty-form" value="Apply">Save and continue</button>
-        <div class="panel-danger toggle-content hide-nojs" id="unsavedChanges">
-            <div class="text toggle-content hide-nojs" id="unsavedQuals">
-                <p>You've still got <a href="#qualifications-panel">unsaved qualifications</a>. Make sure you click "Save this qualification" after entering each one.</p>
-            </div>
-            <div class="text toggle-content hide-nojs" id="unsavedWorkExp">
-                <p>You've still got <a href="#workexperience-panel">unsaved work experience</a>. Make sure you click "Save this work experience" after entering each one.</p>
-            </div>
-            <div class="text toggle-content hide-nojs" id="unsavedTrainingCourse">
-                <p>You've still got an <a href="#training-history-panel">unsaved training course</a>. Make sure you click "Save this training course" after entering each one.</p>
-            </div>
-        </div>
-        <p id="saveApplication">
-            <button id="save-button" type="submit" name="ApplicationAction" class="button sfa-button-secondary no-check-for-dirty-form cancel" value="Save" onclick='Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/savedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Save Draft Form"] });'>Save</button>
-        </p>
-        @if (Model.DateUpdated.HasValue)
-        {
-            <p class="autosave" id="applicationSaved">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
-        }
     </div>
 
+            @Html.DisplayFor(m => m.Candidate)
+            @Html.EditorFor(m => m.Candidate.Education)
+            @Html.HiddenFor(m => m.VacancyId)
+            @Html.HiddenFor(m => m.IsJavascript, new { @id = "hidden-flag-javascript" })
+
+            Html.RenderPartial("_qualificationsJS", Model);
+            Html.RenderPartial("_qualificationsNonJS", Model);
+
+            Html.RenderPartial("_workExperiencesJS", Model);
+            Html.RenderPartial("_workExperiencesNonJS", Model);
+
+            Html.RenderPartial("_trainingCoursesJS", Model);
+            Html.RenderPartial("_trainingCoursesNonJS", Model);
+
+            @Html.EditorFor(m => m.Candidate.AboutYou)
+            @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
+            @Html.EditorFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
+
+            <div class="form-group">
+                @*The buttons below need the values so the controller knows what action to perform if restyling*@
+                <button id="apply-button" type="submit" name="ApplicationAction" class="button no-check-for-dirty-form" value="Apply">Save and continue</button>
+                <div class="panel-danger toggle-content hide-nojs" id="unsavedChanges">
+                    <div class="text toggle-content hide-nojs" id="unsavedQuals">
+                        <p>You've still got <a href="#qualifications-panel">unsaved qualifications</a>. Make sure you click "Save this qualification" after entering each one.</p>
+                    </div>
+                    <div class="text toggle-content hide-nojs" id="unsavedWorkExp">
+                        <p>You've still got <a href="#workexperience-panel">unsaved work experience</a>. Make sure you click "Save this work experience" after entering each one.</p>
+                    </div>
+                    <div class="text toggle-content hide-nojs" id="unsavedTrainingCourse">
+                        <p>You've still got an <a href="#training-history-panel">unsaved training course</a>. Make sure you click "Save this training course" after entering each one.</p>
+                    </div>
+                </div>
+                <p id="saveApplication">
+                    <button id="save-button" type="submit" name="ApplicationAction" class="button sfa-button-secondary no-check-for-dirty-form cancel" value="Save" onclick='Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/savedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Save Draft Form"] });'>Save</button>
+                </p>
+                @if (Model.DateUpdated.HasValue)
+                {
+                    <p class="autosave" id="applicationSaved">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
+                }
+            </div>
 }
 
 <div class="sfa-saving-prompt toggle-content hide-nojs" id="savedNotification">

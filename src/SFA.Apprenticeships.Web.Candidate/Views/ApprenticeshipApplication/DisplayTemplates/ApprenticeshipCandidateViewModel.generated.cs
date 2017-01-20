@@ -55,310 +55,292 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Disp
         {
 WriteLiteral("<section");
 
-WriteLiteral(" class=\"sfa-section-bordered grid-row\"");
+WriteLiteral(" class=\"grid-row\"");
 
-WriteLiteral(">\r\n    <h2");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"column-two-thirds\"");
+
+WriteLiteral(">\r\n        <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Your details</h2>\r\n    <div");
+WriteLiteral(">Your details</h3>\r\n        <div");
+
+WriteLiteral(" class=\"grid-row\"");
+
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"column-one-half\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n                <h3");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n            <p");
+WriteLiteral(">Full name</h3>\r\n");
 
-WriteLiteral(" class=\"form-label-bold\"");
-
-WriteLiteral(">Full name</p>\r\n");
-
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
-            #line 8 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-       Write(Html.HiddenFor(m => m.FirstName));
+            #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+           Write(Html.HiddenFor(m => m.FirstName));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
-            #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-       Write(Html.HiddenFor(m => m.LastName));
+            #line 10 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+           Write(Html.HiddenFor(m => m.LastName));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            <span");
+WriteLiteral("\r\n                <span");
 
 WriteLiteral(" id=\"candidate-fullname\"");
-
-WriteLiteral(" class=\"form-prepopped\"");
 
 WriteLiteral(">");
 
             
-            #line 10 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-                                                            Write(Html.DisplayFor(model => model.FullName));
+            #line 11 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                                         Write(Html.DisplayFor(model => model.FullName));
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n        </div>\r\n        <div");
+WriteLiteral("</span>\r\n\r\n                <h3");
 
-WriteLiteral(" class=\"form-group date-input\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n            <p");
+WriteLiteral(">Date of birth</h3>\r\n");
 
-WriteLiteral(" class=\"form-label-bold\"");
-
-WriteLiteral(">Date of birth</p>\r\n");
-
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
             #line 14 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-       Write(Html.HiddenFor(m => m.DateOfBirth));
+           Write(Html.HiddenFor(m => m.DateOfBirth));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            <span");
+WriteLiteral("\r\n                <span");
 
 WriteLiteral(" id=\"candidate-dob\"");
-
-WriteLiteral(" class=\"form-prepopped\"");
 
 WriteLiteral(">");
 
             
             #line 15 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-                                                       Write(Html.DisplayFor(model => model.DateOfBirth, "Date"));
+                                    Write(Html.DisplayFor(model => model.DateOfBirth, "Date"));
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n        </div>\r\n        <div");
+WriteLiteral("</span>\r\n                <h3");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n            <span");
+WriteLiteral(">Address</h3>\r\n                <ul");
 
-WriteLiteral(" class=\"form-label-bold\"");
+WriteLiteral(" class=\"list\"");
 
-WriteLiteral(">Address</span>\r\n            <ul");
-
-WriteLiteral(" class=\"list-text form-prepopped\"");
-
-WriteLiteral(">\r\n                <li");
+WriteLiteral(">\r\n                    <li");
 
 WriteLiteral(" id=\"candidate-address-line1\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 21 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Html.HiddenFor(m => m.Address.AddressLine1));
+            #line 19 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Html.HiddenFor(m => m.Address.AddressLine1));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 22 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Model.Address.AddressLine1);
+            #line 20 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Model.Address.AddressLine1);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </li>\r\n                <li");
+WriteLiteral("\r\n                    </li>\r\n                    <li");
 
 WriteLiteral(" id=\"candidate-address-line2\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 25 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Html.HiddenFor(m => m.Address.AddressLine2));
+            #line 23 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Html.HiddenFor(m => m.Address.AddressLine2));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 26 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Model.Address.AddressLine2);
+            #line 24 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Model.Address.AddressLine2);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </li>\r\n                <li");
+WriteLiteral("\r\n                    </li>\r\n                    <li");
 
 WriteLiteral(" id=\"candidate-address-line3\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 29 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Html.HiddenFor(m => m.Address.AddressLine3));
+            #line 27 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Html.HiddenFor(m => m.Address.AddressLine3));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 30 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Model.Address.AddressLine3);
+            #line 28 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Model.Address.AddressLine3);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </li>\r\n                <li");
+WriteLiteral("\r\n                    </li>\r\n                    <li");
 
 WriteLiteral(" id=\"candidate-address-line4\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 33 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Html.HiddenFor(m => m.Address.AddressLine4));
+            #line 31 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Html.HiddenFor(m => m.Address.AddressLine4));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 34 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Model.Address.AddressLine4);
+            #line 32 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Model.Address.AddressLine4);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </li>\r\n                <li");
+WriteLiteral("\r\n                    </li>\r\n                    <li");
 
 WriteLiteral(" id=\"candidate-address-postcode\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 37 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Html.HiddenFor(m => m.Address.Postcode));
+            #line 35 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Html.HiddenFor(m => m.Address.Postcode));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 38 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-               Write(Model.Address.Postcode);
+            #line 36 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                   Write(Model.Address.Postcode);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral("\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n         " +
+"   <div");
 
 WriteLiteral(" class=\"column-one-half\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n                <h3");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n            <p");
+WriteLiteral(">Email address</h3>\r\n");
 
-WriteLiteral(" class=\"form-label-bold\"");
-
-WriteLiteral(">Email address</p>\r\n");
-
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
-            #line 46 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-       Write(Html.HiddenFor(m => m.EmailAddress));
+            #line 42 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+           Write(Html.HiddenFor(m => m.EmailAddress));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            <span");
+WriteLiteral("\r\n                <span");
 
 WriteLiteral(" id=\"candidate-email\"");
 
-WriteLiteral(" class=\"form-prepopped\"");
-
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-                                                         Write(Model.EmailAddress);
+            #line 43 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                                      Write(Model.EmailAddress);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n        </div>\r\n        <div");
+WriteLiteral("</span>\r\n                <h3");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">\r\n            <p");
+WriteLiteral(">Phone</h3>\r\n");
 
-WriteLiteral(" class=\"form-label-bold\"");
-
-WriteLiteral(">Phone</p>\r\n");
-
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
-            #line 51 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-       Write(Html.HiddenFor(m => m.PhoneNumber));
+            #line 45 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+           Write(Html.HiddenFor(m => m.PhoneNumber));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            <span");
+WriteLiteral("\r\n                <span");
 
 WriteLiteral(" id=\"candidate-phone\"");
 
-WriteLiteral(" class=\"form-prepopped\"");
-
 WriteLiteral(">");
 
             
-            #line 52 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
-                                                         Write(Model.PhoneNumber);
+            #line 46 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml"
+                                      Write(Model.PhoneNumber);
 
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n        </div>\r\n    </div>\r\n</section>");
+WriteLiteral("</span>\r\n            </div>\r\n        </div>\r\n        <hr />\r\n    </div>\r\n</sectio" +
+"n>");
 
         }
     }

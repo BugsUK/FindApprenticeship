@@ -104,7 +104,7 @@ Write(Html.DisplayFor(m => m, VacancyQuestionsViewModel.PartialView));
             #line hidden
 WriteLiteral("    <div");
 
-WriteLiteral(" class=\"column-one-half inline\"");
+WriteLiteral(" class=\"column-two-thirds sfa-xlarge-top-margin inline\"");
 
 WriteLiteral(">\r\n        <button");
 

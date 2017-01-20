@@ -16,9 +16,9 @@
 
 <section>
     <div class="form-group">
-        @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "form-control form-control-4-4 form-textarea-medium", type = "text" })
         @Html.EditorFor(m => m.FirstQuestionComment, "Comment", Html.GetLabelFor(m => m.FirstQuestionComment))
-        @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "form-control form-control-3-4 form-textarea-medium", type = "text" })
+        @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "form-control form-control-4-4 form-textarea-medium", type = "text" })
         @Html.EditorFor(m => m.SecondQuestionComment, "Comment", Html.GetLabelFor(m => m.SecondQuestionComment))
     </div>
 </section>

@@ -172,12 +172,10 @@
             multipleUrlsDiv.Should().NotBeNull();
             if (multipleUrlsVisible)
             {
-                multipleUrlsTable.ParentNode.Attributes["style"].Should().BeNull();
                 multipleUrlsDiv.Attributes["style"].Should().BeNull();
             }
             else
             {
-                multipleUrlsTable.ParentNode.Attributes["style"].Value.Should().Be("display: none;");
                 multipleUrlsDiv.Attributes["style"].Value.Should().Be("display: none;");
             }
             var singleUrlInput = view.GetElementbyId("apprenticeship-offline-application-url");
@@ -186,12 +184,10 @@
             singleUrlDiv.Should().NotBeNull();
             if (singleUrlVisible)
             {
-                singleUrlInput.ParentNode.Attributes["style"].Should().BeNull();
                 singleUrlDiv.Attributes["style"].Should().BeNull();
             }
             else
             {
-                singleUrlInput.ParentNode.Attributes["style"].Value.Should().Be("display: none;");
                 singleUrlDiv.Attributes["style"].Value.Should().Be("display: none;");
             }
         }

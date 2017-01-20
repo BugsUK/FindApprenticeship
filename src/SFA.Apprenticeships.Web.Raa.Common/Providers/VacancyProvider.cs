@@ -1623,6 +1623,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             vacancy.ThingsToConsiderComment = viewModel.ThingsToConsiderComment;
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
+            vacancy.OtherInformation = viewModel.OtherInformation;
+            vacancy.OtherInformationComment = viewModel.OtherInformationComment;
 
             AddQAInformation(vacancy);
 

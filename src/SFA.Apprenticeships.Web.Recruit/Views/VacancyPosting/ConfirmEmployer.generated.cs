@@ -230,7 +230,7 @@ WriteLiteral(@""";
 
         $(""#location-type-main-location"").on('click', function () {
             if (comeFromPreview === ""True"") {
-                $(""#confirmEmployer"").text(""Save and return to Preview"");
+                $(""#confirmEmployer"").text(""Save and return to preview"");
             }
         });
 

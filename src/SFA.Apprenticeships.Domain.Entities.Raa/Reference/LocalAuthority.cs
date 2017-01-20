@@ -11,5 +11,7 @@
         public string FullName { get; set; }
 
         public County County { get; set; }
+
+        public Region Region { get; set; }
     }
 }

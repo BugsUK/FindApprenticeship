@@ -1,55 +1,51 @@
 ﻿@model ApprenticeshipCandidateViewModel
 
-<section class="sfa-section-bordered grid-row">
-    <h2 class="heading-large">Your details</h2>
-    <div class="column-one-half">
-        <div class="form-group">
-            <p class="form-label-bold">Full name</p>
-            @Html.HiddenFor(m => m.FirstName)
-            @Html.HiddenFor(m => m.LastName)
-            <span id="candidate-fullname" class="form-prepopped">@Html.DisplayFor(model => model.FullName)</span>
+<section class="grid-row">
+    <div class="column-two-thirds">
+        <h3 class="heading-large">Your details</h3>
+        <div class="grid-row">
+            <div class="column-one-half">
+                <h3 class="heading-small">Full name</h3>
+                @Html.HiddenFor(m => m.FirstName)
+                @Html.HiddenFor(m => m.LastName)
+                <span id="candidate-fullname">@Html.DisplayFor(model => model.FullName)</span>
+
+                <h3 class="heading-small">Date of birth</h3>
+                @Html.HiddenFor(m => m.DateOfBirth)
+                <span id="candidate-dob">@Html.DisplayFor(model => model.DateOfBirth, "Date")</span>
+                <h3 class="heading-small">Address</h3>
+                <ul class="list">
+                    <li id="candidate-address-line1">
+                        @Html.HiddenFor(m => m.Address.AddressLine1)
+                        @Model.Address.AddressLine1
+                    </li>
+                    <li id="candidate-address-line2">
+                        @Html.HiddenFor(m => m.Address.AddressLine2)
+                        @Model.Address.AddressLine2
+                    </li>
+                    <li id="candidate-address-line3">
+                        @Html.HiddenFor(m => m.Address.AddressLine3)
+                        @Model.Address.AddressLine3
+                    </li>
+                    <li id="candidate-address-line4">
+                        @Html.HiddenFor(m => m.Address.AddressLine4)
+                        @Model.Address.AddressLine4
+                    </li>
+                    <li id="candidate-address-postcode">
+                        @Html.HiddenFor(m => m.Address.Postcode)
+                        @Model.Address.Postcode
+                    </li>
+                </ul>
+            </div>
+            <div class="column-one-half">
+                <h3 class="heading-small">Email address</h3>
+                @Html.HiddenFor(m => m.EmailAddress)
+                <span id="candidate-email">@Model.EmailAddress</span>
+                <h3 class="heading-small">Phone</h3>
+                @Html.HiddenFor(m => m.PhoneNumber)
+                <span id="candidate-phone">@Model.PhoneNumber</span>
+            </div>
         </div>
-        <div class="form-group date-input">
-            <p class="form-label-bold">Date of birth</p>
-            @Html.HiddenFor(m => m.DateOfBirth)
-            <span id="candidate-dob" class="form-prepopped">@Html.DisplayFor(model => model.DateOfBirth, "Date")</span>
-        </div>
-        <div class="form-group">
-            <span class="form-label-bold">Address</span>
-            <ul class="list-text form-prepopped">
-                <li id="candidate-address-line1">
-                    @Html.HiddenFor(m => m.Address.AddressLine1)
-                    @Model.Address.AddressLine1
-                </li>
-                <li id="candidate-address-line2">
-                    @Html.HiddenFor(m => m.Address.AddressLine2)
-                    @Model.Address.AddressLine2
-                </li>
-                <li id="candidate-address-line3">
-                    @Html.HiddenFor(m => m.Address.AddressLine3)
-                    @Model.Address.AddressLine3
-                </li>
-                <li id="candidate-address-line4">
-                    @Html.HiddenFor(m => m.Address.AddressLine4)
-                    @Model.Address.AddressLine4
-                </li>
-                <li id="candidate-address-postcode">
-                    @Html.HiddenFor(m => m.Address.Postcode)
-                    @Model.Address.Postcode
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="column-one-half">
-        <div class="form-group">
-            <p class="form-label-bold">Email address</p>
-            @Html.HiddenFor(m => m.EmailAddress)
-            <span id="candidate-email" class="form-prepopped">@Model.EmailAddress</span>
-        </div>
-        <div class="form-group">
-            <p class="form-label-bold">Phone</p>
-            @Html.HiddenFor(m => m.PhoneNumber)
-            <span id="candidate-phone" class="form-prepopped">@Model.PhoneNumber</span>
-        </div>
+        <hr />
     </div>
 </section>
