@@ -43,7 +43,7 @@
             var mediator = new ApprenticeshipSearchMediator(_configurationService.Object, _searchProvider.Object,
                 _candidateServiceProvider.Object, _userDataProvider.Object,
                 _referenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(),
-                new ApprenticeshipSearchViewModelLocationValidator(), _apprenticeshipVacancyProvider.Object);
+                new ApprenticeshipSearchViewModelLocationValidator(), _apprenticeshipVacancyProvider.Object, new Mock<IGoogleMapsProvider>().Object);
             return mediator;
         }
     }
