@@ -540,11 +540,11 @@
             return GetMediatorResponse(AdminMediatorCodes.GetStandard.Ok, viewModel);
         }
 
-        public MediatorResponse UpdateStandard(Standard standard)
+        public MediatorResponse<Standard> UpdateStandard(Standard standard)
         {
             _referenceDataProvider.UpdateStandard(standard);
 
-            return new MediatorResponse();
+            return GetMediatorResponse(AdminMediatorCodes.UpdateStandard.Ok, standard);
         }
 
         public MediatorResponse<List<Category>> GetFrameworks()

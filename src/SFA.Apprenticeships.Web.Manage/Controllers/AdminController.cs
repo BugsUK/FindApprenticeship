@@ -526,11 +526,11 @@
         public JsonResult UpdateStandard(EditStandardViewModel standard)
         {
             var entity = new Standard() { Id = standard.Id, Status = standard.Status };
-
+            
             var response = _adminMediator.UpdateStandard(entity);
-
+            throw new Exception("Beep boop");
             //todo change this
-            return Json(new {status = "Ok"});
+            //return Json(new {status = "Ok"});
         }
 
         [HttpGet]

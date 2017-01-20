@@ -179,11 +179,20 @@
                     var changedItems = self.changedItems();
 
                     for (var i = 0; i < changedItems.length; i++) {
-                        df.push($.post('@Url.Action("UpdateStandard")', ko.mapping.toJS(changedItems[i])));
+                        df.push(
+                            $.post('@Url.Action("UpdateStandard")', ko.mapping.toJS(changedItems[i]))
+                            .then(function() {
+                                // set changed flag on item back to false
+                            })
+                        );
                     }
 
-                    $.when(df).then(function() {
+                    $.when(df).promise().then(function(response) {
                         self.busy(false);
+
+                        //cleanup
+                    }).fail(function() {
+                        alert('erk');
                     });
                 }
 

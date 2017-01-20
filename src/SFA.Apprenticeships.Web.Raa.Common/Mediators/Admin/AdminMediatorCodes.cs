@@ -198,5 +198,10 @@
             public const string Error = "AdminMediatorCodes.GetFrameworksBytes.Error";
             public const string Ok = "AdminMediatorCodes.GetFrameworksBytes.Ok";
         }
+
+        public class UpdateStandard
+        {
+            public const string Ok = "AdminMediatorCodes.UpdateStandard.Ok";
+        }
     }
 }
