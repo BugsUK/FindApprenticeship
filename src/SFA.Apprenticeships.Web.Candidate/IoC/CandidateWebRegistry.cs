@@ -51,6 +51,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
     using StructureMap.Configuration.DSL;
     using System.Web;
     using Application.Provider.Strategies;
+    using Common.Providers;
 
     public class CandidateWebRegistry : Registry
     {
@@ -103,6 +104,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
             For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
 
             For<ICandidateApplicationsProvider>().Use<CandidateApplicationsProvider>();
+
+            For<IGoogleMapsProvider>().Use<GoogleMapsProvider>();
         }
 
         private void RegisterServices()

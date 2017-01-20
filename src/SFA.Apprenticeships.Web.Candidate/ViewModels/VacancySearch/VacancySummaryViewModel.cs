@@ -41,5 +41,7 @@
                 return Math.Round(Distance, 1, MidpointRounding.AwayFromZero).ToString(CultureInfo.InvariantCulture);
             }
         }
+
+        public string GoogleStaticMapsUrl { get; set; }
     }
 }
