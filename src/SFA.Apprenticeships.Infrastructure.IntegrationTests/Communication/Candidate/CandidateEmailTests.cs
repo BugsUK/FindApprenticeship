@@ -210,7 +210,7 @@
 
             Action sendEmail = () => _dispatcher.SendEmail(request);
 
-            sendEmail.ShouldThrow<CustomException>().Which.Code.Should().Be(ErrorCodes.EmailError);
+            sendEmail.ShouldThrow<CustomException>().Which.Code.Should().Be(ErrorCodes.EmailFormatError);
             VerifyErrorsLogged(Times.Once());
         }
 

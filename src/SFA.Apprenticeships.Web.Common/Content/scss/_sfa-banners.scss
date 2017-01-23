@@ -1,4 +1,8 @@
-﻿// ==========================================================================
+﻿.js-enabled #global-cookie-message, #global-cookie-message  {
+    display:block !important; // Overrides GDS style as the cookie message is currently handled server side without JS
+}
+
+// ==========================================================================
 // This is a clone of #global-cookie-message, copied from _header.scss in the
 // govuk_template package.
 // ==========================================================================
