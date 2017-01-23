@@ -3,10 +3,6 @@
 // govuk_template package.
 // ==========================================================================
 
-.js-enabled .sfa-maintenance-banner {
-  display: none; /* shown with JS, always on for non-JS */
-}
-
 .sfa-maintenance-banner {
   width: 100%;
   background-color: $yellow-25; // Set background to 25% opacity of GDS yellow
@@ -24,4 +20,7 @@
 
 .sfa-maintenance-banner .sfa-maintenance-close {
     font-weight: bold;
+    display:block;
+    margin:0 auto;
+    max-width:960px;
 }

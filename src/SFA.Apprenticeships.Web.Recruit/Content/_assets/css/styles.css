@@ -3213,10 +3213,6 @@ input[type=number] {
   .form-control-4-4 {
     width: 100%; } }
 
-.js-enabled .sfa-maintenance-banner {
-  display: none;
-  /* shown with JS, always on for non-JS */ }
-
 .sfa-maintenance-banner {
   width: 100%;
   background-color: #fff2d3;
@@ -3237,7 +3233,10 @@ input[type=number] {
 
 /*Additions to the cloned styles above */
 .sfa-maintenance-banner .sfa-maintenance-close {
-  font-weight: bold; }
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+  max-width: 960px; }
 
 .notifications .error-summary, .notifications .warning-summary, .notifications .success-summary, .notifications .info-summary {
   margin-bottom: 0px !important; }
