@@ -24,6 +24,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
         private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
+        private readonly IGoogleMapsProvider _googleMapsProvider;
 
         public TraineeshipSearchMediator(
             IConfigurationService configService,
@@ -32,7 +33,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             TraineeshipSearchViewModelServerValidator searchRequestValidator,
             TraineeshipSearchViewModelLocationValidator searchLocationValidator,
             ITraineeshipVacancyProvider traineeshipVacancyProvider,
-            ICandidateServiceProvider candidateServiceProvider)
+            ICandidateServiceProvider candidateServiceProvider, IGoogleMapsProvider googleMapsProvider)
             : base(configService, userDataProvider)
         {
             _searchProvider = searchProvider;
@@ -40,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             _searchLocationValidator = searchLocationValidator;
             _traineeshipVacancyProvider = traineeshipVacancyProvider;
             _candidateServiceProvider = candidateServiceProvider;
+            _googleMapsProvider = googleMapsProvider;
         }
 
         public MediatorResponse<TraineeshipSearchViewModel> Index(Guid? candidateId)
@@ -166,6 +168,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (traineeshipSearchResponseViewModel.HasError())
             {
                 return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, traineeshipSearchResponseViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            //Populate Google static maps URL
+            foreach (var vacancy in traineeshipSearchResponseViewModel.Vacancies)
+            {
+                vacancy.GoogleStaticMapsUrl = _googleMapsProvider.GetStaticMapsUrl(vacancy.Location);
             }
 
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, traineeshipSearchResponseViewModel);

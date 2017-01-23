@@ -92,7 +92,8 @@
                     opt => opt.Ignore())
                 .ForMember(d => d.VacancyLocationType,
                     opt => opt.MapFrom(src => src.VacancyLocationType))
-                .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage));
+                .ForMember(d => d.Wage, opt => opt.MapFrom(src => src.Wage))
+                .ForMember(d => d.GoogleStaticMapsUrl, opt => opt.Ignore());
 
             Mapper.CreateMap<Address, AddressViewModel>()
                 .ForMember(a => a.AddressLine1, opt => opt.Ignore())

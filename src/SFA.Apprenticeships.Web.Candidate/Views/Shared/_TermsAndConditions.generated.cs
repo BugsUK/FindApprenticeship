@@ -67,7 +67,11 @@ WriteLiteral(@">
 
     <p>However, the SFA accepts no liability for:</p>
 
-    <ul>
+    <ul");
+
+WriteLiteral(" class=\"list list-bullet\"");
+
+WriteLiteral(@">
         <li>you being unable to access the service (eg because of excessive demand or because we've taken the service down for maintenance)</li>
         <li>loss of any of data</li>
         <li>delay or failure in receiving data</li>
@@ -81,15 +85,13 @@ WriteLiteral(@">
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(@">What happens if you misuse your account</h3>
+WriteLiteral(">What happens if you misuse your account</h3>\r\n\r\n    <p>We may delete your accoun" +
+"t if you:</p>\r\n\r\n    <ul");
 
-    <p>We may delete your account if you:</p>
+WriteLiteral(" class=\"list list-bullet\"");
 
-    <ul>
-        <li>use an inappropriate email address for your username</li>
-        <li>submit an application posing as someone else</li>
-    </ul>
-</section>");
+WriteLiteral(">\r\n        <li>use an inappropriate email address for your username</li>\r\n       " +
+" <li>submit an application posing as someone else</li>\r\n    </ul>\r\n</section>");
 
         }
     }

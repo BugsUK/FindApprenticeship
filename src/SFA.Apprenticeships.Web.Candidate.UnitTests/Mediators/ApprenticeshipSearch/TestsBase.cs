@@ -16,7 +16,7 @@
     {
         protected static IApprenticeshipSearchMediator GetMediator(IConfigurationService configurationService, ISearchProvider searchProvider, ICandidateServiceProvider candidateServiceProvider, IUserDataProvider userDataProvider, IReferenceDataService referenceDataService, IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
         {
-            return new ApprenticeshipSearchMediator(configurationService, searchProvider, candidateServiceProvider, userDataProvider, referenceDataService, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), apprenticeshipVacancyProvider);
+            return new ApprenticeshipSearchMediator(configurationService, searchProvider, candidateServiceProvider, userDataProvider, referenceDataService, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), apprenticeshipVacancyProvider, new Mock<IGoogleMapsProvider>().Object);
         }
 
         protected Mock<ICandidateServiceProvider> CandidateServiceProvider;
@@ -39,7 +39,7 @@
             SearchProvider = new Mock<ISearchProvider>();
             ReferenceDataService = new Mock<IReferenceDataService>();
             ApprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
-            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object);
+            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object, new Mock<IGoogleMapsProvider>().Object);
         }
     }
 }

@@ -5,31 +5,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">Give feedback</h1>
-    <p class="sfa-no-bottom-margin">Please leave your suggestions or comments about our service.</p>
-    <p>If you're looking for help then <a href="@Url.RouteUrl(CandidateRouteNames.Helpdesk)">contact us</a> instead.</p>
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">Give feedback</h1>
+    </div>
 </div>
 
-@using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post, new { id = "feedback-form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.FormTextFor(
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <p class="sfa-no-bottom-margin">Please leave your suggestions or comments about our service.</p>
+        <p>If you're looking for help then <a href="@Url.RouteUrl(CandidateRouteNames.Helpdesk)">contact us</a> instead.</p>
+
+        @using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post, new { id = "feedback-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.FormTextFor(
             m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
-            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" })
+            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71", @class = "form-control-2-3" })
 
-    @Html.FormTextFor(
+            @Html.FormTextFor(
             m => m.Email,
-            containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
+                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100", @class = "form-control-2-3" },
             hintHtmlAttributes: new { @class = "text" })
 
-    @Html.FormTextAreaFor(m => m.Details,
-                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
-                hintHtmlAttributes: new { @class = "text" })
+            @Html.FormTextAreaFor(m => m.Details,
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "7", role = "textbox", aria_multiline = "true", @class = "form-control-4-4" })
 
-    <div class="form-group">
-        <button id="give-feedback-form-button" class="button">Give feedback</button>
+            <div class="form-group">
+                <button id="give-feedback-form-button" class="button">Give feedback</button>
+            </div>
+        }
     </div>
-}
+</div>

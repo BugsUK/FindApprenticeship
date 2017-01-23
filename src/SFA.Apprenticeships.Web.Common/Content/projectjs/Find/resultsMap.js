@@ -76,7 +76,7 @@ $(function () {
     function checkGoogleMapsApiScriptLoaded() {
         if (!apiScriptLoaded && !apiScriptLoading) {
             apiScriptLoading = true;
-            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
+            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
         }
     }
 

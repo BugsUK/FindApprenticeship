@@ -11,70 +11,76 @@
     </div>
 </div>
 
-@using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post, new { id = "helpdesk-form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.FormTextFor(
+<div class="grid-row">
+    <div class="column-two-thirds">
+        @using (Html.BeginRouteForm(CandidateRouteNames.Helpdesk, FormMethod.Post, new { id = "helpdesk-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.FormTextFor(
             m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
-            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" })
+            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71", @class= "form-control-2-3" })
 
-    @Html.FormTextFor(
+            @Html.FormTextFor(
             m => m.Email,
-            containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
+                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100", @class = "form-control-2-3" },
             hintHtmlAttributes: new { @class = "text" })
 
-    <div class="form-group">
-        <label for="contact-subject" class="form-label-bold">Briefly describe your question</label>
-        @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs sfa-small-bottom-margin select-inject form-control" })
+            <div class="form-group">
+                <label for="contact-subject" class="form-label-bold">Briefly describe your question</label>
+                @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs select-inject form-control form-control-2-3" })
 
-        <div id="changeEmailAddress" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
-            <p>If you'd like to change your email address visit the <a href="@Url.RouteUrl(RouteNames.UpdateEmail)">update email</a> page. If you're still having problems contact us using this form.</p>
-        </div>
+                <div id="changeEmailAddress" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
+                    <p>If you'd like to change your email address visit the <a href="@Url.RouteUrl(RouteNames.UpdateEmail)">update email</a> page. If you're still having problems contact us using this form.</p>
+                </div>
 
-        <div id="forgottenEmailAddress" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
-            <p>If you've forgotten your email address visit the <a href="@Url.RouteUrl(RouteNames.ForgottenCredentials)">forgotten email</a> page. If you're still having problems contact us using this form.</p>
-        </div>
+                <div id="forgottenEmailAddress" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
+                    <p>If you've forgotten your email address visit the <a href="@Url.RouteUrl(RouteNames.ForgottenCredentials)">forgotten email</a> page. If you're still having problems contact us using this form.</p>
+                </div>
 
-        <div id="cantSignIn" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
-            <p>If you're having trouble signing in to your account visit the <a href="@Url.RouteUrl(RouteNames.ForgottenCredentials)">forgotten password</a> page. If you're still having problems contact us using this form.</p>
-        </div>
+                <div id="cantSignIn" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
+                    <p>If you're having trouble signing in to your account visit the <a href="@Url.RouteUrl(RouteNames.ForgottenCredentials)">forgotten password</a> page. If you're still having problems contact us using this form.</p>
+                </div>
 
-        <div id="cantActivate" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
-            <p><a href="@Url.RouteUrl(RouteNames.SignIn)">Activate your account</a> by signing in. You'll need the email address and password you used to create your account.</p>
-            <p>If you haven't received your activation code, you can re-send it from the activation page. Make sure you've checked your junk email folder.</p>
-            <p>If you're still having problems contact us using this form.</p>
-        </div>
+                <div id="cantActivate" class="selfServe panel panel-border-narrow toggle-content hide-nojs text">
+                    <p><a href="@Url.RouteUrl(RouteNames.SignIn)">Activate your account</a> by signing in. You'll need the email address and password you used to create your account.</p>
+                    <p>If you haven't received your activation code, you can re-send it from the activation page. Make sure you've checked your junk email folder.</p>
+                    <p>If you're still having problems contact us using this form.</p>
+                </div>
 
-        @Html.FormTextFor(
+                @Html.FormTextFor(
             m => m.Enquiry,
             containerHtmlAttributes: new { @class = "form-group-compound" },
-          controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty)
-    </div>
-    @Html.FormTextAreaFor(m => m.Details,
-                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "sfa-small-bottom-margin" },
+          controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected form-control-2-3", rows = "2" , maxlength = "100" }, labelText: string.Empty)
+            </div>
+            @Html.FormTextAreaFor(m => m.Details,
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "7", role = "textbox", aria_multiline = "true", @class = "form-control-4-4" },
                 hintHtmlAttributes: new { @class = "text" })
-    <div class="form-group">
-        <button id="send-contact-form-button" class="button">Send</button>
+            <div class="form-group">
+                <button id="send-contact-form-button" class="button">Send</button>
+            </div>
+        }
+        <section>
+            <h2 class="heading-medium">Apprenticeship helpline</h2>
+            <p>
+                Contact the helpline if you’d prefer to speak to somebody, or if
+                you're having difficulty with the contact form.
+            </p>
+            <p>
+                <span class="bold-small">Phone</span>
+                <br/>
+                0800 015 0400
+            </p>
+            <p>
+                <span class="bold-small">Email</span>
+                <br/> 
+                <a href="mailto:nationalhelpdesk@findapprenticeship.service.gov.uk">nationalhelpdesk@findapprenticeship.service.gov.uk</a>
+</p>
+            <p>
+                Contact <a href="https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx"
+                           rel="external">National Careers Service</a> (NCS) if you have a
+                question about whether an apprenticeship is right for you.
+            </p>
+        </section>
     </div>
-}
-<section >
-    <h2 class="heading-medium">Apprenticeship helpline</h2>
-    <p>
-        Contact the helpline if you’d prefer to speak to somebody, or if
-        you're having difficulty with the contact form.
-    </p>
-    <p>
-        Phone:
-        <br>0800 015 0400
-    </p>
-    <p>
-        Email: <a href="mailto:nationalhelpdesk@findapprenticeship.service.gov.uk">nationalhelpdesk@findapprenticeship.service.gov.uk</a>
-    </p>
-    <p>
-        Contact <a href="https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx"
-                   rel="external">National Careers Service</a> (NCS) if you have a
-        question about whether an apprenticeship is right for you.
-    </p>
-</section>
+</div>

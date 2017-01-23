@@ -4,9 +4,9 @@
     ViewBag.Title = "Contact us - Recruit an Apprentice";
 }
 
-<div class="hgroup">
+<div class="grid-row">
+    <div class="column-two-thirds">
     <h1 class="heading-xlarge">Contact us</h1>
-</div>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ContactUs, FormMethod.Post, new { id = "contact-us-form" }))
 {
@@ -14,22 +14,22 @@
     @Html.FormTextFor(
             m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
-            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" })
+            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71", @class="form-control-2-3" })
 
     @Html.FormTextFor(
             m => m.Email,
-            containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
+            containerHtmlAttributes: new { @class = "form-group" },
+                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100", @class = "form-control-2-3" },
             hintHtmlAttributes: new { @class = "text" })
 
-    <div class="form-group">
-        @Html.FormTextFor(m => m.Enquiry, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" })
-    </div>
+        @Html.FormTextFor(m => m.Enquiry, controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected form-control-2-3", maxlength = "100" })
 
     @Html.FormTextAreaFor(m => m.Details,
-                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "7", role = "textbox", aria_multiline = "true", @class = "form-control-4-4" },
                 hintHtmlAttributes: new { @class = "text" })
     <div class="form-group">
         <button id="send-contact-form-button" class="button">Send</button>
     </div>
 }
+</div>
+</div>

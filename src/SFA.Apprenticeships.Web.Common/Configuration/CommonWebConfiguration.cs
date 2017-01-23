@@ -37,6 +37,8 @@
         public int SubCategoriesFullNamesLimit { get; set; }
 
         public string RaaApiBaseUrl { get; set; }
+
+        public string GoogleMapsPrivateKey { get; set; }
     }
 
     public class Features

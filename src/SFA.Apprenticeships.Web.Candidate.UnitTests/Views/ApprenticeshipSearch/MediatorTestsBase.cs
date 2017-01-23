@@ -37,7 +37,7 @@
             ReferenceDataService = new Mock<IReferenceDataService>();
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);
             ApprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
-            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object);
+            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object, new Mock<IGoogleMapsProvider>().Object);
         }
 
         private static IEnumerable<Category> GetCategories()

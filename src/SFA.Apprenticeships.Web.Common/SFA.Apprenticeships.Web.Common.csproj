@@ -245,6 +245,8 @@
     <Compile Include="Handlers\AiExceptionLogger.cs" />
     <Compile Include="Mappers\Resolvers\WageToWageViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\WageViewModelToWageConverter.cs" />
+    <Compile Include="Providers\GoogleMapsProvider.cs" />
+    <Compile Include="Providers\IGoogleMapsProvider.cs" />
     <Compile Include="ViewModels\ReleaseNoteViewModel.cs" />
     <Compile Include="ViewModels\VersionViewModel.cs" />
     <Compile Include="Converters\PageableConverters.cs" />
