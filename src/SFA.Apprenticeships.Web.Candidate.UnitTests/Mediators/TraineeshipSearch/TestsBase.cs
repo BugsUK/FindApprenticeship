@@ -15,7 +15,7 @@
     {
         protected static ITraineeshipSearchMediator GetMediator(IConfigurationService configurationService, ISearchProvider searchProvider, IUserDataProvider userDataProvider, ITraineeshipVacancyProvider traineeshipVacancyProvider, ICandidateServiceProvider candidateServiceProvider)
         {
-            return new TraineeshipSearchMediator(configurationService, searchProvider, userDataProvider, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator(), traineeshipVacancyProvider, candidateServiceProvider);
+            return new TraineeshipSearchMediator(configurationService, searchProvider, userDataProvider, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator(), traineeshipVacancyProvider, candidateServiceProvider, new Mock<IGoogleMapsProvider>().Object);
         }
 
         protected Mock<IConfigurationService> ConfigurationService;
@@ -35,7 +35,7 @@
             SearchProvider = new Mock<ISearchProvider>();
             TraineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
             CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            Mediator = new TraineeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, UserDataProvider.Object, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator(), TraineeshipVacancyProvider.Object, CandidateServiceProvider.Object);
+            Mediator = new TraineeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, UserDataProvider.Object, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator(), TraineeshipVacancyProvider.Object, CandidateServiceProvider.Object, new Mock<IGoogleMapsProvider>().Object);
         }
     }
 }

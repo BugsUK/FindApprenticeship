@@ -24,7 +24,8 @@
             Mapper.CreateMap<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>()
                 .ConvertUsing<TraineeshipSearchResultsResolver>();
 
-            Mapper.CreateMap<TraineeshipSearchResponse, TraineeshipVacancySummaryViewModel>();
+            Mapper.CreateMap<TraineeshipSearchResponse, TraineeshipVacancySummaryViewModel>()
+                .ForMember(d => d.GoogleStaticMapsUrl, opt => opt.Ignore());
 
             Mapper.CreateMap<TraineeshipSearchViewModel, Location>()
                 .ConvertUsing<LocationResolver>();

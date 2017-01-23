@@ -483,24 +483,14 @@ WriteLiteral("></div>\r\n                                <img");
 
 WriteLiteral(" class=\"static-map\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5985), Tuple.Create("\"", 6150)
-, Tuple.Create(Tuple.Create("", 5991), Tuple.Create("//maps.googleapis.com/maps/api/staticmap?markers=", 5991), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 5985), Tuple.Create("\"", 6019)
             
             #line 87 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                               , Tuple.Create(Tuple.Create("", 6040), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+, Tuple.Create(Tuple.Create("", 5991), Tuple.Create<System.Object, System.Int32>(vacancy.GoogleStaticMapsUrl
             
             #line default
             #line hidden
-, 6040), false)
-, Tuple.Create(Tuple.Create("", 6068), Tuple.Create(",", 6068), true)
-            
-            #line 87 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 6069), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
-            
-            #line default
-            #line hidden
-, 6069), false)
-, Tuple.Create(Tuple.Create("", 6098), Tuple.Create("&size=190x125&zoom=12&client=gme-skillsfundingagency", 6098), true)
+, 5991), false)
 );
 
 WriteLiteral(" />\r\n                            </div>\r\n                        </div>\r\n        " +

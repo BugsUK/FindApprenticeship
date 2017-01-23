@@ -35,6 +35,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
+        private readonly IGoogleMapsProvider _googleMapsProvider;
 
         private readonly string[] _blacklistedCategoryCodes;
 
@@ -46,7 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             IReferenceDataService referenceDataService,
             ApprenticeshipSearchViewModelServerValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator,
-            IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
+            IApprenticeshipVacancyProvider apprenticeshipVacancyProvider, IGoogleMapsProvider googleMapsProvider)
             : base(configService, userDataProvider)
         {
             _configService = configService;
@@ -56,6 +57,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
+            _googleMapsProvider = googleMapsProvider;
             _blacklistedCategoryCodes = configService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes.Split(',');
         }
 
@@ -331,6 +333,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (candidateId.HasValue)
             {
                 SetSavedVacancyStatuses(candidateId.Value, results);
+            }
+
+            //Populate Google static maps URL
+            foreach (var vacancy in results.Vacancies)
+            {
+                vacancy.GoogleStaticMapsUrl = _googleMapsProvider.GetStaticMapsUrl(vacancy.Location);
             }
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
