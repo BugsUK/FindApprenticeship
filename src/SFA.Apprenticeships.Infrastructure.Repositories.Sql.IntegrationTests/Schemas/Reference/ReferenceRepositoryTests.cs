@@ -58,7 +58,6 @@
             sectors.Should().NotBeNullOrEmpty();
             sectors.Any(std => std.Id == 0
                                || string.IsNullOrWhiteSpace(std.Name)
-                               || !std.Standards.Any()
                                || std.Standards.Any(x => x.ApprenticeshipSectorId != std.Id))
                                .Should().BeFalse();
         }
