@@ -934,6 +934,7 @@
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\nas\reports.js" />
     <Content Include="Content\_assets\js\nas\vacancyApplications.js" />
+    <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\print.js" />
     <Content Include="Content\_assets\js\prototype-recruit.js" />

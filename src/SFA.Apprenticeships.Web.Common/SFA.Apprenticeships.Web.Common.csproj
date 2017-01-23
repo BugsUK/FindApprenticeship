@@ -719,6 +719,7 @@
     <Content Include="Content\projectjs\Recruit\dashboard.js" />
     <Content Include="Content\projectjs\Recruit\reports.js" />
     <Content Include="Content\projectjs\Recruit\vacancyApplications.js" />
+    <Content Include="Content\projectjs\Recruit\validationscripts.js" />
     <Content Include="gulpfile.js" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
       <Generator>RazorGenerator</Generator>
