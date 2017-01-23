@@ -3213,6 +3213,9 @@ input[type=number] {
   .form-control-4-4 {
     width: 100%; } }
 
+.js-enabled #global-cookie-message, #global-cookie-message {
+  display: block !important; }
+
 .sfa-maintenance-banner {
   width: 100%;
   background-color: #fff2d3;
