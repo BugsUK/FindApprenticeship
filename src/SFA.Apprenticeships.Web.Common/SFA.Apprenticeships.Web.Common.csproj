@@ -646,13 +646,13 @@
     <Content Include="Content\libs\vendor\jquery.scrollTableBody-1.0.0.js" />
     <Content Include="Content\libs\vendor\jquery.validate-vsdoc.js" />
     <Content Include="Content\libs\vendor\jquery.validate.js" />
-    <Content Include="Content\libs\vendor\jquery.validate.min.js" />
     <Content Include="Content\libs\vendor\jquery.validate.unobtrusive.custom.js" />
     <Content Include="Content\libs\vendor\jquery.validate.unobtrusive.js" />
     <Content Include="Content\libs\vendor\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\libs\vendor\jstorage.js" />
     <Content Include="Content\libs\vendor\knockout-3.1.0.debug.js" />
     <Content Include="Content\libs\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\libs\vendor\knockout.mapping-latest.js" />
     <Content Include="Content\libs\vendor\knockout.validation.debug.js" />
     <Content Include="Content\libs\vendor\knockout.validation.js" />
     <Content Include="Content\libs\vendor\modernizr-2.7.1.js" />

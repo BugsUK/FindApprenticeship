@@ -534,7 +534,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var standards = GetStandards();
             var sectors = GetSectors();
             viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
-            viewModel.Standards = standards;
+            viewModel.Standards = standards.Where(w => w.Status == FrameworkStatusType.Active).ToList();
             viewModel.Sectors = sectors;
             viewModel.AutoSaveTimeoutInSeconds =
                     _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;

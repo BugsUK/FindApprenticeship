@@ -333,7 +333,7 @@
       <Name>SFA.Apprenticeships.Infrastructure.WebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.DAS.RAA.Api.UnitTests\SFA.DAS.RAA.Api.UnitTests.csproj">
-      <Project>{3ca36139-bbdd-4305-b15a-e9500606b672}</Project>
+      <Project>{50730ae1-d314-40e7-93b2-450f0c898cae}</Project>
       <Name>SFA.DAS.RAA.Api.UnitTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.DAS.RAA.Api\SFA.DAS.RAA.Api.csproj">

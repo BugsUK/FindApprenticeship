@@ -1,5 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces;
     using Attributes;
     using Common.Attributes;
@@ -11,8 +14,10 @@
     using Raa.Common.ViewModels.Api;
     using Raa.Common.ViewModels.Employer;
     using Raa.Common.ViewModels.Provider;
-    using System;
     using System.Web.Mvc;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
+    using Raa.Common.ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [AuthorizeUser(Roles = Roles.Admin)]
@@ -498,14 +503,64 @@
         public ActionResult Standards()
         {
             var response = _adminMediator.GetStandard();
-            return View(response.ViewModel);
+
+            var standards = new List<EditStandardViewModel>();
+
+            foreach(var standardSector in response.ViewModel.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
+            {
+                var ssat1 = response.ViewModel.Single(s =>  s.Id == standardSector.ApprenticeshipOccupationId);
+
+                standards.AddRange(standardSector.Standards.OrderBy(s => s.Name).Select(s => new EditStandardViewModel()
+                {
+                    Id = s.Id,
+                    Name = ssat1.Name,
+                    StandardSectorName = s.Name,
+                    StandardName = standardSector.Name,
+                    Status = s.Status
+                }));
+            }
+
+            return View(standards);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateStandard(EditStandardViewModel standard)
+        {
+            var entity = new Standard() { Id = standard.Id, Status = standard.Status };
+            
+            var response = _adminMediator.UpdateStandard(entity);
+            
+            // always return success here as an exception will return of it's own accord
+            return Json(new {status = "Ok"});
         }
 
         [HttpGet]
         public ActionResult Frameworks()
         {
             var response = _adminMediator.GetFrameworks();
-            return View(response.ViewModel);
+            var categories = new List<EditCategoryViewModel>();
+
+            foreach (var category in response.ViewModel)
+            {
+                categories.AddRange(
+                    category.SubCategories.Select(s => new EditCategoryViewModel()
+                    {
+                        Id = s.Id,
+                        SsatName = category.FullName,
+                        FullName = s.FullName,
+                        Status = s.Status
+                    }));
+            }
+
+            return View(categories);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateFramework(EditCategoryViewModel category)
+        {
+            var response = _adminMediator.UpdateFramework(category);
+
+            return Json(new {Status = "Ok"});
         }
 
         [HttpGet]

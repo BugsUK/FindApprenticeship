@@ -325,6 +325,10 @@
       <Project>{0D94A2DF-6D5A-4DEC-B6A1-137F3B461B47}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.WebServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
+      <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
+      <Name>SFA.Apprenticeships.Web.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure.Azure\SFA.Infrastructure.Azure.csproj">
       <Project>{fe5b99f5-66d8-42fc-a8b3-6562837623a4}</Project>
       <Name>SFA.Infrastructure.Azure</Name>

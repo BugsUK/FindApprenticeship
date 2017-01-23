@@ -1,46 +1,240 @@
 ﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Raa.Reference
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Manage.Constants
-@model List<SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.StandardSubjectAreaTierOne>
+@model List<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditStandardViewModel>
 @{
     ViewBag.Title = "Standards";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .highlight-row {
+        background-color: #dee0e2;
+    }
+</style>
+
 <h1 id="heading" class="heading-xlarge">Standards</h1>
 
 @Html.RouteLink("Download Standards", ManagementRouteNames.AdminStandardsCsv)
 
+<div class="grid-row" data-bind="visible: message" style="display: none;">
+    <div class="column-two-thirds">
+        <div class="info-summary" role="group" aria-labelledby="VacancyDeletedInfoMessageText" tabindex="-1">
+
+            <p id="VacancyDeletedInfoMessageText" data-bind="text: message"></p>
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" />
+    <button style="display: none;" class="button no-handler" data-bind="css : { 'disabled' : busy }, visible : changedItems().length > 0, click: saveChanges">
+        <span data-bind="visible: !busy()">Save changes to <span data-bind="text: changedItems().length"></span> item(s)</span>
+        <span data-bind="visible: busy">Saving</span>
+    </button>
+</div>
+
 <table>
+    <thead>
     <tr>
         <th>ID</th>
         <th>SSAT1</th>
         <th>Standard Sector</th>
         <th>Standard</th>
+        <th></th>
     </tr>
+    </thead>
 
-    @foreach (var standardSector in Model.SelectMany(s => s.Sectors).OrderBy(s => s.Name))
-    {
-        var ssat1 = Model.Single(s => s.Id == standardSector.ApprenticeshipOccupationId);
-
-        foreach (var standard in standardSector.Standards.OrderBy(s => s.Name))
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => standard.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => ssat1.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => standardSector.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => standard.Name)
-                </td>
-            </tr>
+    <tbody data-bind="template: { name: 'standard', foreach: standards, as: 'standard' }">
+        @foreach (var standard in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.StandardSectorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => standard.StandardName)
+                    </td>
+                    <td></td>
+                </tr>
         }
-    }
+    </tbody>
 </table>
 
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
 
+    <script type="text/html" id="standard">
+        <tr data-bind="css : { 'highlight-row' : standard.Changed() }">
+            <td data-bind="text: standard.Id"></td>
+            <td data-bind="text: standard.Name"></td>
+            <td data-bind="text: standard.StandardSectorName"></td>
+            <td data-bind="text: standard.StandardName"></td>
+            <td>
+                <select data-bind="options: $root.statuses, optionsText: 'name', value: standard.StatusText"></select>
+            </td>
+        </tr>
+    </script>
+
+    <script>
+        var pageInit = function() {
+            var statuses = [
+                { name: 'Active', value: @((int) FrameworkStatusType.Active) },
+                { name: 'Ceased', value: @((int) FrameworkStatusType.Ceased) }
+            ];
+
+            var mappings = {
+                create: function(options) {
+                    var mapped = ko.mapping.fromJS(options.data);
+                    mapped.Selected = ko.observable(false);
+
+                    var status = '';
+                    for (var i = 0; i < statuses.length; i++) {
+                        if (statuses[i].value === mapped.Status()) {
+                            status = statuses[i]; //.name;
+                            break;
+                        }
+                    }
+
+                    mapped.StatusText = ko.observable(status);
+
+                    mapped.Changed = ko.observable(false);
+
+                    mapped.StatusText.subscribe(function(newValue) {
+                        for (var i = 0; i < statuses.length; i++) {
+                            if (statuses[i].name === newValue.name) {
+                                mapped.Status(statuses[i].value);
+                                return;
+                            }
+                        }
+                    });
+
+                    return mapped;
+                }
+            };
+
+            function ViewModel() {
+                var self = this;
+
+                self.busy = ko.observable(false);
+                self.statuses = ko.observableArray(statuses);
+
+                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)), mappings);
+
+                self.dataChange = function(item) {
+                    item.Changed(true);
+                }
+
+                self.searchText = ko.observable();
+
+                self.message = ko.observable();
+
+                self.standards = ko.computed(function() {
+                    if (self.searchText() != null) {
+                        var filter = self.searchText().toLowerCase();
+
+                        return ko.utils.arrayFilter(self.data(),
+                            function(item) {
+                                var match = false;
+
+                                var id = item.Id();
+                                if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
+
+                                var name = item.Name();
+                                if (name != null) match = match || name.toLowerCase().indexOf(filter) > -1;
+
+                                var standardName = item.StandardName();
+                                if (standardName != null)
+                                    match = match || standardName.toLowerCase().indexOf(filter) > -1;
+
+                                var standardSectorName = item.StandardSectorName();
+                                if (standardSectorName != null)
+                                    match = match || standardSectorName.toLowerCase().indexOf(filter) > -1;
+
+                                return match;
+                            });
+                    } else {
+                        return self.data();
+                    }
+                });
+
+                self.changedItems = ko.computed(function() {
+                    return ko.utils.arrayFilter(self.data(),
+                        function(item) {
+                            return item.Changed();
+                        });
+                });
+
+                // subscribe to all observables on this object
+                for (var i = 0; i < self.data().length; i++) {
+                    var mapped = self.data()[i];
+
+                    (function(mapped) {
+                        for (var item in mapped) {
+                            if (item !== 'Status' && item !== 'Changed' && mapped.hasOwnProperty(item) && item.indexOf('_') === -1) {
+                                mapped[item].subscribe(function(newValue) { self.dataChange(mapped); });
+                            }
+                        }
+                    }(mapped));
+
+                }
+
+                // functions
+                self.saveChanges = function() {
+                    self.busy(true);
+
+                    // clear existing message
+                    self.message(null);
+                    var df = [];
+                    
+                    var changedItems = self.changedItems();
+
+                    for (var i = 0; i < changedItems.length; i++) {
+                        (function() {
+                            var item = changedItems[i];
+                            df.push($.Deferred(function(promise) {
+                                $.ajax({
+                                    method: 'POST',
+                                    url: '@Url.Action("UpdateStandard")',
+                                    data: ko.mapping.toJS(item)
+                                }).done(function() {
+                                    item.Changed(false);
+                                    promise.resolve();
+                                }).fail(function() {
+                                    promise.reject();
+                                });
+                            }));
+                        })();
+                    }
+
+                    $.when.apply(undefined, df).always(function() {
+                        // always reset busy (button) state
+                        self.busy(false);
+                    }).done(function() {
+                        // add success message
+
+                    }).fail(function() {
+                        // add error state
+                        self.message('Failed to save');
+                    });
+                }
+
+                return self;
+            };
+
+            var viewModel = new ViewModel();
+
+            ko.applyBindings(viewModel);
+        }
+
+        pageInit();
+    </script>
+}

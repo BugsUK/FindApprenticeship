@@ -1143,6 +1143,7 @@
     <Content Include="Content\_assets\js\vendor\jstorage.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.mapping-latest.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-2.7.1.js" />

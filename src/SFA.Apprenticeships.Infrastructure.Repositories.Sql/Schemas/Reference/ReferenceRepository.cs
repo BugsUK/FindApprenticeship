@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa.Reference;
@@ -90,7 +91,8 @@
                     ApprenticeshipLevel = (ApprenticeshipLevel)levelAsInt,
                     Id = x.StandardId,
                     Name = x.FullName,
-                    ApprenticeshipSectorId = x.StandardSectorId
+                    ApprenticeshipSectorId = x.StandardSectorId,
+                    Status = (FrameworkStatusType)x.ApprenticeshipFrameworkStatusTypeId
                 };
                 return std;
             }).ToList();
@@ -396,6 +398,54 @@
             _logger.Debug("Got all education levels");
 
             return levels;
+        }
+
+        public void UpdateStandard(Standard standard)
+        {
+            _logger.Debug($"Updating standard with id={standard.Id}");
+
+            const string standardSql = "SELECT * FROM Reference.Standard WHERE StandardId = @Id";
+
+            //TODO: Does this need to be here? If not, test and remove.
+            var sqlParams = new
+            {
+                standard.Id
+            };
+
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
+
+            var dbStandard = dbStandards.Single();
+
+            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)standard.Status;
+
+            var result = _getOpenConnection.UpdateSingle(dbStandard);
+
+            if (!result)
+                throw new Exception($"Failed to save standard with id={standard.Id}");
+        }
+
+        public void UpdateFramework(Category category)
+        {
+            _logger.Debug($"Updating framework with id={category.Id}");
+
+            const string standardSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @Id";
+
+            //TODO: Does this need to be here? If not, test and remove.
+            var sqlParams = new
+            {
+                category.Id
+            };
+
+            var dbStandards = _getOpenConnection.Query<Entities.ApprenticeshipFramework>(standardSql, sqlParams);
+
+            var dbStandard = dbStandards.Single();
+
+            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
+
+            var result = _getOpenConnection.UpdateSingle(dbStandard);
+
+            if (!result)
+                throw new Exception($"Failed to save standard with id={category.Id}");
         }
     }
 }

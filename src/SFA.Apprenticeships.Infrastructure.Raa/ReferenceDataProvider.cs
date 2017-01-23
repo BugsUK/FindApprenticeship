@@ -200,5 +200,15 @@
         {
             return _referenceRepository.GetRegionByCode(regionCode);
         }
+
+        public void UpdateStandard(Standard standard)
+        {
+            _referenceRepository.UpdateStandard(standard);
+        }
+
+        public void UpdateFramework(Category category)
+        {
+            _referenceRepository.UpdateFramework(category);
+        }
     }
 }

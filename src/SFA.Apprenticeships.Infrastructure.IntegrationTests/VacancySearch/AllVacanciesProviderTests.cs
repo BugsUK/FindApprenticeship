@@ -17,12 +17,14 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     using StructureMap;
+    using Web.Common.Configuration;
 
     [TestFixture]
     public class AllVacanciesProviderTests
     {
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
+        private string _environment;
 
         [SetUp]
         public void SetUp()
@@ -37,6 +39,9 @@
 
             _elasticsearchClientFactory = container.GetInstance<IElasticsearchClientFactory>();
             container.GetInstance<IMapper>();
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            _environment = configurationService.Get<CommonWebConfiguration>().Environment.ToLower();
         }
 
         [Test, Category("Integration")]
@@ -47,7 +52,7 @@
             var provider = new AllApprenticeshipVacanciesProvider(_logger.Object, _elasticsearchClientFactory);
 
             // Act.
-            var vacancies = provider.GetAllVacancyIds("apprenticeships").ToList();
+            var vacancies = provider.GetAllVacancyIds($"{_environment}_apprenticeships").ToList();
 
             // Assert.
             vacancies.Should().NotBeNull();
@@ -63,7 +68,7 @@
             var provider = new AllTraineeshipVacanciesProvider(_logger.Object, _elasticsearchClientFactory);
 
             // Act.
-            var vacancies = provider.GetAllVacancyIds("traineeships").ToList();
+            var vacancies = provider.GetAllVacancyIds($"{_environment}_traineeships").ToList();
 
             // Assert.
             vacancies.Should().NotBeNull();

@@ -45,5 +45,8 @@
         Region GetRegionById(int regionId);
 
         Region GetRegionByCode(string regionCode);
+		
+		void UpdateStandard(Standard standard);
+        void UpdateFramework(Category entity);
     }
 }

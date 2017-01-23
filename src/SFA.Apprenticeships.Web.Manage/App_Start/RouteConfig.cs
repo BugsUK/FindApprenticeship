@@ -392,6 +392,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.AdminUpdateStandard,
+               url: "admin/standard",
+               defaults: new { controller = "Admin", action = "UpdateStandard" }
+               );
+
+            routes.MapRoute(
                name: ManagementRouteNames.AdminStandardsCsv,
                url: "admin/standards/csv",
                defaults: new { controller = "Admin", action = "DownloadStandardsCsv" }
@@ -402,6 +408,12 @@
                 url: "admin/frameworks",
                 defaults: new { controller = "Admin", action = "Frameworks" }
                 );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AdminUpdateFramework,
+               url: "admin/framework",
+               defaults: new { controller = "Admin", action = "UpdateFramework" }
+               );
 
             routes.MapRoute(
                name: ManagementRouteNames.AdminFrameworksCsv,
