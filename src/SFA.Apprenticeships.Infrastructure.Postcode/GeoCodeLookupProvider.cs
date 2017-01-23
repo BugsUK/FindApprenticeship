@@ -60,6 +60,8 @@
 
         private GeoPoint GetGeoPointFor(string addressOrPostCode)
         {
+            if(string.IsNullOrEmpty(addressOrPostCode)) return GeoPoint.NotSet;
+
             var dataSet = GetDataFromService(BuildUrl(addressOrPostCode));
 
             //Check for an error
