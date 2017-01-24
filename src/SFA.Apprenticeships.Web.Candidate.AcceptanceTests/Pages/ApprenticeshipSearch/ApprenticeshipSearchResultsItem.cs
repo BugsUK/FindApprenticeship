@@ -5,7 +5,7 @@
     using SpecBind.Pages;
     using SpecBind.Selenium;
 
-    [ElementLocator(Class = "search-results__item")]
+    [ElementLocator(Class = "search-result")]
     public class ApprenticeshipSearchResultsItem : WebElement
     {
         protected internal ApprenticeshipSearchResultsItem(ISearchContext searchContext) : base(searchContext)

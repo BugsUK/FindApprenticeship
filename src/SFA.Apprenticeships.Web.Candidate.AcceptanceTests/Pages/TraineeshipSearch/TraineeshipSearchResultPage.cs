@@ -185,7 +185,7 @@
         }
     }
 
-    [ElementLocator(Class = "search-results__item")]
+    [ElementLocator(Class = "search-result")]
     public class TraineeshipSearchResultItem : WebElement
     {
         public TraineeshipSearchResultItem(ISearchContext parent)

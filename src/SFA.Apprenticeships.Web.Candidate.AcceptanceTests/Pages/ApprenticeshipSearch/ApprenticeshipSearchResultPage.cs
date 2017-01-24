@@ -216,7 +216,7 @@
         }
     }
 
-    [ElementLocator(Class = "search-results__item")]
+    [ElementLocator(Class = "search-result")]
     public class SearchResultItem : WebElement
     {
         public SearchResultItem(ISearchContext parent) : base(parent)

@@ -4,7 +4,7 @@
     using global::SpecBind.Selenium;
     using OpenQA.Selenium;
 
-    [ElementLocator(Class = "date-input")]
+    [ElementLocator(Class = "form-date")]
     public class DateOfBirthTemplate : WebElement
     {
         public DateOfBirthTemplate(ISearchContext searchContext) : base(searchContext)

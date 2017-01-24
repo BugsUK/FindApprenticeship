@@ -44,7 +44,7 @@
 
         #region Date of birth
 
-        [ElementLocator(Class = "date-input")]
+        [ElementLocator(Class = "form-date")]
         public DateOfBirthTemplate DateOfBirth { get; set; }
 
         public IWebElement Day { get { return DateOfBirth.Day; } }
