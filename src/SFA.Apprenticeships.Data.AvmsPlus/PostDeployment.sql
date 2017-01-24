@@ -65,4 +65,6 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.InitialData.InterfaceErrorGroupType.sql"
 :r ".\Scripts\Data\dbo.InitialData.InterfaceErrorType.sql"
 :r ".\Scripts\Data\dbo.InitialData.MessageStatus.sql"
+:r ".\Scripts\Data\dbo.RegionalTeams.Upsert.sql"
+:r ".\Scripts\Data\dbo.RegionalTeamMappings.Upsert.sql"
 :r ".\Scripts\EnableSnapshotIsolation.sql"

@@ -28,7 +28,7 @@
                 .With(av => av.Status, VacancyStatus.Submitted)
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
-                .With(av => av.DateStartedToQA, DateTime.MinValue)
+                .With(av => av.DateStartedToQA, null)
                 .With(av => av.DeliveryOrganisationId, null)
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, Guid.NewGuid().GetHashCode())
