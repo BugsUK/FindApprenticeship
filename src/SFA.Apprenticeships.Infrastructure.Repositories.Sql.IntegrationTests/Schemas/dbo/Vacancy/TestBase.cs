@@ -28,7 +28,7 @@
                 .With(av => av.Status, VacancyStatus.Submitted)
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
-                .With(av => av.DateStartedToQA, null)
+                .With(av => av.DateStartedToQA, DateTime.MinValue)
                 .With(av => av.DeliveryOrganisationId, null)
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, Guid.NewGuid().GetHashCode())
@@ -36,6 +36,12 @@
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
                 .With(av => av.RegionalTeam, RegionalTeam.NorthWest)
+                .With(av => av.IsAnonymousEmployer, null)
+                .With(av => av.NewApplicationCount, 0)
+                .With(av => av.ApplicantCount, 0)
+                .With(av => av.ProviderTradingName, null)
+                .With(av => av.CreatedDate, DateTime.Today)
+                .With(av => av.IsMultiLocation, null)
                 .Create();
 
             result.Address = new PostalAddress

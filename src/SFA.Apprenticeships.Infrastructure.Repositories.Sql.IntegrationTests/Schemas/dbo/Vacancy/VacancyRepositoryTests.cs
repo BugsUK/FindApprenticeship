@@ -77,6 +77,8 @@
             vacancy.Duration = 2;
             vacancy.DurationType = DurationType.Years;
             vacancy.ExpectedDuration = "2 years";
+            vacancy.EmployerId = SeedData.Employers.AcmeCorp.EmployerId;
+            vacancy.EmployerLocation = "Coventry";
 
             writeRepository.Create(vacancy);
 
