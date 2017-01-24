@@ -9,11 +9,11 @@
         </p>
         <div class="hide-nojs">
             <div class="form-group inline clearfix">
-                <label data-target="training-history-panel" for="training-history-yes" class="block-label selection-button-radio" data-bind="css: {selected: showTrainingCourses()}">
+                <label id="training-history-yes-label" data-target="training-history-panel" for="training-history-yes" class="block-label selection-button-radio" data-bind="css: {selected: showTrainingCourses()}">
                     @Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, true, new { id = "training-history-yes", data_bind = "attr:{'checked': hasTrainingCourses() }", aria_controls = "training-history-panel", aria_expanded = "false", aria_labelledby = "trainingCoursesQuestion" })
                     Yes
                 </label>
-                <label for="training-history-no" class="block-label selection-button-radio" data-bind="css: {selected: !showTrainingCourses()}">
+                <label id="training-history-no-label" for="training-history-no" class="block-label selection-button-radio" data-bind="css: {selected: !showTrainingCourses()}">
                     @Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, false, new { id = "training-history-no", data_bind = "attr:{'checked': hasNoTrainingCourses() }", aria_labelledby = "hasNoTrainingCoursesQuestion" })
                     No
                 </label>

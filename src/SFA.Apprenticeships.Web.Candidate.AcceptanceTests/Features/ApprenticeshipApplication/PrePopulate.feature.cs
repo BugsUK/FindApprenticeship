@@ -134,7 +134,7 @@ this.FeatureBackground();
             table1.AddRow(new string[] {
                         "AddressLine3ReadOnly",
                         "Equals",
-                        ""});
+                        "London"});
             table1.AddRow(new string[] {
                         "AddressLine4ReadOnly",
                         "Equals",

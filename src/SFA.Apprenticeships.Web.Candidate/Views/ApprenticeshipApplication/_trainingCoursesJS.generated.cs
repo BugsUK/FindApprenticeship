@@ -94,6 +94,8 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n                <label");
 
+WriteLiteral(" id=\"training-history-yes-label\"");
+
 WriteLiteral(" data-target=\"training-history-panel\"");
 
 WriteLiteral(" for=\"training-history-yes\"");
@@ -114,6 +116,8 @@ WriteLiteral("                    ");
             #line default
             #line hidden
 WriteLiteral("\r\n                    Yes\r\n                </label>\r\n                <label");
+
+WriteLiteral(" id=\"training-history-no-label\"");
 
 WriteLiteral(" for=\"training-history-no\"");
 

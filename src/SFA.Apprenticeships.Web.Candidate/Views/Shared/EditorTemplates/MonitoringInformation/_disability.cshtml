@@ -4,13 +4,13 @@
     <fieldset class="inline">
         <legend class="form-label-bold sfa-small-bottom-margin" id="disability-label">Do you have a learning difficulty, disability or health problem?</legend>
 
-        <label for="disability-yes" class="block-label selection-button-radio">
+        <label id="disability-yes-label" for="disability-yes" class="block-label selection-button-radio">
             @Html.RadioButtonFor(m => m.DisabilityStatus, 1, new { id = "disability-yes", aria_labelledby = "disability-label" }) Yes
         </label>
-        <label for="disability-no" class="block-label selection-button-radio">
+        <label id="disability-no-label" for="disability-no" class="block-label selection-button-radio">
             @Html.RadioButtonFor(m => m.DisabilityStatus, 2, new { id = "disability-no", aria_labelledby = "disability-label" }) No
         </label>
-        <label for="disability-prefer-not-to-say" class="block-label selection-button-radio">
+        <label id="disability-prefer-not-to-say-label" for="disability-prefer-not-to-say" class="block-label selection-button-radio">
             @Html.RadioButtonFor(m => m.DisabilityStatus, 3, new { id = "disability-prefer-not-to-say", aria_labelledby = "disability-label" }) Prefer not to say
         </label>
     </fieldset>
@@ -40,10 +40,10 @@
             <span class="form-hint">For example, do you need a signer or information in braille</span>
         </legend>
         <div class="form-group form-group-compound inline hide-nojs">
-            <label data-target="support-panel" for="disability-support-yes" class="block-label selection-button-radio">
+            <label id="disability-support-yes-label" data-target="support-panel" for="disability-support-yes" class="block-label selection-button-radio">
                 @Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, new { id = "disability-support-yes", aria_controls = "support-panel", aria_expanded = "false" }) Yes
             </label>
-            <label for="disability-support-no" class="block-label selection-button-radio hide-nojs">
+            <label id="disability-support-no-label" for="disability-support-no" class="block-label selection-button-radio hide-nojs">
                 @Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, new { id = "disability-support-no" }) No
             </label>
         </div>

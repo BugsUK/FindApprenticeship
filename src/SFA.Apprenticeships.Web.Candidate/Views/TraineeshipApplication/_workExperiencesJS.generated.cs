@@ -92,6 +92,8 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n                <label");
 
+WriteLiteral(" id=\"workexp-yes-label\"");
+
 WriteLiteral(" data-target=\"workexperience-panel\"");
 
 WriteLiteral(" for=\"workexp-yes\"");
@@ -112,6 +114,8 @@ WriteLiteral("                    ");
             #line default
             #line hidden
 WriteLiteral("\r\n                    Yes\r\n                </label>\r\n                <label");
+
+WriteLiteral(" id=\"workexp-no-label\"");
 
 WriteLiteral(" for=\"workexp-no\"");
 

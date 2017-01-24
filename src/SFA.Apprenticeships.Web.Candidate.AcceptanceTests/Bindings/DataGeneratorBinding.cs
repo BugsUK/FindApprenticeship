@@ -107,7 +107,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                 // Click on the i-th search result
                 _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
                 var searchResult = _driver.FindElements(
-                    By.CssSelector(".search-results__item .vacancy-link"))
+                    By.CssSelector(".search-result .vacancy-link"))
                     .Skip(i++).First();
                 var vacancyId = searchResult.GetAttribute("data-vacancy-id");
                 _tokenManager.SetToken(BindingData.VacancyIdToken, vacancyId);
@@ -137,7 +137,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                 // Click on the i-th search result
                 _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
                 var searchResult = _driver.FindElements(
-                    By.CssSelector(".search-results__item .vacancy-link"))
+                    By.CssSelector(".search-result .vacancy-link"))
                     .Skip(i++).First();
                 var vacancyId = searchResult.GetAttribute("data-vacancy-id");
                 _tokenManager.SetToken(BindingData.VacancyIdToken, vacancyId);
@@ -181,7 +181,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                 // Click on the i-th search result
                 _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
                 var searchResult = _driver.FindElements(
-                    By.CssSelector(".search-results__item .vacancy-link"))
+                    By.CssSelector(".search-result .vacancy-link"))
                     .Skip(i++).First();
                 var vacancyId = searchResult.GetAttribute("data-vacancy-id");
                 _tokenManager.SetToken(BindingData.VacancyIdToken, vacancyId);

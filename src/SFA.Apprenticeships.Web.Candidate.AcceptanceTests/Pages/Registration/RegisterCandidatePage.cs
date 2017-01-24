@@ -33,7 +33,7 @@
         [ElementLocator(Id = "ConfirmPassword")]
         public IWebElement ConfirmPassword { get; set; }
 
-        [ElementLocator(Id = "HasAcceptedTermsAndConditions")]
+        [ElementLocator(Id = "HasAcceptedTermsAndConditionsText")]
         public IWebElement HasAcceptedTermsAndConditions { get; set; }
 
         [ElementLocator(Id = "create-account-btn")]

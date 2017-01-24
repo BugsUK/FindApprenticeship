@@ -69,6 +69,8 @@ WriteLiteral(" id=\"disability-label\"");
 WriteLiteral(">Do you have a learning difficulty, disability or health problem?</legend>\r\n\r\n   " +
 "     <label");
 
+WriteLiteral(" id=\"disability-yes-label\"");
+
 WriteLiteral(" for=\"disability-yes\"");
 
 WriteLiteral(" class=\"block-label selection-button-radio\"");
@@ -86,6 +88,8 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral(" Yes\r\n        </label>\r\n        <label");
 
+WriteLiteral(" id=\"disability-no-label\"");
+
 WriteLiteral(" for=\"disability-no\"");
 
 WriteLiteral(" class=\"block-label selection-button-radio\"");
@@ -102,6 +106,8 @@ WriteLiteral("            ");
             #line default
             #line hidden
 WriteLiteral(" No\r\n        </label>\r\n        <label");
+
+WriteLiteral(" id=\"disability-prefer-not-to-say-label\"");
 
 WriteLiteral(" for=\"disability-prefer-not-to-say\"");
 
@@ -168,6 +174,8 @@ WriteLiteral(" class=\"form-group form-group-compound inline hide-nojs\"");
 
 WriteLiteral(">\r\n            <label");
 
+WriteLiteral(" id=\"disability-support-yes-label\"");
+
 WriteLiteral(" data-target=\"support-panel\"");
 
 WriteLiteral(" for=\"disability-support-yes\"");
@@ -186,6 +194,8 @@ WriteLiteral("                ");
             #line default
             #line hidden
 WriteLiteral(" Yes\r\n            </label>\r\n            <label");
+
+WriteLiteral(" id=\"disability-support-no-label\"");
 
 WriteLiteral(" for=\"disability-support-no\"");
 

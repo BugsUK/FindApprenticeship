@@ -96,7 +96,7 @@
 
         #region Buttons
 
-        [ElementLocator(Id = "AcceptSubmit")]
+        [ElementLocator(Id = "AcceptSubmitLabel")]
         public IWebElement AcceptSubmit { get; set; }
 
         [ElementLocator(Id = "submit-application")]
