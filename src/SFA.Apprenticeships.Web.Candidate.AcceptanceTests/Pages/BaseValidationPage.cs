@@ -11,13 +11,13 @@
         {
         }
 
-        [ElementLocator(Class = "validation-summary-errors")]
+        [ElementLocator(Class = "error-summary")]
         public IWebElement ValidationSummary { get; set; }
 
-        [ElementLocator(Class = "validation-summary-errors")]
+        [ElementLocator(Class = "error-summary-list")]
         public IElementList<IWebElement, ValidationSummaryItem> ValidationSummaryItems { get; set; }
 
-        [ElementLocator(Class = "validation-summary-errors")]
+        [ElementLocator(Class = "error-summary-list")]
         public IElementList<IWebElement, ValidationSummaryNoLinkItem> ValidationSummaryNoLinkItems { get; set; }
 
         [ElementLocator(TagName = "form")]
@@ -61,7 +61,7 @@
             }
         }
 
-        [ElementLocator(Class = "error-message")]
+        [ElementLocator(Class = "field-validation-error")]
         public class ValidationErrorFieldItem : WebElement
         {
             public ValidationErrorFieldItem(ISearchContext parent)

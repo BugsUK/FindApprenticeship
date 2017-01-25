@@ -59,9 +59,9 @@ else
                         <p class="@vacancy.Description.GetPreserveFormattingCssClass()">@vacancy.Description</p>
                         <div class="grid-row">
                             <div class="column-two-thirds">
-                                <ul class="list sfa-no-margins">
+                                <ul class="list sfa-no-margins vacancy-details-list">
                                     <li>
-                                        <span class="bold-small">Distance:</span> <span class="distance-value">@vacancy.DistanceAsString</span> miles
+                                        <span class="bold-small">Distance:</span> <span id="distance-value" class="distance-value">@vacancy.DistanceAsString</span> miles
                                         <a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
                                         <div class="detail-content toggle-content hide-nojs">
                                             <select class="form-control select-mode" name="">
@@ -74,8 +74,8 @@ else
                                             <span class="journey-time"></span>
                                         </div>
                                     </li>
-                                    <li><span class="bold-small">Closing date:</span> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
-                                    <li><span class="bold-small">Possible start date:</span><span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
+                                    <li><span class="bold-small">Closing date:</span> <span id="closing-date-value" class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
+                                    <li><span class="bold-small">Possible start date:</span><span id="start-date-value" class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
                                     <li class="sfa-hide-tablet">
                                         <a href="#1" style="margin-left: 0;" class="summary-style mob-map-trigger map-closed">Show/hide map</a>
                                     </li>

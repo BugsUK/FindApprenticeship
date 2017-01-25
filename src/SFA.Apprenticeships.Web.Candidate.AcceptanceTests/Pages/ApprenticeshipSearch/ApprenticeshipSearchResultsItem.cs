@@ -12,7 +12,7 @@
         {
         }
 
-        [ElementLocator(Class = "list-text")]
+        [ElementLocator(Class = "vacancy-details-list")]
         public IElementList<IWebElement, PropertyListItem> PropertyList { get; set; }
 
         public string DistanceDisplayed

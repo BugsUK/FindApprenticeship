@@ -126,9 +126,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
         protected SelectList GetSearchFields(bool addRefineOption = false, string selectedValue = "All")
         {
+            var allDisplayName = addRefineOption && selectedValue == "All" ? "-- Refine search --" : "All";
+
             var searchFieldsOptions = new List<object>
             {
-                new { FieldName = ApprenticeshipSearchField.All.ToString(), DisplayName = "All"},
+                new { FieldName = ApprenticeshipSearchField.All.ToString(), DisplayName = allDisplayName},
                 new { FieldName = ApprenticeshipSearchField.JobTitle.ToString(), DisplayName = "Job title"},
                 new { FieldName = ApprenticeshipSearchField.Description.ToString(), DisplayName = "Description"},
                 new { FieldName = ApprenticeshipSearchField.Employer.ToString(), DisplayName = "Employer"},
@@ -140,11 +142,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (searchFactors != null && searchFactors.ProviderFactors != null && searchFactors.ProviderFactors.Enabled)
             {
                 searchFieldsOptions.Insert(4, new { FieldName = ApprenticeshipSearchField.Provider.ToString(), DisplayName = "Training Provider" });
-            }
-
-            if (addRefineOption && selectedValue == "All")
-            {
-                searchFieldsOptions.Add(new { FieldName = selectedValue, DisplayName = "-- Refine search --" });
             }
 
             var searchFields = new SelectList(
