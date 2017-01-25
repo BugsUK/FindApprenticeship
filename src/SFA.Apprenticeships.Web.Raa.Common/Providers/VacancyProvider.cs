@@ -785,17 +785,30 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 viewModel.Contact = vacancy.GetContactInformation(providerSite);
             }
 
-            viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
-                ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
-                : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+            if (vacancy.FrameworkStatus == FrameworkStatusType.Active ||
+                vacancy.StandardStatus == FrameworkStatusType.Active)
+            {
+                viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
+                    ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
+                    : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
+                        .FullName;
 
-            viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
-                ? viewModel.TrainingDetailsViewModel.SectorCodeName
-                : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName).FullName;
+                viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
+                    ? viewModel.TrainingDetailsViewModel.SectorCodeName
+                    : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName)
+                        .FullName;
 
-            var standard = GetStandard(vacancy.StandardId);
+                var standard = GetStandard(vacancy.StandardId);
 
-            viewModel.StandardName = standard == null ? "" : standard.Name;
+                viewModel.StandardName = standard == null ? "" : standard.Name;
+            }
+            else
+            {
+                vacancy.StandardId = null;
+                if (viewModel.TrainingDetailsViewModel != null)
+                    viewModel.TrainingDetailsViewModel.StandardId = null;
+            }
+            
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated

@@ -738,12 +738,14 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
         e.EmployerId,
         e.Town AS EmployerLocation,
 		af.CodeName AS FrameworkCodeName,
+        af.ApprenticeshipFrameworkStatusTypeId AS FrameworkStatus,
 		el.CodeName AS ApprenticeshipLevel,
 		ao.CodeName AS SectorCodeName,
 		dbo.GetCreatedByProviderUsername(v.VacancyId) AS CreatedByProviderUsername,
 		dbo.GetDateQAApproved(v.VacancyId) AS DateQAApproved,
 		rt.TeamName AS RegionalTeam,
 		af.StandardId,
+        st.ApprenticeshipFrameworkStatusTypeId AS StandardStatus,
 		aq1.Question AS FirstQuestion,
 		aq2.Question AS SecondQuestion,
 		TBP.Value AS TrainingProvided,
@@ -796,6 +798,8 @@ JOIN	Employer e
 ON		o.EmployerId = e.EmployerId
 JOIN	ProviderSite s
 ON      s.ProviderSiteId = v.VacancyManagerId
+LEFT OUTER JOIN Reference.[Standard] st
+ON		st.StandardId = v.StandardId
 LEFT OUTER JOIN	ApprenticeshipFramework af
 ON		af.ApprenticeshipFrameworkId = v.ApprenticeshipFrameworkId
 LEFT OUTER JOIN	ApprenticeshipType AS at

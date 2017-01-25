@@ -48,5 +48,6 @@
 		
 		void UpdateStandard(Standard standard);
         void UpdateFramework(Category entity);
+        Category InsertFramework(Category entity);
     }
 }

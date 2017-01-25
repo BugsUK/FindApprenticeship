@@ -2,6 +2,7 @@
 namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System;
+    using Reference;
 
     public class Vacancy : VacancySummary, ICreatableEntity, IUpdatableEntity, ICloneable
     {
@@ -63,6 +64,10 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string AnonymousEmployerReasonComment { get; set; }
         public string AnonymousAboutTheEmployerComment { get; set; }
 
+        public FrameworkStatusType FrameworkStatus { get; set; }
+        public FrameworkStatusType StandardStatus { get; set; }
+
+        public DateTime CreatedDateTime { get; set; }
         public object Clone()
         {
             return new Vacancy
@@ -116,6 +121,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 ApprenticeshipLevel = ApprenticeshipLevel,
                 ApprenticeshipLevelComment = ApprenticeshipLevelComment,
                 FrameworkCodeName = FrameworkCodeName,
+                FrameworkStatus = FrameworkStatus,
+                StandardStatus = StandardStatus,
                 FrameworkCodeNameComment = FrameworkCodeNameComment,
                 StandardId = StandardId,
                 StandardIdComment = StandardIdComment,
@@ -154,7 +161,5 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 AnonymousAboutTheEmployerComment = AnonymousAboutTheEmployerComment
             };
         }
-
-        public DateTime CreatedDateTime { get; set; }
     }
 }

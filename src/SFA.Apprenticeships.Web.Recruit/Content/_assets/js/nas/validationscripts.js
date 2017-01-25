@@ -96,7 +96,7 @@ $(document).ready(function () {
         });
     }
 
-    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn').on('click', function () {
+    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button, #addTrainingCourseBtn, .no-handler').on('click', function () {
         var $this = $(this),
             $thisText = $this.text();
 

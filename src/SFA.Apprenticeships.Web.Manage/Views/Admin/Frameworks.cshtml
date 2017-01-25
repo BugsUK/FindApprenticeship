@@ -3,7 +3,8 @@
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.ReferenceData
 @using SFA.Apprenticeships.Web.Manage.Constants
-@model List<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditCategoryViewModel>
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditFrameworksViewModel
 @{
     ViewBag.Title = "Frameworks";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,11 +14,18 @@
     .highlight-row {
         background-color: #dee0e2;
     }
+
+    .new-item {
+        background-color: rgb(222, 235, 255);
+    }
 </style>
 
 <h1 id="heading" class="heading-xlarge">Frameworks</h1>
 
-@Html.RouteLink("Download Frameworks", ManagementRouteNames.AdminFrameworksCsv)
+<div class="grid-row">
+    @Html.RouteLink("Download Frameworks", ManagementRouteNames.AdminFrameworksCsv, null, new { @class = "column-one-third" })
+    <a href="" class="column-one-third" data-bind="click: addItem">Add new framework</a>
+</div>
 
 <div class="grid-row" data-bind="visible: message" style="display: none;">
     <div class="column-two-thirds">
@@ -29,9 +37,12 @@
     </div>
 </div>
 
-<div>
-    <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" />
-    <button style="display: none;" class="button no-handler" data-bind="css : { 'disabled' : busy }, visible : changedItems().length > 0, click: saveChanges">
+<div class="grid-row sfa-medium-bottom-margin sfa-medium-top-margin">
+    <input type="text" placeholder="Type to search" data-bind="value: searchText, valueUpdate: 'keyup'" class="column-one-third" />
+    <label class="column-one-third">
+        <input type="checkbox" data-bind="checked: showChanged" /> Show modified
+    </label>
+    <button style="display: none;" class="button no-handler column-one-third" data-bind="css : { 'disabled' : busy }, visible : changedItems().length > 0, click: saveChanges">
         <span data-bind="visible: !busy()">Save changes to <span data-bind="text: changedItems().length"></span> item(s)</span>
         <span data-bind="visible: busy">Saving</span>
     </button>
@@ -42,13 +53,15 @@
     <tr>
         <th>ID</th>
         <th>SSAT1</th>
+        <th>Code</th>
         <th>Frameworks</th>
         <th>Status</th>
+        <th></th>
     </tr>
     </thead>
     
     <tbody data-bind="template: { name: 'category', foreach: categories, as: 'category' }">
-    @foreach (var subCategory in Model)
+    @foreach (var subCategory in Model.Categories)
     {
         <tr>
             <td>
@@ -56,6 +69,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => subCategory.SsatName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => subCategory.Code)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => subCategory.FullName)
@@ -72,12 +88,20 @@
     @Scripts.Render("~/bundles/knockout")
 
     <script type="text/html" id="category">
-        <tr data-bind="css : { 'highlight-row' : category.Changed() }">
+        <tr data-bind="css : { 'highlight-row' : category.Changed(), 'new-item' : !category.Id() }">
             <td data-bind="text: category.Id"></td>
-            <td data-bind="text: category.SsatName"></td>
-            <td data-bind="text: category.FullName"></td>
+            <td><select data-bind="options: $root.SsatList, optionsText: 'FullName', value: category.SsatName"></select></td>
+            <td>
+                <span data-bind="text: category.Code, visible: Id"></span>
+                <input data-bind="value: Code, visible: !Id()"/>
+            </td>
+            <td><input type="text" data-bind="value: category.FullName, valueUpdate: 'keyup'"/></td>
             <td>
                 <select data-bind="options: $root.statuses, optionsText: 'name', value: category.StatusText"></select>
+            </td>
+            <td>
+                <a href="" data-bind="click: $root.delete, visible: !Id()"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                <a href="" data-bind="click: $root.save, visible: !Id()"><i class="fa fa-check" aria-hidden="true"></i></a>
             </td>
         </tr>
     </script>
@@ -88,6 +112,8 @@
                 { name: 'Active', value: @((int) CategoryStatus.Active) },
                 { name: 'Ceased', value: @((int) CategoryStatus.Ceased) }
             ];
+
+            var ssatList = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Occupations)));
 
             var mappings = {
                 create: function(options) {
@@ -104,12 +130,30 @@
 
                     mapped.StatusText = ko.observable(status);
 
+                    var ssat;
+                    for (var i = 0; i < ssatList().length; i++) {
+                        if (options.data.SsatName == ssatList()[i].FullName()) {
+                            mapped.SsatName = ko.observable(ssatList()[i]);
+                            mapped.SsatCode = ko.observable(ssatList()[i].CodeName);
+                            break;
+                        }
+                    }
+
                     mapped.Changed = ko.observable(false);
 
                     mapped.StatusText.subscribe(function(newValue) {
                         for (var i = 0; i < statuses.length; i++) {
                             if (statuses[i].name === newValue.name) {
                                 mapped.Status(statuses[i].value);
+                                return;
+                            }
+                        }
+                    });
+
+                    mapped.SsatName.subscribe(function(newValue) {
+                        for (var i = 0; i < ssatList().length; i++) {
+                            if (ssatList()[i].FullName === newValue.FullName) {
+                                mapped.SsatCode(ssatList()[i].CodeName);
                                 return;
                             }
                         }
@@ -124,39 +168,48 @@
 
                 self.busy = ko.observable(false);
                 self.statuses = ko.observableArray(statuses);
+                self.SsatList = ssatList;
 
-                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)), mappings);
+                self.data = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model.Categories)), mappings);
 
                 self.dataChange = function(item) {
                     item.Changed(true);
                 }
 
                 self.searchText = ko.observable();
+                self.showChanged = ko.observable(false);
 
                 self.message = ko.observable();
 
                 self.categories = ko.computed(function() {
-                    if (self.searchText() != null) {
-                        var filter = self.searchText().toLowerCase();
-
+                    if (self.showChanged()) {
                         return ko.utils.arrayFilter(self.data(),
                             function(item) {
-                                var match = false;
-
-                                var id = item.Id();
-                                if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
-
-                                var ssatName = item.SsatName();
-                                if (ssatName != null) match = match || ssatName.toLowerCase().indexOf(filter) > -1;
-
-                                var fullName = item.FullName();
-                                if (fullName != null)
-                                    match = match || fullName.toLowerCase().indexOf(filter) > -1;
-
-                                return match;
+                                return item.Changed();
                             });
                     } else {
-                        return self.data();
+                        if (self.searchText() != null) {
+                            var filter = self.searchText().toLowerCase();
+
+                            return ko.utils.arrayFilter(self.data(),
+                                function(item) {
+                                    var match = false;
+
+                                    var id = item.Id();
+                                    if (id != null) match = match || id.toString().toLowerCase().indexOf(filter) > -1;
+
+                                    var ssatName = item.SsatName().FullName();
+                                    if (ssatName != null) match = match || ssatName.toLowerCase().indexOf(filter) > -1;
+
+                                    var fullName = item.FullName();
+                                    if (fullName != null)
+                                        match = match || fullName.toLowerCase().indexOf(filter) > -1;
+
+                                    return match;
+                                });
+                        } else {
+                            return self.data();
+                        }
                     }
                 });
 
@@ -171,14 +224,18 @@
                 for (var i = 0; i < self.data().length; i++) {
                     var mapped = self.data()[i];
 
-                    (function(mapped) {
-                        for (var item in mapped) {
-                            if (item !== 'Status' && item !== 'Changed' && mapped.hasOwnProperty(item) && item.indexOf('_') === -1) {
-                                mapped[item].subscribe(function(newValue) { self.dataChange(mapped); });
-                            }
-                        }
-                    }(mapped));
+                    subscribeObject(mapped);
+                }
 
+                function subscribeObject(mapped) {
+                    for (var item in mapped) {
+                        if (item !== 'Status' &&
+                            item !== 'Changed' &&
+                            mapped.hasOwnProperty(item) &&
+                            item.indexOf('_') === -1) {
+                            mapped[item].subscribe(function(newValue) { self.dataChange(mapped); });
+                        }
+                    }
                 }
 
                 // functions
@@ -220,6 +277,43 @@
                         // add error state
                         self.message('Failed to save');
                     });
+                }
+
+                self.addItem = function() {
+                    //clear search first
+                    self.searchText(null);
+
+                    var newItem = ko.mapping.fromJS(@Html.Raw(Json.Encode(new EditCategoryViewModel())), mappings);
+                    newItem.Id(null);
+
+                    subscribeObject(newItem);
+
+                    self.data.splice(0, 0, newItem);
+                }
+
+                self.delete = function(item) {
+                    // should only delete new items that aren't saved
+                    if (!item.Id()) {
+                        self.data.remove(item);
+                    }
+                }
+
+                self.save = function(item) {
+                    // validate
+                    if (item.FullName() && item.FullName() !== '') {
+                        self.message(null);
+
+                        $.ajax({
+                            method: 'POST',
+                            url: '@Url.Action("CreateFramework")',
+                            data: ko.mapping.toJS(item)
+                        }).done(function(data) {
+                            item.Id(data.Id);
+                            item.Changed(false);
+                        }).fail(function() {
+                            self.message('Failed to save');
+                        });
+                    }
                 }
 
                 return self;

@@ -321,5 +321,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         [Write(false)]
         public bool? IsMultiLocation { get; set; }
+
+        [Write(false)]
+        public FrameworkStatusType? FrameworkStatus { get; set; }
+
+        [Write(false)]
+        public FrameworkStatusType? StandardStatus { get; set; }
     }
 }

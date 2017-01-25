@@ -539,6 +539,7 @@
         {
             var response = _adminMediator.GetFrameworks();
             var categories = new List<EditCategoryViewModel>();
+            var occupations = response.ViewModel.Select(s => new OccupationViewModel() {Id = s.Id, FullName = s.FullName, CodeName = s.CodeName.Replace("SSAT1.","") }).ToList();
 
             foreach (var category in response.ViewModel)
             {
@@ -546,21 +547,36 @@
                     category.SubCategories.Select(s => new EditCategoryViewModel()
                     {
                         Id = s.Id,
+                        Code = CategoryPrefixes.GetOriginalFrameworkCode(s.CodeName),
                         SsatName = category.FullName,
                         FullName = s.FullName,
                         Status = s.Status
                     }));
             }
 
-            return View(categories);
+            var viewModel = new EditFrameworksViewModel() { Categories = categories, Occupations = occupations};
+
+            return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult UpdateFramework(EditCategoryViewModel category)
         {
+            category.SsatCode = CategoryPrefixes.GetOriginalSectorSubjectAreaTier1Code(category.SsatCode);
+
             var response = _adminMediator.UpdateFramework(category);
 
             return Json(new {Status = "Ok"});
+        }
+
+        [HttpPost]
+        public ActionResult CreateFramework(EditCategoryViewModel category)
+        {
+            category.SsatCode = CategoryPrefixes.GetOriginalSectorSubjectAreaTier1Code(category.SsatCode);
+
+            var response = _adminMediator.InsertFramework(category);
+
+            return Json(response.ViewModel);
         }
 
         [HttpGet]
