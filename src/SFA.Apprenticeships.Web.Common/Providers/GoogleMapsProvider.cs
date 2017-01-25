@@ -15,19 +15,29 @@
         public GoogleMapsProvider(IConfigurationService configurationService)
         {
             _privateKey = configurationService.Get<CommonWebConfiguration>().GoogleMapsPrivateKey;
-            _usablePrivateKey = _privateKey.Replace("-", "+").Replace("_", "/");
+            if (!string.IsNullOrEmpty(_privateKey))
+            {
+                _usablePrivateKey = _privateKey.Replace("-", "+").Replace("_", "/");
+            }
         }
 
         public string GetStaticMapsUrl(GeoPointViewModel geoPointViewModel)
         {
             if (geoPointViewModel == null) return "";
 
+            var staticMapsUrl = $"https://maps.googleapis.com/maps/api/staticmap?markers={geoPointViewModel.Latitude},{geoPointViewModel.Longitude}&size=190x125&zoom=12";
+
+            if (string.IsNullOrEmpty(_usablePrivateKey))
+            {
+                return staticMapsUrl;
+            }
+
             var encoding = new ASCIIEncoding();
 
             // converting key to bytes will throw an exception, need to replace '-' and '_' characters first.
             var privateKeyBytes = Convert.FromBase64String(_usablePrivateKey);
 
-            var staticMapsUrl = $"https://maps.googleapis.com/maps/api/staticmap?markers={geoPointViewModel.Latitude},{geoPointViewModel.Longitude}&size=190x125&zoom=12&client=gme-skillsfundingagency";
+            staticMapsUrl += "&client=gme-skillsfundingagency";
             var uri = new Uri(staticMapsUrl);
             var encodedPathAndQueryBytes = encoding.GetBytes(uri.LocalPath + uri.Query);
 

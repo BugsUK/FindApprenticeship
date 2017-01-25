@@ -106,10 +106,10 @@
 
         #region Qualifications
 
-        [ElementLocator(Id = "qualifications-yes")]
+        [ElementLocator(Id = "qualifications-yes-label")]
         public IWebElement QualificationsYes { get; set; }
 
-        [ElementLocator(Id = "qualifications-no")]
+        [ElementLocator(Id = "qualifications-no-label")]
         public IWebElement QualificationsNo { get; set; }
 
         [ElementLocator(Id = "qualification-validation-summary")]
@@ -168,10 +168,10 @@
 
         #region Work Experience
 
-        [ElementLocator(Id = "workexp-yes")]
+        [ElementLocator(Id = "workexp-yes-label")]
         public IWebElement WorkExperienceYes { get; set; }
 
-        [ElementLocator(Id = "workexp-no")]
+        [ElementLocator(Id = "workexp-no-label")]
         public IWebElement WorkExperienceNo { get; set; }
 
         [ElementLocator(Id = "addWorkBtn")]
@@ -224,10 +224,10 @@
 
         #region Training History
 
-        [ElementLocator(Id = "training-history-yes")]
+        [ElementLocator(Id = "training-history-yes-label")]
         public IWebElement TrainingCoursesYes { get; set; }
 
-        [ElementLocator(Id = "training-history-no")]
+        [ElementLocator(Id = "training-history-no-label")]
         public IWebElement TrainingCoursesNo { get; set; }
 
         [ElementLocator(Id = "addTrainingCourseBtn")]
@@ -289,10 +289,10 @@
 
         #region WhatCanWeDoToSupportYou
 
-        [ElementLocator(Id = "disability-support-yes")]
+        [ElementLocator(Id = "disability-support-yes-label")]
         public IWebElement SupportMeYes { get; set; }
 
-        [ElementLocator(Id = "disability-support-no")]
+        [ElementLocator(Id = "disability-support-no-label")]
         public IWebElement SupportMeNo { get; set; }
 
         [ElementLocator(Id = "Candidate_MonitoringInformation_AnythingWeCanDoToSupportYourInterview")]

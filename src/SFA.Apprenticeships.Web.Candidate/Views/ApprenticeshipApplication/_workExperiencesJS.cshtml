@@ -9,11 +9,11 @@
         </p>
         <div class="hide-nojs">
             <div class="form-group inline clearfix">
-                <label data-target="workexperience-panel" for="workexp-yes" class="block-label selection-button-radio" data-bind="css: {selected: showWorkExperience()}">
+                <label id="workexp-yes-label" data-target="workexperience-panel" for="workexp-yes" class="block-label selection-button-radio" data-bind="css: {selected: showWorkExperience()}">
                     @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, new { id = "workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }", aria_controls = "workexperience-panel", aria_expanded = "false", aria_labelledby = "workExpQuestion" })
                     Yes
                 </label>
-                <label for="workexp-no" class="block-label selection-button-radio" data-bind="css: {selected: !showWorkExperience()}">
+                <label id="workexp-no-label" for="workexp-no" class="block-label selection-button-radio" data-bind="css: {selected: !showWorkExperience()}">
                     @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, new { id = "workexp-no", data_bind = "attr:{'checked': hasNoWorkExperience() }", aria_labelledby = "workExpQuestion" })
                     No
                 </label>

@@ -61,7 +61,7 @@
 
         public static class TermsAndConditions
         {
-            public const string LabelText = "I accept the <a href='/terms' target='_blank' onclick=\"Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/register/readterms', 'WT.dl', '99', 'WT.ti', 'Read Terms and Conditions'] });\">terms and conditions</a>";
+            public const string LabelText = "<span id=\"HasAcceptedTermsAndConditionsText\">I accept the </span><a href='/terms' target='_blank' onclick=\"Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/register/readterms', 'WT.dl', '99', 'WT.ti', 'Read Terms and Conditions'] });\">terms and conditions</a>";
             public const string MustAcceptTermsAndConditions = "Please accept the terms and conditions";
         }
 

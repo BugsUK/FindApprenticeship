@@ -185,7 +185,7 @@
         }
     }
 
-    [ElementLocator(Class = "search-results__item")]
+    [ElementLocator(Class = "search-result")]
     public class TraineeshipSearchResultItem : WebElement
     {
         public TraineeshipSearchResultItem(ISearchContext parent)
@@ -210,10 +210,10 @@
         [ElementLocator(Class = "search-shortdesc")]
         public IWebElement ShortDescription { get; set; }
 
-        [ElementLocator(Class = "distance-value")]
+        [ElementLocator(Id = "distance-value")]
         public IWebElement Distance { get; set; }
 
-        [ElementLocator(Class = "closing-date-value")]
+        [ElementLocator(Id = "closing-date-value")]
         public IWebElement ClosingDate { get; set; }
 
         public override string Text

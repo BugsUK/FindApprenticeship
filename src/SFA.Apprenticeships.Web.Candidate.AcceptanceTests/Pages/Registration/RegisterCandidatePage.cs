@@ -33,7 +33,7 @@
         [ElementLocator(Id = "ConfirmPassword")]
         public IWebElement ConfirmPassword { get; set; }
 
-        [ElementLocator(Id = "HasAcceptedTermsAndConditions")]
+        [ElementLocator(Id = "HasAcceptedTermsAndConditionsText")]
         public IWebElement HasAcceptedTermsAndConditions { get; set; }
 
         [ElementLocator(Id = "create-account-btn")]
@@ -44,7 +44,7 @@
 
         #region Date of birth
 
-        [ElementLocator(Class = "date-input")]
+        [ElementLocator(Class = "form-date")]
         public DateOfBirthTemplate DateOfBirth { get; set; }
 
         public IWebElement Day { get { return DateOfBirth.Day; } }

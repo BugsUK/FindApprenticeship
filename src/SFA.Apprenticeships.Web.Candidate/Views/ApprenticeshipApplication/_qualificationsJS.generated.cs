@@ -95,6 +95,8 @@ WriteLiteral(" class=\"form-group inline clearfix\"");
 
 WriteLiteral(">\r\n                <label");
 
+WriteLiteral(" id=\"qualifications-yes-label\"");
+
 WriteLiteral(" data-target=\"qualifications-panel\"");
 
 WriteLiteral(" for=\"qualifications-yes\"");
@@ -117,6 +119,8 @@ WriteLiteral("                    ");
             #line default
             #line hidden
 WriteLiteral("\r\n                    Yes\r\n\r\n                </label>\r\n                <label");
+
+WriteLiteral(" id=\"qualifications-no-label\"");
 
 WriteLiteral(" for=\"qualifications-no\"");
 

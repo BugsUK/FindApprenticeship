@@ -446,7 +446,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
                     WHERE	v.VacancyStatusId IN @VacancyStatuses
                     {(!string.IsNullOrEmpty(query.FrameworkCodeName) ? "AND     af.CodeName = @FrameworkCodeName" : "")}
                     {(query.EditedInRaa ? "AND     v.EditedInRaa = 1" : "")}
-                    {(query.LiveDate.HasValue ? "AND     dbo.GetLiveDate(v.VacancyId) >= @LiveDate" : "")}
+                    {(query.LiveDate.HasValue ? "AND     dbo.GetDateQAApproved(v.VacancyId) >= @LiveDate" : "")}
                     {(query.LatestClosingDate.HasValue ? "AND       v.ApplicationClosingDate <= @LatestClosingDate" : "")}
                     ORDER BY v.VacancyReferenceNumber
                     {(query.PageSize > 0 ? "OFFSET (@skip) ROWS FETCH NEXT (@take) ROWS ONLY" : "")}

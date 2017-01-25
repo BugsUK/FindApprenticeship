@@ -24,7 +24,7 @@
 		123, -- UPIN
 		@ukprn, -- UKPRN
 		'Hopwood Hall College', -- FullName
-		NULL, -- TradingName
+		'Hopwood Hall College', -- TradingName
 		1, -- IsContracted
 		'2016-01-31', -- ContractedFrom
 		'2016-12-31', -- ContractedTo

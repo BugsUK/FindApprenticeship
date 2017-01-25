@@ -5,14 +5,14 @@
     using SpecBind.Pages;
     using SpecBind.Selenium;
 
-    [ElementLocator(Class = "search-results__item")]
+    [ElementLocator(Class = "search-result")]
     public class ApprenticeshipSearchResultsItem : WebElement
     {
         protected internal ApprenticeshipSearchResultsItem(ISearchContext searchContext) : base(searchContext)
         {
         }
 
-        [ElementLocator(Class = "list-text")]
+        [ElementLocator(Class = "vacancy-details-list")]
         public IElementList<IWebElement, PropertyListItem> PropertyList { get; set; }
 
         public string DistanceDisplayed

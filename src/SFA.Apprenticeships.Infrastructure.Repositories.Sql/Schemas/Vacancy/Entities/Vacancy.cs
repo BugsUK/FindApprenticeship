@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     public class Vacancy : IVacancyWage
     {
         [Write(false)]
-        public DateTime DateQAApproved { get; set; }
+        public DateTime? DateQAApproved { get; set; }
 
         [Write(false)]
         public DateTime? DateFirstSubmitted { get; set; }

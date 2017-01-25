@@ -36,6 +36,12 @@
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
                 .With(av => av.RegionalTeam, RegionalTeam.NorthWest)
+                .With(av => av.IsAnonymousEmployer, null)
+                .With(av => av.NewApplicationCount, 0)
+                .With(av => av.ApplicantCount, 0)
+                .With(av => av.ProviderTradingName, null)
+                .With(av => av.CreatedDate, DateTime.Today)
+                .With(av => av.IsMultiLocation, null)
                 .Create();
 
             result.Address = new PostalAddress

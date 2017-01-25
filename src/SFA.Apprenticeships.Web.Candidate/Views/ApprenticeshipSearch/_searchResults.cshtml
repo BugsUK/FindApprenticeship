@@ -153,11 +153,11 @@ else
                     </p>
                     <div class="grid-row">
                         <div class="column-two-thirds">
-                            <ul data-show="DisplayDistance" class="list sfa-no-margins @(!Model.VacancySearch.DisplayDistance ? "toggle-content" : "")">
+                            <ul class="list sfa-no-margins vacancy-details-list @(!Model.VacancySearch.DisplayDistance ? "toggle-content" : "")">
                                 @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                                 {
-                                    <li>
-                                        <span class="bold-small">Distance:</span> @vacancy.DistanceAsString
+                                    <li data-show="DisplayDistance">
+                                        <span class="bold-small">Distance:</span> <span id="distance-value">@vacancy.DistanceAsString</span> miles
 
                                         <a href="#" class="summary-style hide-nojs journey-trigger">Journey time</a>
                                         <div class="detail-content toggle-content hide-nojs">
@@ -173,10 +173,10 @@ else
                                     </li>
                                 }
                                 <li data-show="DisplayClosingDate">
-                                    <span class="bold-small @(!Model.VacancySearch.DisplayClosingDate ? "toggle-content" : "")">Closing date:</span> @vacancy.ClosingDate.ToFriendlyClosingWeek()
-                                </li>
+                                    <span class="bold-small @(!Model.VacancySearch.DisplayClosingDate ? "toggle-content" : "")">Closing date:</span> <span id="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span>
+</li>
                                 <li data-show="DisplayStartDate">
-                                    <span class="bold-small @(!Model.VacancySearch.DisplayStartDate ? "toggle-content" : "")">Possible start date:</span> 22 Dec 2017
+                                    <span class="bold-small @(!Model.VacancySearch.DisplayStartDate ? "toggle-content" : "")">Possible start date:</span> <span id="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span>
                                 </li>
                                 <li data-show="DisplayApprenticeshipLevel" class="@(!Model.VacancySearch.DisplayApprenticeshipLevel ? "toggle-content" : "")">
                                     <span class="bold-small">Apprenticeship level:</span> @vacancy.ApprenticeshipLevel

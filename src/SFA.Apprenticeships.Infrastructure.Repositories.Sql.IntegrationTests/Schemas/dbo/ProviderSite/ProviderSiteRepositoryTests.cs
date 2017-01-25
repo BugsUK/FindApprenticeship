@@ -68,6 +68,7 @@
             var originalProvideSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             originalProvideSite.FullName = new string(originalProvideSite.FullName.Reverse().ToArray());
+            originalProvideSite.ProviderSiteRelationships[0].ProviderSiteFullName = originalProvideSite.FullName;
 
             // Act.
             var updatedProviderSite = _providerSiteWriteRepository.Update(originalProvideSite);

@@ -5,6 +5,7 @@
     using Common;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
 
     using SFA.Apprenticeships.Application.Interfaces;
@@ -28,7 +29,7 @@
             _connection = new GetOpenConnectionFromConnectionString(
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
-            _referenceRepository = new ReferenceRepository(_connection, null, null);
+            _referenceRepository = new ReferenceRepository(_connection, new ReferenceMappers(), new Mock<ILogService>().Object);
             _employerReadRepository = new EmployerRepository(_connection, _mapper, _referenceRepository);
             _employerWriteRepository = new EmployerRepository(_connection, _mapper, _referenceRepository);
         }

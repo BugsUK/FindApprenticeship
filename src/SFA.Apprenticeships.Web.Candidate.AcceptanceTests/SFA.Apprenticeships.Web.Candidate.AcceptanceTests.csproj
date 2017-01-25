@@ -94,7 +94,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Gherkin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=86496cfa5b4a5851, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.CustomPlugin.2.2.0-preview20161020\lib\net45\Gherkin.dll</HintPath>
+      <HintPath>..\packages\SpecFlow.CustomPlugin.2.0.0\lib\net45\Gherkin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
@@ -108,16 +108,16 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SpecBind, Version=1.6.2.232, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecBind.1.6.2.232\lib\net45\SpecBind.dll</HintPath>
+    <Reference Include="SpecBind, Version=1.7.3.280, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecBind.1.7.3.280\lib\net45\SpecBind.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SpecBind.Selenium, Version=1.6.2.232, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecBind.Selenium.1.6.2.232\lib\net45\SpecBind.Selenium.dll</HintPath>
+    <Reference Include="SpecBind.Selenium, Version=1.7.3.280, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecBind.Selenium.1.7.3.280\lib\net45\SpecBind.Selenium.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
@@ -137,28 +137,28 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.2.2.0-preview20161020\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+    <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.2.0.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="TechTalk.SpecFlow.Generator, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.CustomPlugin.2.2.0-preview20161020\lib\net45\TechTalk.SpecFlow.Generator.dll</HintPath>
+    <Reference Include="TechTalk.SpecFlow.Generator, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.CustomPlugin.2.0.0\lib\net45\TechTalk.SpecFlow.Generator.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="TechTalk.SpecFlow.Parser, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.CustomPlugin.2.2.0-preview20161020\lib\net45\TechTalk.SpecFlow.Parser.dll</HintPath>
+    <Reference Include="TechTalk.SpecFlow.Parser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.CustomPlugin.2.0.0\lib\net45\TechTalk.SpecFlow.Parser.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="TechTalk.SpecFlow.Utils, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.CustomPlugin.2.2.0-preview20161020\lib\net45\TechTalk.SpecFlow.Utils.dll</HintPath>
+    <Reference Include="TechTalk.SpecFlow.Utils, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.CustomPlugin.2.0.0\lib\net45\TechTalk.SpecFlow.Utils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebDriver, Version=2.52.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.2.52.0\lib\net40\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.0.1\lib\net40\WebDriver.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebDriver.Support, Version=2.52.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.Support.2.52.0\lib\net40\WebDriver.Support.dll</HintPath>
+    <Reference Include="WebDriver.Support, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.0.1\lib\net40\WebDriver.Support.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
