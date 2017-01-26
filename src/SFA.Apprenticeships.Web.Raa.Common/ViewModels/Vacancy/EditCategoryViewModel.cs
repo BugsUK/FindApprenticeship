@@ -5,8 +5,10 @@
     public class EditCategoryViewModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string SsatName { get; set; }
         public string FullName { get; set; }
         public CategoryStatus Status { get; set; }
+        public string SsatCode { get; set; }
     }
 }

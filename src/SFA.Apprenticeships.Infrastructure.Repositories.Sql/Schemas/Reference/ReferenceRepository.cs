@@ -429,6 +429,7 @@
             _logger.Debug($"Updating framework with id={category.Id}");
 
             const string standardSql = "SELECT * FROM ApprenticeshipFramework WHERE ApprenticeshipFrameworkId = @Id";
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
             //TODO: Does this need to be here? If not, test and remove.
             var sqlParams = new
@@ -440,12 +441,47 @@
 
             var dbStandard = dbStandards.Single();
 
+            var occupations = _getOpenConnection.Query<ApprenticeshipOccupation>(sectorSql);
+            var occupationId = occupations.Single(w => w.CodeName == category.ParentCategoryCodeName).ApprenticeshipOccupationId;
+
             dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
+            dbStandard.FullName = category.FullName;
+            dbStandard.ApprenticeshipOccupationId = occupationId;
 
             var result = _getOpenConnection.UpdateSingle(dbStandard);
 
             if (!result)
                 throw new Exception($"Failed to save standard with id={category.Id}");
+        }
+
+        public Category InsertFramework(Category category)
+        {
+            _logger.Debug($"Inserting new framework");
+
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
+
+            //TODO: Does this need to be here? If not, test and remove.
+            var sqlParams = new
+            {
+                category.Id
+            };
+
+            var dbStandard = new ApprenticeshipFramework();
+
+            var occupations = _getOpenConnection.Query<ApprenticeshipOccupation>(sectorSql);
+            var occupationId = occupations.Single(w => w.CodeName == category.ParentCategoryCodeName).ApprenticeshipOccupationId;
+
+            dbStandard.ApprenticeshipFrameworkStatusTypeId = (int)category.Status;
+            dbStandard.FullName = category.FullName;
+            dbStandard.ApprenticeshipOccupationId = occupationId;
+            dbStandard.CodeName = category.CodeName;
+            dbStandard.ShortName = category.CodeName;
+
+            var result = _getOpenConnection.Insert(dbStandard);
+
+            category.Id = (int)result;
+
+            return category;
         }
     }
 }

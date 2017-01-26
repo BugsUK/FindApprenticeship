@@ -416,6 +416,12 @@
                );
 
             routes.MapRoute(
+               name: ManagementRouteNames.AdminCreateFramework,
+               url: "admin/framework/create",
+               defaults: new { controller = "Admin", action = "CreateFramework" }
+               );
+
+            routes.MapRoute(
                name: ManagementRouteNames.AdminFrameworksCsv,
                url: "admin/frameworks/csv",
                defaults: new { controller = "Admin", action = "DownloadFrameworksCsv" }

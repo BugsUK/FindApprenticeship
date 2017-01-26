@@ -210,5 +210,10 @@
         {
             _referenceRepository.UpdateFramework(category);
         }
+
+        public Category InsertFramework(Category entity)
+        {
+            return _referenceRepository.InsertFramework(entity);
+        }
     }
 }

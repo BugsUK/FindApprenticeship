@@ -556,9 +556,20 @@
 
         public MediatorResponse<EditCategoryViewModel> UpdateFramework(EditCategoryViewModel category)
         {
-            var entity  = new Category(category.Id, "", category.FullName, CategoryType.Framework, category.Status);
+            var entity  = new Category(category.Id, category.Code, category.FullName, category.SsatCode, CategoryType.Framework, category.Status);
 
             _referenceDataProvider.UpdateFramework(entity);
+
+            return GetMediatorResponse(AdminMediatorCodes.UpdateFramework.Ok, category);
+        }
+
+        public MediatorResponse<EditCategoryViewModel> InsertFramework(EditCategoryViewModel category)
+        {
+            var entity = new Category(category.Id, category.Code, category.FullName, category.SsatCode, CategoryType.Framework, category.Status);
+
+            var dbCategory = _referenceDataProvider.InsertFramework(entity);
+
+            category.Id = dbCategory.Id;
 
             return GetMediatorResponse(AdminMediatorCodes.UpdateFramework.Ok, category);
         }
