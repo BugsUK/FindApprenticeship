@@ -4,7 +4,6 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="ConfigurationPath" value="Configs\settings.config" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="SSLWebRecruit" thumbprint="86B23A467637C7365590E719E70FEA46781A82D1" thumbprintAlgorithm="sha1" />
