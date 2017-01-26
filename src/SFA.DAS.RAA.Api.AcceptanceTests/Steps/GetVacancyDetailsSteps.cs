@@ -31,8 +31,8 @@
         [When(@"I request the vacancy details for the vacancy with reference number: (.*)")]
         public async Task WhenIRequestTheVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
         {
-            var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber);
-            await GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber, Guid.Empty);
+            var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber * 100000);
+            await GetVacancy(vacancyUri, vacancyReferenceNumber, vacancyReferenceNumber * 100000, Guid.Empty);
         }
 
         [When(@"I request the vacancy details for the vacancy with guid: (.*)")]
@@ -66,8 +66,8 @@
         [Then(@"I see the vacancy details for the vacancy with reference number: (.*)")]
         public void ThenISeeTheVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
         {
-            var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyReferenceNumber: {vacancyReferenceNumber}");
-            var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber);
+            var vacancy = ScenarioContext.Current.Get<DbVacancy>($"vacancyReferenceNumber: {vacancyReferenceNumber * 100000}");
+            var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber * 100000);
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
 
             vacancy.Should().NotBeNull();
@@ -102,7 +102,7 @@
         [Then(@"I do not see the vacancy details for the vacancy with reference number: (.*)")]
         public void ThenIDoNotSeeTheVacancyDetailsForTheVacancyWithReferenceNumber(int vacancyReferenceNumber)
         {
-            var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber);
+            var vacancyUri = string.Format(UriFormats.VacancyReferenceNumberUriFormat, vacancyReferenceNumber * 100000);
             var responseVacancy = ScenarioContext.Current.Get<Vacancy>(vacancyUri);
             responseVacancy.Should().BeNull();
         }
@@ -126,14 +126,14 @@
         {
             var vacancy1 = new Fixture().Build<DbVacancy>()
                 .With(v => v.VacancyId, 1)
-                .With(v => v.VacancyReferenceNumber, 1)
+                .With(v => v.VacancyReferenceNumber, 100000)
                 .With(v => v.VacancyGuid, new Guid("10000000-0000-0000-0000-000000000000"))
                 .With(v => v.VacancyStatusId, (int)VacancyStatus.Live)
                 .With(v => v.ContractOwnerID, RaaApiUserFactory.SkillsFundingAgencyProviderId)
                 .Create();
             var vacancy2 = new Fixture().Build<DbVacancy>()
                 .With(v => v.VacancyId, 2)
-                .With(v => v.VacancyReferenceNumber, 2)
+                .With(v => v.VacancyReferenceNumber, 200000)
                 .With(v => v.VacancyGuid, new Guid("20000000-0000-0000-0000-000000000000"))
                 .With(v => v.VacancyStatusId, (int)VacancyStatus.Live)
                 .With(v => v.ContractOwnerID, -1)

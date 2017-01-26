@@ -7,7 +7,7 @@
 Scenario: Get vacancy details with no identifier
 	When I authorize my request with a Provider API key
 	And I request the vacancy details for the vacancy with no identifier
-	Then The response status is: BadRequest with response message: Please specify either a vacancyId, a vacancyReferenceNumber or a vacancyGuid.
+	Then The response status is: NotFound
 	And I do not see the vacancy details for the vacancy with no identifier
 
 @RA388 @GetVacancyById

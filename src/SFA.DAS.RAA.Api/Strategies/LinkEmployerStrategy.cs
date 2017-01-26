@@ -58,7 +58,6 @@
                 {
                     validationResult.Errors.Add(new ValidationFailure("EmployerEdsUrn", string.Format(EmployerProviderSiteLinkMessages.EmployerNotFoundFormat, employerProviderSiteLinkRequest.EmployerEdsUrn)));
                 }
-                //TODO: Validate geocoding for employer. Use Google as a fallback
             }
             catch (CustomException ex)
             {

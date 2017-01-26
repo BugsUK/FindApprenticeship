@@ -85,8 +85,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
  testRunner.And("I request the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
- testRunner.Then("The response status is: BadRequest with response message: Please specify either a" +
-                    " vacancyId, a vacancyReferenceNumber or a vacancyGuid.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("The response status is: NotFound", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 11
  testRunner.And("I do not see the vacancy details for the vacancy with no identifier", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden

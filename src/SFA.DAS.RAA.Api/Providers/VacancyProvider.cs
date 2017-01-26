@@ -26,7 +26,7 @@
             var vacancyReference = vacancyIdentifier.Reference;
             var vacancyGuid = vacancyIdentifier.Guid;
 
-            if (!vacancyId.HasValue && !string.IsNullOrEmpty(vacancyReference) && !vacancyGuid.HasValue)
+            if (!vacancyId.HasValue && string.IsNullOrEmpty(vacancyReference) && !vacancyGuid.HasValue)
             {
                 throw new ArgumentException(VacancyMessages.MissingVacancyIdentifier);
             }
