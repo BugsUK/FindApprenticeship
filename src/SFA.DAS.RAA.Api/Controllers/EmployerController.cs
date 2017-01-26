@@ -6,9 +6,9 @@
     using Apprenticeships.Web.Common.Extensions;
     using Models;
     using Strategies;
-    using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]
+    [RoutePrefix("employer")]
     public class EmployerController : ApiController
     {
         private readonly ILinkEmployerStrategy _linkEmployerStrategy;
@@ -24,9 +24,9 @@
         /// <param name="employerProviderSiteLinkRequest">Defines the provider site to link to as well as additional employer information. Note that you can specify the employer identifier in either the URL or the POST body</param>
         /// <param name="edsUrn">The employer's secondary identifier.</param>
         /// <returns></returns>
-        [Route("employer/{edsUrn}/link")]
+        [Route("{edsUrn}/link")]
         [ResponseType(typeof(EmployerProviderSiteLink))]
-        [SwaggerOperation("LinkEmployer")]
+        [HttpPost]
         public IHttpActionResult LinkEmployer(EmployerProviderSiteLinkRequest employerProviderSiteLinkRequest, int edsUrn)
         {
             return Ok(_linkEmployerStrategy.LinkEmployer(employerProviderSiteLinkRequest, edsUrn, User.GetUkprn()));

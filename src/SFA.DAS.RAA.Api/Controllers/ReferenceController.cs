@@ -8,6 +8,7 @@
     using Apprenticeships.Domain.Entities.Raa.Reference;
     using Constants;
 
+    [RoutePrefix("reference")]
     public class ReferenceController : ApiController
     {
         private readonly IReferenceDataProvider _referenceDataProvider;
@@ -17,15 +18,17 @@
             _referenceDataProvider = referenceDataProvider;
         }
 
-        [Route("reference/counties")]
+        [Route("counties")]
         [ResponseType(typeof(IEnumerable<County>))]
+        [HttpGet]
         public IHttpActionResult GetCounties()
         {
             return Ok(_referenceDataProvider.GetCounties());
         }
 
-        [Route("reference/county")]
+        [Route("county")]
         [ResponseType(typeof(County))]
+        [HttpGet]
         public IHttpActionResult GetCounty(int? countyId = null, string countyCode = null)
         {
             if (!countyId.HasValue && string.IsNullOrEmpty(countyCode))
@@ -43,15 +46,17 @@
             return Ok(county);
         }
 
-        [Route("reference/localauthorities")]
+        [Route("localauthorities")]
         [ResponseType(typeof(IEnumerable<LocalAuthority>))]
+        [HttpGet]
         public IHttpActionResult GetLocalAuthorities()
         {
             return Ok(_referenceDataProvider.GetLocalAuthorities());
         }
 
-        [Route("reference/localauthority")]
+        [Route("localauthority")]
         [ResponseType(typeof(LocalAuthority))]
+        [HttpGet]
         public IHttpActionResult GetLocalAuthority(int? localAuthorityId = null, string localAuthorityCode = null)
         {
             if (!localAuthorityId.HasValue && string.IsNullOrEmpty(localAuthorityCode))
@@ -69,15 +74,17 @@
             return Ok(localAuthority);
         }
 
-        [Route("reference/regions")]
+        [Route("regions")]
         [ResponseType(typeof(IEnumerable<Region>))]
+        [HttpGet]
         public IHttpActionResult GetRegions()
         {
             return Ok(_referenceDataProvider.GetRegions());
         }
 
-        [Route("reference/region")]
+        [Route("region")]
         [ResponseType(typeof(Region))]
+        [HttpGet]
         public IHttpActionResult GetRegion(int? regionId = null, string regionCode = null)
         {
             if (!regionId.HasValue && string.IsNullOrEmpty(regionCode))

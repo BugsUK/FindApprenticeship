@@ -6,7 +6,6 @@
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Strategies;
-    using Swashbuckle.Swagger.Annotations;
 
     [Authorize(Roles = Roles.Provider)]
     [RoutePrefix("vacancy")]
@@ -31,7 +30,6 @@
         /// <returns></returns>
         [Route("wage")]
         [ResponseType(typeof(Vacancy))]
-        [SwaggerOperation("EditVacancyWage")]
         [HttpPut]
         public IHttpActionResult EditWage(WageUpdate wageUpdate, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
         {
