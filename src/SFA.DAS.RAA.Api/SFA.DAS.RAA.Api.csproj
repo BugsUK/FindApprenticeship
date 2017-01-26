@@ -259,8 +259,10 @@
     </Compile>
     <Compile Include="Handlers\AiExceptionLogger.cs" />
     <Compile Include="Handlers\ApiKeyHandler.cs" />
+    <Compile Include="Models\EmployerIdentifier.cs" />
     <Compile Include="Models\EmployerProviderSiteLink.cs" />
     <Compile Include="Models\EmployerProviderSiteLinkRequest.cs" />
+    <Compile Include="Models\VacancyIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IVacancyProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />

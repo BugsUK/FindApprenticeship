@@ -6,6 +6,7 @@
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies;
     using FluentAssertions;
+    using Models;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -38,7 +39,7 @@
                 .With(v => v.Wage, existingWage)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
-            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+            vacancyProvider.Setup(p => p.Get(new VacancyIdentifier(vacancyId))).Returns(vacancy);
 
             var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
 
@@ -54,7 +55,7 @@
             };
 
             //Act
-            Action editWageAction = () => strategy.EditWage(wageUpdate, vacancyId);
+            Action editWageAction = () => strategy.EditWage(wageUpdate, new VacancyIdentifier(vacancyId));
 
             //Assert
             editWageAction.ShouldThrow<ArgumentException>().WithMessage("You can only edit the wage of a vacancy that is live or closed.");
@@ -75,7 +76,7 @@
                 .With(v => v.Wage, existingWage)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
-            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+            vacancyProvider.Setup(p => p.Get(new VacancyIdentifier(vacancyId))).Returns(vacancy);
 
             var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
             updateVacancyStrategy.Setup(s => s.UpdateVacancy(vacancy)).Returns<Vacancy>(v => v);
@@ -92,7 +93,7 @@
             };
 
             //Act
-            var updatedVacancy = strategy.EditWage(wageUpdate, vacancyId);
+            var updatedVacancy = strategy.EditWage(wageUpdate, new VacancyIdentifier(vacancyId));
 
             //Assert
             //Verify that the update call has been made
@@ -122,7 +123,7 @@
                 .With(v => v.Wage, existingWage)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
-            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+            vacancyProvider.Setup(p => p.Get(new VacancyIdentifier(vacancyId))).Returns(vacancy);
 
             var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
             updateVacancyStrategy.Setup(s => s.UpdateVacancy(vacancy)).Returns<Vacancy>(v => v);
@@ -139,7 +140,7 @@
             };
 
             //Act
-            var updatedVacancy = strategy.EditWage(wageUpdate, vacancyId);
+            var updatedVacancy = strategy.EditWage(wageUpdate, new VacancyIdentifier(vacancyId));
 
             //Assert
             //Verify that the update call has been made
@@ -168,7 +169,7 @@
                 .With(v => v.Wage, existingWage)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
-            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+            vacancyProvider.Setup(p => p.Get(new VacancyIdentifier(vacancyId))).Returns(vacancy);
 
             var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
             updateVacancyStrategy.Setup(s => s.UpdateVacancy(vacancy)).Returns<Vacancy>(v => v);
@@ -181,7 +182,7 @@
             };
 
             //Act
-            var updatedVacancy = strategy.EditWage(wageUpdate, vacancyId);
+            var updatedVacancy = strategy.EditWage(wageUpdate, new VacancyIdentifier(vacancyId));
 
             //Assert
             //Verify that the update call has been made
@@ -208,7 +209,7 @@
                 .With(v => v.VacancyType, VacancyType.Traineeship)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
-            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+            vacancyProvider.Setup(p => p.Get(new VacancyIdentifier(vacancyId))).Returns(vacancy);
 
             var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
 
@@ -222,7 +223,7 @@
             };
 
             //Act
-            Action editWageAction = () => strategy.EditWage(wageUpdate, vacancyId);
+            Action editWageAction = () => strategy.EditWage(wageUpdate, new VacancyIdentifier(vacancyId));
 
             //Assert
             editWageAction.ShouldThrow<ArgumentException>().WithMessage("You can only edit the wage of an Apprenticeship vacancy.");
@@ -243,7 +244,7 @@
                 .With(v => v.Wage, existingWage)
                 .Create();
             var vacancyProvider = new Mock<IVacancyProvider>();
-            vacancyProvider.Setup(p => p.Get(vacancyId, null, null)).Returns(vacancy);
+            vacancyProvider.Setup(p => p.Get(new VacancyIdentifier(vacancyId))).Returns(vacancy);
 
             var updateVacancyStrategy = new Mock<IUpdateVacancyStrategy>();
             updateVacancyStrategy.Setup(s => s.UpdateVacancy(vacancy)).Returns<Vacancy>(v => v);
@@ -260,7 +261,7 @@
             };
 
             //Act
-            var updatedVacancy = strategy.EditWage(wageUpdate, vacancyId);
+            var updatedVacancy = strategy.EditWage(wageUpdate, new VacancyIdentifier(vacancyId));
 
             //Assert
             //Verify that the update call has been made

@@ -5,6 +5,7 @@
     using System.Web.Http.Description;
     using Apprenticeships.Domain.Entities.Raa;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Models;
     using Providers;
 
     [Authorize(Roles = Roles.Provider)]
@@ -18,12 +19,28 @@
             _vacancyProvider = vacancyProvider;
         }
 
-        [Route("{vacancyId}")]
+        [Route("{id}")]
         [ResponseType(typeof(Vacancy))]
         [HttpGet]
-        public IHttpActionResult Get(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        public IHttpActionResult GetById(int id)
         {
-            return Ok(_vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid));
+            return Ok(_vacancyProvider.Get(new VacancyIdentifier(id)));
+        }
+
+        [Route("reference/{reference}")]
+        [ResponseType(typeof(Vacancy))]
+        [HttpGet]
+        public IHttpActionResult GetByReferenceNumber(string reference)
+        {
+            return Ok(_vacancyProvider.Get(new VacancyIdentifier(reference)));
+        }
+
+        [Route("guid/{guid}")]
+        [ResponseType(typeof(Vacancy))]
+        [HttpGet]
+        public IHttpActionResult GetByGuid(Guid guid)
+        {
+            return Ok(_vacancyProvider.Get(new VacancyIdentifier(guid)));
         }
     }
 }

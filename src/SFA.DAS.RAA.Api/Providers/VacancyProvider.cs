@@ -7,7 +7,9 @@
     using Apprenticeships.Application.VacancyPosting.Strategies;
     using Apprenticeships.Domain.Entities.Exceptions;
     using Apprenticeships.Domain.Entities.Raa.Vacancies;
+    using Apprenticeships.Domain.Entities.Vacancies;
     using Constants;
+    using Models;
 
     public class VacancyProvider : IVacancyProvider
     {
@@ -18,9 +20,13 @@
             _getVacancyStrategies = getVacancyStrategies;
         }
 
-        public Vacancy Get(int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        public Vacancy Get(VacancyIdentifier vacancyIdentifier)
         {
-            if (!vacancyId.HasValue && !vacancyReferenceNumber.HasValue && !vacancyGuid.HasValue)
+            var vacancyId = vacancyIdentifier.Id;
+            var vacancyReference = vacancyIdentifier.Reference;
+            var vacancyGuid = vacancyIdentifier.Guid;
+
+            if (!vacancyId.HasValue && !string.IsNullOrEmpty(vacancyReference) && !vacancyGuid.HasValue)
             {
                 throw new ArgumentException(VacancyMessages.MissingVacancyIdentifier);
             }
@@ -33,9 +39,17 @@
                 {
                     vacancy = _getVacancyStrategies.GetVacancyById(vacancyId.Value);
                 }
-                else if (vacancyReferenceNumber.HasValue)
+                else if (!string.IsNullOrEmpty(vacancyReference))
                 {
-                    vacancy = _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber.Value);
+                    int vacancyReferenceNumber;
+                    if (VacancyHelper.TryGetVacancyReferenceNumber(vacancyReference, out vacancyReferenceNumber))
+                    {
+                        vacancy = _getVacancyStrategies.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+                    }
+                    else
+                    {
+                        throw new ArgumentException(VacancyMessages.InvalidVacancyReference);
+                    }
                 }
                 else
                 {

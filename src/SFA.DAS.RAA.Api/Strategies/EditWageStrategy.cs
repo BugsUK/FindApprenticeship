@@ -6,9 +6,9 @@
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Constants;
     using Apprenticeships.Domain.Entities.Raa.Vacancies.Validation;
     using Apprenticeships.Domain.Entities.Vacancies;
-    using Constants;
     using Providers;
     using FluentValidation;
+    using Models;
     using VacancyType = Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class EditWageStrategy : IEditWageStrategy
@@ -22,9 +22,9 @@
             _updateVacancyStrategy = updateVacancyStrategy;
         }
 
-        public Vacancy EditWage(WageUpdate wageUpdate, int? vacancyId = null, int? vacancyReferenceNumber = null, Guid? vacancyGuid = null)
+        public Vacancy EditWage(WageUpdate wageUpdate, VacancyIdentifier vacancyIdentifier)
         {
-            var vacancy = _vacancyProvider.Get(vacancyId, vacancyReferenceNumber, vacancyGuid);
+            var vacancy = _vacancyProvider.Get(vacancyIdentifier);
             if (vacancy.VacancyType != VacancyType.Apprenticeship)
             {
                 throw new ArgumentException(WageUpdateMessages.CannotEditTraineeshipWage);
