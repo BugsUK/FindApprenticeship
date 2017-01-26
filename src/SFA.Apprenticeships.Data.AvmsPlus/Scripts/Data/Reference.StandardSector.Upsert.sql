@@ -63,7 +63,11 @@ USING (VALUES
   (59,N'Bus, Coach and HGV',17),
   (60,N'Furniture',17),
   (61,N'Groundsmanship',1),
-  (62,N'Media',1)
+  (62,N'Media',1),
+  (63,N'Ambulance services', 20),
+  (64,N'Craft', 17),
+  (65,N'Event Management', 13),
+  (66,N'Hair and Beauty', 13)
 ) 
 AS Source (StandardSectorId, FullName, ApprenticeshipOccupationId) 
 ON Target.StandardSectorId = Source.StandardSectorId 
